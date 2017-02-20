@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content-title %}
+    <h1>{% trans 'Dashboard' %}</h1>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Dashboard' %}</h1>
+{% endblock %}

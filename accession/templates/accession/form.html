@@ -1,0 +1,55 @@
+{% extends 'layout-box-form.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block js_page %}
+    <script src="{% static 'accession/js/accession-form.js' %}"></script>
+{% endblock %}
+
+{% block notifications %}
+    {% include 'accession/notifications-errors.html' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-exchange"></i>&nbsp;&nbsp;{% trans 'Accession' %}
+        </li>
+        <li>
+            {% trans 'Accession Records' %}
+        </li>
+        <li class="active">
+            {% trans 'Create/Edit' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    Accession Records
+{% endblock %}
+
+{% block box-1-body %}
+    {% include 'accession/form/form_fields.html' %}
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        {% buttons %}
+            <a class="btn btn-default" href="{% url 'accession:list' %}">
+                <i class="fa fa-times"></i>
+                {% trans 'Cancel' %}
+            </a>
+
+            <button type="submit" class="btn btn-primary" formnovalidate>
+                {% bootstrap_icon "save" %} Submit
+            </button>
+        {% endbuttons %}
+    </div>
+{% endblock %}

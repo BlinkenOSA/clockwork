@@ -1,0 +1,8 @@
+<div class="btn-group ">
+    <a class="btn btn-default btn-xs" href="{% url 'archival_unit:series_update' parent_id id %}">
+        <i class="fa fa-edit"></i>
+    </a>
+    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'archival_unit:series_delete' parent_id id %}">
+        <i class="fa fa-trash-o"></i>
+    </a>
+</div>

@@ -1,0 +1,104 @@
+{% extends 'layout-box-form.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/flag-css/flag-css.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="{% static 'isad/js/isad-form.js' %}"></script>
+{% endblock %}
+
+{% block notifications %}
+    {% include 'isad/notifications-errors.html' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-align-justify"></i>&nbsp;&nbsp;{% trans 'ISAD(G) Records' %}
+        </li>
+        <li class="active">
+            {% trans 'Create/Edit' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    ISAD(G) Record
+{% endblock %}
+
+{% block box-1-body %}
+    <div class="nav-tabs-custom">
+        <ul id="isadTab" class="nav nav-tabs bordered">
+            <li class="active">
+                <a href="#t0" data-toggle="tab">Required Values</a>
+            </li>
+            <li>
+                <a href="#t1" data-toggle="tab">Identity</a>
+            </li>
+            <li>
+                <a href="#t2" data-toggle="tab">Context</a>
+            </li>
+            <li>
+                <a href="#t3" data-toggle="tab">Content</a>
+            </li>
+            <li>
+                <a href="#t4" data-toggle="tab">Access & Use</a>
+            </li>
+            <li>
+                <a href="#t5" data-toggle="tab">Allied Materials</a>
+            </li>
+            <li>
+                <a href="#t6" data-toggle="tab">Notes</a>
+            </li>
+        </ul>
+
+        <div class="tab-content padding-10">
+            <div class="tab-pane fade active in" id="t0">
+                {% include 'isad/form/form_tab01.html' %}
+            </div>
+            <div class="tab-pane fade" id="t1">
+                {% include 'isad/form/form_tab02.html' %}
+            </div>
+            <div class="tab-pane fade" id="t2">
+                {% include 'isad/form/form_tab03.html' %}
+            </div>
+            <div class="tab-pane fade" id="t3">
+                {% include 'isad/form/form_tab04.html' %}
+            </div>
+            <div class="tab-pane fade" id="t4">
+                {% include 'isad/form/form_tab05.html' %}
+            </div>
+            <div class="tab-pane fade" id="t5">
+                {% include 'isad/form/form_tab06.html' %}
+            </div>
+            <div class="tab-pane fade" id="t6">
+                {% include 'isad/form/form_tab07.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        {% buttons %}
+            <a class="btn btn-default" href="{% url 'isad:list' %}">
+                <i class="fa fa-times"></i>
+                {% trans 'Cancel' %}
+            </a>
+
+            <button type="submit" class="btn btn-primary" formnovalidate>
+                {% bootstrap_icon "save" %} Submit
+            </button>
+        {% endbuttons %}
+    </div>
+{% endblock %}

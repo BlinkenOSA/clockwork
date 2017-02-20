@@ -1,0 +1,50 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block js_page %}
+    <script src="{% static 'accession/js/accession.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-exchange"></i>&nbsp;&nbsp;{% trans 'Accession' %}
+        </li>
+        <li class="active">
+            {% trans 'Accession Records' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Accession Records' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <table id="accession_table" class="table table-striped table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Seq. No.' %}</th>
+                <th>{% trans 'Transfer Date' %}</th>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        <a class="btn btn-primary" href="{% url 'accession:create' %}">
+            <i class="fa fa-plus"></i>
+            {% trans 'Create' %}
+        </a>
+    </div>
+{% endblock %}

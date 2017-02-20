@@ -1,0 +1,14 @@
+- model: controlled_list.Building
+  pk: 1
+  fields:
+    building: Arany Janos u. 32.
+
+- model: controlled_list.Building
+  pk: 2
+  fields:
+    building: Kerepesi
+
+- model: controlled_list.Building
+  pk: 3
+  fields:
+    building: Oktober 14

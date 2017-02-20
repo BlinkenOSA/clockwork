@@ -1,0 +1,14 @@
+- model: controlled_list.ExtentUnit
+  pk: 1
+  fields:
+    unit: documents
+
+- model: controlled_list.ExtentUnit
+  pk: 2
+  fields:
+    unit: item(s)
+
+- model: controlled_list.ExtentUnit
+  pk: 3
+  fields:
+    unit: pages

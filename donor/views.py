@@ -1,0 +1,87 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext
+from django_datatables_view.base_datatable_view import BaseDatatableView
+from django.db.models import Q
+
+from donor.models import Donor
+from donor.forms import DonorForm, DonorPopupForm
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
+
+
+class DonorList(TemplateView):
+    template_name = 'donor/list.html'
+
+
+class DonorListJson(BaseDatatableView):
+    model = Donor
+    columns = ['id', 'name', 'address', 'action']
+    order_columns = ['id', 'name', '', '']
+    max_display_length = 500
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get(u'search[value]', None)
+        if search:
+            qs = qs.filter(
+                Q(name__icontains=search) |
+                Q(country__country__icontains=search) |
+                Q(city__icontains=search) |
+                Q(address__icontains=search)
+            )
+        return qs
+
+    def render_column(self, row, column):
+        if column == 'address':
+            return row.get_address()
+        elif column == 'action':
+            return render_to_string('donor/table_action_buttons.html', context={'id': row.id})
+        else:
+            return super(DonorListJson, self).render_column(row, column)
+
+
+class DonorDetail(DetailView):
+    model = Donor
+    template_name = 'donor/detail.html'
+    context_object_name = 'donor'
+
+
+class DonorCreate(SuccessMessageMixin, CreateView):
+    model = Donor
+    form_class = DonorForm
+    template_name = 'donor/form.html'
+    success_url = reverse_lazy('donor:list')
+    success_message = ugettext("%(name)s was created successfully")
+
+
+class DonorUpdate(SuccessMessageMixin, UpdateView):
+    model = Donor
+    form_class = DonorForm
+    template_name = 'donor/form.html'
+    success_url = reverse_lazy('donor:list')
+    success_message = ugettext("%(name)s was updated successfully")
+
+
+class DonorDelete(DeleteView):
+    model = Donor
+    template_name = 'donor/delete.html'
+    context_object_name = 'donor'
+    success_url = reverse_lazy('donor:list')
+    success_message = ugettext("Donor was deleted successfully")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(DonorDelete, self).delete(request, *args, **kwargs)
+
+
+class DonorPopupCreate(SuccessMessageMixin, CreateView):
+    model = Donor
+    form_class = DonorPopupForm
+    template_name = 'donor/popup/form_popup.html'
+    success_message = ugettext("%(name)s was created successfully")
+
+    def form_valid(self, form):
+        donor = form.save()
+        return render(self.request, 'donor/popup/form_popup_success.html', {'donor': donor})

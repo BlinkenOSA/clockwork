@@ -1,0 +1,59 @@
+{% extends 'layout-box-form.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block css_page %}
+{% endblock %}
+
+{% block js_page %}
+    <script src="{% static 'finding_aids/js/finding_aids_archival_unit.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li class="active">
+            {% trans 'Select Archival Unit' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Select the series to work in' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <fieldset>
+        <div class="col-md-12">
+            {% bootstrap_field form.archival_unit %}
+        </div>
+    </fieldset>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-left">
+        <a id="fa-batch" class="btn btn-default" href="#">
+            <i class="fa fa-cogs"></i> Batch Changes
+        </a>
+        <a id="fa-print" class="btn btn-default" href="#">
+            <i class="fa fa-print"></i> Print Labels
+        </a>
+    </div>
+    <div class="pull-right">
+        <a id="fa-table" class="btn btn-default" href="#">
+            <i class="fa fa-table"></i> Table View
+        </a>
+        <a id="fa-container" class="btn btn-default" href="#">
+            <i class="fa fa-archive"></i> Containers
+        </a>
+    </div>
+{% endblock %}

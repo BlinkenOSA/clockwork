@@ -1,0 +1,89 @@
+{% extends 'layout-box-box-form-table-vertical.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Select-1.2.0/css/select.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    <script src="{% static 'js/ajax-post.js' %}"></script>
+
+    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/Select-1.2.0/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js' %}"></script>
+
+    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
+    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
+
+    <script>
+        var archival_unit_id = {{ archival_unit.id }};
+    </script>
+
+    <script src="{% static 'container/js/container.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ archival_unit.title_full }}
+        </li>
+        <li class="active">
+            {% trans 'Containers' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Create Container' %}
+{% endblock %}
+
+{% block box-1-body %}
+    {% include 'container/form/form_create_container.html' %}
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        <a id="container-create" class="btn btn-primary" href="#">
+            <i class="fa fa-plus"></i>
+            {% trans 'Create' %}
+        </a>
+    </div>
+{% endblock %}
+
+{% block box-2-title %}
+    {% trans 'Containers' %}
+{% endblock %}
+
+{% block box-2-body %}
+    <table id="container_table" class="table table-bordered table-hover table-striped no-padding" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Container Number' %}</th>
+                <th>{% trans 'Container Type ID' %}</th>
+                <th>{% trans 'Container Type' %}</th>
+                <th>{% trans 'Primary Type ID' %}</th>
+                <th>{% trans 'Primary Type' %}</th>
+                <th>{% trans 'Folders/Items' %}</th>
+                <th>{% trans 'Label' %}</th>
+                <th>{% trans 'Navigate' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+

@@ -87,3 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+.idea/
+static/thirdparty/editor/*
+static/thirdparty/datatables/*
+static/thirdparty/flag-css/*
+static/thirdparty/django-dynamic-formset/*
+static/thirdparty/noty/*
+*/migrations/*

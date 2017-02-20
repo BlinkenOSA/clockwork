@@ -1,0 +1,143 @@
+- model: controlled_list.CarrierType
+  pk: 1
+  fields:
+    type: Archival Box
+    width: 125
+
+- model: controlled_list.CarrierType
+  pk: 2
+  fields:
+    type: Archival Card Box
+    width: 315
+
+- model: controlled_list.CarrierType
+  pk: 3
+  fields:
+    type: Boxes of color prints
+    width: 440
+
+- model: controlled_list.CarrierType
+  pk: 4
+  fields:
+    type: Audio cassette
+    width: 15
+
+- model: controlled_list.CarrierType
+  pk: 5
+  fields:
+    type: Beta SP
+    width: 30
+
+- model: controlled_list.CarrierType
+  pk: 6
+  fields:
+    type: VHS
+    width: 25
+
+- model: controlled_list.CarrierType
+  pk: 7
+  fields:
+    type: CD-ROM
+    width: 10
+
+- model: controlled_list.CarrierType
+  pk: 8
+  fields:
+    type: Rolls of 35 mm microfilm in microfilm cabinet
+    width: 50
+
+- model: controlled_list.CarrierType
+  pk: 9
+  fields:
+    type: Rolls of 16 mm microfilm in microfilm cabinet
+    width: 23
+
+- model: controlled_list.CarrierType
+  pk: 10
+  fields:
+    type: SVHS
+    width: 25
+
+- model: controlled_list.CarrierType
+  pk: 11
+  fields:
+    type: Plastic card box
+    width: 245
+
+- model: controlled_list.CarrierType
+  pk: 12
+  fields:
+    type: Floppy 3.5
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 13
+  fields:
+    type: Floppy 5.25
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 14
+  fields:
+    type: DVD-ROM
+    width: 10
+
+- model: controlled_list.CarrierType
+  pk: 15
+  fields:
+    type: SDLT I
+    width: 34
+
+- model: controlled_list.CarrierType
+  pk: 16
+  fields:
+    type: Oversized box (40 cm)
+    width: 400
+
+- model: controlled_list.CarrierType
+  pk: 17
+  fields:
+    type: SVHS-C
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 18
+  fields:
+    type: mini CD-R
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 19
+  fields:
+    type: mini DV
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 20
+  fields:
+    type: Oversized folder
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 21
+  fields:
+    type: N/A
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 22
+  fields:
+    type: Digital Container
+    width: 1
+
+- model: controlled_list.CarrierType
+  pk: 23
+  fields:
+    type: Blu-Ray
+    width: 10
+
+- model: controlled_list.CarrierType
+  pk: 24
+  fields:
+    type: HDD
+    width: 1

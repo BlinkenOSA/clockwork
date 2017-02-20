@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{% trans 'Accession' %} - {{ accession.seq }} {{ accession.title }}</h4>
+  </div>
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>Accession Number</dt>
+        <dd>{{ accession.seq }}</dd>
+
+        <dt>Title</dt>
+        <dd>{{ accession.title }}</dd>
+
+        {% if accession.creator.all %}
+            <dt>{% trans 'Creator' %}</dt>
+            {% for creator in accession.creator.all %}
+                <dd>{{ creator }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        <dt>Transfer Date</dt>
+        <dd>{{ accession.transfer_date }}</dd>
+
+        <dt>Created by</dt>
+        <dd>{{ donor.user_created }} {{ donor.date_created }}</dd>
+
+        <dt>Updated by</dt>
+        <dd>{{ donor.user_updated }} {{ donor.date_updated }}</dd>
+
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>

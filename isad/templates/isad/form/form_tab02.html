@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<fieldset>
+	<div class="col-md-12">
+        {% bootstrap_field form.date_predominant %}
+    </div>
+    <div class="col-md-12">
+        {% include 'isad/subform/subform_extents.html' %}
+    </div>
+    <div class="col-md-12">
+        {% include 'isad/subform/subform_carriers.html' %}
+    </div>
+</fieldset>

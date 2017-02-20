@@ -1,0 +1,21 @@
+{% load i18n %}
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            $( document ).ready(function() {
+                var n = noty({
+                    text: '{{ message }}',
+                    theme: 'metroui',
+                    type: 'success',
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500 // opening & closing animation speed
+                    }
+                });
+            })
+        </script>
+    {% endfor %}
+{% endif %}

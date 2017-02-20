@@ -1,0 +1,24 @@
+- model: controlled_list.PrimaryType
+  pk: 1
+  fields:
+    type: Text
+
+- model: controlled_list.PrimaryType
+  pk: 2
+  fields:
+    type: Video
+
+- model: controlled_list.PrimaryType
+  pk: 3
+  fields:
+    type: Still Image
+
+- model: controlled_list.PrimaryType
+  pk: 4
+  fields:
+    type: Audio
+
+- model: controlled_list.PrimaryType
+  pk: 5
+  fields:
+    type: Electronic Record

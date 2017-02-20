@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<fieldset>
+	<div class="col-md-12">
+        {% bootstrap_field form.embargo %}
+    </div>
+	<div class="col-md-6">
+        {% bootstrap_field form.physical_characteristics %}
+    </div>
+	<div class="col-md-6">
+        {% bootstrap_field form.physical_characteristics_original %}
+    </div>
+    <div class="col-md-12">
+        {% include 'isad/subform/subform_related_finding_aids.html' %}
+    </div>
+</fieldset>

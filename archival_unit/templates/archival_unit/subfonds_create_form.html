@@ -1,0 +1,88 @@
+{% extends 'layout-box-form.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block css %}
+    {{ form.media.css }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/select2-bootstrap/select2-bootstrap.css' %}">
+{% endblock %}
+
+{% block js %}
+    {{ form.media.js }}
+{% endblock %}
+
+{% block notifications %}
+    {% include 'notifications-errors.html' %}
+{% endblock %}
+
+{% block errors %}
+    {% include 'nonfield-errors.html' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <a href="{% url 'archival_unit:fonds' %}">
+                <i class="fa fa-sitemap"></i>&nbsp;&nbsp;{% trans 'Archival Unit' %}
+            </a>
+        </li>
+        <li>HU OSA {{ form.fonds.value }} {{ form.fonds_title.value }}</li>
+        <li>{% trans 'Create Subfonds' %}</li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Create Subfonds' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <fieldset>
+        <div class="col-md-2">
+            {% bootstrap_field form.fonds %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.fonds_title %}
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="col-md-2">
+            {% bootstrap_field form.subfonds %}
+        </div>
+        <div class="col-md-6">
+            {% bootstrap_field form.title %}
+        </div>
+        <div class="col-md-4">
+            {% bootstrap_field form.acronym %}
+        </div>
+        {{ form.parent }}
+        {{ form.series }}
+        {{ form.level }}
+    </fieldset>
+    <fieldset>
+        <div class="col-md-12">
+            {% bootstrap_field form.accession %}
+        </div>
+    </fieldset>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        {% buttons %}
+            <a class="btn btn-default" href="{% url 'archival_unit:subfonds' form.parent.value %}">
+                <i class="fa fa-times"></i>
+                {% trans 'Cancel' %}
+            </a>
+
+            <button type="submit" class="btn btn-primary" formnovalidate>
+                {% bootstrap_icon "save" %} Submit
+            </button>
+        {% endbuttons %}
+    </div>
+{% endblock %}

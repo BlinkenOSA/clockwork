@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Other forms of name' %}</label>
+    {% for form in other_names %}
+        <div id="{{ form.prefix }}-row" class="other_names-subform row subform">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <div class="col-md-4">
+                {% bootstrap_field form.name show_label=false %}
+            </div>
+            <div class="col-md-2">
+                {% bootstrap_field form.year_from show_label=false %}
+            </div>
+            <div class="col-md-2">
+                {% bootstrap_field form.year_to show_label=false %}
+            </div>
+            <div class="col-md-2">
+                {% bootstrap_field form.relationship show_label=false %}
+            </div>
+            <div class="col-md-2">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ other_names.management_form }}
+</div>

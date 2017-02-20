@@ -1,0 +1,49 @@
+- model: accession.AccessionMethod
+  pk: 1
+  fields:
+    method: CEU
+
+- model: accession.AccessionMethod
+  pk: 2
+  fields:
+    method: Deposit (Non OSF)
+
+- model: accession.AccessionMethod
+  pk: 3
+  fields:
+    method: Deposit (OSF)
+
+- model: accession.AccessionMethod
+  pk: 4
+  fields:
+    method: Donation (non-OSF)
+
+- model: accession.AccessionMethod
+  pk: 5
+  fields:
+    method: Donation (OSF)
+
+- model: accession.AccessionMethod
+  pk: 6
+  fields:
+    method: OSA capture
+
+- model: accession.AccessionMethod
+  pk: 7
+  fields:
+    method: OSA creation
+
+- model: accession.AccessionMethod
+  pk: 8
+  fields:
+    method: OSA pending
+
+- model: accession.AccessionMethod
+  pk: 9
+  fields:
+    method: OSA purchase
+
+- model: accession.AccessionMethod
+  pk: 10
+  fields:
+    method: Unknown

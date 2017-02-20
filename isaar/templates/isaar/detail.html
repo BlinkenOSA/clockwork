@@ -1,0 +1,59 @@
+{% load i18n %}
+
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{% trans 'ISAAR/CPF' %} - {{ isaar.name }}</h4>
+  </div>
+  <div class="modal-body">
+    <h5>{% trans 'Required Values' %}</h5>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>{% trans 'Name' %}</dt>
+        <dd>{{ isaar.name }}</dd>
+
+        <dt>{% trans 'Type of Entity' %}</dt>
+        <dd>{{ type }}</dd>
+
+        <dt>{% trans 'Date of Existence' %}</dt>
+        <dd>{{ isaar.date_existence_from }} - {{ isaar.date_existence_to }}</dd>
+    </dl>
+
+    <h5>{% trans 'Identity' %}</h5>
+    <hr/>
+    <dl class="dl-horizontal">
+
+        {% if isaar.isaarothername_set.all %}
+            <dt>{% trans 'Other forms of name' %}</dt>
+            {% for other_name in isaar.isaarothername_set.all %}
+                <dd>
+                    {{ other_name.name }}
+                    {% if other_name.year_from or other_name.year_to %}
+                        (
+                        {{ other_name.year_from }} -
+                        {% if other_name.year_to %}
+                            {{ other_name.year_to }}
+                        {% endif %}
+                        )
+                    {% endif %}
+                    {% if other_name.relationship %}
+                        {{ other_name.relationship.relationship }}
+                    {% endif %}
+                </dd>
+            {% endfor %}
+        {% endif %}
+
+
+
+        <dt>{% trans 'Created by' %}</dt>
+        <dd>{{ isaar.user_created }} {{ isaar.date_created }}</dd>
+
+        <dt>{% trans 'Updated by' %}</dt>
+        <dd>{{ isaar.user_updated }} {{ isaar.date_updated }}</dd>
+
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>

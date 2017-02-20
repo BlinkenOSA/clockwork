@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<fieldset>
+ 	<div class="col-md-12">
+        {% include 'isad/subform/subform_location_of_originals.html' %}
+    </div>
+  	<div class="col-md-12">
+        {% include 'isad/subform/subform_location_of_copies.html' %}
+    </div>
+	<div class="col-md-6">
+        {% bootstrap_field form.publication_note|add_class:"tinymce" %}
+    </div>
+	<div class="col-md-6">
+        {% bootstrap_field form.publication_note_original|add_class:"tinymce" %}
+    </div>
+</fieldset>

@@ -1,0 +1,29 @@
+{% load bootstrap3 %}
+{% load i18n %}
+
+<fieldset>
+    <div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>{% trans 'Reference Code'%}</dt>
+            <dd>{{ archival_unit.reference_code }}</dd>
+            <br/>
+            <dt>{% trans 'Fonds'%}</dt>
+            <dd>{{ fonds_name }}</dd>
+            <dt>{% trans 'Subfonds'%}</dt>
+            <dd>{{ subfonds_name }}</dd>
+            <dt>{% trans 'Series'%}</dt>
+            <dd>{{ series_name }}</dd>
+        </dl>
+        <hr/>
+    </div>
+
+    <div class="col-md-12">
+        {% bootstrap_field form.primary_type %}
+    </div>
+    <div class="col-md-12">
+        {% bootstrap_field form.carrier_type %}
+    </div>
+    <div class="col-md-12">
+        {% bootstrap_field form.container_label %}
+    </div>
+</fieldset>

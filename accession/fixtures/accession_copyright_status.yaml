@@ -1,0 +1,34 @@
+- model: accession.AccessionCopyrightStatus
+  pk: 1
+  fields:
+    status: Copyright held by Creator
+
+- model: accession.AccessionCopyrightStatus
+  pk: 2
+  fields:
+    status: Copyright held by Donor
+
+- model: accession.AccessionCopyrightStatus
+  pk: 3
+  fields:
+    status: Copyright held by OSA
+
+- model: accession.AccessionCopyrightStatus
+  pk: 4
+  fields:
+    status: Copyright held by OSF
+
+- model: accession.AccessionCopyrightStatus
+  pk: 5
+  fields:
+    status: Copyright held by Other
+
+- model: accession.AccessionCopyrightStatus
+  pk: 6
+  fields:
+    status: Orphan Work
+
+- model: accession.AccessionCopyrightStatus
+  pk: 7
+  fields:
+    status: Public Domain

@@ -1,0 +1,66 @@
+/* DataTables Action column */
+th {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+tbody td {
+    vertical-align: middle !important;
+}
+
+.action_column {
+    text-align: center;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.box-body .nav-tabs-custom {
+    margin: -10px !important;
+}
+
+.subform-wrap {
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+.nav-tabs-custom {
+    margin-bottom: 0px !important;
+}
+
+.select2-addon {
+    vertical-align: top !important;
+    padding-top: 25px;
+}
+
+.btn-editor {
+    color: #FFF !important;
+}
+
+.btn-container {
+    color: #333 !important;
+}
+
+.DTE_Header_Content h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px;
+}
+
+.panel-fullscreen {
+    display: block;
+    z-index: 1040;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: auto;
+}
+
+.dt-buttons {
+    float:right !important;
+}

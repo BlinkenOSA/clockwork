@@ -1,0 +1,71 @@
+{% extends 'layout-box-box-form-table-horizontal.html' %}
+
+{% load staticfiles %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/KeyTable-2.2.0/css/keyTable.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    <script src="{% static 'js/ajax-post.js' %}"></script>
+    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
+    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'isad/js/isad.js' %}"></script>
+
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li class="active">
+            <i class="fa fa-align-justify"></i>&nbsp;&nbsp;{% trans 'ISAD(G) Records' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Archival Unit' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <fieldset>
+        <div class="col-md-12">
+            {% bootstrap_field form.archival_unit %}
+        </div>
+    </fieldset>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        <a id="isad-create" class="btn btn-primary" href="#">
+            <i class="fa fa-plus"></i>
+            {% trans 'Create' %}
+        </a>
+    </div>
+{% endblock %}
+
+{% block box-2-title %}
+    {% trans 'ISAD(G) Records' %}
+{% endblock %}
+
+{% block box-2-body %}
+    <table id="isad_table" class="table table-striped table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Reference Code' %}</th>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'View/Edit/Delete' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+

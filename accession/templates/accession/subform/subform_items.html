@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Items' %}</label>
+    {% for form in accession_items %}
+        <div id="{{ form.prefix }}-row" class="accession_items-subform row subform">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            <div class="col-md-3">
+                {% bootstrap_field form.quantity show_label=false %}
+            </div>
+            <div class="col-md-3">
+                {% bootstrap_field form.container show_label=false %}
+            </div>
+            <div class="col-md-4">
+                {% bootstrap_field form.content show_label=false %}
+            </div>
+            <div class="col-md-2">
+               {% if form.instance.pk %}
+                    {{ form.DELETE|add_class:"delete-row-hidden" }}
+               {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    {{ accession_items.management_form }}
+</div>

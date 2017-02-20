@@ -1,0 +1,7 @@
+<script>
+    var s2 = $('[name="donor"]').data('select2');
+    s2.trigger('select', {
+        data: {"id": {{ donor.id }}, "text": "{{ donor.name }}" }
+    });
+    $('#viewModal').modal('hide');
+</script>

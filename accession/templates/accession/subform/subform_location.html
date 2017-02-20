@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="row">
+    <div class="col-md-4">
+        {% bootstrap_field form.building %}
+    </div>
+    <div class="col-md-2">
+        {% bootstrap_field form.module %}
+    </div>
+    <div class="col-md-2">
+        {% bootstrap_field form.row %}
+    </div>
+    <div class="col-md-2">
+        {% bootstrap_field form.section %}
+    </div>
+    <div class="col-md-2">
+        {% bootstrap_field form.shelf %}
+    </div>
+</div>
+<br/>

@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Identifiers for corporate bodies' %}</label>
+    {% for form in corporate_body_identifiers %}
+        <div id="{{ form.prefix }}-row" class="corporate_body_identifiers-subform subform row">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <div class="col-md-6">
+                {% bootstrap_field form.identifier show_label=false %}
+            </div>
+            <div class="col-md-4">
+                {% bootstrap_field form.rule show_label=false %}
+            </div>
+            <div class="col-md-2">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ corporate_body_identifiers.management_form }}
+</div>

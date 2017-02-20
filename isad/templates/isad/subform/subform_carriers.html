@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Carrier of the unit of description' %}</label>
+    {% for form in carriers %}
+        <div id="{{ form.prefix }}-row" class="carriers-subform subform row">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <div class="col-md-5">
+                {% render_field form.carrier_number placeholder=form.carrier_number.label class+='form-control' %}
+            </div>
+            <div class="col-md-4">
+                {% bootstrap_field form.carrier_type show_label=false %}
+            </div>
+            <div class="col-md-1">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ carriers.management_form }}
+</div>

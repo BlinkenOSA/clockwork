@@ -1,0 +1,51 @@
+{% extends 'layout-box-form.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block notifications %}
+    {% include 'notifications-errors.html' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-exchange"></i>&nbsp;&nbsp;{% trans 'Accession' %}
+        </li>
+        <li>
+            {% trans 'Donors' %}
+        </li>
+        <li class="active">
+            {% trans 'Create/Edit' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    Donors
+{% endblock %}
+
+{% block box-1-body %}
+    {% include 'donor/form/form_fields.html' %}
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        {% buttons %}
+            <a class="btn btn-default" href="{% url 'donor:list' %}">
+                <i class="fa fa-times"></i>
+                {% trans 'Cancel' %}
+            </a>
+
+            <button type="submit" class="btn btn-primary" formnovalidate>
+                {% bootstrap_icon "save" %} Submit
+            </button>
+        {% endbuttons %}
+    </div>
+{% endblock %}

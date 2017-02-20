@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<fieldset>
+	<div class="col-md-6">
+        {% bootstrap_field form.seq|attr:"readonly:readonly" %}
+        {% bootstrap_field form.title %}
+        {% bootstrap_field form.creator %}
+        {% bootstrap_field form.transfer_date %}
+        {% include 'accession/subform/subform_items.html' %}
+        {% bootstrap_field form.method %}
+        {% bootstrap_field form.access_note %}
+        {% include 'accession/subform/subform_location.html' %}
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                {% bootstrap_field form.donor %}
+                {% include 'accession/subform/subform_donor_addon.html' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {% bootstrap_field form.creation_year_from %}
+            </div>
+            <div class="col-md-6">
+                {% bootstrap_field form.creation_year_to %}
+            </div>
+        </div>
+        {% bootstrap_field form.custodial_history %}
+        {% bootstrap_field form.copyright_status %}
+        {% bootstrap_field form.copyright_note %}
+        {% bootstrap_field form.note %}
+    </div>
+</fieldset>

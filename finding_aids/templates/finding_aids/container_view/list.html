@@ -1,0 +1,81 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Select-1.2.0/css/select.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    <script src="{% static 'js/ajax-post.js' %}"></script>
+
+    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/Select-1.2.0/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js' %}"></script>
+
+    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
+    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
+
+    <script>
+        var containerID = {{ container.id|escapejs }}
+    </script>
+
+    <script src="{% static 'finding_aids/js/finding_aids_container.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ container.archival_unit.title_full }}
+        </li>
+        <li>
+            Container #{{ container.container_no }} / {{ container.carrier_type.type }}
+        </li>
+        <li class="active">
+            {% trans 'Folders/Items' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Folders/Items' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <input id="container_id" type="hidden" value="{{ container.id }}">
+    <table id="fa_table" class="table table-bordered table-hover table-striped no-padding" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Folder/Item Number' %}</th>
+                <th>{% trans 'Title' %}</th>
+                <th>{% trans 'Title Original' %}</th>
+                <th>{% trans 'Date From' %}</th>
+                <th>{% trans 'Date To' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-left">
+        <a href="{% url 'container:list_with_archival_unit' container.archival_unit.id %}" class="btn btn-default">
+            <i class="fa fa-hand-o-left"></i> Back to Containers
+        </a>
+    </div>
+{% endblock %}
+

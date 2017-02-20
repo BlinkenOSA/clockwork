@@ -1,0 +1,14 @@
+- model: controlled_list.Locale
+  pk: PL
+  fields:
+    locale_name: Polish
+
+- model: controlled_list.Locale
+  pk: HU
+  fields:
+    locale_name: Hungarian
+
+- model: controlled_list.Locale
+  pk: RU
+  fields:
+    locale_name: Russian

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css' %}">
+
+    {% block css_page %}
+    {% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js' %}"></script>
+
+    {% block js_page %}
+    {% endblock %}
+{% endblock %}
+
+{% block notifications %}
+    {% include 'notifications-success.html' %}
+{% endblock %}
+
+{% block content %}
+    {% block errors %}
+    {% endblock %}
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                {% block box-1-title%}
+                {% endblock %}
+            </h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="toggle-expand-btn btn btn-box-tool">
+                    <i class="fa fa-expand"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="box-body">
+            {% block box-1-body %}
+            {% endblock %}
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            {% block box-1-footer %}
+            {% endblock %}
+        </div>
+        <!-- /.box-footer-->
+
+    </div>
+    <!-- /.box -->
+{% endblock %}
