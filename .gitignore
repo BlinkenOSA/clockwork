@@ -94,4 +94,4 @@ static/thirdparty/datatables/*
 static/thirdparty/flag-css/*
 static/thirdparty/django-dynamic-formset/*
 static/thirdparty/noty/*
-*/migrations/*
+*/migrations/0*
