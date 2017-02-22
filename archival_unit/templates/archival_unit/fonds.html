@@ -3,7 +3,13 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block css_page %}
+    {{ form.media.css }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/select2-bootstrap/select2-bootstrap.css' %}">
+{% endblock %}
+
 {% block js_page %}
+    {{ form.media.js }}
     <script src="{% static 'archival_unit/js/archival_unit.js' %}"></script>
 {% endblock %}
 
@@ -43,7 +49,8 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-primary pull-right" href="{% url 'archival_unit:fonds_create' %}">
+    <a class="btn btn-primary pull-right fm-create" href="{% url 'archival_unit:fonds_create' %}"
+       data-fm-head="Create" data-fm-callback="reload">
         <i class="fa fa-plus"></i>
         {% trans 'Create Fonds' %}
     </a>

@@ -25,3 +25,10 @@ var series_table = $('#archival_unit_series_table').DataTable({
            { "sortable": false, "class": "action_column"},
  	 ],
 });
+
+$(function() {
+	$.fm({
+		modal_head_selector: '.modal-title',
+		debug: false
+	});
+});

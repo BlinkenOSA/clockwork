@@ -39,6 +39,8 @@ PREREQ_APP = [
     'bootstrap3',
     'django_select2',
     'widget_tweaks',
+    'crispy_forms',
+    'fm',
 ]
 
 PROJECT_APPS = [
@@ -173,3 +175,5 @@ DATE_EXTENSIONS_OUTPUT_FORMAT_YEAR = "Y"
 DATE_EXTENSIONS_DATE_INPUT_FORMATS = ("%Y-%m-%d",)
 DATE_EXTENSIONS_MONTH_INPUT_FORMATS = ("%Y-%m",)
 DATE_EXTENSIONS_YEAR_INPUT_FORMATS = ("%Y",)
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

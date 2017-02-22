@@ -1,14 +1,14 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.db.models import Q
+from fm.views import AjaxCreateView
 
 from donor.models import Donor
-from donor.forms import DonorForm, DonorPopupForm
+from donor.forms import DonorForm
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 
@@ -76,12 +76,15 @@ class DonorDelete(DeleteView):
         return super(DonorDelete, self).delete(request, *args, **kwargs)
 
 
-class DonorPopupCreate(SuccessMessageMixin, CreateView):
+class DonorPopupCreate(SuccessMessageMixin, AjaxCreateView):
     model = Donor
-    form_class = DonorPopupForm
+    form_class = DonorForm
     template_name = 'donor/popup/form_popup.html'
-    success_message = ugettext("%(name)s was created successfully")
 
-    def form_valid(self, form):
-        donor = form.save()
-        return render(self.request, 'donor/popup/form_popup_success.html', {'donor': donor})
+    def get_success_result(self):
+        return {
+            'status': 'ok',
+            'message': self.get_response_message(),
+            'entry_id': self.object.id,
+            'entry_name': self.object.name
+        }

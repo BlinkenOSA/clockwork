@@ -1,5 +1,6 @@
 <div class="input-group-btn select2-addon">
-    <a class="btn btn-default select2-button" type="button" data-toggle="modal" data-target="#viewModal" href="{% url 'donor:create_popup' %}">
+    <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'donor:create_popup' %}"
+        data-fm-head="Create Donor" data-fm-callback="selectDonor">
         <i class="fa fa-plus"></i>
     </a>
     <a class="btn btn-default select2-button" type="button" href="{% url 'donor:list' %}" target="_blank">

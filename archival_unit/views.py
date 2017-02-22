@@ -5,7 +5,9 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from fm.views import AjaxCreateView, AjaxUpdateView
 
 from archival_unit.forms import FondsCreateForm, FondsUpdateForm, SubFondsCreateForm, \
     SubFondsUpdateForm, SeriesCreateForm, SeriesUpdateForm
@@ -19,9 +21,10 @@ from archival_unit.models import ArchivalUnit
 '''
 
 
-class FondsList(ListView):
+class FondsList(FormMixin, ListView):
     template_name = 'archival_unit/fonds.html'
     context_object_name = 'fonds'
+    form_class = FondsCreateForm
 
     def get_queryset(self):
         return ArchivalUnit.objects.filter(level='F')
@@ -54,11 +57,10 @@ class FondsListJson(BaseDatatableView):
             return super(FondsListJson, self).render_column(row, column)
 
 
-class FondsCreate(SuccessMessageMixin, CreateView):
+class FondsCreate(SuccessMessageMixin, AjaxCreateView):
     model = ArchivalUnit
     form_class = FondsCreateForm
-    template_name = 'archival_unit/fonds_create_form.html'
-    success_url = reverse_lazy('archival_unit:fonds')
+    template_name = 'archival_unit/fonds_form.html'
     success_message = ugettext("HU-OSA %(fonds)s was created successfully")
 
     def get_initial(self):
@@ -69,11 +71,10 @@ class FondsCreate(SuccessMessageMixin, CreateView):
         }
 
 
-class FondsUpdate(SuccessMessageMixin, UpdateView):
+class FondsUpdate(SuccessMessageMixin, AjaxUpdateView):
     model = ArchivalUnit
     form_class = FondsUpdateForm
-    template_name = 'archival_unit/fonds_edit_form.html'
-    success_url = reverse_lazy('archival_unit:fonds')
+    template_name = 'archival_unit/fonds_form.html'
     success_message = ugettext("HU-OSA %(fonds)s was updated successfully")
 
 
@@ -88,6 +89,7 @@ class FondsDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(FondsDelete, self).delete(request, *args, **kwargs)
 
+
 '''
     ****************
     Subfonds Classes
@@ -95,8 +97,9 @@ class FondsDelete(DeleteView):
 '''
 
 
-class SubFondsList(ListView):
+class SubFondsList(FormMixin, ListView):
     template_name = 'archival_unit/subfonds.html'
+    form_class = SubFondsCreateForm
     context_object_name = 'fonds'
 
     def get_queryset(self):
@@ -131,20 +134,17 @@ class SubFondsListJson(BaseDatatableView):
             return super(SubFondsListJson, self).render_column(row, column)
 
 
-class SubFondsCreate(SuccessMessageMixin, CreateView):
+class SubFondsCreate(SuccessMessageMixin, AjaxCreateView):
     model = ArchivalUnit
     form_class = SubFondsCreateForm
-    template_name = 'archival_unit/subfonds_create_form.html'
+    template_name = 'archival_unit/subfonds_form.html'
     success_message = ugettext("HU-OSA %(fonds)s-%(subfonds)s was created successfully")
-
-    def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:subfonds', kwargs={'parent_id': parent_id} )
 
     def get_initial(self):
         fonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
         initial = super(SubFondsCreate, self).get_initial()
         initial['fonds_title'] = fonds.title
+        initial['fonds_acronym'] = fonds.acronym
         initial['parent'] = fonds.id
         initial['fonds'] = fonds.fonds
         initial['series'] = 0
@@ -152,20 +152,17 @@ class SubFondsCreate(SuccessMessageMixin, CreateView):
         return initial
 
 
-class SubFondsUpdate(SuccessMessageMixin, UpdateView):
+class SubFondsUpdate(SuccessMessageMixin, AjaxUpdateView):
     model = ArchivalUnit
     form_class = SubFondsUpdateForm
-    template_name = 'archival_unit/subfonds_edit_form.html'
+    template_name = 'archival_unit/subfonds_form.html'
     success_message = ugettext("HU-OSA %(fonds)s-%(subfonds)s was updated successfully")
-
-    def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:subfonds', kwargs={'parent_id': parent_id} )
 
     def get_initial(self):
         fonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
         initial = super(SubFondsUpdate, self).get_initial()
         initial['fonds_title'] = fonds.title
+        initial['fonds_acronym'] = fonds.acronym
         return initial
 
 
@@ -190,8 +187,9 @@ class SubFondsDelete(DeleteView):
 '''
 
 
-class SeriesList(ListView):
+class SeriesList(FormMixin, ListView):
     template_name = 'archival_unit/series.html'
+    form_class = SeriesCreateForm
     context_object_name = 'subfonds'
 
     def get_queryset(self):
@@ -224,15 +222,11 @@ class SeriesListJson(BaseDatatableView):
             return super(SeriesListJson, self).render_column(row, column)
 
 
-class SeriesCreate(SuccessMessageMixin, CreateView):
+class SeriesCreate(SuccessMessageMixin, AjaxCreateView):
     model = ArchivalUnit
     form_class = SeriesCreateForm
-    template_name = 'archival_unit/series_create_form.html'
+    template_name = 'archival_unit/series_form.html'
     success_message = ugettext("HU-OSA %(fonds)s-%(subfonds)s-%(series)s was created successfully")
-
-    def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:series', kwargs={'parent_id': parent_id})
 
     def get_initial(self):
         subfonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
@@ -240,30 +234,30 @@ class SeriesCreate(SuccessMessageMixin, CreateView):
         initial = super(SeriesCreate, self).get_initial()
         initial['fonds'] = fonds.fonds
         initial['fonds_title'] = fonds.title
+        initial['fonds_acronym'] = fonds.acronym
         initial['subfonds'] = subfonds.subfonds
         initial['subfonds_title'] = subfonds.title
+        initial['subfonds_acronym'] = subfonds.acronym
         initial['parent'] = subfonds.id
         initial['series'] = 0
         initial['level'] = 'S'
         return initial
 
 
-class SeriesUpdate(SuccessMessageMixin, UpdateView):
+class SeriesUpdate(SuccessMessageMixin, AjaxUpdateView):
     model = ArchivalUnit
     form_class = SeriesUpdateForm
-    template_name = 'archival_unit/series_edit_form.html'
+    template_name = 'archival_unit/series_form.html'
     success_message = ugettext("HU-OSA %(fonds)s-%(subfonds)s-%(series)s was updated successfully")
-
-    def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:series', kwargs={'parent_id': parent_id})
 
     def get_initial(self):
         subfonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
         fonds = ArchivalUnit.objects.get(pk=subfonds.parent.id)
         initial = super(SeriesUpdate, self).get_initial()
         initial['fonds_title'] = fonds.title
+        initial['fonds_acronym'] = fonds.acronym
         initial['subfonds_title'] = subfonds.title
+        initial['subfonds_acronym'] = subfonds.acronym
         return initial
 
 

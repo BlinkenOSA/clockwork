@@ -22,7 +22,7 @@ class ArchivalUnit(models.Model):
 
     sort = models.CharField(max_length=12, blank=True)
 
-    title = models.CharField(max_length=500, blank=True)
+    title = models.CharField(max_length=500)
     title_full = models.CharField(max_length=2000, blank=True, null=True)
     acronym = models.CharField(max_length=50, blank=True, null=True)
     reference_code = models.CharField(max_length=20)
@@ -37,31 +37,17 @@ class ArchivalUnit(models.Model):
     user_updated = models.CharField(max_length=100, blank=True)
     date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
-    def clean(self):
+    def save(self):
         self.sort = '%04d%04d%04d' % (self.fonds, self.subfonds, self.series)
 
         if self.level == 'F':
             self.reference_code = 'HU OSA ' + str(self.fonds)
             self.title_full = self.reference_code + ' ' + self.title
 
-            if self.pk is None:
-                if ArchivalUnit.objects.filter(fonds=self.fonds, level='F').count() > 0:
-                    raise ValidationError({'fonds': ugettext('Fonds number should be unique.')})
-
-            if self.title == "":
-                raise ValidationError({'title': ugettext('Title is mandatory.')})
-
         elif self.level == 'SF':
             self.reference_code = 'HU OSA ' + str(self.fonds) + '-' + str(self.subfonds)
             fonds_title = self.parent.title
             self.title_full = self.reference_code + ' ' + fonds_title + ': ' + self.title
-
-            if self.pk is None:
-                if ArchivalUnit.objects.filter(fonds=self.fonds, subfonds=self.subfonds, level='SF').count() > 0:
-                    raise ValidationError({'subfonds': ugettext('Subfonds number should be unique.')})
-
-            if self.title == "" and self.subfonds > 0:
-                raise ValidationError({'title': ugettext('Title is mandatory.')})
 
         else:
             self.reference_code = 'HU OSA ' + str(self.fonds) + '-' + str(self.subfonds) + '-' + str(self.series)
@@ -69,15 +55,7 @@ class ArchivalUnit(models.Model):
             fonds_title = self.parent.parent.title
             self.title_full = self.reference_code + ' ' + fonds_title + ': ' + subfonds_title + ': ' + self.title
 
-            if self.pk is None:
-                if ArchivalUnit.objects.filter(fonds=self.fonds, subfonds=self.subfonds, series=self.series, level='S').count() > 0:
-                    raise ValidationError({'series': ugettext('Series number should be unique.')})
-
-            if self.series < 1:
-                raise ValidationError({'series': ugettext('Series number should be bigger than 0.')})
-
-            if self.title == "":
-                raise ValidationError({'title': ugettext('Title is mandatory.')})
+        super(ArchivalUnit, self).save()
 
     def __unicode__(self):
         return ' '.join((self.reference_code, self.title))
@@ -85,3 +63,5 @@ class ArchivalUnit(models.Model):
     class Meta:
         db_table = 'archival_units'
         ordering = ['fonds', 'subfonds', 'series']
+        unique_together = (("fonds", "subfonds", "series"),)
+

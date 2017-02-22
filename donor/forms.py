@@ -26,15 +26,3 @@ class DonorForm(ModelForm):
                 {'email': ugettext("E-mail or Website information is needed."),
                  'website': ugettext("E-mail or Website information is needed.")}
             )
-
-
-class DonorPopupForm(DonorForm):
-    country = ModelChoiceField(queryset=Country.objects.all(),
-                               empty_label=ugettext('- Select Country -'),
-                               required=True)
-
-    class Meta(DonorForm.Meta):
-        widgets = DonorForm.Meta.widgets
-        widgets.update({
-            'country': Select()
-        })

@@ -3,7 +3,13 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block css_page %}
+    {{ form.media.css }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/select2-bootstrap/select2-bootstrap.css' %}">
+{% endblock %}
+
 {% block js_page %}
+    {{ form.media.js }}
     <script src="{% static 'archival_unit/js/archival_unit.js' %}"></script>
 {% endblock %}
 
@@ -43,18 +49,14 @@
 {% endblock %}
 
 {% block box-1-footer %}
+    <a class="btn btn-default" href="{% url 'archival_unit:subfonds' subfonds.parent.id %}">
+        <i class="fa fa-step-backward"></i>
+        {% trans 'Back to Subfonds' %}
+    </a>
+
     <div class="pull-right">
-        <a class="btn btn-default" href="{% url 'archival_unit:subfonds' subfonds.parent.id %}">
-            <i class="fa fa-step-backward"></i>
-            {% trans 'Back to Subfonds' %}
-        </a>
-
-        <a class="btn btn-default" href="{% url 'archival_unit:fonds' %}">
-            <i class="fa fa-fast-backward"></i>
-            {% trans 'Back to Fonds' %}
-        </a>
-
-        <a class="btn btn-primary" href="{% url 'archival_unit:series_create' subfonds.id %}">
+        <a class="btn btn-primary fm-create" href="{% url 'archival_unit:series_create' subfonds.id %}"
+            data-fm-head="Create Series" data-fm-callback="reload">
             <i class="fa fa-plus"></i>
             {% trans 'Create Series' %}
         </a>
