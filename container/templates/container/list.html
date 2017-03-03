@@ -4,25 +4,8 @@
 {% load bootstrap3 %}
 {% load i18n %}
 
-{% block css_page %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Select-1.2.0/css/select.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css' %}">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
-{% endblock %}
-
 {% block js_page %}
     <script src="{% static 'js/ajax-post.js' %}"></script>
-
-    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/Select-1.2.0/js/dataTables.select.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js' %}"></script>
-
-    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
-    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
-
     <script>
         var archival_unit_id = {{ archival_unit.id }};
     </script>
@@ -58,12 +41,10 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <div class="pull-right">
-        <a id="container-create" class="btn btn-primary" href="#">
-            <i class="fa fa-plus"></i>
-            {% trans 'Create' %}
-        </a>
-    </div>
+    <a id="container-create" class="btn btn-primary" href="#">
+        <i class="fa fa-plus"></i>
+        {% trans 'Create' %}
+    </a>
 {% endblock %}
 
 {% block box-2-title %}
@@ -75,13 +56,12 @@
         <thead>
             <tr>
                 <th>{% trans 'Container Number' %}</th>
-                <th>{% trans 'Container Type ID' %}</th>
                 <th>{% trans 'Container Type' %}</th>
-                <th>{% trans 'Primary Type ID' %}</th>
                 <th>{% trans 'Primary Type' %}</th>
                 <th>{% trans 'Folders/Items' %}</th>
                 <th>{% trans 'Label' %}</th>
                 <th>{% trans 'Navigate' %}</th>
+                <th>{% trans 'Action' %}</th>
             </tr>
         </thead>
     </table>

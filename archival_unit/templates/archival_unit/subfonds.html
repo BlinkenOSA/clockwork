@@ -50,16 +50,16 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-default" href="{% url 'archival_unit:fonds' %}">
-        <i class="fa fa-step-backward"></i>
-        {% trans 'Back to Fonds' %}
-    </a>
-
     <div class="pull-right">
-        <a class="btn btn-primary fm-create" href="{% url 'archival_unit:subfonds_create' fonds.id %}"
-           data-fm-head="Create Subfonds" data-fm-callback="reload">
-            <i class="fa fa-plus"></i>
-            {% trans 'Create Subfonds' %}
+        <a class="btn btn-default" href="{% url 'archival_unit:fonds' %}">
+            <i class="fa fa-step-backward"></i>
+            {% trans 'Back to Fonds' %}
         </a>
     </div>
+
+    <a class="btn btn-primary fm-create" href="{% url 'archival_unit:subfonds_create' fonds.id %}"
+       data-fm-head="Create Subfonds" data-fm-callback="reloadTable">
+        <i class="fa fa-plus"></i>
+        {% trans 'Create Subfonds' %}
+    </a>
 {% endblock %}

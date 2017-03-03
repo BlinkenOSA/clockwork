@@ -5,6 +5,7 @@ from isad.views import IsadList, IsadListJson, IsadCreate, IsadDelete, IsadUpdat
 urlpatterns = [
     url(r'^$', IsadList.as_view(), name='list'),
     url(r'^(?P<pk>\d+)/$', IsadDetail.as_view(), name='view'),
+
     url(r'^create/(?P<archival_unit>\d+)/$', IsadCreate.as_view(), name='create'),
     url(r'^update/(?P<pk>\d+)/$', IsadUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', IsadDelete.as_view(), name='delete'),

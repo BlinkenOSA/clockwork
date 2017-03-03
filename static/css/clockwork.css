@@ -64,3 +64,7 @@ tbody td {
 .dt-buttons {
     float:right !important;
 }
+
+.modal-dialog {
+    width: 60% !important;
+}

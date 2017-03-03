@@ -41,15 +41,13 @@
 
 {% block box-1-footer %}
     <div class="pull-right">
-        {% buttons %}
-            <a class="btn btn-default" href="{% url 'accession:list' %}">
-                <i class="fa fa-times"></i>
-                {% trans 'Cancel' %}
-            </a>
-
-            <button type="submit" class="btn btn-primary" formnovalidate>
-                {% bootstrap_icon "save" %} Submit
-            </button>
-        {% endbuttons %}
+        <a class="btn btn-default" href="{% url 'accession:list' %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Cancel' %}
+        </a>
     </div>
+
+    <button type="submit" class="btn btn-primary" formnovalidate>
+        {% bootstrap_icon "save" %} Submit
+    </button>
 {% endblock %}

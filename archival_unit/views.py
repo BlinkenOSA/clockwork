@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView

@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch.dispatcher import receiver
 
 
 class Container(models.Model):
@@ -17,3 +19,16 @@ class Container(models.Model):
 
     class Meta:
         db_table = 'containers'
+
+    def __unicode__(self):
+        return "Container #%s / %s" % (self.container_no, self.carrier_type)
+
+
+@receiver(post_delete)
+def update_container_numbers(sender, **kwargs):
+    container_no = 1
+    containers = Container.objects.filter(archival_unit=kwargs['instance'].archival_unit).order_by('container_no')
+    for container in containers:
+        container.container_no = container_no
+        container_no += 1
+        container.save()

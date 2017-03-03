@@ -40,6 +40,17 @@ class IsaarListJson(BaseDatatableView):
         else:
             return super(IsaarListJson, self).render_column(row, column)
 
+    def prepare_results(self, qs):
+        json_array = []
+        columns = self.get_columns()
+
+        for item in qs:
+            data = {"DT_RowId": item.id}
+            for column in columns:
+                data[column] = self.render_column(item, column)
+            json_array.append(data)
+        return json_array
+
 
 class IsaarDetail(DetailView):
     model = Isaar

@@ -4,24 +4,8 @@
 {% load bootstrap3 %}
 {% load i18n %}
 
-{% block css_page %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Buttons-1.2.4/css/buttons.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/Select-1.2.0/css/select.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/RowReorder-1.2.0/css/rowReorder.bootstrap.min.css' %}">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
-{% endblock %}
-
 {% block js_page %}
     <script src="{% static 'js/ajax-post.js' %}"></script>
-
-    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/Buttons-1.2.4/js/buttons.bootstrap.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/Select-1.2.0/js/dataTables.select.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/RowReorder-1.2.0/js/dataTables.rowReorder.min.js' %}"></script>
-
-    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
-    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
 
     <script>
         var containerID = {{ container.id|escapejs }}
@@ -61,18 +45,26 @@
     <table id="fa_table" class="table table-bordered table-hover table-striped no-padding" width="100%">
         <thead>
             <tr>
-                <th>{% trans 'Folder/Item Number' %}</th>
+                <th></th>
+                <th>{% trans 'Folder Number' %}</th>
+                <th>{% trans 'Item Number' %}</th>
                 <th>{% trans 'Title' %}</th>
                 <th>{% trans 'Title Original' %}</th>
-                <th>{% trans 'Date From' %}</th>
-                <th>{% trans 'Date To' %}</th>
+                <th>{% trans 'Date' %}</th>
+                <th>{% trans 'Action' %}</th>
             </tr>
         </thead>
     </table>
 {% endblock %}
 
 {% block box-1-footer %}
-    <div class="pull-left">
+    <a class="btn btn-primary fm-create" href="{% url 'finding_aids:quick_create' container.id %}"
+       data-fm-head="Create" data-fm-callback="reload">
+        <i class="fa fa-plus"></i>
+        {% trans 'Quick Create' %}
+    </a>
+
+    <div class="pull-right">
         <a href="{% url 'container:list_with_archival_unit' container.archival_unit.id %}" class="btn btn-default">
             <i class="fa fa-hand-o-left"></i> Back to Containers
         </a>

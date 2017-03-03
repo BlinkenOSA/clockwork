@@ -9,12 +9,16 @@ class FindingAidsEntity(models.Model):
     container = models.ForeignKey('container.Container')
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True)
 
+    FINDING_AIDS_LEVEL = [('F', 'Folder'), ('I', 'Item')]
+    level = models.CharField(max_length=1, choices=FINDING_AIDS_LEVEL, default='F')
+
     # Required fields
-    entity_no = models.IntegerField(default=1)
+    folder_no = models.IntegerField(default=0)
+    item_no = models.IntegerField(default=0)
 
     title = models.CharField(max_length=300)
     title_given = models.BooleanField(default=False)
-    title_original = models.CharField(max_length=300)
+    title_original = models.CharField(max_length=300, blank=True)
 
     contents_summary = models.TextField(blank=True, null=True)
     contents_summary_original = models.TextField(blank=True, null=True)

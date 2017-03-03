@@ -49,8 +49,8 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-primary pull-right fm-create" href="{% url 'archival_unit:fonds_create' %}"
-       data-fm-head="Create" data-fm-callback="reload">
+    <a class="btn btn-primary fm-create" href="{% url 'archival_unit:fonds_create' %}"
+       data-fm-head="Create" data-fm-callback="reloadTable">
         <i class="fa fa-plus"></i>
         {% trans 'Create Fonds' %}
     </a>

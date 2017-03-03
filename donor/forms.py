@@ -2,7 +2,6 @@ from django import forms
 from django.forms import ModelForm, Select, ModelChoiceField
 from django.utils.translation import ugettext
 
-from authority.models import Country
 from authority.widgets import CountrySelect2Widget
 from donor.models import Donor
 

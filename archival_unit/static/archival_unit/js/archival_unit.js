@@ -29,6 +29,14 @@ var series_table = $('#archival_unit_series_table').DataTable({
 $(function() {
 	$.fm({
 		modal_head_selector: '.modal-title',
-		debug: false
+		debug: false,
+		custom_callbacks: {
+            "reloadTable": function(data, options) {
+				table.ajax.reload(null, false);
+            },
+			"reloadSeriesTable": function (data, options) {
+				series_table.ajax.reload(null, false);
+			}
+        }
 	});
 });

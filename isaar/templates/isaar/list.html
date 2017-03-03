@@ -39,11 +39,9 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <div class="pull-right">
-        <a class="btn btn-primary" href="{% url 'isaar:create' %}">
-            <i class="fa fa-plus"></i>
-            {% trans 'Create' %}
-        </a>
-    </div>
+    <a class="btn btn-primary" href="{% url 'isaar:create' %}">
+        <i class="fa fa-plus"></i>
+        {% trans 'Create' %}
+    </a>
 {% endblock %}
 
