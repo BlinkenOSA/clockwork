@@ -1,5 +1,4 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, ListView, TemplateView
@@ -7,7 +6,7 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView, JSONResponseMixin
 
 from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsInContainerForm
+from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsInContainerForm, FindingAidsInContainerCreateForm
 from finding_aids.models import FindingAidsEntity
 
 
@@ -37,12 +36,15 @@ class FindingAidsInContainerListJson(BaseDatatableView):
         return finding_aids_entities
 
     def render_column(self, row, column):
-
         if column == 'level':
             if row.level == 'I':
                 return '<i class="fa fa-file-o"></i>'
             else:
                 return '<i class="fa fa-folder-open-o"></i>'
+        if column == 'item_no':
+            return row.item_no if row.level == "I" else ""
+        if column == 'folder_no':
+            return row.folder_no if row.level == "F" else ""
         elif column == 'date':
             dates = [str(row.date_from) if row.date_from else "", str(row.date_to) if row.date_to else ""]
             return ' - '.join(filter(None, dates))
@@ -66,7 +68,7 @@ class FindingAidsInContainerListJson(BaseDatatableView):
 
 class FindingAidsQuickCreate(SuccessMessageMixin, AjaxCreateView):
     model = FindingAidsEntity
-    form_class = FindingAidsInContainerForm
+    form_class = FindingAidsInContainerCreateForm
     template_name = 'finding_aids/container_view/form/quick_create.html'
     success_message = ugettext("Folder/Item was created successfully")
 
@@ -74,6 +76,7 @@ class FindingAidsQuickCreate(SuccessMessageMixin, AjaxCreateView):
         initial = super(FindingAidsQuickCreate, self).get_initial()
         initial = initial.copy()
         initial['container_name'] = Container.objects.get(pk=self.kwargs['container_id'])
+        initial['folder_no'] = get_number_of_folders(self.kwargs['container_id']) + 1
         return initial
 
     def pre_save(self):
@@ -98,13 +101,23 @@ class FindingAidsFoldersItemsStatistics(JSONResponseMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         stats = {}
-        folder_no = FindingAidsEntity.objects.filter(Q(level='F') and
-                                            Q(container=Container.objects.get(pk=kwargs['container_id']))).count()
+        folder_no = get_number_of_folders(kwargs['container_id'])
 
         for folder in range(1, folder_no + 1):
-            item_no = FindingAidsEntity.objects.filter(Q(level='F') and
-                                            Q(container=Container.objects.get(pk=kwargs['container_id'])) and
-                                            Q(folder_no=folder)).count()
+            item_no = get_number_of_items(kwargs['container_id'], folder)
             stats[folder] = item_no
 
+        stats[folder_no + 1] = 0
         return self.render_json_response({'stats': stats})
+
+
+def get_number_of_folders(container_id):
+    return FindingAidsEntity.objects.filter(container=Container.objects.get(pk=container_id))\
+                                    .values('folder_no').distinct().count()
+
+
+def get_number_of_items(container_id, folder_no):
+    return FindingAidsEntity.objects.filter(level='I')\
+        .filter(container=Container.objects.get(pk=container_id))\
+        .filter(folder_no=folder_no)\
+        .count()

@@ -1,5 +1,5 @@
 from django.forms import ModelChoiceField, Form, CharField, ModelForm, ChoiceField, RadioSelect, HiddenInput, \
-    TextInput
+    TextInput, Select, IntegerField
 from django.utils.translation import ugettext
 
 from archival_unit.models import ArchivalUnit
@@ -19,11 +19,10 @@ class FindingAidsArchivalUnitForm(Form):
 
 class FindingAidsInContainerForm(ModelForm):
     container_name = CharField(required=False, widget=TextInput(attrs={'readonly': True}))
-    folder_no_select = ChoiceField(required=False, label=ugettext('Folder Number Select'))
-    item_no_select = ChoiceField(required=False, label=ugettext('Item Number Select'))
+    folder_no_select = CharField(required=False, label=ugettext('Folder Number'), widget=Select())
+    item_no = CharField(required=True, label=ugettext('Item Number'), widget=TextInput(attrs={'readonly': True}))
 
-    folder_no = CharField(label=ugettext('Folder Number'), widget=HiddenInput())
-    item_no = CharField(label=ugettext('Item Number'), widget=HiddenInput())
+    folder_no = CharField(widget=HiddenInput())
 
     title = CharField(max_length=300, required=True)
     title_original = CharField(max_length=300)
@@ -37,3 +36,9 @@ class FindingAidsInContainerForm(ModelForm):
     class Meta:
         model = FindingAidsEntity
         exclude = ['container']
+
+
+class FindingAidsInContainerCreateForm(FindingAidsInContainerForm):
+    def __init__(self, *args, **kwargs):
+        super(FindingAidsInContainerCreateForm, self).__init__(*args, **kwargs)
+        self.fields['item_no'].initial = 0

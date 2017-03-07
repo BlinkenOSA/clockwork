@@ -42,12 +42,12 @@
 
 {% block box-1-body %}
     <input id="container_id" type="hidden" value="{{ container.id }}">
-    <table id="fa_table" class="table table-bordered table-hover table-striped no-padding" width="100%">
+    <table id="fa_table" class="table table-bordered no-padding" width="100%">
         <thead>
             <tr>
                 <th></th>
-                <th>{% trans 'Folder Number' %}</th>
-                <th>{% trans 'Item Number' %}</th>
+                <th></th>
+                <th>{% trans 'Number' %}</th>
                 <th>{% trans 'Title' %}</th>
                 <th>{% trans 'Title Original' %}</th>
                 <th>{% trans 'Date' %}</th>
@@ -59,7 +59,7 @@
 
 {% block box-1-footer %}
     <a class="btn btn-primary fm-create" href="{% url 'finding_aids:quick_create' container.id %}"
-       data-fm-head="Create" data-fm-callback="reload">
+       data-fm-head="Create Entity" data-fm-callback="reload">
         <i class="fa fa-plus"></i>
         {% trans 'Quick Create' %}
     </a>

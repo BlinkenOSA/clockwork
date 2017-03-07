@@ -2,30 +2,28 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
+<script>
+    var action = "create";
+</script>
+
 <form role="form" class="form" method="POST" enctype="multipart/form-data" action>
     {% include 'nonfield-errors.html' %}
-        {% for error in form.errors %}
-            {{ error }}
-        {% endfor %}
     {% csrf_token %}
     <fieldset>
-        <div class="col-md-12">
+        <div class="col-md-6">
+            {% bootstrap_field form.level %}
+        </div>
+        <div class="col-md-6">
             {% bootstrap_field form.container_name %}
         </div>
         <div class="col-md-6">
             {% bootstrap_field form.folder_no_select %}
         </div>
         <div class="col-md-6">
-            {% bootstrap_field form.item_no_select %}
-        </div>
-        <div class="col-md-6">
-            {% bootstrap_field form.folder_no %}
-        </div>
-        <div class="col-md-6">
             {% bootstrap_field form.item_no %}
         </div>
         <div class="col-md-12">
-            {% bootstrap_field form.level %}
+            {% bootstrap_field form.folder_no %}
         </div>
         <div class="col-md-6">
             {% bootstrap_field form.title %}

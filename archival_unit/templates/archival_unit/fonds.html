@@ -3,6 +3,10 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block title %}
+    {% trans 'Clockwork AMS - Archival Unit/Fonds' %}
+{% endblock %}
+
 {% block css_page %}
     {{ form.media.css }}
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/select2-bootstrap/select2-bootstrap.css' %}">
