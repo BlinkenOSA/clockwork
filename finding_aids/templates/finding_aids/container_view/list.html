@@ -46,8 +46,6 @@
         <thead>
             <tr>
                 <th></th>
-                <th></th>
-                <th>{% trans 'Number' %}</th>
                 <th>{% trans 'Title' %}</th>
                 <th>{% trans 'Title Original' %}</th>
                 <th>{% trans 'Date' %}</th>
@@ -59,7 +57,7 @@
 
 {% block box-1-footer %}
     <a class="btn btn-primary fm-create" href="{% url 'finding_aids:quick_create' container.id %}"
-       data-fm-head="Create Entity" data-fm-callback="reload">
+       data-fm-head="Create Entity" data-fm-callback="reloadTable">
         <i class="fa fa-plus"></i>
         {% trans 'Quick Create' %}
     </a>

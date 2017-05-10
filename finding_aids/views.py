@@ -6,7 +6,8 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView, JSONResponseMixin
 
 from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsInContainerForm, FindingAidsInContainerCreateForm
+from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsInContainerForm, FindingAidsInContainerCreateForm, \
+    FindingAidsInContainerUpdateForm
 from finding_aids.models import FindingAidsEntity
 
 
@@ -26,7 +27,7 @@ class FindingAidsInContainerList(TemplateView):
 
 class FindingAidsInContainerListJson(BaseDatatableView):
     model = FindingAidsEntity
-    columns = ['level', 'folder_no', 'item_no', 'title', 'title_original', 'date', 'action']
+    columns = ['level', 'title', 'title_original', 'date', 'action']
     order_columns = ['folder_no', 'item_no', 'title']
     max_display_length = 500
 
@@ -37,14 +38,13 @@ class FindingAidsInContainerListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'level':
-            if row.level == 'I':
-                return '<i class="fa fa-file-o"></i>'
+            folder_no = row.container.archival_unit.reference_code + '/' + str(row.folder_no)
+            if row.level == 'F':
+                icon = '<i class="fa fa-folder-open-o"></i>'
+                return '<span class="call_no_folder">' + icon + folder_no + '</span>'
             else:
-                return '<i class="fa fa-folder-open-o"></i>'
-        if column == 'item_no':
-            return row.item_no if row.level == "I" else ""
-        if column == 'folder_no':
-            return row.folder_no if row.level == "F" else ""
+                icon = '<i class="fa fa-file-o"></i>'
+                return '<span class="call_no_item">' + icon + folder_no + ':' + str(row.item_no) + '</span>'
         elif column == 'date':
             dates = [str(row.date_from) if row.date_from else "", str(row.date_to) if row.date_to else ""]
             return ' - '.join(filter(None, dates))
@@ -76,8 +76,13 @@ class FindingAidsQuickCreate(SuccessMessageMixin, AjaxCreateView):
         initial = super(FindingAidsQuickCreate, self).get_initial()
         initial = initial.copy()
         initial['container_name'] = Container.objects.get(pk=self.kwargs['container_id'])
-        initial['folder_no'] = get_number_of_folders(self.kwargs['container_id']) + 1
         return initial
+
+    def get_form(self, form_class=None):
+        form = super(FindingAidsQuickCreate, self).get_form()
+        form.fields['folder_no'].choices = \
+            [(n, n) for n in range(1, get_number_of_folders(self.kwargs['container_id']) + 1)]
+        return form
 
     def pre_save(self):
         self.object.container = Container.objects.get(pk=self.kwargs['container_id'])
@@ -85,8 +90,8 @@ class FindingAidsQuickCreate(SuccessMessageMixin, AjaxCreateView):
 
 class FindingAidsQuickUpdate(SuccessMessageMixin, AjaxUpdateView):
     model = FindingAidsEntity
-    form_class = FindingAidsInContainerForm
-    template_name = 'finding_aids/container_view/form/quick_create.html'
+    form_class = FindingAidsInContainerUpdateForm
+    template_name = 'finding_aids/container_view/form/quick_update.html'
     success_message = ugettext("Folder/Item was updated successfully")
 
     def get_initial(self):
@@ -94,6 +99,10 @@ class FindingAidsQuickUpdate(SuccessMessageMixin, AjaxUpdateView):
         initial = initial.copy()
         initial['container_name'] = Container.objects.get(pk=self.kwargs['container_id'])
         return initial
+
+    def get_form(self, form_class=None):
+        form = super(FindingAidsQuickUpdate, self).get_form()
+        return form
 
 
 class FindingAidsFoldersItemsStatistics(JSONResponseMixin, ListView):

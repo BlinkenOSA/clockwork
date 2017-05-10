@@ -82,3 +82,11 @@ tbody td {
     background-color: #F9F9F9;
     font-style: italic;
 }
+
+.call_no_column i {
+    width: 30px;
+}
+
+.call_no_item {
+    padding-left: 10px;
+}

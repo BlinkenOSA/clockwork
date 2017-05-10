@@ -1,5 +1,5 @@
 from django.forms import ModelChoiceField, Form, CharField, ModelForm, ChoiceField, RadioSelect, HiddenInput, \
-    TextInput, Select, IntegerField
+    TextInput, Select, IntegerField, Textarea
 from django.utils.translation import ugettext
 
 from archival_unit.models import ArchivalUnit
@@ -19,26 +19,41 @@ class FindingAidsArchivalUnitForm(Form):
 
 class FindingAidsInContainerForm(ModelForm):
     container_name = CharField(required=False, widget=TextInput(attrs={'readonly': True}))
-    folder_no_select = CharField(required=False, label=ugettext('Folder Number'), widget=Select())
     item_no = CharField(required=True, label=ugettext('Item Number'), widget=TextInput(attrs={'readonly': True}))
 
-    folder_no = CharField(widget=HiddenInput())
-
     title = CharField(max_length=300, required=True)
-    title_original = CharField(max_length=300)
+    title_original = CharField(max_length=300, required=False)
 
     date_from = ApproximateDateFormField(required=True)
     date_to = ApproximateDateFormField(required=False)
 
     original_locale = ModelChoiceField(queryset=Locale.objects.all(), required=False)
-    level = ChoiceField(choices=FindingAidsEntity.FINDING_AIDS_LEVEL, widget=RadioSelect(), initial="F")
 
     class Meta:
         model = FindingAidsEntity
         exclude = ['container']
+        widgets = {
+          'contents_summary': Textarea(attrs={'rows': 5}),
+          'contents_summary_original': Textarea(attrs={'rows': 5}),
+        }
 
 
 class FindingAidsInContainerCreateForm(FindingAidsInContainerForm):
+    FINDING_AIDS_LEVEL = [('F', 'Add Folder'), ('I', 'Add Item to Folder')]
+
+    level = ChoiceField(choices=FINDING_AIDS_LEVEL, initial="F", label=ugettext('Action'))
+    folder_no = ChoiceField(required=False, label=ugettext('Folder Number'))
+
     def __init__(self, *args, **kwargs):
         super(FindingAidsInContainerCreateForm, self).__init__(*args, **kwargs)
         self.fields['item_no'].initial = 0
+
+
+class FindingAidsInContainerUpdateForm(FindingAidsInContainerForm):
+    FINDING_AIDS_LEVEL = [('F', 'Update Folder'), ('I', 'Update Item in Folder')]
+
+    level = ChoiceField(choices=FINDING_AIDS_LEVEL, initial="F")
+    folder_no = ChoiceField(required=False, label=ugettext('Folder Number'), widget=Select(attrs={'readonly': True}))
+
+    def clean_folder_no(self):
+        return self.instance.folder_no

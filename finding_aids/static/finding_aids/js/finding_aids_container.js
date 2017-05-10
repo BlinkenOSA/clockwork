@@ -4,11 +4,9 @@ var table = $('#fa_table').DataTable({
 	"serverSide": true,
 	"ajax": "/finding_aids/datatable/" + containerID ,
 	"columns": [
-       { "data": 'level', "width": "5%", "class": "action_column" },
-	   { "data": 'folder_no', "width": "5%", "class": "action_column" },
-       { "data": 'item_no', "width": "5%", "class": "action_column" },
+       { "data": 'level', "width": "20%", "class": "call_no_column"},
 	   { "data": 'title', "width": "25%" },
-	   { "data": 'title_original', "width": "30%" },
+	   { "data": 'title_original', "width": "25%" },
 	   { "data": 'date', "width": "20%" },
        { "data": 'action', "width": "10%", "class": "action_column" },
 	],
@@ -67,6 +65,8 @@ $(document).on('click', '#id_level_1', function() {
 		calculateItemNumber();
 	}
 });
+
+
 
 function calculateFolderNumber() {
 	$('#id_folder_no_select').empty();
