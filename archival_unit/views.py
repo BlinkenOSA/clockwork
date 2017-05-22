@@ -31,8 +31,8 @@ class FondsList(FormMixin, ListView):
 
 
 class FondsListJson(BaseDatatableView):
-    columns = ['sort', 'reference_code', 'title', 'acronym', 'navigate', 'action']
-    order_columns = ['sort', 'sort', '', '', '', '']
+    columns = ['sort', 'reference_code', 'title', 'navigate', 'action']
+    order_columns = ['sort', 'sort', '', '', '']
     max_display_length = 500
 
     def get_initial_queryset(self):
@@ -107,7 +107,7 @@ class SubFondsList(FormMixin, ListView):
 
 
 class SubFondsListJson(BaseDatatableView):
-    columns = ['sort', 'reference_code', 'title', 'acronym', 'navigate', 'action']
+    columns = ['sort', 'reference_code', 'title', 'navigate', 'action']
     order_columns = ['sort', 'sort']
     max_display_length = 500
 
@@ -197,7 +197,7 @@ class SeriesList(FormMixin, ListView):
 
 
 class SeriesListJson(BaseDatatableView):
-    columns = ['sort', 'reference_code', 'title', 'acronym', 'action']
+    columns = ['sort', 'reference_code', 'title', 'action']
     order_columns = ['sort', 'sort']
     max_display_length = 500
 
