@@ -3,15 +3,17 @@
 {% load widget_tweaks %}
 
 <fieldset>
-    <div class="col-md-6">
+    <div class="col-md-12">
         {% include 'isaar/subform/subform_places.html' %}
-        {% bootstrap_field form.function|add_class:"tinymce" %}
-        {% bootstrap_field form.legal_status %}
-        {% bootstrap_field form.general_context|add_class:"tinymce" %}
     </div>
     <div class="col-md-6">
-        {% bootstrap_field form.history|add_class:"tinymce" %}
-        {% bootstrap_field form.mandate|add_class:"tinymce" %}
-        {% bootstrap_field form.internal_structure|add_class:"tinymce" %}
+        {% bootstrap_field form.function|attr:"rows:4" %}
+        {% bootstrap_field form.legal_status %}
+        {% bootstrap_field form.general_context|attr:"rows:4" %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.history|attr:"rows:3" %}
+        {% bootstrap_field form.mandate|attr:"rows:3" %}
+        {% bootstrap_field form.internal_structure|attr:"rows:3" %}
     </div>
 </fieldset>

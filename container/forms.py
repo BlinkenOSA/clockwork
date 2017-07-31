@@ -14,6 +14,7 @@ class ContainerForm(Form):
         queryset=CarrierType.objects.all(),
         empty_label=ugettext('- Choose Carrier Type -')
     )
+    legacy_id = CharField(max_length=100, required=False, label='Legacy ID')
     container_label = CharField(max_length=100, required=False)
 
 
@@ -26,6 +27,8 @@ class ContainerUpdateForm(ModelForm):
         queryset=CarrierType.objects.all(),
         empty_label=ugettext('- Choose Carrier Type -')
     )
+    permanent_id = CharField(max_length=100, required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
+    legacy_id = CharField(max_length=100, required=False, label='Legacy ID')
     container_no = CharField(max_length=100, required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta:

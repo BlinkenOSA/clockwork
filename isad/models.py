@@ -14,7 +14,9 @@ class Isad(models.Model):
     # Required fields
     title = models.CharField(max_length=255)
     reference_code = models.CharField(max_length=30)
-    description_level = models.CharField(max_length=10)
+
+    DESCRIPTION_LEVEL = [('F', 'Fonds'), ('SF', 'Subfonds'), ('S', 'Series')]
+    description_level = models.CharField(max_length=10, choices=DESCRIPTION_LEVEL)
     year_from = models.IntegerField()
     year_to = models.IntegerField(blank=True, null=True)
     isaar = models.ManyToManyField('isaar.Isaar', blank=True)
@@ -44,7 +46,7 @@ class Isad(models.Model):
     system_of_arrangement_information_original = models.TextField(blank=True, null=True)
 
     # Access & Use
-    embargo = ApproximateDateField(blank=True, null=True)
+    embargo = ApproximateDateField(blank=True)
     physical_characteristics = models.TextField(blank=True, null=True)
     physical_characteristics_original = models.TextField(blank=True, null=True)
 

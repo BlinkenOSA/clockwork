@@ -4,15 +4,15 @@
 
 <fieldset>
     <div class="col-md-6">
+        {% bootstrap_field form.institution_identifier|attr:"readonly:readonly" %}
         {% bootstrap_field form.old_id %}
         {% bootstrap_field form.language %}
         {% bootstrap_field form.level_of_detail|attr:"readonly:readonly" %}
         {% bootstrap_field form.status|attr:"readonly:readonly" %}
-        {% bootstrap_field form.internal_note|add_class:"tinymce" %}
     </div>
     <div class="col-md-6">
-        {% bootstrap_field form.institution_identifier|attr:"readonly:readonly" %}
-        {% bootstrap_field form.convention|add_class:"tinymce" %}
-        {% bootstrap_field form.source|add_class:"tinymce" %}
+        {% bootstrap_field form.convention|attr:"rows:4" %}
+        {% bootstrap_field form.source|attr:"rows:3" %}
+        {% bootstrap_field form.internal_note|attr:"rows:4" %}
     </div>
 </fieldset>

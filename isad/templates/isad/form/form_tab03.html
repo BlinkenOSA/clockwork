@@ -4,11 +4,11 @@
 
 <fieldset>
 	<div class="col-md-6">
-        {% bootstrap_field form.administrative_history|add_class:"tinymce" %}
-        {% bootstrap_field form.archival_history|add_class:"tinymce" %}
+        {% bootstrap_field form.administrative_history|attr:"rows:4" %}
+        {% bootstrap_field form.archival_history|attr:"rows:4" %}
     </div>
 	<div class="col-md-6">
-        {% bootstrap_field form.administrative_history_original|add_class:"tinymce" %}
-        {% bootstrap_field form.archival_history_original|add_class:"tinymce" %}
+        {% bootstrap_field form.administrative_history_original|attr:"rows:4" %}
+        {% bootstrap_field form.archival_history_original|attr:"rows:4" %}
     </div>
 </fieldset>

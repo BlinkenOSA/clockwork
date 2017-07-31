@@ -42,10 +42,10 @@ class AccessionForm(ModelForm):
             'archival_unit': ArchivalUnitSelect2Widget(attrs={'data-placeholder': '- Select Archival Unit -'}),
             'creator': IsaarRecordsSelect2Widget(attrs={'data-placeholder': '- Select Creators -'}),
             'donor': DonorSelect2Widget(attrs={'data-placeholder': '- Select Donor -'}),
-            'access_note': Textarea(attrs={'rows': 4}),
-            'custodial_history': Textarea(attrs={'rows': 4}),
-            'copyright_note': Textarea(attrs={'rows': 4}),
-            'note': Textarea(attrs={'rows': 4}),
+            'access_note': Textarea(attrs={'rows': 5}),
+            'custodial_history': Textarea(attrs={'rows': 3}),
+            'copyright_note': Textarea(attrs={'rows': 3}),
+            'note': Textarea(attrs={'rows': 3}),
         }
 
 

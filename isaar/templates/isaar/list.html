@@ -20,8 +20,16 @@
     <!-- END BREADCRUMBS -->
 {% endblock %}
 
+{% block infobox_header %}
+    ISAAR-CPF
+{% endblock %}
+
+{% block infobox_text %}
+    <p>{% trans 'Create, modify and remove ISAAR records here. The table shows you the already existing ISAAR records in the system.' %}</p>
+{% endblock %}
+
 {% block box-1-title %}
-    {% trans 'ISAAR/CPF Records' %}
+    <i class="fa fa-male"></i>{% trans 'ISAAR/CPF Records' %}
 {% endblock %}
 
 {% block box-1-body %}

@@ -5,7 +5,7 @@
 {% load staticfiles %}
 
 {% block js_page %}
-    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+
     <script src="{% static 'isaar/js/isaar-form.js' %}"></script>
 {% endblock %}
 
@@ -29,8 +29,16 @@
     <!-- END BREADCRUMBS -->
 {% endblock %}
 
+{% block infobox_header %}
+    ISAAR-CPF Create/Modify
+{% endblock %}
+
+{% block infobox_text %}
+    <p>{% trans 'Use the following form to create or modify ISAAR-CPF records. Highlighting a field will display information about its usage.' %}</p>
+{% endblock %}
+
 {% block box-1-title %}
-    {% trans 'ISAAR/CPF Records' %}
+    <i class="fa fa-male"></i>{% trans 'ISAAR/CPF Records' %}
 {% endblock %}
 
 {% block box-1-body %}

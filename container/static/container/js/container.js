@@ -6,10 +6,10 @@ var table = $('#container_table').DataTable({
 	"select": true,
 	"columns": [
 	   { "data": 'container_no', "width": "10%", "class": "action_column reorder" },
-	   { "data": 'carrier_type', "width": "20%" },
-	   { "data": 'primary_type', "width": "20%" },
+	   { "data": 'identifier', "width": "30%", "class": "action_column reorder" },
+	   { "data": 'carrier_type', "width": "15%" },
+	   { "data": 'primary_type', "width": "15%" },
 	   { "data": 'number_of_fa_entities', "width": "10%" },
-	   { "data": 'container_label', "width": "20%" },
 	   { "data": 'action', "width": "10%", "class": "action_column" },
 	   { "data": 'navigate', "width": "10%", "class": "action_column" }
 	],

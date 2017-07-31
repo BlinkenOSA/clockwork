@@ -31,7 +31,7 @@ class ContainerList(FormView):
 
 class ContainerListJson(BaseDatatableView):
     model = Container
-    columns = ['container_no', 'carrier_type', 'primary_type', 'container_label',
+    columns = ['container_no', 'identifier', 'carrier_type', 'primary_type', 'container_label',
                'number_of_fa_entities', 'navigate', 'action']
     order_columns = ['primary_type', 'container_no']
     max_display_length = 500
@@ -47,6 +47,11 @@ class ContainerListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'primary_type':
             return row.primary_type.type
+        elif column == 'identifier':
+            if row.legacy_id:
+                return "%s (%s)" % (row.permanent_id, row.legacy_id)
+            else:
+                return row.permanent_id
         elif column == 'carrier_type':
             return row.carrier_type.type
         elif column == 'number_of_fa_entities':

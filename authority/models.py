@@ -7,6 +7,7 @@ class Country(models.Model):
     id = models.AutoField(primary_key=True)
     alpha2 = models.CharField(max_length=2, blank=True, null=True)
     alpha3 = models.CharField(max_length=3)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     country = models.CharField(unique=True, max_length=100)
 
@@ -20,8 +21,9 @@ class Country(models.Model):
 
 class Language(models.Model):
     id = models.AutoField(primary_key=True)
-    alpha2 = models.CharField(max_length=10, blank=True, null=True)
-    alpha3 = models.CharField(max_length=10)
+    iso_639_1 = models.CharField(max_length=10)
+    iso_639_2 = models.CharField(max_length=10, blank=True, null=True)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     language = models.CharField(unique=True, max_length=100)
 
@@ -31,3 +33,78 @@ class Language(models.Model):
     class Meta:
         db_table = 'authority_languages'
         ordering = ['language']
+
+
+class Place(models.Model):
+    id = models.AutoField(primary_key=True)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
+    authority_url = models.CharField(max_length=200, blank=True, null=True)
+    place = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.country
+
+    class Meta:
+        db_table = 'authority_places'
+        ordering = ['place']
+
+
+class Person(models.Model):
+    id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
+    authority_url = models.CharField(max_length=150, blank=True, null=True)
+    other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    def __unicode__(self):
+        return ', '.join((self.last_name, self.first_name))
+
+    class Meta:
+        db_table = 'authority_people'
+        ordering = ['last_name', 'first_name']
+
+
+class Corporation(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=300)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
+    authority_url = models.CharField(max_length=150, blank=True, null=True)
+    other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'authority_corporations'
+        ordering = ['name']
+
+
+class Genre(models.Model):
+    id = models.AutoField(primary_key=True)
+    genre = models.CharField(unique=True, max_length=50)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
+    authority_url = models.CharField(max_length=150, blank=True, null=True)
+    other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'authority_genres'
+        ordering = ['genre']
+
+
+class Subject(models.Model):
+    id = models.AutoField(primary_key=True)
+    subject = models.CharField(unique=True, max_length=50)
+    wiki_url = models.CharField(max_length=150, blank=True, null=True)
+    authority_url = models.CharField(max_length=150, blank=True, null=True)
+    other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'authority_subjects'
+        ordering = ['subject']

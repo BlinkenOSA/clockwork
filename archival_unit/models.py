@@ -63,5 +63,5 @@ class ArchivalUnit(models.Model):
     class Meta:
         db_table = 'archival_units'
         ordering = ['fonds', 'subfonds', 'series']
-        unique_together = (("fonds", "subfonds", "series"),)
+        unique_together = (("fonds", "subfonds", "series", "level"),)
 

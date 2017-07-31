@@ -24,8 +24,6 @@ $( "#id_original_locale" ).change(function() {
     changeflag();
 });
 
-tinymce.init({
-    selector:'.tinymce',
-    menu: {},
-    toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify'
-});
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

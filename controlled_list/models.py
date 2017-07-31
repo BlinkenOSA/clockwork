@@ -99,3 +99,15 @@ class PrimaryType(models.Model):
     class Meta:
         db_table = 'controlled_primary_types'
         ordering = ['type']
+
+
+class Keyword(models.Model):
+    id = models.AutoField(primary_key=True)
+    keyword = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_keywords'
+        ordering = ['keyword']

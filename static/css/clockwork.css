@@ -95,3 +95,66 @@ tbody td {
     background-image: none !important;
     background-color: #DDD;
 }
+
+.nav-tabs-custom .nav-tabs li.active {
+    border-bottom-color: #3c8dbc !important;
+}
+
+.nav-tabs-custom .nav-tabs li {
+    border-top: none !important;
+    border-bottom: 3px solid transparent !important;
+}
+
+.box-title i {
+    margin-right: 10px;
+}
+
+.modal-title i {
+    margin-right: 10px;
+}
+
+.modal-header {
+    color: #FFFFFF;
+    background-color: #3c8dbc;
+}
+
+#deleteModal .modal-header {
+    background-color: #dd4b39;
+}
+
+.info-text {
+    padding: 10px 15px;
+    color: #b8c7ce;
+    background-color: #374850;
+    height: 300px;
+    overflow: auto;
+    white-space: normal;
+}
+
+.info-text-header {
+    font-weight: 800;
+}
+
+.info-text-wrapper p {
+    text-align: left;
+    padding-top: 10px;
+}
+
+.info-text::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #1a2226;
+	border-radius: 10px;
+}
+
+.info-text::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #1a2226;
+}
+
+.info-text::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background: #4b646f;
+}

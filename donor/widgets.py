@@ -1,7 +1,13 @@
 from django_select2.forms import ModelSelect2Widget
 
+from donor.models import Donor
+
 
 class DonorSelect2Widget(ModelSelect2Widget):
+    def get_search_fields(self):
+        pass
+
+    model = Donor
     search_fields = [
         'name__icontains',
     ]

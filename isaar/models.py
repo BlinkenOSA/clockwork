@@ -11,7 +11,7 @@ from isaar.validators import validate_type, validate_status
 class Isaar(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-    old_id = models.IntegerField(blank=True, null=True)
+    old_id = models.CharField(max_length=20, blank=True, null=True)
 
     # Required Values
     name = models.CharField(max_length=500)
@@ -31,7 +31,7 @@ class Isaar(models.Model):
     language = models.ManyToManyField('authority.Language', blank=True)
     level_of_detail = models.CharField(max_length=10, default='Minimal')
     status = models.CharField(max_length=10, default='Draft', validators=[validate_status])
-    institution_identifier = models.CharField(max_length=10, default='OSA')
+    institution_identifier = models.CharField(max_length=10, default='HU OSA')
     source = models.TextField(blank=True, null=True)
     internal_note = models.TextField(blank=True, null=True)
     convention = models.TextField(blank=True, null=True)

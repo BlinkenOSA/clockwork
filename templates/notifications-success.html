@@ -4,17 +4,13 @@
     {% for message in messages %}
         <script>
             $( document ).ready(function() {
-                var n = noty({
-                    text: '{{ message }}',
-                    theme: 'metroui',
+                new Noty({
                     type: 'success',
-                    animation: {
-                        open: {height: 'toggle'},
-                        close: {height: 'toggle'},
-                        easing: 'swing',
-                        speed: 500 // opening & closing animation speed
-                    }
-                });
+                    theme: 'bootstrap-v3',
+                    text: '{{ message }}',
+                    timeout: 1000,
+                    closeWith: ['click', 'button']
+                }).show()
             })
         </script>
     {% endfor %}

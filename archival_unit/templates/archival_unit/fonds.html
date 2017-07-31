@@ -33,8 +33,16 @@
     <!-- END BREADCRUMBS -->
 {% endblock %}
 
+{% block infobox_header %}
+    Archival Unit :: Fonds
+{% endblock %}
+
+{% block infobox_text %}
+    <p>{% trans 'Create, modify and remove Fonds here. The table shows you the already existing Fonds in the system.' %}</p>
+{% endblock %}
+
 {% block box-1-title %}
-    {% trans 'Fonds' %}
+    <i class="fa fa-sitemap"></i>{% trans 'Fonds' %}
 {% endblock %}
 
 {% block box-1-body %}
@@ -53,7 +61,7 @@
 
 {% block box-1-footer %}
     <a class="btn btn-primary fm-create" href="{% url 'archival_unit:fonds_create' %}"
-       data-fm-head="Create" data-fm-callback="reloadTable">
+       data-fm-head="<i class='fa fa-sitemap'></i>Create Fonds" data-fm-callback="reloadTable">
         <i class="fa fa-plus"></i>
         {% trans 'Create Fonds' %}
     </a>

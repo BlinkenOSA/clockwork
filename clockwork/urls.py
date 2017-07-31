@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^logout/', auth_views.logout, name='logout'),
 
     url(r'^$', dashboard_view.index, name='dashboard'),
+    url(r'^dashboard/', include('dashboard.urls', namespace='dashboard')),
     url(r'^controlled_list/', include('controlled_list.urls', namespace='controlled_list')),
     url(r'^archival_unit/', include('archival_unit.urls', namespace='archival_unit')),
     url(r'^accession/', include('accession.urls', namespace='accession')),

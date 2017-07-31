@@ -9,16 +9,16 @@
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
-            <div class="col-md-3">
+            <div class="col-md-2">
                 {% bootstrap_field form.quantity show_label=false %}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 {% bootstrap_field form.container show_label=false %}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 {% bootstrap_field form.content show_label=false %}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                {% if form.instance.pk %}
                     {{ form.DELETE|add_class:"delete-row-hidden" }}
                {% endif %}

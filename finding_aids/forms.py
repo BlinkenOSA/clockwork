@@ -3,7 +3,7 @@ from django.forms import ModelChoiceField, Form, CharField, ModelForm, ChoiceFie
 from django.utils.translation import ugettext
 
 from archival_unit.models import ArchivalUnit
-from archival_unit.widgets import ArchivalUnitSelect2Widget
+from archival_unit.widgets import ArchivalUnitSeriesSelect2Widget
 from django_date_extensions.fields import ApproximateDateFormField
 
 from controlled_list.models import Locale
@@ -13,7 +13,7 @@ from finding_aids.models import FindingAidsEntity
 class FindingAidsArchivalUnitForm(Form):
     archival_unit = ModelChoiceField(
         queryset=ArchivalUnit.objects.filter(level='S').order_by('fonds', 'subfonds', 'series'),
-        widget=ArchivalUnitSelect2Widget()
+        widget=ArchivalUnitSeriesSelect2Widget()
     )
 
 

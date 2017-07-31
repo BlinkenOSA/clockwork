@@ -4,14 +4,14 @@
 
 <fieldset>
 	<div class="col-md-6">
-        {% bootstrap_field form.note|add_class:"tinymce" %}
-        {% bootstrap_field form.internal_note|add_class:"tinymce" %}
-        {% bootstrap_field form.archivists_note|add_class:"tinymce" %}
+        {% bootstrap_field form.note|attr:"rows:4" %}
+        {% bootstrap_field form.internal_note|attr:"rows:4" %}
+        {% bootstrap_field form.archivists_note|attr:"rows:4" %}
     </div>
 	<div class="col-md-6">
-        {% bootstrap_field form.note_original|add_class:"tinymce" %}
-        {% bootstrap_field form.internal_note_original|add_class:"tinymce" %}
-        {% bootstrap_field form.archivists_note_original|add_class:"tinymce" %}
+        {% bootstrap_field form.note_original|attr:"rows:4" %}
+        {% bootstrap_field form.internal_note_original|attr:"rows:4" %}
+        {% bootstrap_field form.archivists_note_original|attr:"rows:4" %}
     </div>
 	<div class="col-md-12">
         {% bootstrap_field form.rules_conventions %}

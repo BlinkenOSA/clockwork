@@ -1,4 +1,4 @@
-{% extends 'layout-box-box-form-table-vertical.html' %}
+{% extends 'layout-box-box-form-table-horizontal.html' %}
 
 {% load staticfiles %}
 {% load bootstrap3 %}
@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block box-1-title %}
-    {% trans 'Create Container' %}
+    <i class="fa fa-archive"></i>{% trans 'Create Container' %}
 {% endblock %}
 
 {% block box-1-body %}
@@ -48,18 +48,18 @@
 {% endblock %}
 
 {% block box-2-title %}
-    {% trans 'Containers' %}
+    <i class="fa fa-archive"></i>{% trans 'Containers in ' %}'{{ archival_unit.reference_code }} {{ fonds_name }}:{{ subfonds_name }}:{{ series_name }}'
 {% endblock %}
 
 {% block box-2-body %}
     <table id="container_table" class="table table-bordered table-hover table-striped no-padding" width="100%">
         <thead>
             <tr>
-                <th>{% trans 'Container Number' %}</th>
+                <th>{% trans 'Container No.' %}</th>
+                <th>{% trans 'Permanent ID (Legacy ID)' %}</th>
                 <th>{% trans 'Container Type' %}</th>
                 <th>{% trans 'Primary Type' %}</th>
                 <th>{% trans 'Folders/Items' %}</th>
-                <th>{% trans 'Label' %}</th>
                 <th>{% trans 'Navigate' %}</th>
                 <th>{% trans 'Action' %}</th>
             </tr>

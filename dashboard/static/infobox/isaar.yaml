@@ -1,0 +1,158 @@
+type:
+  title: Type of entity
+  text: >
+        <i>Purpose:</i><br/>To indicate whether the entity being described is a corporate body, person or family.<br/><br/>
+        <i>Rule:</i><br/>
+        Specify the type of entity (corporate body, person or family) that is being described in this authority record.
+name:
+  title: Authorized form(s) of name
+  text: >
+        <i>Purpose:</i><br/>To create an authorized access point that uniquely identifies a corporate body, person or family.<br/><br/>
+        <i>Rule:</i><br/>Record the standardized form of name for the entity being described in accordance with any relevant
+        national or international conventions or rules applied by the agency that created the authority record.
+        Use dates, place, jurisdiction, occupation, epithet and other qualifiers as appropriate to distinguish the
+        authorized form of name from those of other entities with similar names. Specify separately in the
+        Rules and/or conventions element (5.4.3) which set of rules has been applied for this element.
+date_existence:
+  title: Dates of existence
+  text: >
+        <i>Purpose:</i><br/>To indicate the dates of existence of the corporate body, person or family.<br/><br/>
+        <i>Rule:</i><br/>Record the dates of existence of the entity being described. For corporate bodies include the date of
+        establishment / foundation / enabling legislation and dissolution. For persons include the dates or
+        approximate dates of birth and death or, when these dates are not known, floruit dates. Where parallel
+        systems of dating are used, equivalences may be recorded according to relevant conventions or rules.
+        Specify in the Rules and/or conventions element (5.4.3) the system(s) of dating used, e.g. ISO 8601.
+other_names:
+  title: Other forms of name
+  text: >
+        <i>Purpose:</i><br/>To indicate any other name(s) for the corporate body, person or family not used elsewhere
+        in the Identity Area.<br/><br/>
+        <i>Rule:</i><br/>Record other names by which the entity may be known, such as:
+        <br/>
+        A) other forms of the same name, e.g. acronyms;<br/>
+        B) other names of corporate bodies, for example, changes of name over time and their dates;<br/>
+        C) other names of persons or families, for example, changes of name over time with their dates including pseudonyms, maiden names, etc;<br/>
+        D) names and prenominal and postnominal titles of persons and families, e.g. titles of nobility, or titles of honour held by the individual or family
+standardized_names:
+  title: Standardized forms of name according to other rules
+  text: >
+        <i>Purpose:</i><br/>To indicate standardized forms of name for the corporate body, person or family that have been
+        constructed according to rules other than those used to construct the authorised form of name. This can
+        facilitate the sharing of authority records between different professional communities.<br/><br/>
+        <i>Rule:</i><br/>Record the standardized form of name for the entity being described in accordance with other
+        conventions or rules. Specify the rules and/or if appropriate the name of the agency by which these
+        standardized forms of name have been constructed.
+corporate_body_identifiers:
+  title: Identifiers for corporate bodies
+  text: >
+        <i>Purpose:</i><br/>To provide any numeric or alpha-numeric identifiers that are used to identify the corporate body.<br/><br/>
+        <i>Rule:</i><br/>Record where possible any official number or other identifier (e.g. a company registration number) for
+        the corporate body and reference the jurisdiction and scheme under which it has been allocated.
+places:
+  title: Places
+  text: >
+        <i>Purpose:</i><br/>To indicate the predominant places and/or jurisdictions where the corporate body, person or family was
+        based, lived or resided or had some other connection.<br/><br/>
+        <i>Rule:</i><br/>Record the name of the predominant place(s)/jurisdiction(s), together with the nature and covering
+        dates of the relationship with the entity.
+history:
+  title: History
+  text: >
+        <i>Purpose:</i><br/>To provide a concise history of the corporate body, person or family.<br/><br/>
+        <i>Rule:</i><br/>Record in narrative form or as a chronology the main life events, activities, achievements and/or roles
+        of the entity being described. This may include information on gender, nationality, family and religious
+        or political affiliations. Wherever possible, supply dates as an integral component of the narrative
+        description.
+legal_status:
+  title: Legal status
+  text: >
+        <i>Purpose:</i><br/>To indicate the legal status of a corporate body.<br/><br/>
+        <i>Rule:</i><br/>Record the legal status and where appropriate the type of corporate body together with the covering
+        dates when this status applied.
+function:
+  title: Functions, occupations and activities
+  text: >
+        <i>Purpose:</i><br/>To indicate the functions, occupations and activities performed by the corporate body, person or family.<br/><br/>
+        <i>Rule:</i><br/>Record the functions, occupations and activities performed by the entity being described, together with
+        the covering dates when useful. If necessary, describe the nature of the function, occupation or activity.
+mandate:
+  title: Mandates/Sources of authority
+  text: >
+        <i>Purpose:</i><br/>To indicate the sources of authority for the corporate body, person or family in terms of its powers,
+        functions, responsibilities or sphere of activities, including territorial.<br/><br/>
+        <i>Rule:</i><br/>Record any document, law, directive or charter which acts as a source of authority for the powers,
+        functions and responsibilities of the entity being described, together with information on the
+        jurisdiction(s) and covering dates when the mandate(s) applied or were changed.
+internal_structure:
+  title: Internal structure/Geneology
+  text: >
+        <i>Purpose:</i><br/>To describe and/or represent the internal administrative structure(s) of a corporate body or the
+        genealogy of a family.<br/><br/>
+        <i>Rules:</i><br/>Describe the internal structure of a corporate body and the dates of any changes to that structure that
+        are significant to the understanding of the way that corporate body conducted its affairs (e.g. by means of dated organization charts).
+        Describe the genealogy of a family (e.g. by means of a family tree) in a way that demonstrates the inter-relationships of its members with covering dates.
+general_context:
+  title: General context
+  text: >
+        <i>Purpose:</i><br/>To provide significant information on the general social, cultural, economic, political and/or historical
+        context in which the corporate body, person or family operated, lived or was active.<br/><br/>
+        <i>Rule:</i><br/>Provide any significant information on the social, cultural, economic, political and/or historical context
+        in which the entity being described operated.
+institution_identifier:
+  title: Institution identifiers
+  text: >
+        <i>Purpose:</i><br/>To identify the agency(ies) responsible for the authority record.<br/><br/>
+        <i>Rule:</i><br/>Record the full authorized form of name(s) of the agency(ies) responsible for creating, modifying or
+        dissemninating the authority record or, alternatively, record a code for the agency in accordance with
+        the national or international agency code standard. Include reference to any systems of identification
+        used to identify the institutions (e.g. ISO 15511).
+old_id:
+  title: Authority record identifier
+  text: >
+        <i>Purpose:</i><br/>To identify the authority record uniquely within the context in which it will be used.<br/><br/>
+        <i>Rule:</i><br/>Record a unique authority record identifier in accordance with local and/or national conventions. If the
+        authority record is to be used internationally, record the country code of the country in which the authority record was
+        created in accordance with the latest version of ISO 3166 Codes for the representation of names of countries.<br/><br/>
+        Where the creator of the authority record is an international organization, give the organizational
+        identifier in place of the country code.
+language:
+  title: Language(s) and script(s)
+  text: >
+        <i>Purpose:</i><br/>To indicate the language(s) and/or script(s) used to create the authority record.<br/><br/>
+        <i>Rule:</i><br/>Record the language(s) and/or script(s) of the archival authority record. Include the appropriate
+        ISO codes for languages (ISO 639-2) and/or scripts (ISO 15924 Codes for the representation of names of scripts).
+level_of_detail:
+  title: Level of detail
+  text: >
+        <i>Purpose:</i><br/>To indicate whether the authority record applies a minimal, partial or a full level of detail.<br/><br/>
+        <i>Rule:</i><br/>Indicate whether the record consists of a minimal, partial or full level of detail in accordance with
+        relevant international and/or national guidelines and/or rules. In the absence of national guidelines or
+        rules, minimal records are those that consist only of the four essential elements of an ISAAR(CPF)
+        compliant authority record (see 4.8), while full records are those that convey information for all
+        relevant ISAAR(CPF) elements of description.
+status:
+  title: Status
+  text: >
+        <i>Purpose:</i><br/>To indicate the drafting status of the authority record so that users can understand the current status of
+        the authority record.<br/><br/>
+        <i>Rule:</i><br/>Record the current status of the authority record, indicating whether the record is a draft, finalized
+        and/or revised or deleted.
+convention:
+  title: Rules and/or conventions
+  text: >
+        <i>Purpose:</i><br/>To identify the national or international conventions or rules applied in creating the archival authority
+        record.<br/><br/>
+        <i>Rule:</i><br/>Record the names and where useful the editions or publication dates of the conventions or rules
+        applied. Specify separately which rules have been applied for creating the Authorized form of name.
+        Include reference to any system(s) of dating used to identify dates in this authority record (e.g. ISO
+        8601).
+source:
+  title: Sources
+  text: >
+        <i>Purpose:</i><br/>To identify the sources consulted in creating the authority record.<br/><br/>
+        <i>Rule:</i><br/>Record the sources consulted in establishing the authority record.
+internal_note:
+  title: Internal note
+  text: >
+        <i>Purpose:</i><br/>
+        <i>Rule:</i>

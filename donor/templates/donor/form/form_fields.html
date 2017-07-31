@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load bootstrap3 %}
+{% load widget_tweaks %}
 
 <fieldset>
 	<div class="col-md-6">
@@ -14,6 +15,6 @@
         {% bootstrap_field form.fax %}
         {% bootstrap_field form.email %}
         {% bootstrap_field form.website %}
-        {% bootstrap_field form.note %}
+        {% bootstrap_field form.note|attr:"rows:4" %}
     </div>
 </fieldset>
