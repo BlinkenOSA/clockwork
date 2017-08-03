@@ -23,7 +23,3 @@ changeflag();
 $( "#id_original_locale" ).change(function() {
     changeflag();
 });
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})

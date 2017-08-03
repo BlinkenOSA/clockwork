@@ -30,7 +30,7 @@
             Container #{{ container.container_no }} / {{ container.carrier_type.type }}
         </li>
         <li class="active">
-            {% trans 'Folders/Items' %}
+            {% trans 'Finding Aids Records' %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->
@@ -56,10 +56,9 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-primary fm-create" href="{% url 'finding_aids:quick_create' container.id %}"
-       data-fm-head="Create Entity" data-fm-callback="reloadTable">
+    <a class="btn btn-primary" href="{% url 'finding_aids:create' container.id %}">
         <i class="fa fa-plus"></i>
-        {% trans 'Quick Create' %}
+        {% trans 'Create' %}
     </a>
 
     <div class="pull-right">

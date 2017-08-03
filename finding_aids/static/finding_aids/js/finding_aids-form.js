@@ -1,28 +1,19 @@
-// DataTable Init
-var table = $('#fa_table').DataTable({
-    "dom": "lrtip",
-	"serverSide": true,
-	"ajax": "/finding_aids/datatable/" + containerID ,
-	"columns": [
-       { "data": 'level', "width": "20%", "class": "call_no_column"},
-	   { "data": 'title', "width": "25%" },
-	   { "data": 'title_original', "width": "25%" },
-	   { "data": 'date', "width": "20%" },
-       { "data": 'action', "width": "10%", "class": "action_column" },
-	],
-    "rowCallback": function( row, data, index ) {
-      if ( data.item_no != 0 ) {
-	    $(row).addClass('item');
-		return row;
-	  }
-    },
-	"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-	"paging":   true,
-    "ordering": false,
-    "info":     false,
-	"searching": false,
-	"autoWidth": true,
-	"stateSave": true
+function changeflag() {
+    var flag = $('#id_original_locale').val().toLowerCase();
+    if (flag) {
+        var element = $('span.flag');
+        element.removeClass();
+        element.addClass('flag flag-' + flag);
+        element.show();
+    } else {
+        $('span.flag').hide();
+    }
+}
+
+changeflag();
+
+$( "#id_original_locale" ).change(function() {
+    changeflag();
 });
 
 $(document).on('change', '#id_folder_no_select', function() {

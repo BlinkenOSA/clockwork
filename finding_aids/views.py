@@ -1,13 +1,12 @@
-from django.contrib.messages.views import SuccessMessageMixin
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import FormView, ListView, TemplateView
+from django.views.generic import FormView, ListView, TemplateView, CreateView, UpdateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView, JSONResponseMixin
+from fm.views import JSONResponseMixin
 
 from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsInContainerForm, FindingAidsInContainerCreateForm, \
-    FindingAidsInContainerUpdateForm
+from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm
 from finding_aids.models import FindingAidsEntity
 
 
@@ -66,43 +65,27 @@ class FindingAidsInContainerListJson(BaseDatatableView):
         return json_array
 
 
-class FindingAidsQuickCreate(SuccessMessageMixin, AjaxCreateView):
+class FindingAidsCreate(CreateView):
     model = FindingAidsEntity
-    form_class = FindingAidsInContainerCreateForm
-    template_name = 'finding_aids/container_view/form/quick_create.html'
-    success_message = ugettext("Folder/Item was created successfully")
+    form_class = FindingAidsForm
+    template_name = 'finding_aids/container_view/form.html'
+    success_url = reverse_lazy('finding_aids:list')
+    success_message = ugettext("%(reference_code)s was created successfully")
 
-    def get_initial(self):
-        initial = super(FindingAidsQuickCreate, self).get_initial()
-        initial = initial.copy()
-        initial['container_name'] = Container.objects.get(pk=self.kwargs['container_id'])
-        return initial
-
-    def get_form(self, form_class=None):
-        form = super(FindingAidsQuickCreate, self).get_form()
-        form.fields['folder_no'].choices = \
-            [(n, n) for n in range(1, get_number_of_folders(self.kwargs['container_id']) + 1)]
-        return form
-
-    def pre_save(self):
-        self.object.container = Container.objects.get(pk=self.kwargs['container_id'])
+    def get_context_data(self, **kwargs):
+        context = super(FindingAidsCreate, self).get_context_data(**kwargs)
+        context['container'] = Container.objects.get(pk=self.kwargs['container_id'])
+        return context
 
 
-class FindingAidsQuickUpdate(SuccessMessageMixin, AjaxUpdateView):
+class FindingAidsUpdate(UpdateView):
     model = FindingAidsEntity
-    form_class = FindingAidsInContainerUpdateForm
-    template_name = 'finding_aids/container_view/form/quick_update.html'
-    success_message = ugettext("Folder/Item was updated successfully")
-
-    def get_initial(self):
-        initial = super(FindingAidsQuickUpdate, self).get_initial()
-        initial = initial.copy()
-        initial['container_name'] = Container.objects.get(pk=self.kwargs['container_id'])
-        return initial
-
-    def get_form(self, form_class=None):
-        form = super(FindingAidsQuickUpdate, self).get_form()
-        return form
+    form_class = FindingAidsForm
+    template_name = 'finding_aids/container_view/form.html'
+    success_url = reverse_lazy('finding_aids:list')
+    success_message = ugettext("%(reference_code)s was created successfully")
+    inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
+                     'location_of_copies']
 
 
 class FindingAidsFoldersItemsStatistics(JSONResponseMixin, ListView):
