@@ -111,3 +111,51 @@ class Keyword(models.Model):
     class Meta:
         db_table = 'controlled_keywords'
         ordering = ['keyword']
+
+
+class GeoRoles(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_geo_roles'
+        ordering = ['role']
+
+
+class PersonRoles(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_person_roles'
+        ordering = ['role']
+
+
+class CorporationRoles(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_corporation_roles'
+        ordering = ['role']
+
+
+class LanguageUsage(models.Model):
+    id = models.AutoField(primary_key=True)
+    use = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_language_usages'
+        ordering = ['use']
