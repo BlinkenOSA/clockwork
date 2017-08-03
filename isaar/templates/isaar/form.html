@@ -5,7 +5,11 @@
 {% load staticfiles %}
 
 {% block js_page %}
-
+    <script>
+        $('#id_language').djangoSelect2({
+            placeholder: '{% trans "- Select Language -" %}'
+        });
+    </script>
     <script src="{% static 'isaar/js/isaar-form.js' %}"></script>
 {% endblock %}
 

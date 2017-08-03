@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="modal-content">
-    <form action="{% url 'archival_unit:fonds_delete' fonds.id %}" method="post">
+    <form action="{% url 'archival_unit:fonds_delete' fonds.reference_code_id %}" method="post">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

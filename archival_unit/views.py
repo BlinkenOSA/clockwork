@@ -50,9 +50,9 @@ class FondsListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'navigate':
-            return render_to_string('archival_unit/fonds_navigate_buttons.html', context={'id': row.id})
+            return render_to_string('archival_unit/fonds_navigate_buttons.html', context={'id': row.reference_code_id})
         elif column == 'action':
-            return render_to_string('archival_unit/fonds_action_buttons.html', context={'id': row.id})
+            return render_to_string('archival_unit/fonds_action_buttons.html', context={'id': row.reference_code_id})
         else:
             return super(FondsListJson, self).render_column(row, column)
 
@@ -74,20 +74,24 @@ class FondsCreate(AjaxCreateView):
 
 
 class FondsUpdate(AjaxUpdateView):
-    model = ArchivalUnit
     form_class = FondsUpdateForm
     template_name = 'archival_unit/fonds_form.html'
 
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     def get_response_message(self):
-        return ugettext("HU OSA %s was updated successfully!") % self.object.fonds
+        return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
 class FondsDelete(DeleteView):
-    model = ArchivalUnit
     template_name = 'archival_unit/fonds_delete.html'
     context_object_name = 'fonds'
     success_url = reverse_lazy('archival_unit:fonds')
     success_message = ugettext("Fonds was deleted successfully")
+
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
@@ -107,7 +111,7 @@ class SubFondsList(FormMixin, ListView):
     context_object_name = 'fonds'
 
     def get_queryset(self):
-        return ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
 
 
 class SubFondsListJson(BaseDatatableView):
@@ -116,7 +120,7 @@ class SubFondsListJson(BaseDatatableView):
     max_display_length = 500
 
     def get_initial_queryset(self):
-        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(pk=self.kwargs['parent_id']))
+        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -130,21 +134,19 @@ class SubFondsListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'navigate':
-            return render_to_string('archival_unit/subfonds_navigate_buttons.html', context={'id': row.id})
+            return render_to_string('archival_unit/subfonds_navigate_buttons.html', context={'id': row.reference_code_id})
         elif column == 'action':
-            return render_to_string('archival_unit/subfonds_action_buttons.html', context={'parent_id': row.parent.id,
-                                                                                           'id': row.id})
+            return render_to_string('archival_unit/subfonds_action_buttons.html', context={'id': row.reference_code_id})
         else:
             return super(SubFondsListJson, self).render_column(row, column)
 
 
 class SubFondsCreate(AjaxCreateView):
-    model = ArchivalUnit
     form_class = SubFondsCreateForm
     template_name = 'archival_unit/subfonds_form.html'
 
     def get_initial(self):
-        fonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        fonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
         initial = super(SubFondsCreate, self).get_initial()
         initial['fonds_title'] = fonds.title
         initial['fonds_acronym'] = fonds.acronym
@@ -155,7 +157,7 @@ class SubFondsCreate(AjaxCreateView):
         return initial
 
     def get_response_message(self):
-        return ugettext("HU OSA %s-%s was created successfully!") % (self.object.fonds, self.object.subfonds)
+        return ugettext("%s was created successfully!") % self.object.reference_code
 
 
 class SubFondsUpdate(AjaxUpdateView):
@@ -163,26 +165,31 @@ class SubFondsUpdate(AjaxUpdateView):
     form_class = SubFondsUpdateForm
     template_name = 'archival_unit/subfonds_form.html'
 
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     def get_initial(self):
-        fonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        fonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id']).parent
         initial = super(SubFondsUpdate, self).get_initial()
         initial['fonds_title'] = fonds.title
         initial['fonds_acronym'] = fonds.acronym
         return initial
 
     def get_response_message(self):
-        return ugettext("HU OSA %s-%s was updated successfully!") % (self.object.fonds, self.object.subfonds)
+        return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
 class SubFondsDelete(DeleteView):
-    model = ArchivalUnit
     template_name = 'archival_unit/subfonds_delete.html'
     context_object_name = 'subfonds'
     success_message = ugettext("Subfonds was deleted successfully")
 
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:subfonds', kwargs={'parent_id': parent_id})
+        parent_id = self.object.parent.reference_code_id
+        return reverse('archival_unit:subfonds', kwargs={'parent_reference_code_id': parent_id})
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
@@ -201,7 +208,7 @@ class SeriesList(FormMixin, ListView):
     context_object_name = 'subfonds'
 
     def get_queryset(self):
-        return ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
 
 
 class SeriesListJson(BaseDatatableView):
@@ -210,7 +217,7 @@ class SeriesListJson(BaseDatatableView):
     max_display_length = 500
 
     def get_initial_queryset(self):
-        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(pk=self.kwargs['parent_id']))
+        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -224,8 +231,7 @@ class SeriesListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('archival_unit/series_action_buttons.html', context={'parent_id': row.parent.id,
-                                                                                         'id': row.id})
+            return render_to_string('archival_unit/series_action_buttons.html', context={'id': row.reference_code_id})
         else:
             return super(SeriesListJson, self).render_column(row, column)
 
@@ -236,7 +242,7 @@ class SeriesCreate(AjaxCreateView):
     template_name = 'archival_unit/series_form.html'
 
     def get_initial(self):
-        subfonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        subfonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
         fonds = ArchivalUnit.objects.get(pk=subfonds.parent_id)
         initial = super(SeriesCreate, self).get_initial()
         initial['fonds'] = fonds.fonds
@@ -251,17 +257,18 @@ class SeriesCreate(AjaxCreateView):
         return initial
 
     def get_response_message(self):
-        return ugettext("HU OSA %s-%s-%s was created successfully!") % (self.object.fonds, self.object.subfonds,
-                                                                        self.object.series)
+        return ugettext("%s was created successfully!") % self.object.reference_code
 
 
 class SeriesUpdate(AjaxUpdateView):
-    model = ArchivalUnit
     form_class = SeriesUpdateForm
     template_name = 'archival_unit/series_form.html'
 
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     def get_initial(self):
-        subfonds = ArchivalUnit.objects.get(pk=self.kwargs['parent_id'])
+        subfonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id']).parent
         fonds = ArchivalUnit.objects.get(pk=subfonds.parent.id)
         initial = super(SeriesUpdate, self).get_initial()
         initial['fonds_title'] = fonds.title
@@ -271,8 +278,7 @@ class SeriesUpdate(AjaxUpdateView):
         return initial
 
     def get_response_message(self):
-        return ugettext("HU OSA %s-%s-%s was updated successfully!") % (self.object.fonds, self.object.subfonds,
-                                                                     self.object.series)
+        return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
 class SeriesDelete(DeleteView):
@@ -281,9 +287,12 @@ class SeriesDelete(DeleteView):
     context_object_name = 'series'
     success_message = ugettext("Series was deleted successfully")
 
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     def get_success_url(self):
-        parent_id = self.kwargs['parent_id']
-        return reverse('archival_unit:series', kwargs={'parent_id': parent_id})
+        parent_id = self.object.parent.reference_code_id
+        return reverse('archival_unit:series', kwargs={'parent_reference_code_id': parent_id})
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)

@@ -1,37 +1,6 @@
 /**
  *
  */
-var editor = new $.fn.dataTable.Editor( {
-	ajax: "update-ajax",
-	table: "#isad_table",
-	fields: [ {
-			label: "Reference Code",
-			name: "reference_code"
-		}, {
-			label: "Title",
-			name: "title"
-		}, {
-			label: "View/Edit/Delete",
-			name: "view-edit-delete"
-		}, {
-            label: "Actions",
-            name: "action"
-        }
-	],
-    formOptions: {
-        inline: {
-           onBlur: 'submit'
-        }
-    }
-} );
-
-/*
-// Inline editing on tab focus
-$('#isad_table').on( 'key-focus', function ( e, datatable, cell ) {
-    editor.inline( cell.index() );
-} );
-*/
-
 $('#isad_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
@@ -40,11 +9,7 @@ $('#isad_table').DataTable({
            { "data": 'title' },
 		   { "data": 'view-edit-delete', "width": "100px", "class": "action_column", "sortable": false },
 		   { "data": 'action', "width": "100px", "class": "action_column", "sortable": false },
- 	 ],
-    keys: {
-        columns: '.editable',
-        keys: [ 9 ]
-    },
+ 	 ]
 });
 
 $('select').on('change', function (evt) {

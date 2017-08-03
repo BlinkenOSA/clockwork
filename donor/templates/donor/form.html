@@ -4,6 +4,15 @@
 {% load bootstrap3 %}
 {% load staticfiles %}
 
+{% block js_page %}
+    <script>
+        $('#id_country').djangoSelect2({
+            placeholder: '- Select Country -'
+        });
+    </script>
+{% endblock %}
+
+
 {% block notifications %}
     {% include 'notifications-errors.html' %}
 {% endblock %}

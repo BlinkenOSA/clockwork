@@ -47,6 +47,8 @@ class ContainerListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'primary_type':
             return row.primary_type.type
+        elif column == 'container_no':
+            return '%s/%s' % (row.archival_unit.reference_code, row.container_no)
         elif column == 'identifier':
             if row.legacy_id:
                 return "%s (%s)" % (row.permanent_id, row.legacy_id)

@@ -5,10 +5,10 @@ $('#isaar_table').dataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
- 	        { "width": "50px" },
-			{ "sortable": false },
-            { "sortable": false },
-            { "sortable": false },
-		    { "width": "100px", "sortable": false, "class": "action_column" },
+ 	        { "data": "id", "width": "50px" },
+			{ "data": "name", "sortable": false },
+            { "data": "type", "sortable": false },
+            { "data": "status", "sortable": false },
+		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
     ]
 });

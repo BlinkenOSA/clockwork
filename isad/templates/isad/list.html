@@ -5,17 +5,18 @@
 {% load bootstrap3 %}
 
 {% block css_page %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/KeyTable-2.2.0/css/keyTable.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/editor/css/editor.bootstrap.min.css' %}">
 {% endblock %}
 
 {% block js_page %}
+    <script>
+        $('#id_archival_unit').djangoSelect2({
+            placeholder: '{% trans '- Select Archival Unit -' %}',
+            escapeMarkup: function (m) { return m; }
+        });
+    </script>
+
     <script src="{% static 'js/ajax-post.js' %}"></script>
-    <script src="{% static 'thirdparty/editor/js/dataTables.editor.min.js' %}"></script>
-    <script src="{% static 'thirdparty/editor/js/editor.bootstrap.min.js' %}"></script>
-
     <script src="{% static 'isad/js/isad.js' %}"></script>
-
 {% endblock %}
 
 {% block content-header %}

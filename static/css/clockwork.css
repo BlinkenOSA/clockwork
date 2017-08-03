@@ -158,3 +158,51 @@ tbody td {
     border-radius: 10px;
     background: #4b646f;
 }
+
+.form-group.has-success label {
+    color: #333;
+}
+
+.form-group.has-success .form-control, .form-group.has-success .input-group-addon {
+    border-color: #d2d6de;
+}
+
+.form-group.has-success .help-block {
+    color: #737373;
+}
+
+.has-success .select2-selection {
+    border-color: #d2d6de !important;
+}
+
+.archival_unit_select_refcode {
+    float: left;
+    width: 130px;
+}
+
+.archival_unit_select_title {
+    padding-left: 10px;
+    clear: both;
+}
+
+.archival_unit_title.level_F {
+    padding-left: 5px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.archival_unit_title.level_SF {
+    padding-left: 20px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.archival_unit_title.level_S {
+    padding-left: 35px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.selection .archival_unit_title.level_F, .selection .archival_unit_title.level_SF, .selection .archival_unit_title.level_S {
+    padding: 0px;
+}

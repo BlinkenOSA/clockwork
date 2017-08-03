@@ -1,9 +1,9 @@
 <div class="btn-group ">
-    <a class="btn btn-default btn-xs fm-update" href="{% url 'archival_unit:subfonds_update' parent_id id %}"
+    <a class="btn btn-default btn-xs fm-update" href="{% url 'archival_unit:subfonds_update' id %}"
         data-fm-head="Edit" data-fm-callback="reloadTable">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'archival_unit:subfonds_delete' parent_id id %}">
+    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'archival_unit:subfonds_delete' id %}">
         <i class="fa fa-trash-o"></i>
     </a>
 </div>

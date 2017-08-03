@@ -19,8 +19,8 @@ class IsaarList(TemplateView):
 
 class IsaarListJson(BaseDatatableView):
     model = Isaar
-    columns = ['old_id', 'name', 'type', 'status', 'action']
-    order_columns = ['old_id', 'name', '', '', '']
+    columns = ['id', 'name', 'type', 'status', 'action']
+    order_columns = ['id', 'name', '', '', '']
     max_display_length = 500
 
     def filter_queryset(self, qs):

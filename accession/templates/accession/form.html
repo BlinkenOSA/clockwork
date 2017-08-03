@@ -5,6 +5,14 @@
 {% load staticfiles %}
 
 {% block js_page %}
+    <script>
+        $('#id_creator').djangoSelect2({
+            placeholder: '- Select Creator -'
+        });
+        $('#id_donor').djangoSelect2({
+            placeholder: '- Select Donor (ISAAR) -'
+        });
+    </script>
     <script src="{% static 'accession/js/accession-form.js' %}"></script>
 {% endblock %}
 

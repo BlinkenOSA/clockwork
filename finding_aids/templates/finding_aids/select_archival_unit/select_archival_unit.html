@@ -8,6 +8,12 @@
 {% endblock %}
 
 {% block js_page %}
+    <script>
+        $('#id_archival_unit').djangoSelect2({
+            placeholder: '- Select Archival Unit -',
+            escapeMarkup: function (m) { return m; }
+        });
+    </script>
     <script src="{% static 'finding_aids/js/finding_aids_archival_unit.js' %}"></script>
 {% endblock %}
 

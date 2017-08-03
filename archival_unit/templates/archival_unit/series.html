@@ -52,14 +52,14 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-primary fm-create" href="{% url 'archival_unit:series_create' subfonds.id %}"
+    <a class="btn btn-primary fm-create" href="{% url 'archival_unit:series_create' subfonds.reference_code_id %}"
         data-fm-head="Create Series" data-fm-callback="reloadSeriesTable">
         <i class="fa fa-plus"></i>
         {% trans 'Create Series' %}
     </a>
 
     <div class="pull-right">
-        <a class="btn btn-default" href="{% url 'archival_unit:subfonds' subfonds.parent.id %}">
+        <a class="btn btn-default" href="{% url 'archival_unit:subfonds' subfonds.parent.reference_code_id %}">
             <i class="fa fa-step-backward"></i>
             {% trans 'Back to Subfonds' %}
         </a>

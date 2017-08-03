@@ -4,9 +4,6 @@ from authority.models import Country, Language
 
 
 class CountrySelect2Widget(ModelSelect2Widget):
-    def get_search_fields(self):
-        pass
-
     model = Country
     search_fields = [
         'country__icontains',
@@ -15,9 +12,6 @@ class CountrySelect2Widget(ModelSelect2Widget):
 
 
 class LanguagesSelect2Widget(ModelSelect2MultipleWidget):
-    def get_search_fields(self):
-        pass
-
     model = Language
     search_fields = [
         'language__icontains',

@@ -17,7 +17,7 @@ class Isaar(models.Model):
     name = models.CharField(max_length=500)
     type = models.CharField(max_length=1, validators=[validate_type])
     date_existence_from = ApproximateDateField()
-    date_existence_to = ApproximateDateField()
+    date_existence_to = ApproximateDateField(blank=True)
 
     # Description
     function = models.TextField(blank=True, null=True)
