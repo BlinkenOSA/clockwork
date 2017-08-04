@@ -2,1286 +2,1286 @@
   pk: 1
   fields:
     language: Afar
-    alpha2: aa
-    alpha3: aar
+    iso_639_1: aa
+    iso_639_2: aar
 
 - model: authority.language
   pk: 2
   fields:
     language: Abkhazian
-    alpha2: ab
-    alpha3: abk
+    iso_639_1: ab
+    iso_639_2: abk
 
 - model: authority.language
   pk: 3
   fields:
     language: Afrikaans
-    alpha2: af
-    alpha3: afr
+    iso_639_1: af
+    iso_639_2: afr
 
 - model: authority.language
   pk: 4
   fields:
     language: Akan
-    alpha2: ak
-    alpha3: aka
+    iso_639_1: ak
+    iso_639_2: aka
 
 - model: authority.language
   pk: 5
   fields:
     language: Albanian
-    alpha2: sq
-    alpha3: alb
+    iso_639_1: sq
+    iso_639_2: alb
 
 - model: authority.language
   pk: 6
   fields:
     language: Amharic
-    alpha2: am
-    alpha3: amh
+    iso_639_1: am
+    iso_639_2: amh
 
 - model: authority.language
   pk: 7
   fields:
     language: Arabic
-    alpha2: ar
-    alpha3: ara
+    iso_639_1: ar
+    iso_639_2: ara
 
 - model: authority.language
   pk: 8
   fields:
     language: Aragonese
-    alpha2: an
-    alpha3: arg
+    iso_639_1: an
+    iso_639_2: arg
 
 - model: authority.language
   pk: 9
   fields:
     language: Armenian
-    alpha2: hy
-    alpha3: arm
+    iso_639_1: hy
+    iso_639_2: arm
 
 - model: authority.language
   pk: 10
   fields:
     language: Assamese
-    alpha2: as
-    alpha3: asm
+    iso_639_1: as
+    iso_639_2: asm
 
 - model: authority.language
   pk: 11
   fields:
     language: Avaric
-    alpha2: av
-    alpha3: ava
+    iso_639_1: av
+    iso_639_2: ava
 
 - model: authority.language
   pk: 12
   fields:
     language: Avestan
-    alpha2: ae
-    alpha3: ave
+    iso_639_1: ae
+    iso_639_2: ave
 
 - model: authority.language
   pk: 13
   fields:
     language: Aymara
-    alpha2: ay
-    alpha3: aym
+    iso_639_1: ay
+    iso_639_2: aym
 
 - model: authority.language
   pk: 14
   fields:
     language: Azerbaijani
-    alpha2: az
-    alpha3: aze
+    iso_639_1: az
+    iso_639_2: aze
 
 - model: authority.language
   pk: 15
   fields:
     language: Bashkir
-    alpha2: ba
-    alpha3: bak
+    iso_639_1: ba
+    iso_639_2: bak
 
 - model: authority.language
   pk: 16
   fields:
     language: Bambara
-    alpha2: bm
-    alpha3: bam
+    iso_639_1: bm
+    iso_639_2: bam
 
 - model: authority.language
   pk: 17
   fields:
     language: Basque
-    alpha2: eu
-    alpha3: baq
+    iso_639_1: eu
+    iso_639_2: baq
 
 - model: authority.language
   pk: 18
   fields:
     language: Belarusian
-    alpha2: be
-    alpha3: bel
+    iso_639_1: be
+    iso_639_2: bel
 
 - model: authority.language
   pk: 19
   fields:
     language: Bengali
-    alpha2: bn
-    alpha3: ben
+    iso_639_1: bn
+    iso_639_2: ben
 
 - model: authority.language
   pk: 20
   fields:
     language: Bihari languages
-    alpha2: bh
-    alpha3: bih
+    iso_639_1: bh
+    iso_639_2: bih
 
 - model: authority.language
   pk: 21
   fields:
     language: Bislama
-    alpha2: bi
-    alpha3: bis
+    iso_639_1: bi
+    iso_639_2: bis
 
 - model: authority.language
   pk: 22
   fields:
     language: Bosnian
-    alpha2: bs
-    alpha3: bos
+    iso_639_1: bs
+    iso_639_2: bos
 
 - model: authority.language
   pk: 23
   fields:
     language: Breton
-    alpha2: br
-    alpha3: bre
+    iso_639_1: br
+    iso_639_2: bre
 
 - model: authority.language
   pk: 24
   fields:
     language: Bulgarian
-    alpha2: bg
-    alpha3: bul
+    iso_639_1: bg
+    iso_639_2: bul
 
 - model: authority.language
   pk: 25
   fields:
     language: Burmese
-    alpha2: my
-    alpha3: bur
+    iso_639_1: my
+    iso_639_2: bur
 
 - model: authority.language
   pk: 26
   fields:
     language: Catalan; Valencian
-    alpha2: ca
-    alpha3: cat
+    iso_639_1: ca
+    iso_639_2: cat
 
 - model: authority.language
   pk: 27
   fields:
     language: Chamorro
-    alpha2: ch
-    alpha3: cha
+    iso_639_1: ch
+    iso_639_2: cha
 
 - model: authority.language
   pk: 28
   fields:
     language: Chechen
-    alpha2: ce
-    alpha3: che
+    iso_639_1: ce
+    iso_639_2: che
 
 - model: authority.language
   pk: 29
   fields:
     language: Chinese
-    alpha2: zh
-    alpha3: chi
+    iso_639_1: zh
+    iso_639_2: chi
 
 - model: authority.language
   pk: 30
   fields:
     language: Old Slavonic; Old Bulgarian
-    alpha2: cu
-    alpha3: chu
+    iso_639_1: cu
+    iso_639_2: chu
 
 - model: authority.language
   pk: 31
   fields:
     language: Chuvash
-    alpha2: cv
-    alpha3: chv
+    iso_639_1: cv
+    iso_639_2: chv
 
 - model: authority.language
   pk: 32
   fields:
     language: Cornish
-    alpha2: kw
-    alpha3: cor
+    iso_639_1: kw
+    iso_639_2: cor
 
 - model: authority.language
   pk: 33
   fields:
     language: Corsican
-    alpha2: co
-    alpha3: cos
+    iso_639_1: co
+    iso_639_2: cos
 
 - model: authority.language
   pk: 34
   fields:
     language: Cree
-    alpha2: cr
-    alpha3: cre
+    iso_639_1: cr
+    iso_639_2: cre
 
 - model: authority.language
   pk: 35
   fields:
     language: Czech
-    alpha2: cs
-    alpha3: cze
+    iso_639_1: cs
+    iso_639_2: cze
 
 - model: authority.language
   pk: 36
   fields:
     language: Danish
-    alpha2: da
-    alpha3: dan
+    iso_639_1: da
+    iso_639_2: dan
 
 - model: authority.language
   pk: 37
   fields:
     language: Divehi; Dhivehi; Maldivian
-    alpha2: dv
-    alpha3: div
+    iso_639_1: dv
+    iso_639_2: div
 
 - model: authority.language
   pk: 38
   fields:
     language: Dutch; Flemish
-    alpha2: nl
-    alpha3: dut
+    iso_639_1: nl
+    iso_639_2: dut
 
 - model: authority.language
   pk: 39
   fields:
     language: Dzongkha
-    alpha2: dz
-    alpha3: dzo
+    iso_639_1: dz
+    iso_639_2: dzo
 
 - model: authority.language
   pk: 40
   fields:
     language: English
-    alpha2: en
-    alpha3: eng
+    iso_639_1: en
+    iso_639_2: eng
 
 - model: authority.language
   pk: 41
   fields:
     language: Esperanto
-    alpha2: eo
-    alpha3: epo
+    iso_639_1: eo
+    iso_639_2: epo
 
 - model: authority.language
   pk: 42
   fields:
     language: Estonian
-    alpha2: et
-    alpha3: est
+    iso_639_1: et
+    iso_639_2: est
 
 - model: authority.language
   pk: 43
   fields:
     language: Ewe
-    alpha2: ee
-    alpha3: ewe
+    iso_639_1: ee
+    iso_639_2: ewe
 
 - model: authority.language
   pk: 44
   fields:
     language: Faroese
-    alpha2: fo
-    alpha3: fao
+    iso_639_1: fo
+    iso_639_2: fao
 
 - model: authority.language
   pk: 45
   fields:
     language: Fijian
-    alpha2: fj
-    alpha3: fij
+    iso_639_1: fj
+    iso_639_2: fij
 
 - model: authority.language
   pk: 46
   fields:
     language: Finnish
-    alpha2: fi
-    alpha3: fin
+    iso_639_1: fi
+    iso_639_2: fin
 
 - model: authority.language
   pk: 47
   fields:
     language: French
-    alpha2: fr
-    alpha3: fre
+    iso_639_1: fr
+    iso_639_2: fre
 
 - model: authority.language
   pk: 48
   fields:
     language: Western Frisian
-    alpha2: fy
-    alpha3: fry
+    iso_639_1: fy
+    iso_639_2: fry
 
 - model: authority.language
   pk: 49
   fields:
     language: Fulah
-    alpha2: ff
-    alpha3: ful
+    iso_639_1: ff
+    iso_639_2: ful
 
 - model: authority.language
   pk: 50
   fields:
     language: Georgian
-    alpha2: ka
-    alpha3: geo
+    iso_639_1: ka
+    iso_639_2: geo
 
 - model: authority.language
   pk: 51
   fields:
     language: German
-    alpha2: de
-    alpha3: ger
+    iso_639_1: de
+    iso_639_2: ger
 
 - model: authority.language
   pk: 52
   fields:
     language: Gaelic; Scottish Gaelic
-    alpha2: gd
-    alpha3: gla
+    iso_639_1: gd
+    iso_639_2: gla
 
 - model: authority.language
   pk: 53
   fields:
     language: Irish
-    alpha2: ga
-    alpha3: gle
+    iso_639_1: ga
+    iso_639_2: gle
 
 - model: authority.language
   pk: 54
   fields:
     language: Galician
-    alpha2: gl
-    alpha3: glg
+    iso_639_1: gl
+    iso_639_2: glg
 
 - model: authority.language
   pk: 55
   fields:
     language: Manx
-    alpha2: gv
-    alpha3: glv
+    iso_639_1: gv
+    iso_639_2: glv
 
 - model: authority.language
   pk: 56
   fields:
     language: Greek, Modern (1453-)
-    alpha2: el
-    alpha3: gre
+    iso_639_1: el
+    iso_639_2: gre
 
 - model: authority.language
   pk: 57
   fields:
     language: Guarani
-    alpha2: gn
-    alpha3: grn
+    iso_639_1: gn
+    iso_639_2: grn
 
 - model: authority.language
   pk: 58
   fields:
     language: Gujarati
-    alpha2: gu
-    alpha3: guj
+    iso_639_1: gu
+    iso_639_2: guj
 
 - model: authority.language
   pk: 59
   fields:
     language: Haitian; Haitian Creole
-    alpha2: ht
-    alpha3: hat
+    iso_639_1: ht
+    iso_639_2: hat
 
 - model: authority.language
   pk: 60
   fields:
     language: Hausa
-    alpha2: ha
-    alpha3: hau
+    iso_639_1: ha
+    iso_639_2: hau
 
 - model: authority.language
   pk: 61
   fields:
     language: Hebrew
-    alpha2: he
-    alpha3: heb
+    iso_639_1: he
+    iso_639_2: heb
 
 - model: authority.language
   pk: 62
   fields:
     language: Herero
-    alpha2: hz
-    alpha3: her
+    iso_639_1: hz
+    iso_639_2: her
 
 - model: authority.language
   pk: 63
   fields:
     language: Hindi
-    alpha2: hi
-    alpha3: hin
+    iso_639_1: hi
+    iso_639_2: hin
 
 - model: authority.language
   pk: 64
   fields:
     language: Hiri Motu
-    alpha2: ho
-    alpha3: hmo
+    iso_639_1: ho
+    iso_639_2: hmo
 
 - model: authority.language
   pk: 65
   fields:
     language: Croatian
-    alpha2: hr
-    alpha3: hrv
+    iso_639_1: hr
+    iso_639_2: hrv
 
 - model: authority.language
   pk: 66
   fields:
     language: Hungarian
-    alpha2: hu
-    alpha3: hun
+    iso_639_1: hu
+    iso_639_2: hun
 
 - model: authority.language
   pk: 67
   fields:
     language: Igbo
-    alpha2: ig
-    alpha3: ibo
+    iso_639_1: ig
+    iso_639_2: ibo
 
 - model: authority.language
   pk: 68
   fields:
     language: Icelandic
-    alpha2: is
-    alpha3: ice
+    iso_639_1: is
+    iso_639_2: ice
 
 - model: authority.language
   pk: 69
   fields:
     language: Ido
-    alpha2: io
-    alpha3: ido
+    iso_639_1: io
+    iso_639_2: ido
 
 - model: authority.language
   pk: 70
   fields:
     language: Sichuan Yi; Nuosu
-    alpha2: ii
-    alpha3: iii
+    iso_639_1: ii
+    iso_639_2: iii
 
 - model: authority.language
   pk: 71
   fields:
     language: Inuktitut
-    alpha2: iu
-    alpha3: iku
+    iso_639_1: iu
+    iso_639_2: iku
 
 - model: authority.language
   pk: 72
   fields:
     language: Interlingue; Occidental
-    alpha2: ie
-    alpha3: ile
+    iso_639_1: ie
+    iso_639_2: ile
 
 - model: authority.language
   pk: 73
   fields:
     language: Interlingua (International Auxiliary Language Association)
-    alpha2: ia
-    alpha3: ina
+    iso_639_1: ia
+    iso_639_2: ina
 
 - model: authority.language
   pk: 74
   fields:
     language: Indonesian
-    alpha2: id
-    alpha3: ind
+    iso_639_1: id
+    iso_639_2: ind
 
 - model: authority.language
   pk: 75
   fields:
     language: Inupiaq
-    alpha2: ik
-    alpha3: ipk
+    iso_639_1: ik
+    iso_639_2: ipk
 
 - model: authority.language
   pk: 76
   fields:
     language: Italian
-    alpha2: it
-    alpha3: ita
+    iso_639_1: it
+    iso_639_2: ita
 
 - model: authority.language
   pk: 77
   fields:
     language: Javanese
-    alpha2: jv
-    alpha3: jav
+    iso_639_1: jv
+    iso_639_2: jav
 
 - model: authority.language
   pk: 78
   fields:
     language: Japanese
-    alpha2: ja
-    alpha3: jpn
+    iso_639_1: ja
+    iso_639_2: jpn
 
 - model: authority.language
   pk: 79
   fields:
     language: Kalaallisut; Greenlandic
-    alpha2: kl
-    alpha3: kal
+    iso_639_1: kl
+    iso_639_2: kal
 
 - model: authority.language
   pk: 80
   fields:
     language: Kannada
-    alpha2: kn
-    alpha3: kan
+    iso_639_1: kn
+    iso_639_2: kan
 
 - model: authority.language
   pk: 81
   fields:
     language: Kashmiri
-    alpha2: ks
-    alpha3: kas
+    iso_639_1: ks
+    iso_639_2: kas
 
 - model: authority.language
   pk: 82
   fields:
     language: Kanuri
-    alpha2: kr
-    alpha3: kau
+    iso_639_1: kr
+    iso_639_2: kau
 
 - model: authority.language
   pk: 83
   fields:
     language: Kazakh
-    alpha2: kk
-    alpha3: kaz
+    iso_639_1: kk
+    iso_639_2: kaz
 
 - model: authority.language
   pk: 84
   fields:
     language: Central Khmer
-    alpha2: km
-    alpha3: khm
+    iso_639_1: km
+    iso_639_2: khm
 
 - model: authority.language
   pk: 85
   fields:
     language: Kikuyu; Gikuyu
-    alpha2: ki
-    alpha3: kik
+    iso_639_1: ki
+    iso_639_2: kik
 
 - model: authority.language
   pk: 86
   fields:
     language: Kinyarwanda
-    alpha2: rw
-    alpha3: kin
+    iso_639_1: rw
+    iso_639_2: kin
 
 - model: authority.language
   pk: 87
   fields:
     language: Kirghiz; Kyrgyz
-    alpha2: ky
-    alpha3: kir
+    iso_639_1: ky
+    iso_639_2: kir
 
 - model: authority.language
   pk: 88
   fields:
     language: Komi
-    alpha2: kv
-    alpha3: kom
+    iso_639_1: kv
+    iso_639_2: kom
 
 - model: authority.language
   pk: 89
   fields:
     language: Kongo
-    alpha2: kg
-    alpha3: kon
+    iso_639_1: kg
+    iso_639_2: kon
 
 - model: authority.language
   pk: 90
   fields:
     language: Korean
-    alpha2: ko
-    alpha3: kor
+    iso_639_1: ko
+    iso_639_2: kor
 
 - model: authority.language
   pk: 91
   fields:
     language: Kuanyama; Kwanyama
-    alpha2: kj
-    alpha3: kua
+    iso_639_1: kj
+    iso_639_2: kua
 
 - model: authority.language
   pk: 92
   fields:
     language: Kurdish
-    alpha2: ku
-    alpha3: kur
+    iso_639_1: ku
+    iso_639_2: kur
 
 - model: authority.language
   pk: 93
   fields:
     language: Lao
-    alpha2: lo
-    alpha3: lao
+    iso_639_1: lo
+    iso_639_2: lao
 
 - model: authority.language
   pk: 94
   fields:
     language: Latin
-    alpha2: la
-    alpha3: lat
+    iso_639_1: la
+    iso_639_2: lat
 
 - model: authority.language
   pk: 95
   fields:
     language: Latvian
-    alpha2: lv
-    alpha3: lav
+    iso_639_1: lv
+    iso_639_2: lav
 
 - model: authority.language
   pk: 96
   fields:
     language: Limburgan; Limburger; Limburgish
-    alpha2: li
-    alpha3: lim
+    iso_639_1: li
+    iso_639_2: lim
 
 - model: authority.language
   pk: 97
   fields:
     language: Lingala
-    alpha2: ln
-    alpha3: lin
+    iso_639_1: ln
+    iso_639_2: lin
 
 - model: authority.language
   pk: 98
   fields:
     language: Lithuanian
-    alpha2: lt
-    alpha3: lit
+    iso_639_1: lt
+    iso_639_2: lit
 
 - model: authority.language
   pk: 99
   fields:
     language: Luxembourgish; Letzeburgesch
-    alpha2: lb
-    alpha3: ltz
+    iso_639_1: lb
+    iso_639_2: ltz
 
 - model: authority.language
   pk: 100
   fields:
     language: Luba-Katanga
-    alpha2: lu
-    alpha3: lub
+    iso_639_1: lu
+    iso_639_2: lub
 
 - model: authority.language
   pk: 101
   fields:
     language: Ganda
-    alpha2: lg
-    alpha3: lug
+    iso_639_1: lg
+    iso_639_2: lug
 
 - model: authority.language
   pk: 102
   fields:
     language: Macedonian
-    alpha2: mk
-    alpha3: mac
+    iso_639_1: mk
+    iso_639_2: mac
 
 - model: authority.language
   pk: 103
   fields:
     language: Marshallese
-    alpha2: mh
-    alpha3: mah
+    iso_639_1: mh
+    iso_639_2: mah
 
 - model: authority.language
   pk: 104
   fields:
     language: Malayalam
-    alpha2: ml
-    alpha3: mal
+    iso_639_1: ml
+    iso_639_2: mal
 
 - model: authority.language
   pk: 105
   fields:
     language: Maori
-    alpha2: mi
-    alpha3: mao
+    iso_639_1: mi
+    iso_639_2: mao
 
 - model: authority.language
   pk: 106
   fields:
     language: Marathi
-    alpha2: mr
-    alpha3: mar
+    iso_639_1: mr
+    iso_639_2: mar
 
 - model: authority.language
   pk: 107
   fields:
     language: Malay
-    alpha2: ms
-    alpha3: may
+    iso_639_1: ms
+    iso_639_2: may
 
 - model: authority.language
   pk: 108
   fields:
     language: Malagasy
-    alpha2: mg
-    alpha3: mlg
+    iso_639_1: mg
+    iso_639_2: mlg
 
 - model: authority.language
   pk: 109
   fields:
     language: Maltese
-    alpha2: mt
-    alpha3: mlt
+    iso_639_1: mt
+    iso_639_2: mlt
 
 - model: authority.language
   pk: 110
   fields:
     language: Mongolian
-    alpha2: mn
-    alpha3: mon
+    iso_639_1: mn
+    iso_639_2: mon
 
 - model: authority.language
   pk: 111
   fields:
     language: Nauru
-    alpha2: na
-    alpha3: nau
+    iso_639_1: na
+    iso_639_2: nau
 
 - model: authority.language
   pk: 112
   fields:
     language: Navajo; Navaho
-    alpha2: nv
-    alpha3: nav
+    iso_639_1: nv
+    iso_639_2: nav
 
 - model: authority.language
   pk: 113
   fields:
     language: Ndebele, South; South Ndebele
-    alpha2: nr
-    alpha3: nbl
+    iso_639_1: nr
+    iso_639_2: nbl
 
 - model: authority.language
   pk: 114
   fields:
     language: Ndebele, North; North Ndebele
-    alpha2: nd
-    alpha3: nde
+    iso_639_1: nd
+    iso_639_2: nde
 
 - model: authority.language
   pk: 115
   fields:
     language: Ndonga
-    alpha2: ng
-    alpha3: ndo
+    iso_639_1: ng
+    iso_639_2: ndo
 
 - model: authority.language
   pk: 116
   fields:
     language: Nepali
-    alpha2: ne
-    alpha3: nep
+    iso_639_1: ne
+    iso_639_2: nep
 
 - model: authority.language
   pk: 117
   fields:
     language: Norwegian Nynorsk; Nynorsk, Norwegian
-    alpha2: nn
-    alpha3: nno
+    iso_639_1: nn
+    iso_639_2: nno
 
 - model: authority.language
   pk: 118
   fields:
     language: Bokm√•l, Norwegian; Norwegian Bokm√•l
-    alpha2: nb
-    alpha3: nob
+    iso_639_1: nb
+    iso_639_2: nob
 
 - model: authority.language
   pk: 119
   fields:
     language: Norwegian
-    alpha2: no
-    alpha3: nor
+    iso_639_1: no
+    iso_639_2: nor
 
 - model: authority.language
   pk: 120
   fields:
     language: Chichewa; Chewa; Nyanja
-    alpha2: ny
-    alpha3: nya
+    iso_639_1: ny
+    iso_639_2: nya
 
 - model: authority.language
   pk: 121
   fields:
     language: Occitan (post 1500); Proven√ßal
-    alpha2: oc
-    alpha3: oci
+    iso_639_1: oc
+    iso_639_2: oci
 
 - model: authority.language
   pk: 122
   fields:
     language: Ojibwa
-    alpha2: oj
-    alpha3: oji
+    iso_639_1: oj
+    iso_639_2: oji
 
 - model: authority.language
   pk: 123
   fields:
     language: Oriya
-    alpha2: or
-    alpha3: ori
+    iso_639_1: or
+    iso_639_2: ori
 
 - model: authority.language
   pk: 124
   fields:
     language: Oromo
-    alpha2: om
-    alpha3: orm
+    iso_639_1: om
+    iso_639_2: orm
 
 - model: authority.language
   pk: 125
   fields:
     language: Ossetian; Ossetic
-    alpha2: os
-    alpha3: oss
+    iso_639_1: os
+    iso_639_2: oss
 
 - model: authority.language
   pk: 126
   fields:
     language: Panjabi; Punjabi
-    alpha2: pa
-    alpha3: pan
+    iso_639_1: pa
+    iso_639_2: pan
 
 - model: authority.language
   pk: 127
   fields:
     language: Persian
-    alpha2: fa
-    alpha3: per
+    iso_639_1: fa
+    iso_639_2: per
 
 - model: authority.language
   pk: 128
   fields:
     language: Pali
-    alpha2: pi
-    alpha3: pli
+    iso_639_1: pi
+    iso_639_2: pli
 
 - model: authority.language
   pk: 129
   fields:
     language: Polish
-    alpha2: pl
-    alpha3: pol
+    iso_639_1: pl
+    iso_639_2: pol
 
 - model: authority.language
   pk: 130
   fields:
     language: Portuguese
-    alpha2: pt
-    alpha3: por
+    iso_639_1: pt
+    iso_639_2: por
 
 - model: authority.language
   pk: 131
   fields:
     language: Pushto; Pashto
-    alpha2: ps
-    alpha3: pus
+    iso_639_1: ps
+    iso_639_2: pus
 
 - model: authority.language
   pk: 132
   fields:
     language: Quechua
-    alpha2: qu
-    alpha3: que
+    iso_639_1: qu
+    iso_639_2: que
 
 - model: authority.language
   pk: 133
   fields:
     language: Romansh
-    alpha2: rm
-    alpha3: roh
+    iso_639_1: rm
+    iso_639_2: roh
 
 - model: authority.language
   pk: 134
   fields:
     language: Romanian; Moldavian; Moldovan
-    alpha2: ro
-    alpha3: rum
+    iso_639_1: ro
+    iso_639_2: rum
 
 - model: authority.language
   pk: 135
   fields:
     language: Rundi
-    alpha2: rn
-    alpha3: run
+    iso_639_1: rn
+    iso_639_2: run
 
 - model: authority.language
   pk: 136
   fields:
     language: Russian
-    alpha2: ru
-    alpha3: rus
+    iso_639_1: ru
+    iso_639_2: rus
 
 - model: authority.language
   pk: 137
   fields:
     language: Sango
-    alpha2: sg
-    alpha3: sag
+    iso_639_1: sg
+    iso_639_2: sag
 
 - model: authority.language
   pk: 138
   fields:
     language: Sanskrit
-    alpha2: sa
-    alpha3: san
+    iso_639_1: sa
+    iso_639_2: san
 
 - model: authority.language
   pk: 139
   fields:
     language: Sinhala; Sinhalese
-    alpha2: si
-    alpha3: sin
+    iso_639_1: si
+    iso_639_2: sin
 
 - model: authority.language
   pk: 140
   fields:
     language: Slovak
-    alpha2: sk
-    alpha3: slo
+    iso_639_1: sk
+    iso_639_2: slo
 
 - model: authority.language
   pk: 141
   fields:
     language: Slovenian
-    alpha2: sl
-    alpha3: slv
+    iso_639_1: sl
+    iso_639_2: slv
 
 - model: authority.language
   pk: 142
   fields:
     language: Northern Sami
-    alpha2: se
-    alpha3: sme
+    iso_639_1: se
+    iso_639_2: sme
 
 - model: authority.language
   pk: 143
   fields:
     language: Samoan
-    alpha2: sm
-    alpha3: smo
+    iso_639_1: sm
+    iso_639_2: smo
 
 - model: authority.language
   pk: 144
   fields:
     language: Shona
-    alpha2: sn
-    alpha3: sna
+    iso_639_1: sn
+    iso_639_2: sna
 
 - model: authority.language
   pk: 145
   fields:
     language: Sindhi
-    alpha2: sd
-    alpha3: snd
+    iso_639_1: sd
+    iso_639_2: snd
 
 - model: authority.language
   pk: 146
   fields:
     language: Somali
-    alpha2: so
-    alpha3: som
+    iso_639_1: so
+    iso_639_2: som
 
 - model: authority.language
   pk: 147
   fields:
     language: Sotho, Southern
-    alpha2: st
-    alpha3: sot
+    iso_639_1: st
+    iso_639_2: sot
 
 - model: authority.language
   pk: 148
   fields:
     language: Spanish; Castilian
-    alpha2: es
-    alpha3: spa
+    iso_639_1: es
+    iso_639_2: spa
 
 - model: authority.language
   pk: 149
   fields:
     language: Sardinian
-    alpha2: sc
-    alpha3: srd
+    iso_639_1: sc
+    iso_639_2: srd
 
 - model: authority.language
   pk: 150
   fields:
     language: Serbian
-    alpha2: sr
-    alpha3: srp
+    iso_639_1: sr
+    iso_639_2: srp
 
 - model: authority.language
   pk: 151
   fields:
     language: Swati
-    alpha2: ss
-    alpha3: ssw
+    iso_639_1: ss
+    iso_639_2: ssw
 
 - model: authority.language
   pk: 152
   fields:
     language: Sundanese
-    alpha2: su
-    alpha3: sun
+    iso_639_1: su
+    iso_639_2: sun
 
 - model: authority.language
   pk: 153
   fields:
     language: Swahili
-    alpha2: sw
-    alpha3: swa
+    iso_639_1: sw
+    iso_639_2: swa
 
 - model: authority.language
   pk: 154
   fields:
     language: Swedish
-    alpha2: sv
-    alpha3: swe
+    iso_639_1: sv
+    iso_639_2: swe
 
 - model: authority.language
   pk: 155
   fields:
     language: Tahitian
-    alpha2: ty
-    alpha3: tah
+    iso_639_1: ty
+    iso_639_2: tah
 
 - model: authority.language
   pk: 156
   fields:
     language: Tamil
-    alpha2: ta
-    alpha3: tam
+    iso_639_1: ta
+    iso_639_2: tam
 
 - model: authority.language
   pk: 157
   fields:
     language: Tatar
-    alpha2: tt
-    alpha3: tat
+    iso_639_1: tt
+    iso_639_2: tat
 
 - model: authority.language
   pk: 158
   fields:
     language: Telugu
-    alpha2: te
-    alpha3: tel
+    iso_639_1: te
+    iso_639_2: tel
 
 - model: authority.language
   pk: 159
   fields:
     language: Tajik
-    alpha2: tg
-    alpha3: tgk
+    iso_639_1: tg
+    iso_639_2: tgk
 
 - model: authority.language
   pk: 160
   fields:
     language: Tagalog
-    alpha2: tl
-    alpha3: tgl
+    iso_639_1: tl
+    iso_639_2: tgl
 
 - model: authority.language
   pk: 161
   fields:
     language: Thai
-    alpha2: th
-    alpha3: tha
+    iso_639_1: th
+    iso_639_2: tha
 
 - model: authority.language
   pk: 162
   fields:
     language: Tibetan
-    alpha2: bo
-    alpha3: tib
+    iso_639_1: bo
+    iso_639_2: tib
 
 - model: authority.language
   pk: 163
   fields:
     language: Tigrinya
-    alpha2: ti
-    alpha3: tir
+    iso_639_1: ti
+    iso_639_2: tir
 
 - model: authority.language
   pk: 164
   fields:
     language: Tonga (Tonga Islands)
-    alpha2: to
-    alpha3: ton
+    iso_639_1: to
+    iso_639_2: ton
 
 - model: authority.language
   pk: 165
   fields:
     language: Tswana
-    alpha2: tn
-    alpha3: tsn
+    iso_639_1: tn
+    iso_639_2: tsn
 
 - model: authority.language
   pk: 166
   fields:
     language: Tsonga
-    alpha2: ts
-    alpha3: tso
+    iso_639_1: ts
+    iso_639_2: tso
 
 - model: authority.language
   pk: 167
   fields:
     language: Turkmen
-    alpha2: tk
-    alpha3: tuk
+    iso_639_1: tk
+    iso_639_2: tuk
 
 - model: authority.language
   pk: 168
   fields:
     language: Turkish
-    alpha2: tr
-    alpha3: tur
+    iso_639_1: tr
+    iso_639_2: tur
 
 - model: authority.language
   pk: 169
   fields:
     language: Twi
-    alpha2: tw
-    alpha3: twi
+    iso_639_1: tw
+    iso_639_2: twi
 
 - model: authority.language
   pk: 170
   fields:
     language: Uighur; Uyghur
-    alpha2: ug
-    alpha3: uig
+    iso_639_1: ug
+    iso_639_2: uig
 
 - model: authority.language
   pk: 171
   fields:
     language: Ukrainian
-    alpha2: uk
-    alpha3: ukr
+    iso_639_1: uk
+    iso_639_2: ukr
 
 - model: authority.language
   pk: 172
   fields:
     language: Urdu
-    alpha2: ur
-    alpha3: urd
+    iso_639_1: ur
+    iso_639_2: urd
 
 - model: authority.language
   pk: 173
   fields:
     language: Uzbek
-    alpha2: uz
-    alpha3: uzb
+    iso_639_1: uz
+    iso_639_2: uzb
 
 - model: authority.language
   pk: 174
   fields:
     language: Venda
-    alpha2: ve
-    alpha3: ven
+    iso_639_1: ve
+    iso_639_2: ven
 
 - model: authority.language
   pk: 175
   fields:
     language: Vietnamese
-    alpha2: vi
-    alpha3: vie
+    iso_639_1: vi
+    iso_639_2: vie
 
 - model: authority.language
   pk: 176
   fields:
     language: Volap√ºk
-    alpha2: vo
-    alpha3: vol
+    iso_639_1: vo
+    iso_639_2: vol
 
 - model: authority.language
   pk: 177
   fields:
     language: Welsh
-    alpha2: cy
-    alpha3: wel
+    iso_639_1: cy
+    iso_639_2: wel
 
 - model: authority.language
   pk: 178
   fields:
     language: Walloon
-    alpha2: wa
-    alpha3: wln
+    iso_639_1: wa
+    iso_639_2: wln
 
 - model: authority.language
   pk: 179
   fields:
     language: Wolof
-    alpha2: wo
-    alpha3: wol
+    iso_639_1: wo
+    iso_639_2: wol
 
 - model: authority.language
   pk: 180
   fields:
     language: Xhosa
-    alpha2: xh
-    alpha3: xho
+    iso_639_1: xh
+    iso_639_2: xho
 
 - model: authority.language
   pk: 181
   fields:
     language: Yiddish
-    alpha2: yi
-    alpha3: yid
+    iso_639_1: yi
+    iso_639_2: yid
 
 - model: authority.language
   pk: 182
   fields:
     language: Yoruba
-    alpha2: yo
-    alpha3: yor
+    iso_639_1: yo
+    iso_639_2: yor
 
 - model: authority.language
   pk: 183
   fields:
     language: Zhuang; Chuang
-    alpha2: za
-    alpha3: zha
+    iso_639_1: za
+    iso_639_2: zha
 
 - model: authority.language
   pk: 184
   fields:
     language: Zulu
-    alpha2: zu
-    alpha3: zul
+    iso_639_1: zu
+    iso_639_2: zul

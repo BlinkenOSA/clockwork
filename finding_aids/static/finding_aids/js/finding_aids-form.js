@@ -16,6 +16,9 @@ $( "#id_original_locale" ).change(function() {
     changeflag();
 });
 
+subformCreate('associated_people');
+
+
 $(document).on('change', '#id_folder_no_select', function() {
 	$('#id_folder_no').val($('#id_folder_no_select').val());
 	calculateItemNumber();

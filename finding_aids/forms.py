@@ -1,12 +1,14 @@
 from django.forms import ModelChoiceField, Form, ModelForm, Textarea
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
+from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
 from archival_unit.widgets import ArchivalUnitSeriesSelect2Widget
+from authority.models import Person
 
 from controlled_list.models import Locale
-from finding_aids.models import FindingAidsEntity
+from finding_aids.models import FindingAidsEntity, FindingAidsEntityAssociatedPerson
 
 IMG_FLAG = ' <span class="flag"></span>'
 
@@ -37,4 +39,15 @@ class FindingAidsForm(ModelForm):
             'date_from': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD',
             'date_to': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD'
         }
+
+
+class FindingAidsAssociatedPeopleInline(InlineFormSet):
+    extra = 1
+    model = FindingAidsEntityAssociatedPerson
+    fields = '__all__'
+    can_delete = True
+    prefix = 'associated_people'
+
+
+
 

@@ -3,10 +3,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext
 from django.views.generic import FormView, ListView, TemplateView, CreateView, UpdateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from extra_views import NamedFormsetsMixin, CreateWithInlinesView
 from fm.views import JSONResponseMixin
 
+from clockwork.mixins import InlineSuccessMessageMixin
 from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm
+from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm, FindingAidsAssociatedPeopleInline
 from finding_aids.models import FindingAidsEntity
 
 
@@ -65,12 +67,14 @@ class FindingAidsInContainerListJson(BaseDatatableView):
         return json_array
 
 
-class FindingAidsCreate(CreateView):
+class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsForm
     template_name = 'finding_aids/container_view/form.html'
     success_url = reverse_lazy('finding_aids:list')
     success_message = ugettext("%(reference_code)s was created successfully")
+    inlines = [FindingAidsAssociatedPeopleInline]
+    inlines_names = ['associated_people']
 
     def get_context_data(self, **kwargs):
         context = super(FindingAidsCreate, self).get_context_data(**kwargs)
