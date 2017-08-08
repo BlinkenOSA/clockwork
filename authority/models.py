@@ -42,7 +42,7 @@ class Place(models.Model):
     place = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.country
+        return self.place
 
     class Meta:
         db_table = 'authority_places'
@@ -63,11 +63,12 @@ class Person(models.Model):
     class Meta:
         db_table = 'authority_people'
         ordering = ['last_name', 'first_name']
+        unique_together = ('last_name', 'first_name')
 
 
 class Corporation(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=300)
+    name = models.CharField(unique=True, max_length=250)
     wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=150, blank=True, null=True)
     other_url = models.CharField(max_length=150, blank=True, null=True)
@@ -88,7 +89,7 @@ class Genre(models.Model):
     other_url = models.CharField(max_length=150, blank=True, null=True)
 
     def __unicode__(self):
-        return self.type
+        return self.genre
 
     class Meta:
         db_table = 'authority_genres'
@@ -103,7 +104,7 @@ class Subject(models.Model):
     other_url = models.CharField(max_length=150, blank=True, null=True)
 
     def __unicode__(self):
-        return self.type
+        return self.subject
 
     class Meta:
         db_table = 'authority_subjects'

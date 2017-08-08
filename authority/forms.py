@@ -1,0 +1,77 @@
+from django.forms import ModelForm
+
+from authority.models import Country, Corporation, Person, Language, Place, Subject, Genre
+
+
+class CountryForm(ModelForm):
+    class Meta:
+        model = Country
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL'
+        }
+
+
+class LanguageForm(ModelForm):
+    class Meta:
+        model = Language
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL'
+        }
+
+
+class CorporationForm(ModelForm):
+    class Meta:
+        model = Corporation
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL',
+            'other_url': 'Other URL'
+        }
+
+
+class PersonForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL',
+            'other_url': 'Other URL'
+        }
+
+
+class PlaceForm(ModelForm):
+    class Meta:
+        model = Place
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL'
+        }
+
+
+class GenreForm(ModelForm):
+    class Meta:
+        model = Genre
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL',
+            'other_url': 'Other URL'
+        }
+
+
+class SubjectForm(ModelForm):
+    class Meta:
+        model = Subject
+        fields = '__all__'
+        labels = {
+            'authority_url': 'Authority URL',
+            'wiki_url': 'Wikipedia URL',
+            'other_url': 'Other URL'
+        }

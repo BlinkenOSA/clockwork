@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+<form role="form" class="form" method="POST" enctype="multipart/form-data" action>
+    {% include 'nonfield-errors.html' %}
+    {% csrf_token %}
+    <fieldset>
+        <div class="col-md-12">
+            {% bootstrap_field form.genre %}
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="col-md-4">
+            {% bootstrap_field form.authority_url %}
+        </div>
+        <div class="col-md-4">
+            {% bootstrap_field form.wiki_url %}
+        </div>
+        <div class="col-md-4">
+            {% bootstrap_field form.other_url %}
+        </div>
+    </fieldset>
+</form>

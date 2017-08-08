@@ -132,7 +132,7 @@
                         </a>
                     </li>
 
-                    <li class="treeview {% if url_name == 'corporation' or url_name == 'country' or url_name == 'person' or url_name == 'place' or url_name == 'subject' %}active{% endif %}">
+                    <li class="treeview {% if 'authority' in request.path %}active{% endif %}">
                         <a href="#">
                             <i class="fa fa-list-alt"></i>
                             <span>{% trans 'Lists' %}</span>
@@ -141,7 +141,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{% if url_name == 'authority' %}active{% endif %}">
+                            <li class="{% if 'authority' in request.path %}active{% endif %}">
                                 <a href="#">
                                     {% trans 'Authority Lists' %}
                                     <span class="pull-right-container">
@@ -149,28 +149,46 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i>
+                                    <li class="{% if 'corporation' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:corporation_list' %}">
+                                            <i class="fa fa-building-o"></i>
                                             <span>{% trans 'Corporations' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i>
+                                    <li class="{% if 'country' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:country_list' %}">
+                                            <i class="fa fa-globe"></i>
                                             <span>{% trans 'Countries' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i>
+                                    <li class="{% if 'genre' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:genre_list' %}">
+                                            <i class="fa fa-shield"></i>
+                                            <span>{% trans 'Genres' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'language' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:language_list' %}">
+                                            <i class="fa fa-language"></i>
+                                            <span>{% trans 'Languages' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'person' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:person_list' %}">
+                                            <i class="fa fa-group"></i>
                                             <span>{% trans 'People' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i>
+                                    <li class="{% if 'place' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:place_list' %}">
+                                            <i class="fa fa-map-marker"></i>
                                             <span>{% trans 'Places' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'subject' in request.path %}active{% endif %}">
+                                        <a href="{% url 'authority:subject_list' %}">
+                                            <i class="fa fa-bookmark"></i>
+                                            <span>{% trans 'Subjects' %}</span>
                                         </a>
                                     </li>
                                 </ul>
