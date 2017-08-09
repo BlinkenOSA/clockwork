@@ -1,6 +1,7 @@
 from django.forms import ModelForm
+from extra_views import InlineFormSet
 
-from authority.models import Country, Corporation, Person, Language, Place, Subject, Genre
+from authority.models import Country, Corporation, Person, Language, Place, Subject, Genre, PersonOtherFormat
 
 
 class CountryForm(ModelForm):
@@ -43,6 +44,14 @@ class PersonForm(ModelForm):
             'wiki_url': 'Wikipedia URL',
             'other_url': 'Other URL'
         }
+
+
+class PersonOtherNamesInLine(InlineFormSet):
+    extra = 1
+    model = PersonOtherFormat
+    fields = '__all__'
+    can_delete = True
+    prefix = 'people_other_names'
 
 
 class PlaceForm(ModelForm):

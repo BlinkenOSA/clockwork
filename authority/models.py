@@ -66,6 +66,19 @@ class Person(models.Model):
         unique_together = ('last_name', 'first_name')
 
 
+class PersonOtherFormat(models.Model):
+    id = models.AutoField(primary_key=True)
+    person = models.ForeignKey('authority.Person', on_delete=models.CASCADE)
+    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'authority_people_other_formats'
+        ordering = ['last_name', 'first_name']
+        unique_together = ('last_name', 'first_name')
+
+
 class Corporation(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=250)

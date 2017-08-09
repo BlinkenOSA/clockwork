@@ -35,8 +35,11 @@ def update_container_numbers(sender, **kwargs):
         containers = Container.objects.filter(archival_unit=kwargs['instance'].archival_unit).order_by('container_no')
     elif isinstance(kwargs['instance'], ArchivalUnit):
         containers = Container.objects.filter(archival_unit=kwargs['instance']).order_by('container_no')
+    else:
+        containers = None
 
-    for container in containers:
-        container.container_no = container_no
-        container_no += 1
-        container.save()
+    if containers:
+        for container in containers:
+            container.container_no = container_no
+            container_no += 1
+            container.save()

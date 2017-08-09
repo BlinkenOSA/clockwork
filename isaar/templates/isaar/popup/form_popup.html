@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load bootstrap3 %}
+
+<script>
+    $('.django-select2').djangoSelect2();
+</script>
+
+<form role="form" class="form" method="POST" enctype="multipart/form-data" action>
+    {% csrf_token %}
+    <div class="nav-tabs-custom">
+        <ul id="isaarTab" class="nav nav-tabs bordered">
+            <li class="active">
+                <a href="#t0" data-toggle="tab">Required Values</a>
+            </li>
+            <li>
+                <a href="#t1" data-toggle="tab">Identity</a>
+            </li>
+            <li>
+                <a href="#t2" data-toggle="tab">Description</a>
+            </li>
+            <li>
+                <a href="#t3" data-toggle="tab">Control</a>
+            </li>
+        </ul>
+
+        <div class="tab-content padding-10">
+            <div class="tab-pane fade active in" id="t0">
+                {% include 'isaar/form/form_tab01.html' %}
+            </div>
+            <div class="tab-pane fade" id="t1">
+                {% include 'isaar/form/form_tab02.html' %}
+            </div>
+            <div class="tab-pane fade" id="t2">
+                {% include 'isaar/form/form_tab03.html' %}
+            </div>
+            <div class="tab-pane fade" id="t3">
+                {% include 'isaar/form/form_tab04.html' %}
+            </div>
+        </div>
+    </div>
+</form>

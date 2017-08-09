@@ -9,7 +9,6 @@ class InlineSuccessMessageMixin(object):
     success_message = ''
 
     def forms_valid(self, form, formset):
-        print "something"
         response = super(InlineSuccessMessageMixin, self).forms_valid(form, formset)
         success_message = self.get_success_message(form.cleaned_data)
         if success_message:

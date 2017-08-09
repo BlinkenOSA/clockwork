@@ -6,10 +6,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from extra_views import NamedFormsetsMixin
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from authority.forms import PersonForm
+from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
+from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
 
 
 class PersonList(TemplateView):
@@ -51,19 +53,23 @@ class PersonListJson(BaseDatatableView):
         return json_array
 
 
-class PersonCreate(AjaxCreateView):
+class PersonCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
     form_class = PersonForm
     model = Person
     template_name = 'authority/person/form.html'
+    inlines = [PersonOtherNamesInLine]
+    inlines_names = ['people_other_names']
 
     def get_response_message(self):
         return ugettext("Person: %s was created successfully!") % self.object
 
 
-class PersonUpdate(AjaxUpdateView):
+class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = PersonForm
     model = Person
     template_name = 'authority/person/form.html'
+    inlines = [PersonOtherNamesInLine]
+    inlines_names = ['people_other_names']
 
     def get_response_message(self):
         return ugettext("Person: %s was updated successfully!") % self.object

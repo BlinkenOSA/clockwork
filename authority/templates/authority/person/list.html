@@ -4,6 +4,9 @@
 {% load i18n %}
 
 {% block js_page %}
+    <script src="{% static 'thirdparty/jquery.form/jquery.form.js' %}"></script>
+    <script src="{% static 'thirdparty/django-dynamic-formset/jquery.formset.js'%}"></script>
+    <script src="{% static 'js/subform.js' %}"></script>
     <script src="{% static 'person/js/person.js' %}"></script>
 {% endblock %}
 

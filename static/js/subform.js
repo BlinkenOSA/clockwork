@@ -12,6 +12,6 @@ var subformCreate = function(prefix) {
         deleteCssClass: deleteCssClass,
         formCssClass: formCssClass
     })
-};
 
-$('.delete-row-hidden').hide();
+    $('.delete-row-hidden').hide();
+};
