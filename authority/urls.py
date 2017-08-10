@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from authority.views.authority_query_views import VIAFTableView, WikipediaTableView
 from authority.views.country_views import *
 from authority.views.corporation_views import *
 from authority.views.language_views import *
@@ -57,5 +58,8 @@ urlpatterns = [
     url(r'^subject/update/(?P<pk>\d+)/$', SubjectUpdate.as_view(), name='subject_update'),
     url(r'^subject/delete/(?P<pk>\d+)/$', SubjectDelete.as_view(), name='subject_delete'),
     url(r'^subject/popup/create/$', SubjectPopupCreate.as_view(), name='subject_create_popup'),
-    url(r'^subject/datatable/$', SubjectListJson.as_view(), name='subject_list_json'),     
+    url(r'^subject/datatable/$', SubjectListJson.as_view(), name='subject_list_json'),
+
+    url(r'^authority_datatable/$', VIAFTableView.as_view(), name='viaf_list_json'),
+    url(r'^wikipedia_datatable/$', WikipediaTableView.as_view(), name='wiki_list_json'),
 ]
