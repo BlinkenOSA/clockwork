@@ -132,7 +132,7 @@
                         </a>
                     </li>
 
-                    <li class="treeview {% if 'authority' in request.path %}active{% endif %}">
+                    <li class="treeview {% if 'authority' in request.path or 'controlled_list' in request.path %}active{% endif %}">
                         <a href="#">
                             <i class="fa fa-list-alt"></i>
                             <span>{% trans 'Lists' %}</span>
@@ -193,7 +193,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{% if url_name == 'controlled_list' %}active{% endif %}">
+                            <li class="{% if 'controlled_list' in request.path %}active{% endif %}">
                                 <a href="#">
                                     {% trans 'Controlled Values' %}
                                     <span class="pull-right-container">
@@ -201,28 +201,76 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li class="">
+                                    <li class="{% if 'access_rights' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:access_rights_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Access Rights' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'building' in request.path %}active{% endif %}">
                                         <a href="{% url 'controlled_list:building_list' %}">
                                             <i class="fa fa-circle-o"></i>
                                             <span>{% trans 'Building' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
+                                    <li class="{% if 'carrier_type' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:carrier_type_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Carrier Types' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'corporation_role' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:corporation_role_list' %}">
                                             <i class="fa fa-circle-o"></i>
                                             <span>{% trans 'Corporation Roles' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
+                                    <li class="{% if 'extent_unit' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:extent_unit_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Extent Units' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'geo_role' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:geo_role_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Geo Roles' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'keyword' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:keyword_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Keywords' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'language_usage' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:language_usage_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Language Usages' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'person_role' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:person_role_list' %}">
                                             <i class="fa fa-circle-o"></i>
                                             <span>{% trans 'Person Roles' %}</span>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
+                                    <li class="{% if 'primary_type' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:primary_type_list' %}">
                                             <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Subjects' %}</span>
+                                            <span>{% trans 'Primary Types' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'reproduction_right' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:reproduction_right_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Reproduction Rights' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="{% if 'rights_restriction_reason' in request.path %}active{% endif %}">
+                                        <a href="{% url 'controlled_list:rights_restriction_reason_list' %}">
+                                            <i class="fa fa-circle-o"></i>
+                                            <span>{% trans 'Rights Restriction Reasons' %}</span>
                                         </a>
                                     </li>
                                 </ul>

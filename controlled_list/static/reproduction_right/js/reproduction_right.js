@@ -1,7 +1,7 @@
 /**
  *
  */
-var table = $('#access_rights_table').DataTable({
+var table = $('#reproduction_rights_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [

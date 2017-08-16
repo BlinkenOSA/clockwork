@@ -1,11 +1,11 @@
 /**
  *
  */
-var table = $('#access_rights_table').DataTable({
+var table = $('#keyword_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
-			{ "data": "statement"},
+			{ "data": "keyword"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
  	]
 });

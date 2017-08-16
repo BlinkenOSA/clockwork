@@ -1,11 +1,11 @@
 /**
  *
  */
-var table = $('#access_rights_table').DataTable({
+var table = $('#rights_restriction_reason_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
-			{ "data": "statement"},
+			{ "data": "reason"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
  	]
 });

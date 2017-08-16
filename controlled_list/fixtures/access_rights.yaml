@@ -1,14 +1,14 @@
-- model: controlled_list.AccessRights
+- model: controlled_list.AccessRight
   pk: 1
   fields:
     statement: Not restricted
 
-- model: controlled_list.AccessRights
+- model: controlled_list.AccessRight
   pk: 2
   fields:
     statement: Partially restricted
 
-- model: controlled_list.AccessRights
+- model: controlled_list.AccessRight
   pk: 3
   fields:
     statement: Restricted

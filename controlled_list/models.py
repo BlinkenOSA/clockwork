@@ -1,6 +1,17 @@
 from __future__ import unicode_literals
-
 from django.db import models
+
+
+class AccessRight(models.Model):
+    id = models.AutoField(primary_key=True)
+    statement = models.CharField(unique=True, max_length=200)
+
+    def __unicode__(self):
+        return self.statement
+
+    class Meta:
+        db_table = 'controlled_rights_access'
+        ordering = ['statement']
 
 
 class Building(models.Model):
@@ -15,19 +26,117 @@ class Building(models.Model):
         ordering = ['building']
 
 
-class AccessRights(models.Model):
+class CarrierType(models.Model):
     id = models.AutoField(primary_key=True)
-    statement = models.CharField(unique=True, max_length=200)
+    type = models.CharField(unique=True, max_length=100)
+    width = models.IntegerField()
+    old_id = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
-        return self.statement
+        return self.type
 
     class Meta:
-        db_table = 'controlled_rights_access'
-        ordering = ['statement']
+        db_table = 'controlled_carrier_types'
+        ordering = ['type']
 
 
-class ReproductionRights(models.Model):
+class CorporationRole(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_corporation_roles'
+        ordering = ['role']
+
+
+class ExtentUnit(models.Model):
+    id = models.AutoField(primary_key=True)
+    unit = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.unit
+
+    class Meta:
+        db_table = 'controlled_extent_units'
+        ordering = ['unit']
+
+
+class GeoRole(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_geo_roles'
+        ordering = ['role']
+
+
+class Keyword(models.Model):
+    id = models.AutoField(primary_key=True)
+    keyword = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_keywords'
+        ordering = ['keyword']
+
+
+class LanguageUsage(models.Model):
+    id = models.AutoField(primary_key=True)
+    usage = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_language_usages'
+        ordering = ['usage']
+
+
+class Locale(models.Model):
+    id = models.CharField(primary_key=True, max_length=2)
+    locale_name = models.CharField(unique=True, max_length=50)
+
+    def __unicode__(self):
+        return self.locale_name
+
+    class Meta:
+        db_table = 'controlled_locales'
+        ordering = ['locale_name']
+
+
+class PersonRole(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_person_roles'
+        ordering = ['role']
+
+
+class PrimaryType(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.CharField(unique=True, max_length=20)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_primary_types'
+        ordering = ['type']
+
+
+class ReproductionRight(models.Model):
     id = models.AutoField(primary_key=True)
     statement = models.CharField(unique=True, max_length=200)
 
@@ -49,113 +158,3 @@ class RightsRestrictionReason(models.Model):
     class Meta:
         db_table = 'controlled_rights_restriction_reason'
         ordering = ['reason']
-
-
-class ExtentUnit(models.Model):
-    id = models.AutoField(primary_key=True)
-    unit = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.unit
-
-    class Meta:
-        db_table = 'controlled_extent_units'
-        ordering = ['unit']
-
-
-class CarrierType(models.Model):
-    id = models.AutoField(primary_key=True)
-    type = models.CharField(unique=True, max_length=100)
-    width = models.IntegerField()
-    old_id = models.IntegerField(blank=True, null=True)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_carrier_types'
-        ordering = ['type']
-
-
-class Locale(models.Model):
-    id = models.CharField(primary_key=True, max_length=2)
-    locale_name = models.CharField(unique=True, max_length=50)
-
-    def __unicode__(self):
-        return self.locale_name
-
-    class Meta:
-        db_table = 'controlled_locales'
-        ordering = ['locale_name']
-
-
-class PrimaryType(models.Model):
-    id = models.AutoField(primary_key=True)
-    type = models.CharField(unique=True, max_length=20)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_primary_types'
-        ordering = ['type']
-
-
-class Keyword(models.Model):
-    id = models.AutoField(primary_key=True)
-    keyword = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_keywords'
-        ordering = ['keyword']
-
-
-class GeoRoles(models.Model):
-    id = models.AutoField(primary_key=True)
-    role = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_geo_roles'
-        ordering = ['role']
-
-
-class PersonRoles(models.Model):
-    id = models.AutoField(primary_key=True)
-    role = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_person_roles'
-        ordering = ['role']
-
-
-class CorporationRoles(models.Model):
-    id = models.AutoField(primary_key=True)
-    role = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_corporation_roles'
-        ordering = ['role']
-
-
-class LanguageUsage(models.Model):
-    id = models.AutoField(primary_key=True)
-    use = models.CharField(unique=True, max_length=100)
-
-    def __unicode__(self):
-        return self.type
-
-    class Meta:
-        db_table = 'controlled_language_usages'
-        ordering = ['use']
