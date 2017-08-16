@@ -4,12 +4,14 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from extra_views import NamedFormsetsMixin
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from authority.forms import CorporationForm
+from authority.forms import CorporationForm, CorporationOtherNamesInLine
 from authority.models import Corporation
+from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
 
 
 class CorporationList(TemplateView):
@@ -18,7 +20,7 @@ class CorporationList(TemplateView):
 
 class CorporationListJson(BaseDatatableView):
     model = Corporation
-    columns = ['id', 'name', 'action']
+    columns = ['id', 'name', 'authority_url', 'action']
     order_columns = ['name', '']
     max_display_length = 500
 
@@ -33,6 +35,9 @@ class CorporationListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/corporation/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(CorporationListJson, self).render_column(row, column)
 
@@ -48,19 +53,23 @@ class CorporationListJson(BaseDatatableView):
         return json_array
 
 
-class CorporationCreate(AjaxCreateView):
+class CorporationCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'
+    inlines = [CorporationOtherNamesInLine]
+    inlines_names = ['corporation_other_names']
 
     def get_response_message(self):
         return ugettext("Corporation: %s was created successfully!") % self.object.name
 
 
-class CorporationUpdate(AjaxUpdateView):
+class CorporationUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'
+    inlines = [CorporationOtherNamesInLine]
+    inlines_names = ['corporation_other_names']
 
     def get_response_message(self):
         return ugettext("Corporation: %s was updated successfully!") % self.object.name
@@ -77,15 +86,3 @@ class CorporationDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(CorporationDelete, self).delete(request, *args, **kwargs)
 
-
-class CorporationPopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Corporation
-    template_name = 'authority/corporation/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

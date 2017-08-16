@@ -5,10 +5,9 @@ var table = $('#genre_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
-			{ "data": "genre" },
-			{ "data": "authority_url" },
-			{ "data": "wiki_url" },
-		   	{ "data": "action", width: "100px", "class": "action_column" }
+			{ "data": "genre", "width": "30%" },
+			{ "data": "authority_url", "sortable": false },
+		   	{ "data": "action", width: "100px", "class": "action_column", "sortable": false }
  	]
 });
 

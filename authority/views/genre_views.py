@@ -18,7 +18,7 @@ class GenreList(TemplateView):
 
 class GenreListJson(BaseDatatableView):
     model = Genre
-    columns = ['id', 'genre', 'wiki_url', 'authority_url', 'action']
+    columns = ['id', 'genre', 'authority_url', 'action']
     order_columns = ['genre']
     max_display_length = 500
 
@@ -33,6 +33,9 @@ class GenreListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/genre/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(GenreListJson, self).render_column(row, column)
 
@@ -77,15 +80,3 @@ class GenreDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(GenreDelete, self).delete(request, *args, **kwargs)
 
-
-class GenrePopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Genre
-    template_name = 'authority/genre/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

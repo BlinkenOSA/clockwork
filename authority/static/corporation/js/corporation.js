@@ -6,7 +6,8 @@ var table = $('#corporation_table').DataTable({
 	"ajax": "datatable",
 	"columns": [
 			{ "data": "name"},
-		   	{ "data": "action", "class": "action_column" }
+			{ "data": "authority_url", "sortable": false },
+		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
  	]
 });
 

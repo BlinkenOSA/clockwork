@@ -40,6 +40,7 @@ class Place(models.Model):
     wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     place = models.CharField(unique=True, max_length=100)
+    other_url = models.CharField(max_length=150, blank=True, null=True)
 
     def __unicode__(self):
         return self.place
@@ -91,6 +92,17 @@ class Corporation(models.Model):
 
     class Meta:
         db_table = 'authority_corporations'
+        ordering = ['name']
+
+
+class CorporationOtherFormat(models.Model):
+    id = models.AutoField(primary_key=True)
+    corporation = models.ForeignKey('authority.Corporation', on_delete=models.CASCADE)
+    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250, unique=True)
+
+    class Meta:
+        db_table = 'authority_corporations_other_formats'
         ordering = ['name']
 
 

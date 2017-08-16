@@ -18,7 +18,7 @@ class CountryList(TemplateView):
 
 class CountryListJson(BaseDatatableView):
     model = Country
-    columns = ['id', 'country', 'alpha2', 'alpha3', 'action']
+    columns = ['id', 'country', 'authority_url', 'alpha2', 'alpha3', 'action']
     order_columns = ['country', 'alpha2', 'alpha3']
     max_display_length = 500
 
@@ -35,6 +35,9 @@ class CountryListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/country/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(CountryListJson, self).render_column(row, column)
 
@@ -79,15 +82,3 @@ class CountryDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(CountryDelete, self).delete(request, *args, **kwargs)
 
-
-class CountryPopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Country
-    template_name = 'authority/country/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

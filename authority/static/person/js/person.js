@@ -6,6 +6,7 @@ var table = $('#person_table').DataTable({
 	"ajax": "datatable",
 	"columns": [
 			{ "data": "person_name" },
+			{ "data": "authority_url", "sortable": false },
 		   	{ "data": "action", "class": "action_column" }
  	]
 });

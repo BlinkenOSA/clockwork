@@ -4,7 +4,12 @@
 {% load i18n %}
 
 {% block js_page %}
+    <script src="{% static 'thirdparty/jquery.form/jquery.form.js' %}"></script>
+    <script src="{% static 'thirdparty/django-dynamic-formset/jquery.formset.js'%}"></script>
+    <script src="{% static 'js/subform.js' %}"></script>
+
     <script src="{% static 'corporation/js/corporation.js' %}"></script>
+    <script src="{% static 'authority/js/authority-form.js' %}"></script>
 {% endblock %}
 
 {% block content-header %}
@@ -32,6 +37,7 @@
             <thead>
                 <tr>
                     <th>{% trans 'Name' %}</th>
+                    <th>{% trans 'Authority URL' %}</th>
                     <th>{% trans 'Actions' %}</th>
                 </tr>
             </thead>

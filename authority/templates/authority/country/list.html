@@ -5,6 +5,7 @@
 
 {% block js_page %}
     <script src="{% static 'country/js/country.js' %}"></script>
+    <script src="{% static 'authority/js/authority-form.js' %}"></script>
 {% endblock %}
 
 {% block content-header %}
@@ -32,6 +33,7 @@
             <thead>
                 <tr>
                     <th>{% trans 'Name' %}</th>
+                    <th>{% trans 'Authority URL' %}</th>
                     <th>{% trans 'Alpha-2' %}</th>
                     <th>{% trans 'Alpha-3' %}</th>
                     <th>{% trans 'Actions' %}</th>

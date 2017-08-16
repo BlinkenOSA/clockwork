@@ -6,9 +6,10 @@ var table = $('#country_table').DataTable({
 	"ajax": "datatable",
 	"columns": [
 			{ "data": "country"},
+			{ "data": "authority_url", "sortable": false},
  	       	{ "data": "alpha2", "width": "60px" },
  	       	{ "data": "alpha3", "width": "60px" },
-		   	{ "data": "action", "class": "action_column" }
+		   	{ "data": "action", "class": "action_column", "width": "100px", "sortable": false }
  	]
 });
 

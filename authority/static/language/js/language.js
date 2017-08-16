@@ -5,10 +5,11 @@ var table = $('#language_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
-			{ "data": "language" },
-			{ "data": "iso_639_1" },
-			{ "data": "iso_639_2" },
-		   	{ "data": "action", "class": "action_column" }
+			{ "data": "language", "width": "40%" },
+			{ "data": "authority_url", "sortable": false, "width": "20%" },
+			{ "data": "iso_639_1", "width": "10%"},
+			{ "data": "iso_639_2", "width": "10%" },
+		   	{ "data": "action", "width": "20%", "class": "action_column", "sortable": false }
  	]
 });
 

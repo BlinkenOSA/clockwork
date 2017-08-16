@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -7,7 +6,6 @@ from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin
-from fm.views import AjaxCreateView, AjaxUpdateView
 
 from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
@@ -20,7 +18,7 @@ class PersonList(TemplateView):
 
 class PersonListJson(BaseDatatableView):
     model = Person
-    columns = ['id', 'person_name', 'action']
+    columns = ['id', 'person_name', 'authority_url', 'action']
     order_columns = ['last_name', 'first_name']
     max_display_length = 500
 
@@ -38,6 +36,9 @@ class PersonListJson(BaseDatatableView):
             return render_to_string('authority/person/table_action_buttons.html', context={'id': row.id})
         elif column == 'person_name':
             return ', '.join([row.last_name, row.first_name])
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(PersonListJson, self).render_column(row, column)
 
@@ -85,16 +86,3 @@ class PersonDelete(DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(PersonDelete, self).delete(request, *args, **kwargs)
-
-
-class PersonPopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Person
-    template_name = 'authority/person/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

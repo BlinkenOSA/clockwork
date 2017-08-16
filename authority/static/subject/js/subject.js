@@ -6,8 +6,7 @@ var table = $('#subject_table').DataTable({
 	"ajax": "datatable",
 	"columns": [
 			{ "data": "subject" },
-			{ "data": "authority_url" },
-			{ "data": "wiki_url" },
+			{ "data": "authority_url", "sortable": false },
 		   	{ "data": "action", width: "100px", "class": "action_column" }
  	]
 });

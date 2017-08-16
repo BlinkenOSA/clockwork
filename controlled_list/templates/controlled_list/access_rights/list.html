@@ -1,0 +1,47 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block js_page %}
+    <script src="{% static 'corporation/js/corporation.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-list-alt"></i>&nbsp;&nbsp;{% trans 'Controlled List' %}
+        </li>
+        <li class="active">
+            {% trans 'Access Rights' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Access Rights' %}
+{% endblock %}
+
+{% block box-1-body %}
+        <table id="corporation_table" class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>{% trans 'Statement' %}</th>
+                    <th>{% trans 'Actions' %}</th>
+                </tr>
+            </thead>
+        </table>
+{% endblock %}
+
+{% block box-1-footer %}
+    <a class="btn btn-primary fm-create" href="{% url 'controlled_list:access_rights_create' %}"
+        data-fm-head="Create Access Rights" data-fm-callback="reloadTable">
+        <i class="fa fa-plus"></i>
+        {% trans 'Create' %}
+    </a>
+{% endblock %}

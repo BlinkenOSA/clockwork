@@ -18,7 +18,7 @@ class SubjectList(TemplateView):
 
 class SubjectListJson(BaseDatatableView):
     model = Subject
-    columns = ['id', 'subject', 'wiki_url', 'authority_url', 'action']
+    columns = ['id', 'subject', 'authority_url', 'action']
     order_columns = ['subject']
     max_display_length = 500
 
@@ -33,6 +33,9 @@ class SubjectListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/subject/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(SubjectListJson, self).render_column(row, column)
 
@@ -77,15 +80,3 @@ class SubjectDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(SubjectDelete, self).delete(request, *args, **kwargs)
 
-
-class SubjectPopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Subject
-    template_name = 'authority/subject/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.views.generic.edit import ModelFormMixin
-from extra_views.advanced import ProcessFormWithInlinesView, ModelFormWithInlinesMixin, NamedFormsetsMixin
+from extra_views.advanced import ProcessFormWithInlinesView, ModelFormWithInlinesMixin
 from fm.views import AjaxFormMixin
 from django.template.loader import render_to_string
 

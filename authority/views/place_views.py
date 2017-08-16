@@ -6,10 +6,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from extra_views import NamedFormsetsMixin
 from fm.views import AjaxCreateView, AjaxUpdateView
 
 from authority.forms import PlaceForm
 from authority.models import Place
+from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
 
 
 class PlaceList(TemplateView):
@@ -18,7 +20,7 @@ class PlaceList(TemplateView):
 
 class PlaceListJson(BaseDatatableView):
     model = Place
-    columns = ['id', 'place', 'wiki_url', 'authority_url', 'action']
+    columns = ['id', 'place', 'authority_url', 'action']
     order_columns = ['place']
     max_display_length = 500
 
@@ -33,6 +35,9 @@ class PlaceListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/place/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(PlaceListJson, self).render_column(row, column)
 
@@ -77,15 +82,3 @@ class PlaceDelete(DeleteView):
         messages.success(self.request, self.success_message)
         return super(PlaceDelete, self).delete(request, *args, **kwargs)
 
-
-class PlacePopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Place
-    template_name = 'authority/place/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }

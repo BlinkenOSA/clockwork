@@ -18,7 +18,7 @@ class LanguageList(TemplateView):
 
 class LanguageListJson(BaseDatatableView):
     model = Language
-    columns = ['id', 'language', 'iso_639_1', 'iso_639_2', 'action']
+    columns = ['id', 'language', 'authority_url', 'iso_639_1', 'iso_639_2', 'action']
     order_columns = ['language', 'iso_639_1', 'iso_639_2']
     max_display_length = 500
 
@@ -35,6 +35,9 @@ class LanguageListJson(BaseDatatableView):
     def render_column(self, row, column):
         if column == 'action':
             return render_to_string('authority/language/table_action_buttons.html', context={'id': row.id})
+        elif column == 'authority_url':
+            return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
+                if row.authority_url else None
         else:
             return super(LanguageListJson, self).render_column(row, column)
 
@@ -78,16 +81,3 @@ class LanguageDelete(DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(LanguageDelete, self).delete(request, *args, **kwargs)
-
-
-class LanguagePopupCreate(SuccessMessageMixin, AjaxCreateView):
-    model = Language
-    template_name = 'authority/language/form_popup.html'
-
-    def get_success_result(self):
-        return {
-            'status': 'ok',
-            'message': self.get_response_message(),
-            'entry_id': self.object.id,
-            'entry_name': self.object.name
-        }
