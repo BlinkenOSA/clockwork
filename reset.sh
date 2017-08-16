@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 rm ./*/migrations/00*.py
 rm ./*/migrations/00*.pyc
 
