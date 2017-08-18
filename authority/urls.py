@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from authority.views.authority_query_views import VIAFTableView, WikipediaTableView, LCSHTableView
+from authority.views.authority_query_views import *
 from authority.views.country_views import *
 from authority.views.corporation_views import *
 from authority.views.language_views import *

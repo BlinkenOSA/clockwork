@@ -59,6 +59,11 @@ class GenreCreate(AjaxCreateView):
     def get_response_message(self):
         return ugettext("Genre: %s was created successfully!") % self.object
 
+    def get_success_result(self):
+        results = super(GenreCreate, self).get_success_result()
+        results['entry_id'] = self.object.id
+        results['entry_name'] = self.object.genre
+        return results
 
 class GenreUpdate(AjaxUpdateView):
     form_class = GenreForm

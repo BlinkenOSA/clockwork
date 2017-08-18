@@ -53,6 +53,12 @@ class PersonRoleCreate(AjaxCreateView):
     def get_response_message(self):
         return ugettext("PersonRole: %s was created successfully!") % self.object.role
 
+    def get_success_result(self):
+        results = super(PersonRoleCreate, self).get_success_result()
+        results['entry_id'] = self.object.id,
+        results['entry_name'] = self.object.role
+        return results
+
 
 class PersonRoleUpdate(AjaxUpdateView):
     form_class = PersonRoleForm

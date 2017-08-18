@@ -8,7 +8,8 @@ from fm.views import JSONResponseMixin
 
 from clockwork.mixins import InlineSuccessMessageMixin
 from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm, FindingAidsAssociatedPeopleInline
+from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm, FindingAidsAssociatedPeopleInline, \
+    FindingAidsAssociatedCorporationInline, FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline
 from finding_aids.models import FindingAidsEntity
 
 
@@ -73,8 +74,9 @@ class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWit
     template_name = 'finding_aids/container_view/form.html'
     success_url = reverse_lazy('finding_aids:list')
     success_message = ugettext("%(reference_code)s was created successfully")
-    inlines = [FindingAidsAssociatedPeopleInline]
-    inlines_names = ['associated_people']
+    inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
+               FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline]
+    inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places']
 
     def get_context_data(self, **kwargs):
         context = super(FindingAidsCreate, self).get_context_data(**kwargs)

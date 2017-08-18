@@ -9,11 +9,24 @@
             'theme': "bootstrap",
             'ajax': {
                 'data': function (params) {
-                    return {
+                    var result = {
                         'term': params.term,
                         'page': params.page,
                         'field_id': $element.data('field_id')
                     };
+
+                    var dependentFields = $element.data('select2-dependent-fields')
+                    if (dependentFields) {
+                        dependentFields = dependentFields.trim().split(/\s+/)
+                        $.each(dependentFields, function (i, dependentField) {
+                            result[dependentField] = $('[name=' + dependentField + ']', $element.closest('form')).val()
+                            if (!result[dependentField]) {
+                                result[dependentField] = 0;
+                            }
+                        })
+                    }
+
+                    return result
                 },
                 'processResults': function (data) {
                     return {

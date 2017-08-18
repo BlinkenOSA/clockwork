@@ -45,7 +45,7 @@ class CorporationRole(models.Model):
     role = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.type
+        return self.role
 
     class Meta:
         db_table = 'controlled_corporation_roles'
@@ -69,7 +69,7 @@ class GeoRole(models.Model):
     role = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.type
+        return self.role
 
     class Meta:
         db_table = 'controlled_geo_roles'
@@ -81,7 +81,7 @@ class Keyword(models.Model):
     keyword = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.type
+        return self.keyword
 
     class Meta:
         db_table = 'controlled_keywords'
@@ -93,7 +93,7 @@ class LanguageUsage(models.Model):
     usage = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.type
+        return self.usage
 
     class Meta:
         db_table = 'controlled_language_usages'
@@ -117,7 +117,7 @@ class PersonRole(models.Model):
     role = models.CharField(unique=True, max_length=100)
 
     def __unicode__(self):
-        return self.type
+        return self.role
 
     class Meta:
         db_table = 'controlled_person_roles'

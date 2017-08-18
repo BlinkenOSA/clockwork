@@ -22,8 +22,8 @@ class Isad(models.Model):
     isaar = models.ManyToManyField('isaar.Isaar', blank=True)
     language = models.ManyToManyField('authority.Language')
     accruals = models.BooleanField(default=False)
-    access_rights = models.ForeignKey('controlled_list.AccessRights')
-    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRights')
+    access_rights = models.ForeignKey('controlled_list.AccessRight')
+    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight')
     rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason')
 
     # Identity

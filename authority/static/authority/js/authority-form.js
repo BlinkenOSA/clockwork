@@ -10,7 +10,7 @@ function authorityTablesInit(authority_type) {
 		'info'        : false,
 		'autoWidth'   : false,
 		"serverSide": true,
-		"ajax": "../viaf_datatable",
+		"ajax": "/authority/viaf_datatable",
 		"columns": [
 				{ "data": "viaf_id" },
 				{ "data": "name" },
@@ -26,7 +26,7 @@ function authorityTablesInit(authority_type) {
 		'info'        : false,
 		'autoWidth'   : false,
 		"serverSide": true,
-		"ajax": "../lcsh_datatable",
+		"ajax": "/authority/lcsh_datatable",
 		"columns": [
 				{ "data": "lcsh_id" },
 				{ "data": "name" },
@@ -42,7 +42,7 @@ function authorityTablesInit(authority_type) {
 		'info'        : false,
 		'autoWidth'   : false,
 		"serverSide": true,
-		"ajax": "../wikipedia_datatable",
+		"ajax": "/authority/wikipedia_datatable",
 		"columns": [
 				{ "data": "wiki_url" },
 				{ "data": "name" },
@@ -86,7 +86,7 @@ function authorityTablesInit(authority_type) {
 
 		if(query != " ") {
 			$(this).button('loading');
-			viaf_table.ajax.url( '../viaf_datatable?q=' + query + '&auth_type=' + authority_type).load(stopVIAFButton, true);
+			viaf_table.ajax.url( '/authority/viaf_datatable?q=' + query + '&auth_type=' + authority_type).load(stopVIAFButton, true);
 		}
 	});
 
@@ -107,7 +107,7 @@ function authorityTablesInit(authority_type) {
 
 		if(query != " ") {
 			$(this).button('loading');
-			lcsh_table.ajax.url( '../lcsh_datatable?q=' + query + '&auth_type=' + authority_type).load(stopLCSHButton, true);
+			lcsh_table.ajax.url( '/authority/lcsh_datatable?q=' + query + '&auth_type=' + authority_type).load(stopLCSHButton, true);
 		}
 	});
 
@@ -129,7 +129,7 @@ function authorityTablesInit(authority_type) {
 
 		if(query != " ") {
 			$(this).button('loading');
-			wiki_table.ajax.url( '../wikipedia_datatable?q=' + query).load(stopWikiButton, true);
+			wiki_table.ajax.url( '/authority/wikipedia_datatable?q=' + query).load(stopWikiButton, true);
 		}
 	});
 

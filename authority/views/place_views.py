@@ -61,6 +61,11 @@ class PlaceCreate(AjaxCreateView):
     def get_response_message(self):
         return ugettext("Place: %s was created successfully!") % self.object
 
+    def get_success_result(self):
+        results = super(PlaceCreate, self).get_success_result()
+        results['entry_id'] = self.object.id,
+        results['entry_name'] = self.object.place
+        return results
 
 class PlaceUpdate(AjaxUpdateView):
     form_class = PlaceForm

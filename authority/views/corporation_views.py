@@ -63,6 +63,11 @@ class CorporationCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
     def get_response_message(self):
         return ugettext("Corporation: %s was created successfully!") % self.object.name
 
+    def get_success_result(self):
+        results = super(CorporationCreate, self).get_success_result()
+        results['entry_id'] = self.object.id,
+        results['entry_name'] = self.object.name
+        return results
 
 class CorporationUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = CorporationForm

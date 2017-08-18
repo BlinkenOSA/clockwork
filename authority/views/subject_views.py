@@ -59,6 +59,12 @@ class SubjectCreate(AjaxCreateView):
     def get_response_message(self):
         return ugettext("Subject: %s was created successfully!") % self.object
 
+    def get_success_result(self):
+        results = super(SubjectCreate, self).get_success_result()
+        results['entry_id'] = self.object.id,
+        results['entry_name'] = self.object.subject
+        return results
+
 
 class SubjectUpdate(AjaxUpdateView):
     form_class = SubjectForm

@@ -4,7 +4,19 @@
 
 <fieldset>
     <div class="col-md-12">
-        {% include 'finding_aids/container_view/subform/subform_associated_people.html' %}
+        <div class="form-group">
+            <div class="input-group">
+                {% bootstrap_field form.genre %}
+                <div class="input-group-btn select2-addon">
+                    <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'authority:genre_create' %}"
+                        data-fm-head="<i class='fa fa-exchange'></i>Create Role" data-fm-callback="selectField">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:genre_list' %}" target="_blank">
+                        <i class="fa fa-shield"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
 </fieldset>

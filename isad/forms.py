@@ -6,8 +6,8 @@ from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
 from archival_unit.widgets import ArchivalUnitSelect2Widget
-from authority.widgets import LanguagesSelect2Widget
-from controlled_list.models import AccessRights, ReproductionRights, RightsRestrictionReason, ExtentUnit, CarrierType, \
+from authority.widgets import LanguageSelect2MultipleWidget
+from controlled_list.models import AccessRight, ReproductionRight, RightsRestrictionReason, ExtentUnit, CarrierType, \
     Locale
 from isaar.widgets import IsaarRecordsSelect2Widget
 from isad.models import Isad, IsadCreator, IsadExtent, IsadCarrier, IsadRelatedFindingAids, IsadLocationOfOriginals, \
@@ -29,9 +29,9 @@ class IsadArchivalUnitForm(Form):
 
 
 class IsadForm(ModelForm):
-    access_rights = ModelChoiceField(queryset=AccessRights.objects.all(),
+    access_rights = ModelChoiceField(queryset=AccessRight.objects.all(),
                                      empty_label=ugettext('- Choose Access Rights -'))
-    reproduction_rights = ModelChoiceField(queryset=ReproductionRights.objects.all(),
+    reproduction_rights = ModelChoiceField(queryset=ReproductionRight.objects.all(),
                                            empty_label=ugettext('- Choose Reproduction Rights -'))
     rights_restriction_reason = ModelChoiceField(queryset=RightsRestrictionReason.objects.all(),
                                                  empty_label=ugettext('- Choose Restriction Reason -'))
@@ -72,7 +72,7 @@ class IsadForm(ModelForm):
         widgets = {
             'archival_unit': HiddenInput(),
             'isaar': IsaarRecordsSelect2Widget(),
-            'language': LanguagesSelect2Widget(),
+            'language': LanguageSelect2MultipleWidget(),
             'accruals': Select(choices=ACCRUALS),
             'scope_and_content_abstract': Textarea(attrs={'rows': 4}),
             'scope_and_content_narrative': Textarea(attrs={'rows': 4}),

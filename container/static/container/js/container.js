@@ -5,8 +5,8 @@ var table = $('#container_table').DataTable({
 	"ajax": "/container/datatable/" + archival_unit_id,
 	"select": true,
 	"columns": [
-	   { "data": 'container_no', "width": "10%", "class": "action_column reorder" },
-	   { "data": 'identifier', "width": "30%", "class": "action_column reorder" },
+	   { "data": 'container_no', "width": "20%" } ,
+	   { "data": 'identifier', "width": "20%" },
 	   { "data": 'carrier_type', "width": "15%" },
 	   { "data": 'primary_type', "width": "15%" },
 	   { "data": 'number_of_fa_entities', "width": "10%" },
@@ -42,7 +42,6 @@ $('#container-create').on('click', function(e) {
 		$.ajax({
 			type: 'POST',
 			success: function(data) {
-				table.row.add(data).draw(false);
 				table.page('last').draw(false);
 			},
 			error: function(){ },

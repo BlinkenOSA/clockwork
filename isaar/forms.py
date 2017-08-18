@@ -2,7 +2,7 @@ from django.forms import ModelForm, Select, ChoiceField, ModelChoiceField, TextI
 from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
-from authority.widgets import LanguagesSelect2Widget
+from authority.widgets import LanguageSelect2MultipleWidget
 from isaar.models import Isaar, IsaarOtherName, IsaarRelationship, IsaarStandardizedName, IsaarCorporateBodyIdentifier, \
     IsaarPlaceQualifier, IsaarPlace
 
@@ -34,7 +34,7 @@ class IsaarForm(ModelForm):
         }
         widgets = {
             'type': Select(choices=TYPE_CHOICES),
-            'language': LanguagesSelect2Widget
+            'language': LanguageSelect2MultipleWidget
         }
 
 

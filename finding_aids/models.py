@@ -4,7 +4,7 @@ import uuid as uuid
 from django.db import models
 from django_date_extensions.fields import ApproximateDateField
 
-from controlled_list.models import PrimaryType, PersonRoles, CorporationRoles, GeoRoles, LanguageUsage
+from controlled_list.models import PrimaryType, PersonRole, CorporationRole, GeoRole, LanguageUsage
 from authority.models import Person, Place, Corporation, Country, Language
 
 
@@ -105,7 +105,7 @@ class FindingAidsEntityAssociatedPerson(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     associated_person = models.ForeignKey('authority.Person', on_delete=models.CASCADE)
-    role = models.ForeignKey('controlled_list.PersonRoles', on_delete=models.SET_NULL, blank=True, null=True)
+    role = models.ForeignKey('controlled_list.PersonRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_associated_people'
@@ -115,7 +115,7 @@ class FindingAidsEntityAssociatedCorporation(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     associated_corporation = models.ForeignKey('authority.Corporation', on_delete=models.CASCADE)
-    role = models.ForeignKey('controlled_list.CorporationRoles', on_delete=models.SET_NULL, blank=True, null=True)
+    role = models.ForeignKey('controlled_list.CorporationRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_associated_corporations'
@@ -125,7 +125,7 @@ class FindingAidsEntityAssociatedCountry(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     associated_country = models.ForeignKey('authority.Country', on_delete=models.CASCADE)
-    role = models.ForeignKey('controlled_list.GeoRoles', on_delete=models.SET_NULL, blank=True, null=True)
+    role = models.ForeignKey('controlled_list.GeoRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_associated_countries'
@@ -135,7 +135,7 @@ class FindingAidsEntityAssociatedPlace(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     associated_country = models.ForeignKey('authority.Place', on_delete=models.CASCADE)
-    role = models.ForeignKey('controlled_list.GeoRoles', on_delete=models.SET_NULL, blank=True, null=True)
+    role = models.ForeignKey('controlled_list.GeoRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_associated_places'

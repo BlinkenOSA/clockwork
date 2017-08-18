@@ -64,6 +64,12 @@ class PersonCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
     def get_response_message(self):
         return ugettext("Person: %s was created successfully!") % self.object
 
+    def get_success_result(self):
+        results = super(PersonCreate, self).get_success_result()
+        results['entry_id'] = self.object.id,
+        results['entry_name'] = ', '.join((self.object.last_name, self.object.first_name))
+        return results
+
 
 class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = PersonForm

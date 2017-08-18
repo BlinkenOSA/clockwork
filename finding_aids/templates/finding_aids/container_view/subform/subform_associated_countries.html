@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Associated Countries' %}</label>
+    {% for form in associated_countries %}
+        <div id="{{ form.prefix }}-row" class="associated_countries-subform subform row">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            <div class="col-md-6">
+                {% bootstrap_field form.country show_label=false %}
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        {% bootstrap_field form.role show_label=false %}
+                        <div class="input-group-btn select2-nolabel-addon">
+                            <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:geo_role_create' %}"
+                                data-fm-head="<i class='fa fa-exchange'></i>Create Role" data-fm-callback="selectField">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:geo_role_list' %}" target="_blank">
+                                <i class="fa fa-list-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ associated_countries.management_form }}
+</div>
