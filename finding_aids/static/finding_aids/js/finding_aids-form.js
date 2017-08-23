@@ -23,6 +23,8 @@ $('.fm-create').on('click', function() {
 
 $('.django-select2').djangoSelect2();
 
+subformCreate('languages');
+subformCreate('extents');
 subformCreate('associated_people');
 subformCreate('associated_corporations');
 subformCreate('associated_countries');
@@ -45,48 +47,38 @@ $(function() {
 
 /* TEMP */
 
-$(document).on('change', '#id_folder_no_select', function() {
-	$('#id_folder_no').val($('#id_folder_no_select').val());
+$('#id_level').on('change', function() {
+	var selection = ($('#id_level').val());
+	switch(selection) {
+		case 'F':
+			calculateFolderNumber();
+			$('#id_folder_no').prop('readonly', true);
+			break;
+		case 'I':
+			calculateItemNumber();
+			$('#id_folder_no').prop('readonly', false);
+			break;
+	}
+});
+
+$('#id_folder_no').on('change', function() {
 	calculateItemNumber();
-})
-
-$(document).on('click', '#id_level_0', function() {
-    $('#id_folder_no_select').attr('disabled', true)
-    $('#id_item_no_select').attr('disabled', true);
-	if(action == "create") {
-		calculateFolderNumber();
-	}
 });
 
-$(document).on('click', '#id_level_1', function() {
-	if(action == "create") {
-	    $('#id_folder_no_select').attr('disabled', false);
-		calculateItemNumber();
-	}
-});
 
 function calculateFolderNumber() {
-	$('#id_folder_no_select').empty();
-	$('#id_item_no_select').empty();
-
 	$.ajax({
-		url: "./statistics"
+		url: "../get_new_folder"
 	}).done(function(data) {
-		$.each(data["stats"], function(key, value) {
-			 $('#id_folder_no_select').append($("<option></option>").attr("value",key).text(key));
-		});
-		$('#id_folder_no_select option').last().prop('selected',true);
-		$('#id_item_no').val(0);
+		$('#id_folder_no').val(data["stats"]["new_folder"]);
+		$('#id_archival_reference_code').val(data["stats"]["new_arc"]);
 	});
 }
 
 function calculateItemNumber() {
-	var folder_no = $('#id_folder_no_select').val();
-
 	$.ajax({
-		url: "./statistics"
+		url: "../get_new_item/" + $('#id_folder_no').val()
 	}).done(function(data) {
-		$('#id_item_no').val(data['stats'][folder_no]+1);
+		$('#id_archival_reference_code').val(data["stats"]["new_arc"]);
 	});
 }
-

@@ -40,7 +40,8 @@
         </div>
 
         <form action="" method="post">
-        {% csrf_token %}
+            {% include 'nonfield-errors.html' %}
+            {% csrf_token %}
 
         <div class="box-body">
             {% block box-1-body %}

@@ -28,4 +28,6 @@ function infobox_call_and_update(module, form_field) {
     });
 }
 
-
+$('.modal').on('hidden.bs.modal', function(e) {
+    $(this).removeData();
+});

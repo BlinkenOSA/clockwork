@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if form.errors %}
+    <script>
+        $( document ).ready(function() {
+            var n = noty({
+                    text: "You have errors on the form, please check the fields and correct them!",
+                    theme: 'metroui',
+                    type: 'error',
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500 // opening & closing animation speed
+                    }
+                });
+        })
+    </script>
+{% endif %}

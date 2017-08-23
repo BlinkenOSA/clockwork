@@ -1,8 +1,8 @@
 <div class="btn-group ">
-    <a class="btn btn-default btn-xs" href="{% url 'finding_aids:update' id %}">
+    <a class="btn btn-default btn-xs" href="{% url 'finding_aids:update' container_id id %}">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'archival_unit:fonds_delete' id %}">
+    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'finding_aids:delete' container_id id %}">
         <i class="fa fa-trash-o"></i>
     </a>
 </div>

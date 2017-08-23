@@ -16,6 +16,13 @@ class CountrySelect2MultipleWidget(ModelSelect2MultipleWidget):
     ]
 
 
+class LanguageSelect2Widget(ModelSelect2Widget):
+    model = Language
+    search_fields = [
+        'language__icontains',
+    ]
+
+
 class LanguageSelect2MultipleWidget(ModelSelect2MultipleWidget):
     model = Language
     search_fields = [

@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <fieldset>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
             <div class="input-group">
                 {% bootstrap_field form.genre %}
@@ -18,5 +18,44 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="col-md-6">
+                {% bootstrap_field form.time_start %}
+            </div>
+            <div class="col-md-6">
+                {% bootstrap_field form.time_end %}
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-12">
+        {% bootstrap_field form.physical_condition %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.physical_description %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.physical_description_original %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-12">
+        {% include 'finding_aids/container_view/subform/subform_languages.html' %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
+        {% bootstrap_field form.language_statement %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.language_statement_original %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-12">
+        {% include 'finding_aids/container_view/subform/subform_extents.html' %}
     </div>
 </fieldset>

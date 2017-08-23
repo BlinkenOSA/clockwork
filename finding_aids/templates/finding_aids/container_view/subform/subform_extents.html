@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Extents' %}</label>
+    {% for form in extents %}
+        <div id="{{ form.prefix }}-row" class="extents-subform subform row">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            <div class="col-md-6">
+                {% render_field form.extent_number placeholder=form.extent_number.label class+='form-control' %}
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <div class="input-group">
+                        {% bootstrap_field form.extent_unit show_label=false %}
+                        <div class="input-group-btn select2-nolabel-addon">
+                            <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:extent_unit_create' %}"
+                                data-fm-head="<i class='fa fa-exchange'></i>Create Extent Unit" data-fm-callback="selectField">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:extent_unit_list' %}" target="_blank">
+                                <i class="fa fa-list-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ extents.management_form }}
+</div>

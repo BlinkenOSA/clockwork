@@ -3,7 +3,7 @@ from django.conf.urls import url
 from finding_aids.views import FindingAidsArchivalUnit, \
     FindingAidsInContainerList, FindingAidsInContainerListJson, \
     FindingAidsCreate, FindingAidsUpdate, \
-    FindingAidsFoldersItemsStatistics
+    FindingAidsDelete, FindingAidsNewFolderNumber, FindingAidsNewItemNumber
 
 urlpatterns = [
     # Opening Page
@@ -12,9 +12,12 @@ urlpatterns = [
     # Finding Aids
     url(r'^(?P<container_id>\d+)/$', FindingAidsInContainerList.as_view(), name='finding_aids_container_list'),
     url(r'^(?P<container_id>\d+)/create/$', FindingAidsCreate.as_view(), name='create'),
-    url(r'^update/(?P<pk>\d+)$', FindingAidsUpdate.as_view(), name='update'),
+    url(r'^(?P<container_id>\d+)/update/(?P<pk>\d+)$', FindingAidsUpdate.as_view(), name='update'),
+    url(r'^(?P<container_id>\d+)/delete/(?P<pk>\d+)$', FindingAidsDelete.as_view(), name='delete'),
 
-    url(r'^(?P<container_id>\d+)/statistics/$', FindingAidsFoldersItemsStatistics.as_view(), name='statistics'),
+    url(r'^(?P<container_id>\d+)/get_new_folder/$', FindingAidsNewFolderNumber.as_view(), name='get_new_folder'),
+    url(r'^(?P<container_id>\d+)/get_new_item/(?P<folder_no>\d+)$', FindingAidsNewItemNumber.as_view(), name='get_now_folder'),
+
 
     url(r'^datatable/(?P<container_id>\d+)/$', FindingAidsInContainerListJson.as_view(),
         name='finding_aids_container_list_json')

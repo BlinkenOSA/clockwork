@@ -123,13 +123,21 @@
                     </li>
 
                     <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
-                        <a href="{% url 'finding_aids:choose_archival_unit' %}">
+                        <a href="#">
                             <i class="fa fa-file-o"></i>
                             <span>{% trans 'Finding Aids' %}</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
+                                <a href="{% url 'finding_aids:choose_archival_unit' %}"><i class="fa fa-circle-o"></i> {% trans 'Folders/Items' %}</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-circle-o"></i> {% trans 'Organizer' %}</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="treeview {% if 'authority' in request.path or 'controlled_list' in request.path %}active{% endif %}">

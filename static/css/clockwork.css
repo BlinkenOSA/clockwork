@@ -92,9 +92,11 @@ tbody td {
     width: 30px;
 }
 
+/*
 .call_no_item {
     padding-left: 10px;
 }
+*/
 
 .layout-boxed {
     background-image: none !important;
@@ -210,4 +212,8 @@ tbody td {
 
 .selection .archival_unit_title.level_F, .selection .archival_unit_title.level_SF, .selection .archival_unit_title.level_S {
     padding: 0px;
+}
+
+li.select2-search input {
+    width: 100% !important;
 }

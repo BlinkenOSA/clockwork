@@ -28,3 +28,17 @@ class PersonRoleSelect2Widget(ModelSelect2Widget):
     search_fields = [
         'role__icontains'
     ]
+
+
+class LanguageUsageSelect2Widget(ModelSelect2Widget):
+    model = LanguageUsage
+    search_fields = [
+        'usage__icontains'
+    ]
+
+
+class ExtentUnitSelect2Widget(ModelSelect2Widget):
+    model = ExtentUnit
+    search_fields = [
+        'unit__icontains'
+    ]

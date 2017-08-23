@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
-from django.http import JsonResponse
+from django.db.models import ProtectedError
+from django.http import JsonResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, CreateView, DeleteView
@@ -121,4 +122,7 @@ class ContainerDelete(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
-        return super(ContainerDelete, self).delete(request, *args, **kwargs)
+        try:
+            return super(ContainerDelete, self).delete(request, *args, **kwargs)
+        except ProtectedError:
+            return HttpResponseRedirect(self.get_success_url())

@@ -177,3 +177,22 @@ DATE_EXTENSIONS_MONTH_INPUT_FORMATS = ("%Y-%m",)
 DATE_EXTENSIONS_YEAR_INPUT_FORMATS = ("%Y",)
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+TIME_INPUT_FORMATS = [
+    '%H:%M:%S',     # '14:30:59'
+    '%H:%M',        # '14:30'
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11112',
+    },
+    'select2': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11112',
+    }
+}
+
+# Set the cache backend to select2
+SELECT2_CACHE_BACKEND = 'select2'
