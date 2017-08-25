@@ -7,7 +7,7 @@ from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin
-from fm.views import AjaxCreateView, AjaxUpdateView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import CorporationForm, CorporationOtherNamesInLine
 from authority.models import Corporation
@@ -80,14 +80,12 @@ class CorporationUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
         return ugettext("Corporation: %s was updated successfully!") % self.object.name
 
 
-class CorporationDelete(DeleteView):
+class CorporationDelete(AjaxDeleteView):
     model = Corporation
     template_name = 'authority/corporation/delete.html'
     context_object_name = 'corporation'
-    success_url = reverse_lazy('authority:corporation_list')
-    success_message = ugettext("Corporation was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(CorporationDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Corporation: %s was deleted successfully!") % self.object.name
+        return {'status': 'ok', 'message': msg}
 

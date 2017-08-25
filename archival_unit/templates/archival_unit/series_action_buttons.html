@@ -1,9 +1,10 @@
 <div class="btn-group ">
     <a class="btn btn-default btn-xs fm-update" href="{% url 'archival_unit:series_update' id %}"
-        data-fm-head="Edit" data-fm-callback="reloadSeriesTable">
+       data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadTable">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'archival_unit:series_delete' id %}">
-        <i class="fa fa-trash-o"></i>
+    <a class="btn btn-default btn-xs fm-delete" href="{% url 'archival_unit:series_delete' id %}"
+       data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadTable">
+       <i class="fa fa-trash-o"></i>
     </a>
 </div>

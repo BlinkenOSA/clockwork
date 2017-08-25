@@ -129,6 +129,10 @@ tbody td {
     background-color: #dd4b39;
 }
 
+.delete-modal.modal-header {
+    background-color: #dd4b39;
+}
+
 .info-text {
     padding: 10px 15px;
     color: #b8c7ce;

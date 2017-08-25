@@ -1,25 +1,8 @@
 {% load i18n %}
 
-<div class="modal-content">
-    <form action="{% url 'isad:delete' isad.id %}" method="post">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">{% trans 'Remove ISAD(G)' %}</h4>
-        </div>
-        <div class="modal-body">
-            {% csrf_token %}
-            <p class="delete-message">
-              {% trans 'Are you sure you want to remove ISAD record: ' %}<br/>
-              <strong>{{ isad.reference_code }} {{ isad.title }}?</strong><br/><br/>
-            </p>
-        </div>
-        <div class="modal-footer">
-            <div class="pull-right">
-                <button type="submit" class="btn btn-primary">{% trans 'Confirm' %}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </form>
-</div>
+
+{% csrf_token %}
+<p class="delete-message">
+  {% trans 'Are you sure you want to remove ISAD record: ' %}<br/>
+  <strong>{{ isad.reference_code }} {{ isad.title }}?</strong><br/><br/>
+</p>

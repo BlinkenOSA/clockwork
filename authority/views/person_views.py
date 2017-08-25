@@ -6,6 +6,7 @@ from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin
+from fm.views import AjaxDeleteView
 
 from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
@@ -82,13 +83,11 @@ class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
         return ugettext("Person: %s was updated successfully!") % self.object
 
 
-class PersonDelete(DeleteView):
+class PersonDelete(AjaxDeleteView):
     model = Person
     template_name = 'authority/person/delete.html'
     context_object_name = 'person'
-    success_url = reverse_lazy('authority:person_list')
-    success_message = ugettext("Person was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(PersonDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Person: %s was deleted successfully!") % self.object
+        return {'status': 'ok', 'message': msg}

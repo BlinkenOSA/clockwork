@@ -7,7 +7,7 @@ from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin
-from fm.views import AjaxCreateView, AjaxUpdateView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import PlaceForm
 from authority.models import Place
@@ -67,6 +67,7 @@ class PlaceCreate(AjaxCreateView):
         results['entry_name'] = self.object.place
         return results
 
+
 class PlaceUpdate(AjaxUpdateView):
     form_class = PlaceForm
     model = Place
@@ -76,14 +77,12 @@ class PlaceUpdate(AjaxUpdateView):
         return ugettext("Place: %s was updated successfully!") % self.object
 
 
-class PlaceDelete(DeleteView):
+class PlaceDelete(AjaxDeleteView):
     model = Place
     template_name = 'authority/place/delete.html'
     context_object_name = 'place'
-    success_url = reverse_lazy('authority:place_list')
-    success_message = ugettext("Place was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(PlaceDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Place: %s was deleted successfully!") % self.object
+        return {'status': 'ok', 'message': msg}
 

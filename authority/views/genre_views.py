@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext
 from django.views.generic import TemplateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import GenreForm
 from authority.models import Genre
@@ -65,6 +65,7 @@ class GenreCreate(AjaxCreateView):
         results['entry_name'] = self.object.genre
         return results
 
+
 class GenreUpdate(AjaxUpdateView):
     form_class = GenreForm
     model = Genre
@@ -74,14 +75,10 @@ class GenreUpdate(AjaxUpdateView):
         return ugettext("Genre: %s was updated successfully!") % self.object
 
 
-class GenreDelete(DeleteView):
+class GenreDelete(AjaxDeleteView):
     model = Genre
     template_name = 'authority/genre/delete.html'
-    context_object_name = 'genre'
-    success_url = reverse_lazy('authority:genre_list')
-    success_message = ugettext("Genre was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(GenreDelete, self).delete(request, *args, **kwargs)
-
+    def get_success_result(self):
+        msg = ugettext("Genre: %s was deleted successfully!") % self.object
+        return {'status': 'ok', 'message': msg}

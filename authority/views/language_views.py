@@ -75,9 +75,7 @@ class LanguageDelete(DeleteView):
     model = Language
     template_name = 'authority/language/delete.html'
     context_object_name = 'language'
-    success_url = reverse_lazy('authority:language_list')
-    success_message = ugettext("Language was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(LanguageDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Language: %s was deleted successfully!") % self.object.language
+        return {'status': 'ok', 'message': msg}

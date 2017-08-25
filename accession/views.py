@@ -8,6 +8,8 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from datetime import date
 
+from fm.views import AjaxDeleteView
+
 from accession.form import AccessionForm, AccessionItemsInlineForm
 from accession.models import Accession
 from clockwork.mixins import InlineSuccessMessageMixin
@@ -73,13 +75,11 @@ class AccessionUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithI
     inlines_names = ['accession_items']
 
 
-class AccessionDelete(DeleteView):
+class AccessionDelete(AjaxDeleteView):
     model = Accession
     template_name = 'accession/delete.html'
     context_object_name = 'accession'
-    success_url = reverse_lazy('accession:list')
-    success_message = ugettext("Accession Record was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(AccessionDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Accession: %s was deleted successfully!") % self.object.seq
+        return {'status': 'ok', 'message': msg}

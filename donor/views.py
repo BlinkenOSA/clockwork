@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.db.models import Q
-from fm.views import AjaxCreateView
+from fm.views import AjaxCreateView, AjaxDeleteView
 
 from donor.models import Donor
 from donor.forms import DonorForm
@@ -64,16 +64,14 @@ class DonorUpdate(SuccessMessageMixin, UpdateView):
     success_message = ugettext("%(name)s was updated successfully")
 
 
-class DonorDelete(DeleteView):
+class DonorDelete(AjaxDeleteView):
     model = Donor
     template_name = 'donor/delete.html'
     context_object_name = 'donor'
-    success_url = reverse_lazy('donor:list')
-    success_message = ugettext("Donor was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(DonorDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Donor: %s was deleted successfully!") % self.object.name
+        return {'status': 'ok', 'message': msg}
 
 
 class DonorPopupCreate(SuccessMessageMixin, AjaxCreateView):

@@ -6,6 +6,7 @@ from django.utils.translation import ugettext
 from django.views.generic import DetailView, DeleteView, TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInlinesView
+from fm.views import AjaxDeleteView
 
 from clockwork.mixins import InlineSuccessMessageMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
@@ -83,13 +84,11 @@ class IsaarUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlin
     inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
-class IsaarDelete(DeleteView):
+class IsaarDelete(AjaxDeleteView):
     model = Isaar
     template_name = 'isaar/delete.html'
     context_object_name = 'isaar'
-    success_url = reverse_lazy('isaar:list')
-    success_message = ugettext("ISAAR/CPF record was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(IsaarDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("ISAAR(CPF): %s was deleted successfully!") % self.object.name
+        return {'status': 'ok', 'message': msg}

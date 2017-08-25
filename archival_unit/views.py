@@ -7,7 +7,7 @@ from django.utils.translation import ugettext
 from django.views.generic import ListView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from archival_unit.forms import FondsCreateForm, FondsUpdateForm, SubFondsCreateForm, \
     SubFondsUpdateForm, SeriesCreateForm, SeriesUpdateForm
@@ -84,18 +84,16 @@ class FondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class FondsDelete(DeleteView):
+class FondsDelete(AjaxDeleteView):
     template_name = 'archival_unit/fonds_delete.html'
     context_object_name = 'fonds'
-    success_url = reverse_lazy('archival_unit:fonds')
-    success_message = ugettext("Fonds was deleted successfully")
 
     def get_object(self, queryset=None):
         return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(FondsDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Fonds: %s was deleted successfully!") % self.object.reference_code
+        return {'status': 'ok', 'message': msg}
 
 
 '''
@@ -179,21 +177,16 @@ class SubFondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SubFondsDelete(DeleteView):
+class SubFondsDelete(AjaxDeleteView):
     template_name = 'archival_unit/subfonds_delete.html'
     context_object_name = 'subfonds'
-    success_message = ugettext("Subfonds was deleted successfully")
 
     def get_object(self, queryset=None):
         return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
 
-    def get_success_url(self):
-        parent_id = self.object.parent.reference_code_id
-        return reverse('archival_unit:subfonds', kwargs={'parent_reference_code_id': parent_id})
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(SubFondsDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Subfonds: %s was deleted successfully!") % self.object.reference_code
+        return {'status': 'ok', 'message': msg}
 
 '''
     **************
@@ -281,19 +274,14 @@ class SeriesUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SeriesDelete(DeleteView):
+class SeriesDelete(AjaxDeleteView):
     model = ArchivalUnit
     template_name = 'archival_unit/series_delete.html'
     context_object_name = 'series'
-    success_message = ugettext("Series was deleted successfully")
 
     def get_object(self, queryset=None):
         return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
 
-    def get_success_url(self):
-        parent_id = self.object.parent.reference_code_id
-        return reverse('archival_unit:series', kwargs={'parent_reference_code_id': parent_id})
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(SeriesDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Series: %s was deleted successfully!") % self.object.reference_code
+        return {'status': 'ok', 'message': msg}

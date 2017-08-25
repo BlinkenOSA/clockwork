@@ -1,7 +1,7 @@
 /**
  *
  */
-$('#isad_table').DataTable({
+var table = $('#isad_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
@@ -28,4 +28,18 @@ $('tbody').on('click','.btn-action',function(e) {
       url: $(this).attr("href"),
       cache: false
     });
+});
+
+
+$(function() {
+	$.fm({
+		modal_head_selector: '.modal-title',
+		debug: false,
+		custom_callbacks: {
+            "reloadTable": function(data, options) {
+				table.ajax.reload(null, false);
+                displayMessage(data["message"]);
+            }
+        }
+	});
 });

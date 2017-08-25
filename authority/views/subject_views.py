@@ -79,10 +79,7 @@ class SubjectDelete(DeleteView):
     model = Subject
     template_name = 'authority/subject/delete.html'
     context_object_name = 'subject'
-    success_url = reverse_lazy('authority:subject_list')
-    success_message = ugettext("Subject was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(SubjectDelete, self).delete(request, *args, **kwargs)
-
+    def get_success_result(self):
+        msg = ugettext("Subject: %s was deleted successfully!") % self.object
+        return {'status': 'ok', 'message': msg}

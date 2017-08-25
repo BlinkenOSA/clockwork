@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView
+from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import CountryForm
 from authority.models import Country
@@ -71,14 +71,14 @@ class CountryUpdate(AjaxUpdateView):
         return ugettext("Country: %s was updated successfully!") % self.object.country
 
 
-class CountryDelete(DeleteView):
+class CountryDelete(AjaxDeleteView):
     model = Country
     template_name = 'authority/country/delete.html'
     context_object_name = 'country'
     success_url = reverse_lazy('authority:country_list')
     success_message = ugettext("Country was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(CountryDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("Country: %s was deleted successfully!") % self.object.country
+        return {'status': 'ok', 'message': msg}
 

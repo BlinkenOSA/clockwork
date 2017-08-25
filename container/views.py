@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, CreateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxUpdateView
+from fm.views import AjaxUpdateView, AjaxDeleteView
 
 from archival_unit.models import ArchivalUnit
 from container.forms import ContainerForm, ContainerUpdateForm
@@ -110,19 +110,28 @@ class ContainerUpdate(SuccessMessageMixin, AjaxUpdateView):
     success_message = ugettext("Container was updated successfully")
 
 
-class ContainerDelete(DeleteView):
+class ContainerDelete(AjaxDeleteView):
     model = Container
     template_name = 'container/delete.html'
     context_object_name = 'container'
-    success_message = ugettext("Container was deleted successfully")
 
-    def get_success_url(self):
-        archival_unit = self.object.archival_unit
-        return reverse_lazy('container:list_with_archival_unit', kwargs={'archival_unit': archival_unit.id})
+    def get_success_result(self):
+        msg = ugettext("Container was deleted successfully!")
+        return {'status': 'ok', 'message': msg}
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
         try:
-            return super(ContainerDelete, self).delete(request, *args, **kwargs)
+            self.object = self.get_object()
+            self.pre_delete()
+            self.object.delete()
+            self.post_delete()
+            if self.request.is_ajax():
+                return self.render_json_response(self.get_success_result())
         except ProtectedError:
-            return HttpResponseRedirect(self.get_success_url())
+                return self.render_json_response({'status': 'error',
+                                                  'message': ugettext('Container is not empty, please choose an empty '
+                                                                      'container to delete!')})
+
+        return HttpResponseRedirect(self.get_success_url())
+
+

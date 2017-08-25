@@ -52,7 +52,6 @@ $('#container-create').on('click', function(e) {
 	}
 });
 
-
 $(function() {
 	$.fm({
 		modal_head_selector: '.modal-title',
@@ -60,6 +59,7 @@ $(function() {
 		custom_callbacks: {
             "reloadTable": function(data, options) {
                 table.ajax.reload(null, false);
+				displayMessage(data["message"]);
             }
         }
 	});

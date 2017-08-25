@@ -31,3 +31,13 @@ function infobox_call_and_update(module, form_field) {
 $('.modal').on('hidden.bs.modal', function(e) {
     $(this).removeData();
 });
+
+function displayMessage(message) {
+    new Noty({
+        type: 'success',
+        theme: 'bootstrap-v3',
+        text: message,
+        timeout: 1000,
+        closeWith: ['click', 'button']
+    }).show()
+}

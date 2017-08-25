@@ -3,7 +3,8 @@
         data-fm-head="<i class='fa fa-archive'></i>Edit Container" data-fm-callback="reloadTable">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs" data-toggle="modal" data-target="#deleteModal" href="{% url 'container:delete' container %}">
-        <i class="fa fa-trash-o"></i>
+    <a class="btn btn-default btn-xs fm-delete" href="{% url 'container:delete' container %}"
+       data-fm-head="<i class='fa fa-archive'></i>Delete Container" data-fm-callback="reloadTable">
+       <i class="fa fa-trash-o"></i>
     </a>
 </div>

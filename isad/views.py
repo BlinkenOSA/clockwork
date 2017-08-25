@@ -7,6 +7,7 @@ from django.utils.translation import ugettext
 from django.views.generic import FormView, DeleteView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
+from fm.views import AjaxDeleteView
 
 from archival_unit.models import ArchivalUnit
 from clockwork.mixins import InlineSuccessMessageMixin
@@ -66,7 +67,7 @@ class IsadCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInline
     form_class = IsadForm
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
-    success_message = ugettext("%(reference_code)s was created successfully")
+    success_message = ugettext("ISAD(G) Record: %(reference_code)s was created successfully!")
     inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
     inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
@@ -88,23 +89,21 @@ class IsadUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInline
     form_class = IsadForm
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
-    success_message = ugettext("%(reference_code)s was updated successfully")
+    success_message = ugettext("ISAD(G) Record: %(reference_code)s was updated successfully!")
     inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
     inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
                      'location_of_copies']
 
 
-class IsadDelete(DeleteView):
+class IsadDelete(AjaxDeleteView):
     model = Isad
     template_name = 'isad/delete.html'
     context_object_name = 'isad'
-    success_url = reverse_lazy('isad:list')
-    success_message = ugettext("ISAD(G) record was deleted successfully")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(IsadDelete, self).delete(request, *args, **kwargs)
+    def get_success_result(self):
+        msg = ugettext("ISAD(G) Record: %s was deleted successfully!") % self.object.reference_code
+        return {'status': 'ok', 'message': msg}
 
 
 class IsadAction(JSONResponseMixin, DetailView):

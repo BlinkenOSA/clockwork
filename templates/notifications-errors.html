@@ -3,17 +3,15 @@
 {% if form.errors %}
     <script>
         $( document ).ready(function() {
-            var n = noty({
-                    text: "You have errors on the form, please check the fields and correct them!",
-                    theme: 'metroui',
+            $( document ).ready(function() {
+                new Noty({
                     type: 'error',
-                    animation: {
-                        open: {height: 'toggle'},
-                        close: {height: 'toggle'},
-                        easing: 'swing',
-                        speed: 500 // opening & closing animation speed
-                    }
-                });
+                    theme: 'bootstrap-v3',
+                    text: 'You have errors on your form, please correct them before continue.',
+                    timeout: 3000,
+                    closeWith: ['click', 'button']
+                }).show()
+            })
         })
     </script>
 {% endif %}
