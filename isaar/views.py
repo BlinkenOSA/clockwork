@@ -1,13 +1,12 @@
-from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import DetailView, DeleteView, TemplateView
+from django.views.generic import DetailView, TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInlinesView
-from fm.views import AjaxDeleteView
 
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.mixins import InlineSuccessMessageMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
     PlacesInline, TYPE_CHOICES
@@ -35,7 +34,11 @@ class IsaarListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('isaar/table_action_buttons.html', context={'id': row.id})
+            accession_exist = row.accession_set.filter(pk=row.id).exists()
+            isad_exist = row.isad_set.filter(pk=row.id).exists()
+            exist = accession_exist or isad_exist
+            return render_to_string('isaar/table_action_buttons.html',
+                                    context={'id': row.id, 'exist': exist})
         elif column == 'type':
             return dict(TYPE_CHOICES)[row.type]
         else:
@@ -84,11 +87,10 @@ class IsaarUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlin
     inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
-class IsaarDelete(AjaxDeleteView):
+class IsaarDelete(AjaxDeleteProtectedView):
     model = Isaar
     template_name = 'isaar/delete.html'
     context_object_name = 'isaar'
-
-    def get_success_result(self):
-        msg = ugettext("ISAAR(CPF): %s was deleted successfully!") % self.object.name
-        return {'status': 'ok', 'message': msg}
+    success_message = ugettext("ISAAR-CPF record was deleted successfully!")
+    error_message = ugettext("ISAAR-CPF record can't be deleted, "
+                             "because it has already been assigned to another record!")

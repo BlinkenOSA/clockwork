@@ -1,16 +1,15 @@
-from django.contrib import messages
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, DeleteView
+from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin
-from fm.views import AjaxDeleteView
 
 from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
+from finding_aids.models import FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedPerson
 
 
 class PersonList(TemplateView):
@@ -34,7 +33,9 @@ class PersonListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('authority/person/table_action_buttons.html', context={'id': row.id})
+            exists = FindingAidsEntityAssociatedPerson.objects.filter(associated_person=row).exists()
+            return render_to_string('authority/person/table_action_buttons.html',
+                                    context={'id': row.id, 'exists': exists})
         elif column == 'person_name':
             return ', '.join([row.last_name, row.first_name])
         elif column == 'authority_url':
@@ -83,11 +84,9 @@ class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
         return ugettext("Person: %s was updated successfully!") % self.object
 
 
-class PersonDelete(AjaxDeleteView):
+class PersonDelete(AjaxDeleteProtectedView):
     model = Person
     template_name = 'authority/person/delete.html'
     context_object_name = 'person'
-
-    def get_success_result(self):
-        msg = ugettext("Person: %s was deleted successfully!") % self.object
-        return {'status': 'ok', 'message': msg}
+    success_message = ugettext("Person was deleted successfully!")
+    error_message = ugettext("Person can't be deleted, because it has already been assigned to an entry!")

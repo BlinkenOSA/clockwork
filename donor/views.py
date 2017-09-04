@@ -1,12 +1,14 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from django.db.models import Q
+from django.db.models import Q, ProtectedError
 from fm.views import AjaxCreateView, AjaxDeleteView
 
+from accession.models import Accession
 from donor.models import Donor
 from donor.forms import DonorForm
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -37,7 +39,9 @@ class DonorListJson(BaseDatatableView):
         if column == 'address':
             return row.get_address()
         elif column == 'action':
-            return render_to_string('donor/table_action_buttons.html', context={'id': row.id})
+            accesson_exist = Accession.objects.filter(donor=row).exists()
+            return render_to_string('donor/table_action_buttons.html',
+                                    context={'id': row.id, 'accession_exist': accesson_exist})
         else:
             return super(DonorListJson, self).render_column(row, column)
 
@@ -72,6 +76,21 @@ class DonorDelete(AjaxDeleteView):
     def get_success_result(self):
         msg = ugettext("Donor: %s was deleted successfully!") % self.object.name
         return {'status': 'ok', 'message': msg}
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+            self.pre_delete()
+            self.object.delete()
+            self.post_delete()
+            if self.request.is_ajax():
+                return self.render_json_response(self.get_success_result())
+        except ProtectedError:
+                return self.render_json_response({'status': 'error',
+                                                  'message': ugettext('Donor is referenced, please select a donor'
+                                                                      'record which is not selected elsewhere!')})
+
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DonorPopupCreate(SuccessMessageMixin, AjaxCreateView):

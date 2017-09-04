@@ -111,14 +111,7 @@ class IsadAction(JSONResponseMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         action = self.kwargs['action']
-
         isad = self.get_object()
-
-        if action == 'approve':
-            isad.approved = True
-
-        if action == 'disapprove':
-            isad.approved = False
 
         if action == 'publish':
             isad.published = True

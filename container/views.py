@@ -1,15 +1,13 @@
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.urlresolvers import reverse_lazy
-from django.db.models import ProtectedError
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import FormView, CreateView, DeleteView
+from django.views.generic import FormView, CreateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxUpdateView
 
 from archival_unit.models import ArchivalUnit
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from container.forms import ContainerForm, ContainerUpdateForm
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
@@ -36,6 +34,7 @@ class ContainerListJson(BaseDatatableView):
                'number_of_fa_entities', 'navigate', 'action']
     order_columns = ['primary_type', 'container_no']
     max_display_length = 500
+    number_of_fa_entities = 0
 
     def get_initial_queryset(self):
         if self.kwargs['archival_unit'] == '0':
@@ -58,11 +57,13 @@ class ContainerListJson(BaseDatatableView):
         elif column == 'carrier_type':
             return row.carrier_type.type
         elif column == 'number_of_fa_entities':
-            return FindingAidsEntity.objects.filter(container__id=row.id).count()
+            self.number_of_fa_entities = FindingAidsEntity.objects.filter(container__id=row.id).count()
+            return self.number_of_fa_entities
         elif column == 'navigate':
             return render_to_string(template_name='container/table_navigate_buttons.html', context={'container': row.id})
         elif column == 'action':
-            return render_to_string(template_name='container/table_action_buttons.html', context={'container': row.id})
+            return render_to_string(template_name='container/table_action_buttons.html',
+                                    context={'container': row.id, 'number_of_fa_entities': self.number_of_fa_entities})
         else:
             return super(ContainerListJson, self).render_column(row, column)
 
@@ -110,28 +111,11 @@ class ContainerUpdate(SuccessMessageMixin, AjaxUpdateView):
     success_message = ugettext("Container was updated successfully")
 
 
-class ContainerDelete(AjaxDeleteView):
+class ContainerDelete(AjaxDeleteProtectedView):
     model = Container
     template_name = 'container/delete.html'
     context_object_name = 'container'
-
-    def get_success_result(self):
-        msg = ugettext("Container was deleted successfully!")
-        return {'status': 'ok', 'message': msg}
-
-    def delete(self, request, *args, **kwargs):
-        try:
-            self.object = self.get_object()
-            self.pre_delete()
-            self.object.delete()
-            self.post_delete()
-            if self.request.is_ajax():
-                return self.render_json_response(self.get_success_result())
-        except ProtectedError:
-                return self.render_json_response({'status': 'error',
-                                                  'message': ugettext('Container is not empty, please choose an empty '
-                                                                      'container to delete!')})
-
-        return HttpResponseRedirect(self.get_success_url())
+    success_message = ugettext("Container was deleted successfully!")
+    error_message = ugettext("Container is not empty, please select an empty one to delete!")
 
 

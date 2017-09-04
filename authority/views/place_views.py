@@ -1,17 +1,13 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, DeleteView
+from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from extra_views import NamedFormsetsMixin
 from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import PlaceForm
 from authority.models import Place
-from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
+from finding_aids.models import FindingAidsEntityAssociatedPlace
 
 
 class PlaceList(TemplateView):
@@ -34,7 +30,9 @@ class PlaceListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('authority/place/table_action_buttons.html', context={'id': row.id})
+            exists = FindingAidsEntityAssociatedPlace.objects.filter(associated_place=row).exists()
+            return render_to_string('authority/place/table_action_buttons.html',
+                                    context={'id': row.id, 'exists': exists})
         elif column == 'authority_url':
             return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
                 if row.authority_url else None
@@ -81,8 +79,5 @@ class PlaceDelete(AjaxDeleteView):
     model = Place
     template_name = 'authority/place/delete.html'
     context_object_name = 'place'
-
-    def get_success_result(self):
-        msg = ugettext("Place: %s was deleted successfully!") % self.object
-        return {'status': 'ok', 'message': msg}
-
+    success_message = ugettext("Place was deleted successfully!")
+    error_message = ugettext("Place can't be deleted, because it has already been assigned to an entry!")

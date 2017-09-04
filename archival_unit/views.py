@@ -1,18 +1,16 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxCreateView, AjaxUpdateView
 
 from archival_unit.forms import FondsCreateForm, FondsUpdateForm, SubFondsCreateForm, \
     SubFondsUpdateForm, SeriesCreateForm, SeriesUpdateForm
 from archival_unit.models import ArchivalUnit
-
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from container.models import Container
 
 '''
     *************
@@ -52,7 +50,9 @@ class FondsListJson(BaseDatatableView):
         if column == 'navigate':
             return render_to_string('archival_unit/fonds_navigate_buttons.html', context={'id': row.reference_code_id})
         elif column == 'action':
-            return render_to_string('archival_unit/fonds_action_buttons.html', context={'id': row.reference_code_id})
+            subfonds_exist = ArchivalUnit.objects.filter(parent=row).count()
+            return render_to_string('archival_unit/fonds_action_buttons.html',
+                                    context={'id': row.reference_code_id, 'subfonds_exist': subfonds_exist})
         else:
             return super(FondsListJson, self).render_column(row, column)
 
@@ -84,17 +84,11 @@ class FondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class FondsDelete(AjaxDeleteView):
+class FondsDelete(AjaxDeleteProtectedView):
     template_name = 'archival_unit/fonds_delete.html'
     context_object_name = 'fonds'
-
-    def get_object(self, queryset=None):
-        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
-
-    def get_success_result(self):
-        msg = ugettext("Fonds: %s was deleted successfully!") % self.object.reference_code
-        return {'status': 'ok', 'message': msg}
-
+    success_message = ugettext("Fonds was deleted successfully!")
+    error_message = ugettext("Fonds is not empty, please select an empty one to delete!")
 
 '''
     ****************
@@ -118,7 +112,8 @@ class SubFondsListJson(BaseDatatableView):
     max_display_length = 500
 
     def get_initial_queryset(self):
-        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
+        return ArchivalUnit.objects.filter(
+            parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -132,9 +127,12 @@ class SubFondsListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'navigate':
-            return render_to_string('archival_unit/subfonds_navigate_buttons.html', context={'id': row.reference_code_id})
+            return render_to_string('archival_unit/subfonds_navigate_buttons.html',
+                                    context={'id': row.reference_code_id})
         elif column == 'action':
-            return render_to_string('archival_unit/subfonds_action_buttons.html', context={'id': row.reference_code_id})
+            series_exist = ArchivalUnit.objects.filter(parent=row).exists()
+            return render_to_string('archival_unit/subfonds_action_buttons.html',
+                                    context={'id': row.reference_code_id, 'series_exist': series_exist})
         else:
             return super(SubFondsListJson, self).render_column(row, column)
 
@@ -177,16 +175,12 @@ class SubFondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SubFondsDelete(AjaxDeleteView):
+class SubFondsDelete(AjaxDeleteProtectedView):
     template_name = 'archival_unit/subfonds_delete.html'
     context_object_name = 'subfonds'
+    success_message = ugettext("Subfonds was deleted successfully!")
+    error_message = ugettext("Subfonds is not empty, please select an empty one to delete!")
 
-    def get_object(self, queryset=None):
-        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
-
-    def get_success_result(self):
-        msg = ugettext("Subfonds: %s was deleted successfully!") % self.object.reference_code
-        return {'status': 'ok', 'message': msg}
 
 '''
     **************
@@ -210,7 +204,8 @@ class SeriesListJson(BaseDatatableView):
     max_display_length = 500
 
     def get_initial_queryset(self):
-        return ArchivalUnit.objects.filter(parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
+        return ArchivalUnit.objects.filter(
+            parent=ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id']))
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -224,7 +219,9 @@ class SeriesListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('archival_unit/series_action_buttons.html', context={'id': row.reference_code_id})
+            container_exist = Container.objects.filter(archival_unit=row).exists()
+            return render_to_string('archival_unit/series_action_buttons.html',
+                                    context={'id': row.reference_code_id, 'container_exist': container_exist})
         else:
             return super(SeriesListJson, self).render_column(row, column)
 
@@ -274,14 +271,9 @@ class SeriesUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SeriesDelete(AjaxDeleteView):
+class SeriesDelete(AjaxDeleteProtectedView):
     model = ArchivalUnit
     template_name = 'archival_unit/series_delete.html'
     context_object_name = 'series'
-
-    def get_object(self, queryset=None):
-        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
-
-    def get_success_result(self):
-        msg = ugettext("Series: %s was deleted successfully!") % self.object.reference_code
-        return {'status': 'ok', 'message': msg}
+    success_message = ugettext("Series was deleted successfully!")
+    error_message = ugettext("Series is not empty, please select an empty one to delete!")

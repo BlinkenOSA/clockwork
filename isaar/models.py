@@ -65,7 +65,7 @@ class IsaarOtherName(models.Model):
     id = models.AutoField(primary_key=True)
     isaar = models.ForeignKey('Isaar', on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
-    relationship = models.ForeignKey('IsaarRelationship', blank=True, null=True, on_delete=models.CASCADE)
+    relationship = models.ForeignKey('IsaarRelationship', blank=True, null=True, on_delete=models.SET_NULL)
     year_from = models.IntegerField(blank=True, null=True)
     year_to = models.IntegerField(blank=True, null=True)
 
@@ -107,7 +107,7 @@ class IsaarPlace(models.Model):
     id = models.AutoField(primary_key=True)
     isaar = models.ForeignKey('Isaar', on_delete=models.CASCADE)
     place = models.CharField(max_length=200)
-    place_qualifier = models.ForeignKey('IsaarPlaceQualifier', blank=True, null=True, on_delete=models.CASCADE)
+    place_qualifier = models.ForeignKey('IsaarPlaceQualifier', blank=True, null=True, on_delete=models.SET_NULL)
     year_from = models.IntegerField(blank=True, null=True)
     year_to = models.IntegerField(blank=True, null=True)
 

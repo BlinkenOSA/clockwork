@@ -1,15 +1,13 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, DeleteView
+from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxCreateView, AjaxUpdateView
 
 from authority.forms import GenreForm
 from authority.models import Genre
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 
 
 class GenreList(TemplateView):
@@ -75,10 +73,9 @@ class GenreUpdate(AjaxUpdateView):
         return ugettext("Genre: %s was updated successfully!") % self.object
 
 
-class GenreDelete(AjaxDeleteView):
+class GenreDelete(AjaxDeleteProtectedView):
     model = Genre
     template_name = 'authority/genre/delete.html'
-
-    def get_success_result(self):
-        msg = ugettext("Genre: %s was deleted successfully!") % self.object
-        return {'status': 'ok', 'message': msg}
+    context_object_name = 'genre'
+    success_message = ugettext("Genre was deleted successfully!")
+    error_message = ugettext("Genre can't be deleted, because it has already been assigned to an entry!")

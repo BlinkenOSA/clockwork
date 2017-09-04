@@ -1,14 +1,4 @@
 <div class="btn-group">
-    {% if isad.approved %}
-        <a href="/isad/action/disapprove/{{ isad.id }}/" class="btn btn-success btn-xs btn-action">
-            <i class="fa fa-check"></i>
-        </a>
-    {% else %}
-        <a href="/isad/action/approve/{{ isad.id }}/" class="btn btn-danger btn-xs btn-action">
-            <i class="fa fa-check"></i>
-        </a>
-    {% endif %}
-
     {% if isad.published %}
         <a href="/isad/action/unpublish/{{ isad.id }}/" class="btn btn-success btn-xs btn-action">
             <i class="fa fa-cloud-upload"></i>
@@ -18,5 +8,4 @@
             <i class="fa fa-cloud-upload"></i>
         </a>
     {% endif %}
-
 </div>

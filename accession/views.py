@@ -1,17 +1,16 @@
-from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import ListView, DeleteView, DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from datetime import date
 
-from fm.views import AjaxDeleteView
-
 from accession.form import AccessionForm, AccessionItemsInlineForm
 from accession.models import Accession
+from archival_unit.models import ArchivalUnit
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.mixins import InlineSuccessMessageMixin
 
 
@@ -35,7 +34,9 @@ class AccessionListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('accession/table_action_buttons.html', context={'id': row.id})
+            number_of_archival_units = ArchivalUnit.objects.filter(accessions_id=row.id).count()
+            return render_to_string('accession/table_action_buttons.html',
+                                    context={'id': row.id, 'number_of_archival_units': number_of_archival_units})
         elif column == 'transfer_date':
             return unicode(row.transfer_date)
         else:
@@ -75,11 +76,9 @@ class AccessionUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithI
     inlines_names = ['accession_items']
 
 
-class AccessionDelete(AjaxDeleteView):
+class AccessionDelete(AjaxDeleteProtectedView):
     model = Accession
     template_name = 'accession/delete.html'
     context_object_name = 'accession'
-
-    def get_success_result(self):
-        msg = ugettext("Accession: %s was deleted successfully!") % self.object.seq
-        return {'status': 'ok', 'message': msg}
+    success_message = ugettext("Container was deleted successfully!")
+    error_message = ugettext("Container is not empty, please select an empty one to delete!")

@@ -2,8 +2,10 @@
     <a class="btn btn-default btn-xs" href="{% url 'donor:update' id %}">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs fm-delete" href="{% url 'donor:delete' id %}"
-       data-fm-head="<i class='fa fa-male'></i>Delete Donor" data-fm-callback="reloadTable">
-        <i class="fa fa-trash-o"></i>
-    </a>
+    {% if not accession_exist %}
+        <a class="btn btn-default btn-xs fm-delete" href="{% url 'donor:delete' id %}"
+           data-fm-head="<i class='fa fa-male'></i>Delete Donor" data-fm-callback="reloadTable">
+            <i class="fa fa-trash-o"></i>
+        </a>
+    {% endif %}
 </div>

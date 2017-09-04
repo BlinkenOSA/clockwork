@@ -8,5 +8,5 @@ class DonorSelect2Widget(ModelSelect2Widget):
     search_fields = [
         'name__icontains',
     ]
-    attrs={'placeholder': '-- Select Donor Records --'}
+    attrs={'placeholder': '-- Select Donor Records --', 'allow-clear': 'true'}
 

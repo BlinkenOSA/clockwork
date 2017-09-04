@@ -3,8 +3,10 @@
        data-fm-head="<i class='fa fa-language'></i>Edit Language" data-fm-callback="reloadTable">
        <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs fm-delete" href="{% url 'authority:language_delete' id %}"
-       data-fm-head="<i class='fa fa-language'></i>Delete Language" data-fm-callback="reloadTable">
-       <i class="fa fa-trash-o"></i>
-    </a>
+    {% if not exists %}
+        <a class="btn btn-default btn-xs fm-delete" href="{% url 'authority:language_delete' id %}"
+           data-fm-head="<i class='fa fa-language'></i>Delete Language" data-fm-callback="reloadTable">
+           <i class="fa fa-trash-o"></i>
+        </a>
+    {% endif %}
 </div>

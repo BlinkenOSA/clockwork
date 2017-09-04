@@ -1,15 +1,14 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
 from authority.forms import LanguageForm
-from authority.models import Language
+from authority.models import Language, PersonOtherFormat, CorporationOtherFormat
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from finding_aids.models import FindingAidsEntityLanguage
 
 
 class LanguageList(TemplateView):
@@ -34,7 +33,13 @@ class LanguageListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('authority/language/table_action_buttons.html', context={'id': row.id})
+            fa_language_exists = FindingAidsEntityLanguage.objects.filter(language=row).exists()
+            person_other_exists = PersonOtherFormat.objects.filter(language=row).exists()
+            corporation_other_exists = CorporationOtherFormat.objects.filter(language=row).exists()
+            exists = fa_language_exists or person_other_exists or corporation_other_exists
+
+            return render_to_string('authority/language/table_action_buttons.html',
+                                    context={'id': row.id, 'exists': exists})
         elif column == 'authority_url':
             return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
                 if row.authority_url else None
@@ -71,11 +76,9 @@ class LanguageUpdate(AjaxUpdateView):
         return ugettext("Language: %s was updated successfully!") % self.object.language
 
 
-class LanguageDelete(DeleteView):
+class LanguageDelete(AjaxDeleteProtectedView):
     model = Language
     template_name = 'authority/language/delete.html'
     context_object_name = 'language'
-
-    def get_success_result(self):
-        msg = ugettext("Language: %s was deleted successfully!") % self.object.language
-        return {'status': 'ok', 'message': msg}
+    success_message = ugettext("Language was deleted successfully!")
+    error_message = ugettext("Language can't be deleted, because it has already been assigned to an entry!")

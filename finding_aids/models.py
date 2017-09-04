@@ -12,7 +12,7 @@ class FindingAidsEntity(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4)
     container = models.ForeignKey('container.Container', on_delete=models.PROTECT)
-    original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True)
+    original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
     legacy_id = models.CharField(max_length=200, blank=True, null=True)
     archival_reference_code = models.CharField(max_length=50, blank=True, null=True)
 
@@ -38,7 +38,7 @@ class FindingAidsEntity(models.Model):
     administrative_history = models.TextField(blank=True, null=True)
     administrative_history_original = models.TextField(blank=True, null=True)
 
-    primary_type = models.ForeignKey('controlled_list.PrimaryType', default=1)
+    primary_type = models.ForeignKey('controlled_list.PrimaryType', default=1, on_delete=models.PROTECT)
     genre = models.ManyToManyField('authority.Genre', blank=True, null=True)
 
     # Associated Fields
@@ -94,7 +94,6 @@ class FindingAidsEntity(models.Model):
         super(FindingAidsEntity, self).save()
 
 
-
 class FindingAidsEntityAlternativeTitle(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
@@ -138,7 +137,7 @@ class FindingAidsEntitySubject(models.Model):
 class FindingAidsEntityAssociatedPerson(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
-    associated_person = models.ForeignKey('authority.Person', on_delete=models.CASCADE)
+    associated_person = models.ForeignKey('authority.Person', on_delete=models.PROTECT)
     role = models.ForeignKey('controlled_list.PersonRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -148,7 +147,7 @@ class FindingAidsEntityAssociatedPerson(models.Model):
 class FindingAidsEntityAssociatedCorporation(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
-    associated_corporation = models.ForeignKey('authority.Corporation', on_delete=models.CASCADE)
+    associated_corporation = models.ForeignKey('authority.Corporation', on_delete=models.PROTECT)
     role = models.ForeignKey('controlled_list.CorporationRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -158,7 +157,7 @@ class FindingAidsEntityAssociatedCorporation(models.Model):
 class FindingAidsEntityAssociatedCountry(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
-    associated_country = models.ForeignKey('authority.Country', on_delete=models.CASCADE)
+    associated_country = models.ForeignKey('authority.Country', on_delete=models.PROTECT)
     role = models.ForeignKey('controlled_list.GeoRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -168,7 +167,7 @@ class FindingAidsEntityAssociatedCountry(models.Model):
 class FindingAidsEntityAssociatedPlace(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
-    associated_place = models.ForeignKey('authority.Place', on_delete=models.CASCADE)
+    associated_place = models.ForeignKey('authority.Place', on_delete=models.PROTECT)
     role = models.ForeignKey('controlled_list.GeoRole', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -178,7 +177,7 @@ class FindingAidsEntityAssociatedPlace(models.Model):
 class FindingAidsEntityLanguage(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
-    language = models.ForeignKey('authority.Language', on_delete=models.CASCADE)
+    language = models.ForeignKey('authority.Language', on_delete=models.PROTECT)
     role = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
-from archival_unit.widgets import ArchivalUnitSelect2Widget
+from archival_unit.widgets import ArchivalUnitSelect2Widget, ArchivalUnitIsadSelect2Widget
 from authority.widgets import LanguageSelect2MultipleWidget
 from controlled_list.models import AccessRight, ReproductionRight, RightsRestrictionReason, ExtentUnit, CarrierType, \
     Locale
@@ -23,8 +23,8 @@ IMG_FLAG = ' <span class="flag"></span>'
 
 class IsadArchivalUnitForm(Form):
     archival_unit = ModelChoiceField(
-        queryset=ArchivalUnit.objects.filter(isad__isnull=True),
-        widget=ArchivalUnitSelect2Widget()
+        queryset=ArchivalUnit.objects.all(),
+        widget=ArchivalUnitIsadSelect2Widget()
     )
 
 

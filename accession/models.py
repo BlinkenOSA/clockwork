@@ -24,8 +24,8 @@ class Accession(models.Model):
 
     donor = models.ForeignKey('donor.Donor', on_delete=models.PROTECT)
     creation_year_from = models.IntegerField()
-    creation_year_to = models.IntegerField()
-    custodial_history = models.TextField()
+    creation_year_to = models.IntegerField(blank=True, null=True)
+    custodial_history = models.TextField(blank=True, null=True)
     copyright_status = models.ForeignKey('AccessionCopyrightStatus', on_delete=models.PROTECT)
     copyright_note = models.TextField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)

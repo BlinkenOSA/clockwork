@@ -70,7 +70,7 @@ class Person(models.Model):
 class PersonOtherFormat(models.Model):
     id = models.AutoField(primary_key=True)
     person = models.ForeignKey('authority.Person', on_delete=models.CASCADE)
-    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.CASCADE)
+    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.PROTECT)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
@@ -98,7 +98,7 @@ class Corporation(models.Model):
 class CorporationOtherFormat(models.Model):
     id = models.AutoField(primary_key=True)
     corporation = models.ForeignKey('authority.Corporation', on_delete=models.CASCADE)
-    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.CASCADE)
+    language = models.ForeignKey('authority.Language', blank=True, null=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=250, unique=True)
 
     class Meta:

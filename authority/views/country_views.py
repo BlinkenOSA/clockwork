@@ -1,15 +1,15 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
+from fm.views import AjaxCreateView, AjaxUpdateView
 
 from authority.forms import CountryForm
 from authority.models import Country
+from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from donor.models import Donor
+from finding_aids.models import FindingAidsEntityAssociatedCountry
 
 
 class CountryList(TemplateView):
@@ -34,7 +34,11 @@ class CountryListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('authority/country/table_action_buttons.html', context={'id': row.id})
+            fa_exists = FindingAidsEntityAssociatedCountry.objects.filter(associated_country=row).exists()
+            donor_exists = Donor.objects.filter(country=row).exists()
+            exists = fa_exists or donor_exists
+            return render_to_string('authority/country/table_action_buttons.html',
+                                    context={'id': row.id, 'exists': exists})
         elif column == 'authority_url':
             return '<a href="%s" target="_blank">%s</a>' % (row.authority_url, row.authority_url) \
                 if row.authority_url else None
@@ -71,14 +75,9 @@ class CountryUpdate(AjaxUpdateView):
         return ugettext("Country: %s was updated successfully!") % self.object.country
 
 
-class CountryDelete(AjaxDeleteView):
+class CountryDelete(AjaxDeleteProtectedView):
     model = Country
     template_name = 'authority/country/delete.html'
     context_object_name = 'country'
-    success_url = reverse_lazy('authority:country_list')
-    success_message = ugettext("Country was deleted successfully")
-
-    def get_success_result(self):
-        msg = ugettext("Country: %s was deleted successfully!") % self.object.country
-        return {'status': 'ok', 'message': msg}
-
+    success_message = ugettext("Country was deleted successfully!")
+    error_message = ugettext("Country can't be deleted, because it has already been assigned to an entry!")

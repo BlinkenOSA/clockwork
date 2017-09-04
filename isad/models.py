@@ -9,7 +9,7 @@ from archival_unit.models import ArchivalUnit
 class Isad(models.Model):
     id = models.AutoField(primary_key=True)
     archival_unit = models.OneToOneField('archival_unit.ArchivalUnit')
-    original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True)
+    original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
 
     # Required fields
     title = models.CharField(max_length=255)
@@ -22,9 +22,9 @@ class Isad(models.Model):
     isaar = models.ManyToManyField('isaar.Isaar', blank=True)
     language = models.ManyToManyField('authority.Language')
     accruals = models.BooleanField(default=False)
-    access_rights = models.ForeignKey('controlled_list.AccessRight')
-    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight')
-    rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason')
+    access_rights = models.ForeignKey('controlled_list.AccessRight', on_delete=models.PROTECT)
+    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight', on_delete=models.PROTECT)
+    rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason', on_delete=models.PROTECT)
 
     # Identity
     date_predominant = models.CharField(max_length=200, blank=True, null=True)
@@ -63,8 +63,7 @@ class Isad(models.Model):
     archivists_note_original = models.TextField(blank=True, null=True)
     rules_conventions = models.TextField(blank=True, null=True)
 
-    # Approved/Published
-    approved = models.BooleanField(default=False)
+    # Published
     published = models.BooleanField(default=False)
 
     class Meta:
@@ -85,7 +84,7 @@ class IsadExtent(models.Model):
     isad = models.ForeignKey('Isad', on_delete=models.CASCADE)
     approx = models.BooleanField(default=False)  # This field type is a guess.
     extent_number = models.IntegerField()
-    extent_unit = models.ForeignKey('controlled_list.ExtentUnit', on_delete=models.CASCADE)
+    extent_unit = models.ForeignKey('controlled_list.ExtentUnit', on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'isad_extents'
@@ -96,7 +95,7 @@ class IsadCarrier(models.Model):
     id = models.AutoField(primary_key=True)
     isad = models.ForeignKey('Isad', on_delete=models.CASCADE)
     carrier_number = models.IntegerField()
-    carrier_type = models.ForeignKey('controlled_list.CarrierType', on_delete=models.CASCADE)
+    carrier_type = models.ForeignKey('controlled_list.CarrierType', on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'isad_carriers'

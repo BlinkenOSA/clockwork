@@ -1,10 +1,12 @@
 <div class="btn-group ">
     <a class="btn btn-default btn-xs fm-update" href="{% url 'archival_unit:series_update' id %}"
-       data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadTable">
+       data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadSeriesTable">
         <i class="fa fa-edit"></i>
     </a>
-    <a class="btn btn-default btn-xs fm-delete" href="{% url 'archival_unit:series_delete' id %}"
-       data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadTable">
-       <i class="fa fa-trash-o"></i>
-    </a>
+    {% if not container_exist %}
+        <a class="btn btn-default btn-xs fm-delete" href="{% url 'archival_unit:series_delete' id %}"
+           data-fm-head="<i class='fa fa-sitemap'></i>Edit Series" data-fm-callback="reloadSeriesTable">
+           <i class="fa fa-trash-o"></i>
+        </a>
+    {% endif %}
 </div>
