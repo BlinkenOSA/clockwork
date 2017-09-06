@@ -21,8 +21,7 @@ $('tbody').on('click','.btn-action',function(e) {
 	$.ajax({
       type: 'POST',
 	  success: function(data) {
-		  var table = $('#isad_table').DataTable();
-		  table.row(data['id']).data(data);
+		  table.row('#' + data['DT_rowId']).data(data);
 	  },
       error: function(){ },
       url: $(this).attr("href"),
