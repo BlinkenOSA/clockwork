@@ -221,3 +221,7 @@ tbody td {
 li.select2-search input {
     width: 100% !important;
 }
+
+form.clone-form {
+    display: inline !important;
+}

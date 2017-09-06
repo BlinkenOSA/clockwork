@@ -2,13 +2,14 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 from django.db import models
+from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
 
 from controlled_list.models import PrimaryType, PersonRole, CorporationRole, GeoRole, LanguageUsage
 from authority.models import Person, Place, Corporation, Country, Language
 
 
-class FindingAidsEntity(models.Model):
+class FindingAidsEntity(CloneableMixin, models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4)
     container = models.ForeignKey('container.Container', on_delete=models.PROTECT)

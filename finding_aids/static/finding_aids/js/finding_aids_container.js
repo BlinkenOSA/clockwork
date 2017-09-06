@@ -70,3 +70,28 @@ function calculateItemNumber() {
 	});
 }
 
+$('tbody').on('click','.btn-clone',function(e) {
+	e.preventDefault();
+	$.ajax({
+      type: 'POST',
+	  success: function(data) {
+		  table.ajax.reload(null, false);
+	  },
+      error: function(){ },
+      url: $(this).attr("href"),
+      cache: false
+    });
+});
+
+$(function() {
+	$.fm({
+		modal_head_selector: '.modal-title',
+		debug: false,
+		custom_callbacks: {
+            "reloadTable": function(data, options) {
+                table.ajax.reload(null, false);
+				displayMessage(data["message"]);
+            }
+        }
+	});
+});

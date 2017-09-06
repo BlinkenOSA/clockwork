@@ -5,12 +5,11 @@
 {% load i18n %}
 
 {% block js_page %}
-    <script src="{% static 'js/ajax-post.js' %}"></script>
-
     <script>
         var containerID = {{ container.id|escapejs }}
     </script>
 
+    <script src="{% static 'js/ajax-post.js' %}"></script>
     <script src="{% static 'finding_aids/js/finding_aids_container.js' %}"></script>
 {% endblock %}
 
