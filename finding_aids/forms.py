@@ -52,7 +52,7 @@ class FindingAidsForm(ModelForm):
 
     class Meta:
         model = FindingAidsEntity
-        fields = '__all__'
+        exclude = ['container', 'primary_type']
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
             'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
@@ -71,8 +71,6 @@ class FindingAidsForm(ModelForm):
             'uuid': TextInput(attrs={'readonly': True}),
             'archival_reference_code': TextInput(attrs={'readonly': True}),
             'folder_no': NumberInput(attrs={'readonly': True}),
-            'container': HiddenInput(),
-            'primary_type': HiddenInput(),
             'contents_summary': Textarea(attrs={'rows': 3}),
             'contents_summary_original': Textarea(attrs={'rows': 3}),
             'language_statement': Textarea(attrs={'rows': 3}),
@@ -104,7 +102,7 @@ class FindingAidsUpdateForm(ModelForm):
 
     class Meta:
         model = FindingAidsEntity
-        fields = '__all__'
+        exclude = ['container', 'primary_type']
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
             'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
@@ -123,8 +121,6 @@ class FindingAidsUpdateForm(ModelForm):
             'uuid': TextInput(attrs={'readonly': True}),
             'archival_reference_code': TextInput(attrs={'readonly': True}),
             'folder_no': NumberInput(attrs={'readonly': True}),
-            'container': HiddenInput(),
-            'primary_type': HiddenInput(),
             'contents_summary': Textarea(attrs={'rows': 3}),
             'contents_summary_original': Textarea(attrs={'rows': 3}),
             'language_statement': Textarea(attrs={'rows': 3}),

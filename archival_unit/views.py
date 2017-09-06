@@ -64,13 +64,17 @@ class FondsCreate(AjaxCreateView):
 
     def get_initial(self):
         return {
-            'level': 'F',
             'subfonds': 0,
             'series': 0
         }
 
     def get_response_message(self):
         return ugettext("HU OSA %s was created successfully!") % self.object.fonds
+
+    def form_valid(self, form):
+        subfonds = form.save(commit=False)
+        subfonds.level = 'F'
+        return super(FondsCreate, self).form_valid(form)
 
 
 class FondsUpdate(AjaxUpdateView):
@@ -146,14 +150,20 @@ class SubFondsCreate(AjaxCreateView):
         initial = super(SubFondsCreate, self).get_initial()
         initial['fonds_title'] = fonds.title
         initial['fonds_acronym'] = fonds.acronym
-        initial['parent'] = fonds.id
+
         initial['fonds'] = fonds.fonds
         initial['series'] = 0
-        initial['level'] = 'SF'
         return initial
 
     def get_response_message(self):
         return ugettext("%s was created successfully!") % self.object.reference_code
+
+    def form_valid(self, form):
+        fonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
+        subfonds = form.save(commit=False)
+        subfonds.parent = fonds
+        subfonds.level = 'SF'
+        return super(SubFondsCreate, self).form_valid(form)
 
 
 class SubFondsUpdate(AjaxUpdateView):
@@ -241,13 +251,18 @@ class SeriesCreate(AjaxCreateView):
         initial['subfonds'] = subfonds.subfonds
         initial['subfonds_title'] = subfonds.title
         initial['subfonds_acronym'] = subfonds.acronym
-        initial['parent'] = subfonds.id
         initial['series'] = 0
-        initial['level'] = 'S'
         return initial
 
     def get_response_message(self):
         return ugettext("%s was created successfully!") % self.object.reference_code
+
+    def form_valid(self, form):
+        subfonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
+        series = form.save(commit=False)
+        series.parent = subfonds
+        series.level = 'S'
+        return super(SeriesCreate, self).form_valid(form)
 
 
 class SeriesUpdate(AjaxUpdateView):

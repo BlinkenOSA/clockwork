@@ -8,14 +8,12 @@ from archival_unit.models import ArchivalUnit
 class BaseModelForm(ModelForm):
     class Meta:
         model = ArchivalUnit
-        fields = ("fonds", "subfonds", "series", "parent", "level", "title", "acronym", "accession")
+        fields = ("fonds", "subfonds", "series", "title", "acronym", "accession")
 
 
 class FondsCreateForm(BaseModelForm):
     class Meta(BaseModelForm.Meta):
         widgets = {
-            'parent': HiddenInput(),
-            'level': HiddenInput(),
             'subfonds': HiddenInput(),
             'series': HiddenInput(),
             'accession': AccessionsSelect2Widget()
@@ -40,8 +38,6 @@ class SubFondsCreateForm(BaseModelForm):
 
     class Meta(BaseModelForm.Meta):
         widgets = {
-            'parent': HiddenInput(),
-            'level': HiddenInput(),
             'fonds': TextInput(attrs={'readonly': True}),
             'series': HiddenInput(),
             'accession': AccessionsSelect2Widget()
@@ -68,8 +64,6 @@ class SeriesCreateForm(BaseModelForm):
 
     class Meta(BaseModelForm.Meta):
         widgets = {
-            'parent': HiddenInput(),
-            'level': HiddenInput(),
             'fonds': TextInput(attrs={'readonly': True}),
             'subfonds': TextInput(attrs={'readonly': True}),
             'accession': AccessionsSelect2Widget()

@@ -12,7 +12,7 @@ from authority.models import Person, Place, Corporation, Country, Language
 class FindingAidsEntity(CloneableMixin, models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4)
-    container = models.ForeignKey('container.Container', on_delete=models.PROTECT)
+    container = models.ForeignKey('container.Container', blank=True, null=True, on_delete=models.PROTECT)
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
     legacy_id = models.CharField(max_length=200, blank=True, null=True)
     archival_reference_code = models.CharField(max_length=50, blank=True, null=True)

@@ -76,12 +76,16 @@ class IsadCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInline
     def get_initial(self):
         initial = {}
         archival_unit = ArchivalUnit.objects.get(pk=self.kwargs['archival_unit'])
-        initial['archival_unit'] = archival_unit
         initial['reference_code'] = archival_unit.reference_code
         initial['description_level'] = archival_unit.level
         initial['title'] = archival_unit.title
         initial['level'] = archival_unit.level
         return initial
+
+    def forms_valid(self, form, formset):
+        archival_unit = ArchivalUnit.objects.get(pk=self.kwargs['archival_unit'])
+        self.object.archival_unit = archival_unit
+        return super(IsadCreate, self).forms_valid(form, formset)
 
 
 class IsadUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):

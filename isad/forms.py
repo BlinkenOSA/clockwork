@@ -40,7 +40,7 @@ class IsadForm(ModelForm):
 
     class Meta:
         model = Isad
-        fields = '__all__'
+        exclude = ['archival_unit']
         labels = {
             'year_from': ugettext('Date (From)'),
             'year_to': ugettext('Date (To)'),
@@ -70,7 +70,6 @@ class IsadForm(ModelForm):
             'embargo': ugettext('Date format: YYYY, or YYYY-MM, or YYYY-MM-DD')
         }
         widgets = {
-            'archival_unit': HiddenInput(),
             'isaar': IsaarRecordsSelect2Widget(),
             'language': LanguageSelect2MultipleWidget(),
             'accruals': Select(choices=ACCRUALS),

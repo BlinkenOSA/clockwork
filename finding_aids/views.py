@@ -89,8 +89,6 @@ class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWit
     def get_initial(self):
         initial = {}
         container = Container.objects.get(pk=self.kwargs['container_id'])
-        initial['container'] = container
-        initial['primary_type'] = container.primary_type
         initial['level'] = 'F'
         folder_no = get_number_of_folders(container.id) + 1
         initial['folder_no'] = folder_no
@@ -104,6 +102,9 @@ class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWit
         return context
 
     def forms_valid(self, form, formset):
+        container = Container.objects.get(pk=self.kwargs['container_id'])
+        self.object.container = container
+        self.object.primary_type = container.primary_type
         if self.object.level == 'I':
             item_no = get_number_of_items(self.object.container.id, self.object.folder_no)
             self.object.sequence_no = item_no + 1
@@ -143,6 +144,9 @@ class FindingAidsUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWit
         return initial
 
     def forms_valid(self, form, formset):
+        container = Container.objects.get(pk=self.kwargs['container_id'])
+        self.object.container = container
+        self.object.primary_type = container.primary_type
         return super(FindingAidsUpdate, self).forms_valid(form, formset)
 
 
