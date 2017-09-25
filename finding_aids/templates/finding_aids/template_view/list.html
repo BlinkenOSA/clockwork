@@ -1,0 +1,68 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block js_page %}
+    <script>
+        var seriesID = {{ series.id|escapejs }}
+    </script>
+
+    <script src="{% static 'js/ajax-post.js' %}"></script>
+    <script src="{% static 'finding_aids/js/finding_aids_template.js' %}"></script>
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ series.title_full }}
+        </li>
+        <li class="active">
+            {% trans 'Finding Aids Templates' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Finding Aids Templates' %} in '{{ series.title_full }}'
+{% endblock %}
+
+{% block box-1-body %}
+    <table id="fa_template_table" class="table table-bordered no-padding" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Template Name' %}</th>
+                <th>{% trans 'User Created' %}</th>
+                <th>{% trans 'Action' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block box-1-footer %}
+    <a class="btn btn-primary" href="{% url 'finding_aids:template_create' series.id %}">
+        <i class="fa fa-plus"></i>
+        {% trans 'Create' %}
+    </a>
+
+    <div class="pull-right">
+        <a class="btn btn-default" href="{% url 'container:list_with_archival_unit' series.id %}">
+            <i class="fa fa-archive"></i>
+            {% trans 'Go to Containers' %}
+        </a>
+        <a class="btn btn-default" href="{% url 'finding_aids:choose_archival_unit' %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Cancel' %}
+        </a>
+    </div>
+{% endblock %}
+

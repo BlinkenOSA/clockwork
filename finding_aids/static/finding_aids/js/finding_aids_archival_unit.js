@@ -24,12 +24,20 @@ $('#id_subfonds').on('change', function (evt) {
 $('#id_series').on('change', function (evt) {
 	if($("#id_series").val()) {
 		$('#fa-container').attr('href', '/container/' + $("#id_series").val());
+		$('#fa-template').attr('href', '/finding_aids/templates/' + $("#id_series").val());
 	} else {
 		$('#fa-container').attr('href', '/container/#');
+		$('#fa-template').attr('href', '/finding_aids/templates/#');
 	}
 });
 
 $('#fa-container').on('click', function(e) {
+	if (!($("#id_series").val())) {
+		e.preventDefault();
+	}
+});
+
+$('#fa-template').on('click', function(e) {
 	if (!($("#id_series").val())) {
 		e.preventDefault();
 	}

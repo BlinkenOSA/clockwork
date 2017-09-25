@@ -1,74 +1,13 @@
+from django.db.models import AutoField, UUIDField, ForeignKey
 from django.http import HttpResponseRedirect
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext
-from django.views.generic import FormView, ListView, TemplateView, DetailView
-from django_datatables_view.base_datatable_view import BaseDatatableView
+from django.views.generic import DetailView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from fm.views import JSONResponseMixin, AjaxDeleteView
 
 from clockwork.mixins import InlineSuccessMessageMixin
-from container.models import Container
-from finding_aids.forms import FindingAidsArchivalUnitForm, FindingAidsForm, FindingAidsAssociatedPeopleInline, \
-    FindingAidsAssociatedCorporationInline, FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, \
-    FindingAidsLanguageInline, FindingAidsExtentInline, FindingAidsUpdateForm
-from finding_aids.models import FindingAidsEntity
-
-
-class FindingAidsArchivalUnit(FormView):
-    template_name = 'finding_aids/select_archival_unit/select_archival_unit.html'
-    form_class = FindingAidsArchivalUnitForm
-
-
-class FindingAidsInContainerList(TemplateView):
-    template_name = 'finding_aids/container_view/list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(FindingAidsInContainerList, self).get_context_data(**kwargs)
-        context['container'] = Container.objects.get(pk=kwargs['container_id'])
-        return context
-
-
-class FindingAidsInContainerListJson(BaseDatatableView):
-    model = FindingAidsEntity
-    columns = ['level', 'title', 'title_original', 'date', 'action']
-    order_columns = ['folder_no', 'sequence_no', 'title']
-    max_display_length = 500
-
-    def get_initial_queryset(self):
-        container = Container.objects.get(pk=self.kwargs['container_id'])
-        finding_aids_entities = FindingAidsEntity.objects.filter(container=container).order_by('folder_no')
-        return finding_aids_entities
-
-    def render_column(self, row, column):
-        if column == 'level':
-            folder_no = row.container.archival_unit.reference_code + '/' + str(row.container.container_no) + \
-                        ':' + str(row.folder_no)
-            if row.level == 'F':
-                icon = '<i class="fa fa-folder-open-o"></i>'
-                return '<span class="call_no_folder">' + icon + folder_no + '</span>'
-            else:
-                icon = '<i class="fa fa-file-o"></i>'
-                return '<span class="call_no_item">' + icon + folder_no + '-' + str(row.sequence_no) + '</span>'
-        elif column == 'date':
-            dates = [str(row.date_from) if row.date_from else "", str(row.date_to) if row.date_to else ""]
-            return ' - '.join(filter(None, dates))
-        elif column == 'action':
-            return render_to_string('finding_aids/container_view/table_action_buttons.html', context={
-                'container_id': row.container_id, 'id': row.id})
-        else:
-            return super(FindingAidsInContainerListJson, self).render_column(row, column)
-
-    def prepare_results(self, qs):
-        json_array = []
-        columns = self.get_columns()
-
-        for item in qs:
-            data = {"DT_RowId": item.id}
-            for column in columns:
-                data[column] = self.render_column(item, column)
-            json_array.append(data)
-        return json_array
+from finding_aids.forms import *
+from finding_aids.views.helper_functions import *
 
 
 class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
@@ -103,6 +42,7 @@ class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWit
 
     def forms_valid(self, form, formset):
         container = Container.objects.get(pk=self.kwargs['container_id'])
+        self.object.archival_unit = container.archival_unit
         self.object.container = container
         self.object.primary_type = container.primary_type
         if self.object.level == 'I':
@@ -145,9 +85,67 @@ class FindingAidsUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWit
 
     def forms_valid(self, form, formset):
         container = Container.objects.get(pk=self.kwargs['container_id'])
+        self.object.archival_unit = container.archival_unit
         self.object.container = container
         self.object.primary_type = container.primary_type
         return super(FindingAidsUpdate, self).forms_valid(form, formset)
+
+
+class FindingAidsCreateFromTemplate(FindingAidsCreate):
+    def get_initial(self):
+        template = FindingAidsEntity.objects.get(pk=self.kwargs['template_id'])
+        container = Container.objects.get(pk=self.kwargs['container_id'])
+        return collect_initial(template, container)
+
+    def get_inlines(self):
+        template = FindingAidsEntity.objects.get(pk=self.kwargs['template_id'])
+        inlines = super(FindingAidsCreateFromTemplate, self).get_inlines()
+        return self.collect_inline_initials(template, inlines)
+
+    @staticmethod
+    def collect_inline_initials(template, inlines):
+        pass
+        for idx, inline in enumerate(inlines):
+            initials_array = []
+            model_name = inline.model._meta.model_name
+            fields = [x.name for x in inline.model._meta.fields]
+            set_name = "%s_set" % model_name
+            for val in getattr(template, set_name).all():
+                initial_values = {}
+                for field in fields:
+                    if getattr(val, field):
+                        initial_values[field] = getattr(val, field)
+                initial_values.pop('id', None)
+                initial_values.pop('fa_entity', None)
+                initials_array.append(initial_values)
+            inlines[idx].initial = initials_array
+        return inlines
+
+
+def collect_initial(template, container):
+    initial = {}
+
+    # SIMPLE FIELDS
+    for field in template._meta.fields:
+        if not (isinstance(field, AutoField) or isinstance(field, UUIDField) or isinstance(field, ForeignKey)):
+            if getattr(template, field.name):
+                initial[field.name] = getattr(template, field.name)
+
+    # MANY TO MANY FIELDS
+    for field in template._meta.many_to_many:
+        initial[field.name] = [int(i.id) for i in getattr(template, field.name).all()]
+
+    # Remove fields
+    initial.pop('template_name', None)
+
+    # Set values
+    initial['is_template'] = False
+    initial['level'] = 'F'
+    folder_no = get_number_of_folders(container.id) + 1
+    initial['folder_no'] = folder_no
+    initial['archival_reference_code'] = "%s/%s:%s" % (container.archival_unit.reference_code,
+                                                       container.container_no, folder_no)
+    return initial
 
 
 class FindingAidsClone(JSONResponseMixin, DetailView):
@@ -166,9 +164,6 @@ class FindingAidsClone(JSONResponseMixin, DetailView):
         new_obj.save()
         context = {'success': 'ok'}
         return self.render_json_response(context)
-
-    def renumber_entries(self, new_obj):
-        pass
 
 
 class FindingAidsDelete(AjaxDeleteView):
@@ -202,83 +197,3 @@ class FindingAidsDelete(AjaxDeleteView):
             return self.render_json_response(self.get_success_result())
         else:
             return HttpResponseRedirect(success_url)
-
-
-class FindingAidsNewFolderNumber(JSONResponseMixin, ListView):
-    model = FindingAidsEntity
-
-    def get(self, request, *args, **kwargs):
-        stats = {}
-
-        folder_no = get_number_of_folders(kwargs['container_id'])
-
-        container = Container.objects.get(pk=kwargs['container_id'])
-        arc = "%s/%s:%s" % (container.archival_unit.reference_code,
-                            container.container_no,
-                            folder_no + 1)
-
-        stats['new_folder'] = folder_no + 1
-        stats['new_arc'] = arc
-        return self.render_json_response({'stats': stats})
-
-
-class FindingAidsNewItemNumber(JSONResponseMixin, ListView):
-    model = FindingAidsEntity
-
-    def get(self, request, *args, **kwargs):
-        stats = {}
-        item_no = get_number_of_items(kwargs['container_id'], kwargs['folder_no'])
-
-        container = Container.objects.get(pk=kwargs['container_id'])
-        arc = "%s/%s:%s-%s" % (container.archival_unit.reference_code,
-                               container.container_no,
-                               kwargs['folder_no'],
-                               item_no + 1)
-
-        stats['new_item'] = item_no + 1
-        stats['new_arc'] = arc
-        return self.render_json_response({'stats': stats})
-
-
-def get_number_of_folders(container_id):
-    return FindingAidsEntity.objects.filter(container=Container.objects.get(pk=container_id))\
-                                    .values('folder_no').distinct().count()
-
-
-def get_number_of_items(container_id, folder_no):
-    return FindingAidsEntity.objects.filter(level='I')\
-        .filter(container=Container.objects.get(pk=container_id))\
-        .filter(folder_no=folder_no)\
-        .count()
-
-
-def new_number(new_obj):
-    if new_obj.level == 'F':
-        return {'folder_no': new_obj.folder_no + 1, 'sequence_no': 0}
-    else:
-        return {'folder_no': new_obj.folder_no, 'sequence_no': new_obj.sequence_no + 1}
-
-
-def renumber_entries(action, level, folder_no, sequence_no):
-    if action == 'delete':
-        step = -1
-    else:
-        step = 1
-
-    if level == 'F':
-        folders = FindingAidsEntity.objects.filter(folder_no__gt=folder_no)
-        for folder in folders:
-            folder.folder_no += step
-            folder.save()
-    else:
-        items = FindingAidsEntity.objects.filter(folder_no=folder_no,
-                                                 sequence_no__gt=sequence_no)
-        if len(items) > 0:
-            for item in items:
-                item.sequence_no += step
-                item.save()
-        else:
-            folders = FindingAidsEntity.objects.filter(folder_no__gt=folder_no)
-            for folder in folders:
-                folder.folder_no += step
-                folder.save()

@@ -3,8 +3,6 @@ from __future__ import unicode_literals
 import uuid as uuid
 
 from django.db import models
-
-
 from validators import validate_level, validate_status
 
 
@@ -13,7 +11,6 @@ class ArchivalUnit(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', db_index=True,
                                on_delete=models.PROTECT)
-
     accession = models.ManyToManyField('accession.Accession', blank=True)
 
     fonds = models.IntegerField()

@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% csrf_token %}
+<p class="delete-message">
+    {% trans 'Are you sure you want to remove Finding Aids Template: ' %}
+    <strong>{{ finding_aids.template_name }}?</strong><br/>
+</p>

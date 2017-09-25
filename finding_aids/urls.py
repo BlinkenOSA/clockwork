@@ -1,9 +1,11 @@
 from django.conf.urls import url
 
-from finding_aids.views import FindingAidsArchivalUnit, \
-    FindingAidsInContainerList, FindingAidsInContainerListJson, \
-    FindingAidsCreate, FindingAidsUpdate, \
-    FindingAidsDelete, FindingAidsNewFolderNumber, FindingAidsNewItemNumber, FindingAidsClone
+from finding_aids.views.archival_unit_select_views import FindingAidsArchivalUnit
+from finding_aids.views.container_list_views import *
+from finding_aids.views.finding_aids_entity_views import *
+from finding_aids.views.renumber_views import *
+from finding_aids.views.template_views import FindingAidsTemplateList, FindingAidsTemplateListJson, \
+    FindingAidsTemplateCreate, FindingAidsTemplateUpdate, FindingAidsTemplateDelete
 
 urlpatterns = [
     # Opening Page
@@ -17,13 +19,23 @@ urlpatterns = [
     url(r'^(?P<container_id>\d+)/clone/(?P<pk>\d+)$', FindingAidsClone.as_view(), name='clone'),
 
     url(r'^(?P<container_id>\d+)/get_new_folder/$', FindingAidsNewFolderNumber.as_view(), name='get_new_folder'),
-    url(r'^(?P<container_id>\d+)/get_new_item/(?P<folder_no>\d+)$', FindingAidsNewItemNumber.as_view(), name='get_now_folder'),
+    url(r'^(?P<container_id>\d+)/get_new_item/(?P<folder_no>\d+)$', FindingAidsNewItemNumber.as_view(),
+        name='get_now_folder'),
 
+    url(r'^(?P<container_id>\d+)/create_template/(?P<template_id>\d+)$', FindingAidsCreateFromTemplate.as_view(),
+        name='create_from_template'),
 
     url(r'^datatable/(?P<container_id>\d+)/$', FindingAidsInContainerListJson.as_view(),
-        name='finding_aids_container_list_json')
+        name='finding_aids_container_list_json'),
 
+    # Templates
+    url(r'^templates/(?P<series_id>\d+)/$', FindingAidsTemplateList.as_view(), name='finding_aids_template_list'),
+    url(r'^templates/(?P<series_id>\d+)/create/$', FindingAidsTemplateCreate.as_view(), name='template_create'),
+    url(r'^templates/(?P<series_id>\d+)/update/(?P<pk>\d+)$', FindingAidsTemplateUpdate.as_view(),
+        name='template_update'),
+    url(r'^templates/(?P<series_id>\d+)/delete/(?P<pk>\d+)$', FindingAidsTemplateDelete.as_view(),
+        name='template_delete'),
 
-
-
+    url(r'^templates/datatable/(?P<series_id>\d+)/$', FindingAidsTemplateListJson.as_view(),
+        name='finding_aids_template_list_json'),
 ]

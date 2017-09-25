@@ -67,3 +67,16 @@
     </table>
 {% endblock %}
 
+{% block box-2-footer %}
+    <div class="pull-right">
+        <a class="btn btn-default" href="{% url 'finding_aids:choose_archival_unit' %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Cancel' %}
+        </a>
+
+        <a href="{% url 'finding_aids:finding_aids_template_list' archival_unit.id %}" class="btn btn-default">
+            <i class="fa fa-copy"></i> Edit Templates
+        </a>
+    </div>
+{% endblock %}
+

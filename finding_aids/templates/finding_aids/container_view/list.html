@@ -55,14 +55,36 @@
 {% endblock %}
 
 {% block box-1-footer %}
-    <a class="btn btn-primary" href="{% url 'finding_aids:create' container.id %}">
-        <i class="fa fa-plus"></i>
-        {% trans 'Create' %}
-    </a>
+    <div class="pull-left">
+        <a class="btn btn-primary" href="{% url 'finding_aids:create' container.id %}">
+            <i class="fa fa-plus"></i>
+            {% trans 'Create' %}
+        </a>
+
+        {% if templates %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-copy"></i>
+                {% trans 'Create from Template' %}
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+            {% for template in templates %}
+                <li><a href="{% url 'finding_aids:create_from_template' container.id template.id %}">{{ template }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
 
     <div class="pull-right">
         <a href="{% url 'container:list_with_archival_unit' container.archival_unit.id %}" class="btn btn-default">
             <i class="fa fa-hand-o-left"></i> Back to Containers
+        </a>
+
+        <a href="{% url 'finding_aids:finding_aids_template_list' container.archival_unit.id %}" class="btn btn-default">
+            <i class="fa fa-copy"></i> Edit Templates
         </a>
     </div>
 {% endblock %}

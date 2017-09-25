@@ -1,0 +1,99 @@
+{% extends 'layout-box-form.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/flag-css/flag-css.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'authority/js/authority-form.js' %}"></script>
+    <script src="{% static 'finding_aids/js/finding_aids-form.js' %}"></script>
+{% endblock %}
+
+{% block notifications %}
+    {% include 'notifications-errors.html' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ series.title_full }}
+        </li>
+        <li>
+            {% trans 'Finding Aids Templates' %}
+        </li>
+        <li class="active">
+            {% trans 'Create/Edit' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    <i class="fa fa-align-justify"></i>{% trans 'Finding Aids Records' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <div class="nav-tabs-custom">
+        <ul id="isadTab" class="nav nav-tabs bordered">
+            <li class="active">
+                <a href="#t1" data-toggle="tab">Basic Metadata</a>
+            </li>
+            <li>
+                <a href="#t2" data-toggle="tab">Extra Metadata</a>
+            </li>
+            <li>
+                <a href="#t3" data-toggle="tab">Contributors</a>
+            </li>
+            <li>
+                <a href="#t4" data-toggle="tab">Subjects</a>
+            </li>
+            <li>
+                <a href="#t5" data-toggle="tab">Notes</a>
+            </li>
+        </ul>
+
+        <div class="tab-content padding-10">
+            <div class="tab-pane fade active in" id="t1">
+                {% include 'finding_aids/template_view/form/form_tab01.html' %}
+            </div>
+            <div class="tab-pane" id="t2">
+                {% include 'finding_aids/container_view/form/form_tab02.html' %}
+            </div>
+            <div class="tab-pane" id="t3">
+                {% include 'finding_aids/container_view/form/form_tab03.html' %}
+            </div>
+            <div class="tab-pane" id="t4">
+                {% include 'finding_aids/container_view/form/form_tab04.html' %}
+            </div>
+            <div class="tab-pane" id="t5">
+                {% include 'finding_aids/container_view/form/form_tab05.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        <a class="btn btn-default" href="{% url 'finding_aids:finding_aids_template_list' series.id %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Cancel' %}
+        </a>
+    </div>
+
+    <button type="submit" class="btn btn-primary" formnovalidate>
+        {% bootstrap_icon "save" %} Submit
+    </button>
+{% endblock %}

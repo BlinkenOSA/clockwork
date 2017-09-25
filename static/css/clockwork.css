@@ -225,3 +225,7 @@ li.select2-search input {
 form.clone-form {
     display: inline !important;
 }
+
+#id_template_select {
+    margin-right: 10px;
+}

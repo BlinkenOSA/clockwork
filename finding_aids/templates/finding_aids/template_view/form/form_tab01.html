@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+
+<fieldset>
+    <div class="col-md-12">
+        {% bootstrap_field form.template_name %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-3">
+        {% bootstrap_field form.legacy_id %}
+    </div>
+    <div class="col-md-3">
+        {% bootstrap_field form.uuid %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.original_locale %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
+        {% bootstrap_field form.title %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.title_original %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
+        {% bootstrap_field form.date_from %}
+    </div>
+    <div class="col-md-4">
+        {% bootstrap_field form.date_to %}
+    </div>
+    <div class="col-md-2">
+        {% bootstrap_field form.date_ca_span %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
+        {% bootstrap_field form.contents_summary %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.contents_summary_original %}
+    </div>
+</fieldset>

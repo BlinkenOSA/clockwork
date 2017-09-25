@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
 
 import uuid as uuid
+
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import ugettext
 from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
 
@@ -12,6 +15,7 @@ from authority.models import Person, Place, Corporation, Country, Language
 class FindingAidsEntity(CloneableMixin, models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4)
+    archival_unit = models.ForeignKey('archival_unit.ArchivalUnit', on_delete=models.PROTECT)
     container = models.ForeignKey('container.Container', blank=True, null=True, on_delete=models.PROTECT)
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
     legacy_id = models.CharField(max_length=200, blank=True, null=True)
@@ -20,15 +24,19 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     FINDING_AIDS_LEVEL = [('F', 'Folder'), ('I', 'Item')]
     level = models.CharField(max_length=1, choices=FINDING_AIDS_LEVEL, default='F')
 
+    # Template fields
+    is_template = models.BooleanField(default=False)
+    template_name = models.CharField(max_length=100, blank=True, null=True)
+
     # Required fields
     folder_no = models.IntegerField(default=0)
     sequence_no = models.IntegerField(default=0, blank=True, null=True)
 
-    title = models.CharField(max_length=300)
+    title = models.CharField(max_length=300, blank=True, null=True)
     title_given = models.BooleanField(default=False)
-    title_original = models.CharField(max_length=300, blank=True)
+    title_original = models.CharField(max_length=300, blank=True, null=True)
 
-    date_from = ApproximateDateField()
+    date_from = ApproximateDateField(blank=True)
     date_to = ApproximateDateField(blank=True)
     date_ca_span = models.IntegerField(blank=True, default=0)
 
@@ -40,15 +48,18 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     administrative_history_original = models.TextField(blank=True, null=True)
 
     primary_type = models.ForeignKey('controlled_list.PrimaryType', default=1, on_delete=models.PROTECT)
-    genre = models.ManyToManyField('authority.Genre', blank=True, null=True)
+    genre = models.ManyToManyField('authority.Genre', blank=True)
 
     # Associated Fields
-    spatial_coverage_country = models.ManyToManyField('authority.Country', blank=True, related_name='spatial_coverage_countries')
-    spatial_coverage_place = models.ManyToManyField('authority.Place', blank=True, related_name='spatial_coverage_places')
+    spatial_coverage_country = models.ManyToManyField('authority.Country', blank=True,
+                                                      related_name='spatial_coverage_countries')
+    spatial_coverage_place = models.ManyToManyField('authority.Place', blank=True,
+                                                    related_name='spatial_coverage_places')
 
     # Subject Fields
     subject_person = models.ManyToManyField('authority.Person', blank=True, related_name='subject_poeple')
-    subject_corporation = models.ManyToManyField('authority.Corporation', blank=True, related_name='subject_corporations')
+    subject_corporation = models.ManyToManyField('authority.Corporation', blank=True,
+                                                 related_name='subject_corporations')
     subject_heading = models.ManyToManyField('authority.Subject', blank=True)
     subject_keyword = models.ManyToManyField('controlled_list.Keyword', blank=True)
 
@@ -82,17 +93,25 @@ class FindingAidsEntity(CloneableMixin, models.Model):
         db_table = 'fa_entities'
 
     def save(self, **kwargs):
-        if self.level == 'F':
-            self.archival_reference_code = "%s/%s:%s" % (self.container.archival_unit.reference_code,
-                                                         self.container.container_no,
-                                                         self.folder_no)
+        if self.is_template:
+            self.archival_reference_code = "%s-TEMPLATE" % self.archival_unit.reference_code
         else:
-            self.archival_reference_code = "%s/%s:%s-%s" % (self.container.archival_unit.reference_code,
-                                                            self.container.container_no,
-                                                            self.folder_no,
-                                                            self.sequence_no)
-
+            if self.level == 'F':
+                self.archival_reference_code = "%s/%s:%s" % (self.container.archival_unit.reference_code,
+                                                             self.container.container_no,
+                                                             self.folder_no)
+            else:
+                self.archival_reference_code = "%s/%s:%s-%s" % (self.container.archival_unit.reference_code,
+                                                                self.container.container_no,
+                                                                self.folder_no,
+                                                                self.sequence_no)
         super(FindingAidsEntity, self).save()
+
+    def __unicode__(self):
+        if self.is_template:
+            return self.template_name
+        else:
+            return "%s - %s" % (self.archival_reference_code, self.title)
 
 
 class FindingAidsEntityAlternativeTitle(models.Model):
@@ -179,7 +198,7 @@ class FindingAidsEntityLanguage(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     language = models.ForeignKey('authority.Language', on_delete=models.PROTECT)
-    role = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL, blank=True, null=True)
+    language_usage = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_languages'

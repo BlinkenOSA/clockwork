@@ -1,4 +1,4 @@
-from django.db.models import TextField
+from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField, Form, ModelForm, Textarea, HiddenInput, TextInput, CharField, NumberInput, \
     Select, ChoiceField
 from django.utils.safestring import mark_safe
@@ -45,14 +45,26 @@ class FindingAidsArchivalUnitForm(Form):
     )
 
 
-class FindingAidsForm(ModelForm):
+class FindingAidsTemplateSelectForm(Form):
+    template_select = ModelChoiceField(
+        queryset=FindingAidsEntity.objects.filter(is_template=True),
+        empty_label=None
+    )
+
+    def __init__(self, *args, **kwargs):
+        archival_unit = kwargs.pop('archival_unit', None)
+        super(FindingAidsTemplateSelectForm, self).__init__(*args, **kwargs)
+        self.fields['template_select'].queryset = FindingAidsEntity.objects.filter(is_template=True,
+                                                                                   archival_unit=archival_unit)
+
+
+class FindingAidsBaseForm(ModelForm):
     original_locale = ModelChoiceField(empty_label=ugettext('- Select Original Locale -'),
                                        queryset=Locale.objects.all(), required=False)
-    level_hidden = CharField(widget=HiddenInput(), required=False)
 
     class Meta:
         model = FindingAidsEntity
-        exclude = ['container', 'primary_type']
+        fields = '__all__'
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
             'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
@@ -78,10 +90,12 @@ class FindingAidsForm(ModelForm):
             'physical_condition': Textarea(attrs={'rows': 3}),
             'physical_description': Textarea(attrs={'rows': 3}),
             'physical_description_original': Textarea(attrs={'rows': 3}),
-            'spatial_coverage_country': CountrySelect2MultipleWidget(attrs={'data-placeholder': '-- Select Countries --'}),
+            'spatial_coverage_country': CountrySelect2MultipleWidget(
+                attrs={'data-placeholder': '-- Select Countries --'}),
             'spatial_coverage_place': PlaceSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Places --'}),
             'subject_person': PersonSelect2MultipleWidget(attrs={'data-placeholder': '-- Select People --'}),
-            'subject_corporation': CorporationSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Corporations --'}),
+            'subject_corporation': CorporationSelect2MultipleWidget(
+                attrs={'data-placeholder': '-- Select Corporations --'}),
             'subject_keyword': KeywordSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Keywords --'}),
             'genre': GenreSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Genres --'}),
             'internal_note': Textarea(attrs={'rows': 3})
@@ -94,54 +108,54 @@ class FindingAidsForm(ModelForm):
         }
 
 
-class FindingAidsUpdateForm(ModelForm):
-    original_locale = ModelChoiceField(empty_label=ugettext('- Select Original Locale -'),
-                                       queryset=Locale.objects.all(), required=False)
+class FindingAidsForm(FindingAidsBaseForm):
     level_hidden = CharField(widget=HiddenInput(), required=False)
-    level = ChoiceField(required=False, choices=FindingAidsEntity.FINDING_AIDS_LEVEL, widget=Select(attrs={'disabled': True}))
 
-    class Meta:
-        model = FindingAidsEntity
-        exclude = ['container', 'primary_type']
-        labels = {
-            'uuid': mark_safe(ugettext('UUID')),
-            'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
-            'title_original': mark_safe(ugettext('Title - Original Language') + IMG_FLAG),
-            'contents_summary_original': mark_safe(ugettext('Contents Summary - Original Language') + IMG_FLAG),
-            'language_statement_original': mark_safe(ugettext('Language Statement - Original Language') + IMG_FLAG),
-            'physical_description_original': mark_safe(ugettext('Physical Description - Original Language') + IMG_FLAG),
-            'spatial_coverage_country': ugettext('Spatial Coverage (Countries)'),
-            'spatial_coverage_place': ugettext('Spatial Coverage (Places)'),
-            'subject_person': ugettext('Subject (People)'),
-            'subject_corporation': ugettext('Subject (Corporations)'),
-            'subject_keyword': ugettext('Keywords'),
-            'genre': ugettext('Form/Genre')
-        }
-        widgets = {
-            'uuid': TextInput(attrs={'readonly': True}),
-            'archival_reference_code': TextInput(attrs={'readonly': True}),
-            'folder_no': NumberInput(attrs={'readonly': True}),
-            'contents_summary': Textarea(attrs={'rows': 3}),
-            'contents_summary_original': Textarea(attrs={'rows': 3}),
-            'language_statement': Textarea(attrs={'rows': 3}),
-            'language_statement_original': Textarea(attrs={'rows': 3}),
-            'physical_condition': Textarea(attrs={'rows': 3}),
-            'physical_description': Textarea(attrs={'rows': 3}),
-            'physical_description_original': Textarea(attrs={'rows': 3}),
-            'spatial_coverage_country': CountrySelect2MultipleWidget(attrs={'data-placeholder': '-- Select Countries --'}),
-            'spatial_coverage_place': PlaceSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Places --'}),
-            'subject_person': PersonSelect2MultipleWidget(attrs={'data-placeholder': '-- Select People --'}),
-            'subject_corporation': CorporationSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Corporations --'}),
-            'subject_keyword': KeywordSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Keywords --'}),
-            'genre': GenreSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Genres --'}),
-            'internal_note': Textarea(attrs={'rows': 3})
-        }
-        help_texts = {
-            'date_from': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD',
-            'date_to': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD',
-            'time_start': 'Time format: hh:mm:ss',
-            'time_end': 'Time format: hh:mm:ss'
-        }
+    class Meta(FindingAidsBaseForm.Meta):
+        exclude = ['archival_unit', 'container', 'primary_type']
+
+    def clean_title(self):
+        if not self.cleaned_data['title']:
+            raise ValidationError(ugettext("This field is mandatory."))
+
+    def clean_date_from(self):
+        if not self.cleaned_data['date_from']:
+            raise ValidationError(ugettext("This field is mandatory."))
+
+
+class FindingAidsTemplateForm(FindingAidsBaseForm):
+    class Meta(FindingAidsBaseForm.Meta):
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+
+    def clean_template_name(self):
+        if not self.cleaned_data['template_name']:
+            raise ValidationError(ugettext("This field is mandatory."))
+
+
+class FindingAidsUpdateForm(FindingAidsBaseForm):
+    level_hidden = CharField(widget=HiddenInput(), required=False)
+    level = ChoiceField(required=False, choices=FindingAidsEntity.FINDING_AIDS_LEVEL,
+                        widget=Select(attrs={'disabled': True}))
+
+    class Meta(FindingAidsBaseForm.Meta):
+        exclude = ['archival_unit', 'container', 'primary_type']
+
+    def clean_title(self):
+        if not self.cleaned_data['title']:
+            raise ValidationError(ugettext("This field is mandatory."))
+
+    def clean_date_from(self):
+        if not self.cleaned_data['date_from']:
+            raise ValidationError(ugettext("This field is mandatory."))
+
+
+class FindingAidsTemplateUpdateForm(FindingAidsBaseForm):
+    class Meta(FindingAidsBaseForm.Meta):
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+
+    def clean_template_name(self):
+        if not self.cleaned_data['template_name']:
+            raise ValidationError(ugettext("This field is mandatory."))
 
 
 class FindingAidsAssociatedPeopleForm(ModelForm):
