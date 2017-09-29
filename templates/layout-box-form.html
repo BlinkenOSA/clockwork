@@ -43,18 +43,17 @@
             {% include 'nonfield-errors.html' %}
             {% csrf_token %}
 
-        <div class="box-body">
-            {% block box-1-body %}
-            {% endblock %}
-        </div>
-        <!-- /.box-body -->
+            <div class="box-body">
+                {% block box-1-body %}
+                {% endblock %}
+            </div>
+            <!-- /.box-body -->
 
-        <div class="box-footer">
-            {% block box-1-footer %}
-            {% endblock %}
-        </div>
-        <!-- /.box-footer-->
-
+            <div class="box-footer">
+                {% block box-1-footer %}
+                {% endblock %}
+            </div>
+            <!-- /.box-footer-->
         </form>
 
     </div>

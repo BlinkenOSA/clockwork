@@ -8,13 +8,18 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import SubjectForm
 from authority.models import Subject
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 
 
-class SubjectList(TemplateView):
+class SubjectPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Subject
+
+
+class SubjectList(SubjectPermissionMixin, TemplateView):
     template_name = 'authority/subject/list.html'
 
 
-class SubjectListJson(BaseDatatableView):
+class SubjectListJson(SubjectPermissionMixin, BaseDatatableView):
     model = Subject
     columns = ['id', 'subject', 'authority_url', 'action']
     order_columns = ['subject']
@@ -50,7 +55,7 @@ class SubjectListJson(BaseDatatableView):
         return json_array
 
 
-class SubjectCreate(AjaxCreateView):
+class SubjectCreate(SubjectPermissionMixin, AjaxCreateView):
     form_class = SubjectForm
     model = Subject
     template_name = 'authority/subject/form.html'
@@ -65,7 +70,7 @@ class SubjectCreate(AjaxCreateView):
         return results
 
 
-class SubjectUpdate(AjaxUpdateView):
+class SubjectUpdate(SubjectPermissionMixin, AjaxUpdateView):
     form_class = SubjectForm
     model = Subject
     template_name = 'authority/subject/form.html'
@@ -74,7 +79,7 @@ class SubjectUpdate(AjaxUpdateView):
         return ugettext("Subject: %s was updated successfully!") % self.object
 
 
-class SubjectDelete(AjaxDeleteProtectedView):
+class SubjectDelete(SubjectPermissionMixin, AjaxDeleteProtectedView):
     model = Subject
     template_name = 'authority/subject/delete.html'
     context_object_name = 'subject'

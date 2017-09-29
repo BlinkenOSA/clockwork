@@ -229,3 +229,12 @@ form.clone-form {
 #id_template_select {
     margin-right: 10px;
 }
+
+div.error-content {
+    padding-top: 20px;
+}
+
+div.required label:after {
+    color: #cc0d1c;
+    content: " *";
+}

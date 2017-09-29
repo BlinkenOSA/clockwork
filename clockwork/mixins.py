@@ -1,4 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ImproperlyConfigured
 from django.http import JsonResponse
 
 
@@ -60,3 +64,18 @@ class AjaxableResponseMixin(object):
             return JsonResponse(data)
         else:
             return response
+
+
+class GeneralAllPermissionMixin(PermissionRequiredMixin):
+    permission_model = None
+    raise_exception = True
+
+    def get_permission_required(self):
+        if self.permission_model is None:
+            raise ImproperlyConfigured(
+                '{0} is missing the permission_model attribute. Define {0}.permission_model, or override '
+                '{0}.get_permission_required().'.format(self.__class__.__name__)
+            )
+        content_type = ContentType.objects.get_for_model(self.permission_model)
+        permissions = Permission.objects.filter(content_type=content_type)
+        return tuple("%s.%s" % (p.content_type, p.codename) for p in permissions)

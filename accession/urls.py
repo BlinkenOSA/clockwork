@@ -1,5 +1,4 @@
-from django.conf.urls import include, url
-from accession import views
+from django.conf.urls import url
 from accession.views import AccessionList, AccessionListJson, AccessionCreate, AccessionUpdate, AccessionDelete, \
     AccessionDetail
 

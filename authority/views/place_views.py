@@ -7,14 +7,19 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import PlaceForm
 from authority.models import Place
+from clockwork.mixins import GeneralAllPermissionMixin
 from finding_aids.models import FindingAidsEntityAssociatedPlace
 
 
-class PlaceList(TemplateView):
+class AccessionPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Place
+
+
+class PlaceList(AccessionPermissionMixin, TemplateView):
     template_name = 'authority/place/list.html'
 
 
-class PlaceListJson(BaseDatatableView):
+class PlaceListJson(AccessionPermissionMixin, BaseDatatableView):
     model = Place
     columns = ['id', 'place', 'authority_url', 'action']
     order_columns = ['place']
@@ -51,7 +56,7 @@ class PlaceListJson(BaseDatatableView):
         return json_array
 
 
-class PlaceCreate(AjaxCreateView):
+class PlaceCreate(AccessionPermissionMixin, AjaxCreateView):
     form_class = PlaceForm
     model = Place
     template_name = 'authority/place/form.html'
@@ -66,7 +71,7 @@ class PlaceCreate(AjaxCreateView):
         return results
 
 
-class PlaceUpdate(AjaxUpdateView):
+class PlaceUpdate(AccessionPermissionMixin, AjaxUpdateView):
     form_class = PlaceForm
     model = Place
     template_name = 'authority/place/form.html'
@@ -75,7 +80,7 @@ class PlaceUpdate(AjaxUpdateView):
         return ugettext("Place: %s was updated successfully!") % self.object
 
 
-class PlaceDelete(AjaxDeleteView):
+class PlaceDelete(AccessionPermissionMixin, AjaxDeleteView):
     model = Place
     template_name = 'authority/place/delete.html'
     context_object_name = 'place'

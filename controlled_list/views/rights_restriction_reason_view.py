@@ -6,15 +6,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import RightsRestrictionReasonForm
 from controlled_list.models import RightsRestrictionReason
 
 
-class RightsRestrictionReasonList(TemplateView):
+class RightsRestrictionReasonPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = RightsRestrictionReason
+
+
+class RightsRestrictionReasonList(RightsRestrictionReasonPermissionMixin, TemplateView):
     template_name = 'controlled_list/rights_restriction_reason/list.html'
 
 
-class RightsRestrictionReasonListJson(BaseDatatableView):
+class RightsRestrictionReasonListJson(RightsRestrictionReasonPermissionMixin, BaseDatatableView):
     model = RightsRestrictionReason
     columns = ['id', 'reason', 'action']
     order_columns = ['reason']
@@ -46,7 +51,7 @@ class RightsRestrictionReasonListJson(BaseDatatableView):
         return json_array
 
 
-class RightsRestrictionReasonCreate(AjaxCreateView):
+class RightsRestrictionReasonCreate(RightsRestrictionReasonPermissionMixin, AjaxCreateView):
     form_class = RightsRestrictionReasonForm
     model = RightsRestrictionReason
     template_name = 'controlled_list/rights_restriction_reason/form.html'
@@ -55,7 +60,7 @@ class RightsRestrictionReasonCreate(AjaxCreateView):
         return ugettext("RightsRestrictionReason: %s was created successfully!") % self.object
 
 
-class RightsRestrictionReasonUpdate(AjaxUpdateView):
+class RightsRestrictionReasonUpdate(RightsRestrictionReasonPermissionMixin, AjaxUpdateView):
     form_class = RightsRestrictionReasonForm
     model = RightsRestrictionReason
     template_name = 'controlled_list/rights_restriction_reason/form.html'

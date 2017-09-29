@@ -8,15 +8,20 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import CountryForm
 from authority.models import Country
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 from donor.models import Donor
 from finding_aids.models import FindingAidsEntityAssociatedCountry
 
 
-class CountryList(TemplateView):
+class CountryPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Country
+
+
+class CountryList(CountryPermissionMixin, TemplateView):
     template_name = 'authority/country/list.html'
 
 
-class CountryListJson(BaseDatatableView):
+class CountryListJson(CountryPermissionMixin, BaseDatatableView):
     model = Country
     columns = ['id', 'country', 'authority_url', 'alpha2', 'alpha3', 'action']
     order_columns = ['country', 'alpha2', 'alpha3']
@@ -57,7 +62,7 @@ class CountryListJson(BaseDatatableView):
         return json_array
 
 
-class CountryCreate(AjaxCreateView):
+class CountryCreate(CountryPermissionMixin, AjaxCreateView):
     form_class = CountryForm
     model = Country
     template_name = 'authority/country/form.html'
@@ -66,7 +71,7 @@ class CountryCreate(AjaxCreateView):
         return ugettext("Country: %s was created successfully!") % self.object.country
 
 
-class CountryUpdate(AjaxUpdateView):
+class CountryUpdate(CountryPermissionMixin, AjaxUpdateView):
     form_class = CountryForm
     model = Country
     template_name = 'authority/country/form.html'
@@ -75,7 +80,7 @@ class CountryUpdate(AjaxUpdateView):
         return ugettext("Country: %s was updated successfully!") % self.object.country
 
 
-class CountryDelete(AjaxDeleteProtectedView):
+class CountryDelete(CountryPermissionMixin, AjaxDeleteProtectedView):
     model = Country
     template_name = 'authority/country/delete.html'
     context_object_name = 'country'

@@ -9,14 +9,19 @@ from authority.forms import CorporationForm, CorporationOtherNamesInLine
 from authority.models import Corporation
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
+from clockwork.mixins import GeneralAllPermissionMixin
 from finding_aids.models import FindingAidsEntityAssociatedCorporation
 
 
-class CorporationList(TemplateView):
+class CorporationPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Corporation
+
+
+class CorporationList(CorporationPermissionMixin, TemplateView):
     template_name = 'authority/corporation/list.html'
 
 
-class CorporationListJson(BaseDatatableView):
+class CorporationListJson(CorporationPermissionMixin, BaseDatatableView):
     model = Corporation
     columns = ['id', 'name', 'authority_url', 'action']
     order_columns = ['name', '']
@@ -53,7 +58,7 @@ class CorporationListJson(BaseDatatableView):
         return json_array
 
 
-class CorporationCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
+class CorporationCreate(CorporationPermissionMixin, NamedFormsetsMixin, CreateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'
@@ -70,7 +75,7 @@ class CorporationCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
         return results
 
 
-class CorporationUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
+class CorporationUpdate(CorporationPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'
@@ -81,7 +86,7 @@ class CorporationUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
         return ugettext("Corporation: %s was updated successfully!") % self.object.name
 
 
-class CorporationDelete(AjaxDeleteProtectedView):
+class CorporationDelete(CorporationPermissionMixin, AjaxDeleteProtectedView):
     model = Corporation
     template_name = 'authority/corporation/delete.html'
     context_object_name = 'corporation'

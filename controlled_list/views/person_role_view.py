@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import PersonRoleForm
 from controlled_list.models import PersonRole
 
 
-class PersonRoleList(TemplateView):
+class PersonRolePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = PersonRole
+
+
+class PersonRoleList(PersonRolePermissionMixin, TemplateView):
     template_name = 'controlled_list/person_role/list.html'
 
 
-class PersonRoleListJson(BaseDatatableView):
+class PersonRoleListJson(PersonRolePermissionMixin, BaseDatatableView):
     model = PersonRole
     columns = ['id', 'role', 'action']
     order_columns = ['role']
@@ -45,7 +50,7 @@ class PersonRoleListJson(BaseDatatableView):
         return json_array
 
 
-class PersonRoleCreate(AjaxCreateView):
+class PersonRoleCreate(PersonRolePermissionMixin, AjaxCreateView):
     form_class = PersonRoleForm
     model = PersonRole
     template_name = 'controlled_list/person_role/form.html'
@@ -60,7 +65,7 @@ class PersonRoleCreate(AjaxCreateView):
         return results
 
 
-class PersonRoleUpdate(AjaxUpdateView):
+class PersonRoleUpdate(PersonRolePermissionMixin, AjaxUpdateView):
     form_class = PersonRoleForm
     model = PersonRole
     template_name = 'controlled_list/person_role/form.html'

@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import KeywordForm
 from controlled_list.models import Keyword
 
 
-class KeywordList(TemplateView):
+class KeywordPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Keyword
+
+
+class KeywordList(KeywordPermissionMixin, TemplateView):
     template_name = 'controlled_list/keyword/list.html'
 
 
-class KeywordListJson(BaseDatatableView):
+class KeywordListJson(KeywordPermissionMixin, BaseDatatableView):
     model = Keyword
     columns = ['id', 'keyword', 'action']
     order_columns = ['keyword']
@@ -45,7 +50,7 @@ class KeywordListJson(BaseDatatableView):
         return json_array
 
 
-class KeywordCreate(AjaxCreateView):
+class KeywordCreate(KeywordPermissionMixin, AjaxCreateView):
     form_class = KeywordForm
     model = Keyword
     template_name = 'controlled_list/keyword/form.html'
@@ -54,7 +59,7 @@ class KeywordCreate(AjaxCreateView):
         return ugettext("Keyword: %s was created successfully!") % self.object
 
 
-class KeywordUpdate(AjaxUpdateView):
+class KeywordUpdate(KeywordPermissionMixin, AjaxUpdateView):
     form_class = KeywordForm
     model = Keyword
     template_name = 'controlled_list/keyword/form.html'

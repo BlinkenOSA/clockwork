@@ -8,14 +8,19 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import LanguageForm
 from authority.models import Language, PersonOtherFormat, CorporationOtherFormat
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 from finding_aids.models import FindingAidsEntityLanguage
 
 
-class LanguageList(TemplateView):
+class LanguagePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Language
+
+
+class LanguageList(LanguagePermissionMixin, TemplateView):
     template_name = 'authority/language/list.html'
 
 
-class LanguageListJson(BaseDatatableView):
+class LanguageListJson(LanguagePermissionMixin, BaseDatatableView):
     model = Language
     columns = ['id', 'language', 'authority_url', 'iso_639_1', 'iso_639_2', 'action']
     order_columns = ['language', 'iso_639_1', 'iso_639_2']
@@ -58,7 +63,7 @@ class LanguageListJson(BaseDatatableView):
         return json_array
 
 
-class LanguageCreate(AjaxCreateView):
+class LanguageCreate(LanguagePermissionMixin, AjaxCreateView):
     form_class = LanguageForm
     model = Language
     template_name = 'authority/language/form.html'
@@ -67,7 +72,7 @@ class LanguageCreate(AjaxCreateView):
         return ugettext("Language: %s was created successfully!") % self.object.language
 
 
-class LanguageUpdate(AjaxUpdateView):
+class LanguageUpdate(LanguagePermissionMixin, AjaxUpdateView):
     form_class = LanguageForm
     model = Language
     template_name = 'authority/language/form.html'
@@ -76,7 +81,7 @@ class LanguageUpdate(AjaxUpdateView):
         return ugettext("Language: %s was updated successfully!") % self.object.language
 
 
-class LanguageDelete(AjaxDeleteProtectedView):
+class LanguageDelete(LanguagePermissionMixin, AjaxDeleteProtectedView):
     model = Language
     template_name = 'authority/language/delete.html'
     context_object_name = 'language'

@@ -29,21 +29,26 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 PREREQ_APP = [
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'bootstrap3',
     'django_select2',
     'widget_tweaks',
     'crispy_forms',
     'fm',
+    'userena',
+    'guardian',
+    'easy_thumbnails'
 ]
 
 PROJECT_APPS = [
+    'accounts',
     'authority',
     'controlled_list',
     'dashboard',
@@ -106,7 +111,6 @@ DATABASES = {
 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -196,3 +200,30 @@ CACHES = {
 
 # Set the cache backend to select2
 SELECT2_CACHE_BACKEND = 'select2'
+
+# User Authentication
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+ANONYMOUS_USER_ID = -1
+
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+USERENA_SIGNIN_REDIRECT_URL = '/'
+USERENA_REDIRECT_ON_SIGNOUT = '/accounts/signin/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
+SITE_ID = 1
+
+USERENA_DISABLE_PROFILE_LIST = True
+USERENA_ACTIVATION_REQUIRED = False
+USERENA_DISABLE_SIGNUP = True
+USERENA_USE_MESSAGES = False
+USERENA_MUGSHOT_PATH = 'mugshots/%(username)s/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/Users/Josh/PycharmProjects/clockwork-python/clockwork/static/media/'

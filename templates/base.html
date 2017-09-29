@@ -83,208 +83,269 @@
                         </a>
                     </li>
 
-                    <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
-                        <a href="{% url 'archival_unit:fonds' %}">
-                            <i class="fa fa-sitemap"></i>
-                            <span>{% trans "Archival Unit" %}</span>
-                        </a>
-                    </li>
+                    {% if perms.archival_unit %}
+                        <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
+                            <a href="{% url 'archival_unit:fonds' %}">
+                                <i class="fa fa-sitemap"></i>
+                                <span>{% trans "Archival Unit" %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
 
-                    <li class="{% if 'isaar' in request.path %}active{% endif %}">
-                        <a href="{% url 'isaar:list' %}">
-                            <i class="fa fa-male"></i>
-                            <span>{% trans "ISAAR/CPF" %}</span>
-                        </a>
-                    </li>
+                    {% if perms.isaar %}
+                        <li class="{% if 'isaar' in request.path %}active{% endif %}">
+                            <a href="{% url 'isaar:list' %}">
+                                <i class="fa fa-male"></i>
+                                <span>{% trans "ISAAR/CPF" %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
 
-                    <li class="treeview {% if 'donor' in request.path or 'accession' in request.path %}active{% endif %}">
-                        <a href="#">
-                            <i class="fa fa-exchange"></i>
-                            <span>{% trans "Accession" %}</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="{% if 'accession' in request.path %}active{% endif %}">
-                                <a href="{% url 'accession:list' %}"><i class="fa fa-circle-o"></i> {% trans 'Accession Records' %}</a>
-                            </li>
-                            <li class="{% if 'donor' in request.path %}active{% endif %}">
-                                <a href="{% url 'donor:list' %}"><i class="fa fa-circle-o"></i> {% trans 'Donor' %}</a>
-                            </li>
-                        </ul>
-                    </li>
+                    {% if perms.accession or perms.donor %}
+                        <li class="treeview {% if 'donor' in request.path or 'accession' in request.path %}active{% endif %}">
+                            <a href="#">
+                                <i class="fa fa-exchange"></i>
+                                <span>{% trans "Accession" %}</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                {% if perms.accession %}
+                                    <li class="{% if 'accession' in request.path %}active{% endif %}">
+                                        <a href="{% url 'accession:list' %}"><i class="fa fa-circle-o"></i> {% trans 'Accession Records' %}</a>
+                                    </li>
+                                {% endif %}
 
-                    <li class="{% if 'isad' in request.path %}active{% endif %}">
-                        <a href="{% url 'isad:list' %}">
-                            <i class="fa fa-align-justify"></i>
-                            <span>{% trans 'ISAD(G)' %}</span>
-                        </a>
-                    </li>
+                                {% if perms.donor %}
+                                    <li class="{% if 'donor' in request.path %}active{% endif %}">
+                                        <a href="{% url 'donor:list' %}"><i class="fa fa-circle-o"></i> {% trans 'Donor' %}</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% endif %}
 
-                    <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
-                        <a href="#">
-                            <i class="fa fa-file-o"></i>
-                            <span>{% trans 'Finding Aids' %}</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
-                                <a href="{% url 'finding_aids:choose_archival_unit' %}"><i class="fa fa-circle-o"></i> {% trans 'Folders/Items' %}</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-circle-o"></i> {% trans 'Organizer' %}</a>
-                            </li>
-                        </ul>
-                    </li>
+                    {% if perms.isad %}
+                        <li class="{% if 'isad' in request.path %}active{% endif %}">
+                            <a href="{% url 'isad:list' %}">
+                                <i class="fa fa-align-justify"></i>
+                                <span>{% trans 'ISAD(G)' %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
 
-                    <li class="treeview {% if 'authority' in request.path or 'controlled_list' in request.path %}active{% endif %}">
-                        <a href="#">
-                            <i class="fa fa-list-alt"></i>
-                            <span>{% trans 'Lists' %}</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="{% if 'authority' in request.path %}active{% endif %}">
-                                <a href="#">
-                                    {% trans 'Authority Lists' %}
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="{% if 'corporation' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:corporation_list' %}">
-                                            <i class="fa fa-building-o"></i>
-                                            <span>{% trans 'Corporations' %}</span>
+                    {% if perms.finding_aids %}
+                        <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
+                            <a href="#">
+                                <i class="fa fa-file-o"></i>
+                                <span>{% trans 'Finding Aids' %}</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
+                                    <a href="{% url 'finding_aids:choose_archival_unit' %}"><i class="fa fa-circle-o"></i> {% trans 'Folders/Items' %}</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-circle-o"></i> {% trans 'Organizer' %}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.controlled_list or perms.authority %}
+                        <li class="treeview {% if 'authority' in request.path or 'controlled_list' in request.path %}active{% endif %}">
+                            <a href="#">
+                                <i class="fa fa-list-alt"></i>
+                                <span>{% trans 'Lists' %}</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                {% if perms.authority %}
+                                    <li class="{% if 'authority' in request.path %}active{% endif %}">
+                                        <a href="#">
+                                            {% trans 'Authority Lists' %}
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            {% if perms.authority.add_corporation %}
+                                                <li class="{% if 'corporation' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:corporation_list' %}">
+                                                        <i class="fa fa-building-o"></i>
+                                                        <span>{% trans 'Corporations' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_country %}
+                                                <li class="{% if 'country' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:country_list' %}">
+                                                        <i class="fa fa-globe"></i>
+                                                        <span>{% trans 'Countries' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_genre %}
+                                                <li class="{% if 'genre' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:genre_list' %}">
+                                                        <i class="fa fa-shield"></i>
+                                                        <span>{% trans 'Genres' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_language %}
+                                                <li class="{% if 'language' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:language_list' %}">
+                                                        <i class="fa fa-language"></i>
+                                                        <span>{% trans 'Languages' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_person %}
+                                                <li class="{% if 'person' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:person_list' %}">
+                                                        <i class="fa fa-group"></i>
+                                                        <span>{% trans 'People' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_place %}
+                                                <li class="{% if 'place' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:place_list' %}">
+                                                        <i class="fa fa-map-marker"></i>
+                                                        <span>{% trans 'Places' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if perms.authority.add_subject %}
+                                                <li class="{% if 'subject' in request.path %}active{% endif %}">
+                                                    <a href="{% url 'authority:subject_list' %}">
+                                                        <i class="fa fa-bookmark"></i>
+                                                        <span>{% trans 'Subjects' %}</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
                                     </li>
-                                    <li class="{% if 'country' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:country_list' %}">
-                                            <i class="fa fa-globe"></i>
-                                            <span>{% trans 'Countries' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'genre' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:genre_list' %}">
-                                            <i class="fa fa-shield"></i>
-                                            <span>{% trans 'Genres' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'language' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:language_list' %}">
-                                            <i class="fa fa-language"></i>
-                                            <span>{% trans 'Languages' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'person' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:person_list' %}">
-                                            <i class="fa fa-group"></i>
-                                            <span>{% trans 'People' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'place' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:place_list' %}">
-                                            <i class="fa fa-map-marker"></i>
-                                            <span>{% trans 'Places' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'subject' in request.path %}active{% endif %}">
-                                        <a href="{% url 'authority:subject_list' %}">
-                                            <i class="fa fa-bookmark"></i>
-                                            <span>{% trans 'Subjects' %}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="{% if 'controlled_list' in request.path %}active{% endif %}">
-                                <a href="#">
-                                    {% trans 'Controlled Values' %}
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="{% if 'access_rights' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:access_rights_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Access Rights' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'building' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:building_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Building' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'carrier_type' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:carrier_type_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Carrier Types' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'corporation_role' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:corporation_role_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Corporation Roles' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'extent_unit' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:extent_unit_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Extent Units' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'geo_role' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:geo_role_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Geo Roles' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'keyword' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:keyword_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Keywords' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'language_usage' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:language_usage_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Language Usages' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'person_role' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:person_role_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Person Roles' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'primary_type' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:primary_type_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Primary Types' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'reproduction_right' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:reproduction_right_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Reproduction Rights' %}</span>
-                                        </a>
-                                    </li>
-                                    <li class="{% if 'rights_restriction_reason' in request.path %}active{% endif %}">
-                                        <a href="{% url 'controlled_list:rights_restriction_reason_list' %}">
-                                            <i class="fa fa-circle-o"></i>
-                                            <span>{% trans 'Rights Restriction Reasons' %}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                                {% endif %}
+
+                                {% if perms.controlled_list %}
+                                <li class="{% if 'controlled_list' in request.path %}active{% endif %}">
+                                    <a href="#">
+                                        {% trans 'Controlled Values' %}
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        {% if perms.controlled_list.add_accessrights %}
+                                            <li class="{% if 'access_rights' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:access_rights_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Access Rights' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_building %}
+                                            <li class="{% if 'building' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:building_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Building' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_carriertype %}
+                                            <li class="{% if 'carrier_type' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:carrier_type_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Carrier Types' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_corporationrole %}
+                                            <li class="{% if 'corporation_role' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:corporation_role_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Corporation Roles' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_extentunit %}
+                                            <li class="{% if 'extent_unit' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:extent_unit_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Extent Units' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_georole %}
+                                            <li class="{% if 'geo_role' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:geo_role_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Geo Roles' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_keyword %}
+                                            <li class="{% if 'keyword' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:keyword_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Keywords' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_languageusage %}
+                                            <li class="{% if 'language_usage' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:language_usage_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Language Usages' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_personrole %}
+                                            <li class="{% if 'person_role' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:person_role_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Person Roles' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_primarytype %}
+                                            <li class="{% if 'primary_type' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:primary_type_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Primary Types' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_reproductionright %}
+                                            <li class="{% if 'reproduction_right' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:reproduction_right_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Reproduction Rights' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.rights_restrictionreason %}
+                                            <li class="{% if 'rights_restriction_reason' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:rights_restriction_reason_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Rights Restriction Reasons' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% endif %}
+
                     <li class="header">INFOBOX</li>
 
                     <li class="">

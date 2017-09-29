@@ -9,14 +9,19 @@ from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
-from finding_aids.models import FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedPerson
+from clockwork.mixins import GeneralAllPermissionMixin
+from finding_aids.models import FindingAidsEntityAssociatedPerson
 
 
-class PersonList(TemplateView):
+class PersonPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Person
+
+
+class PersonList(PersonPermissionMixin, TemplateView):
     template_name = 'authority/person/list.html'
 
 
-class PersonListJson(BaseDatatableView):
+class PersonListJson(PersonPermissionMixin, BaseDatatableView):
     model = Person
     columns = ['id', 'person_name', 'authority_url', 'action']
     order_columns = ['last_name', 'first_name']
@@ -56,7 +61,7 @@ class PersonListJson(BaseDatatableView):
         return json_array
 
 
-class PersonCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
+class PersonCreate(PersonPermissionMixin, NamedFormsetsMixin, CreateWithInlinesAjaxView):
     form_class = PersonForm
     model = Person
     template_name = 'authority/person/form.html'
@@ -73,7 +78,7 @@ class PersonCreate(NamedFormsetsMixin, CreateWithInlinesAjaxView):
         return results
 
 
-class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
+class PersonUpdate(PersonPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = PersonForm
     model = Person
     template_name = 'authority/person/form.html'
@@ -84,7 +89,7 @@ class PersonUpdate(NamedFormsetsMixin, UpdateWithInlinesAjaxView):
         return ugettext("Person: %s was updated successfully!") % self.object
 
 
-class PersonDelete(AjaxDeleteProtectedView):
+class PersonDelete(PersonPermissionMixin, AjaxDeleteProtectedView):
     model = Person
     template_name = 'authority/person/delete.html'
     context_object_name = 'person'

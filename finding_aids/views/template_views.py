@@ -8,15 +8,14 @@ from fm.views import AjaxDeleteView
 
 from archival_unit.models import ArchivalUnit
 from clockwork.mixins import InlineSuccessMessageMixin
-from container.models import Container
-from finding_aids.forms import FindingAidsForm, FindingAidsAssociatedPeopleInline, \
+from finding_aids.forms import FindingAidsAssociatedPeopleInline, \
     FindingAidsAssociatedCorporationInline, FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, \
     FindingAidsLanguageInline, FindingAidsExtentInline, FindingAidsTemplateForm
+from finding_aids.mixins import FindingAidsPermissionMixin
 from finding_aids.models import FindingAidsEntity
-from finding_aids.views.helper_functions import get_number_of_items
 
 
-class FindingAidsTemplateList(TemplateView):
+class FindingAidsTemplateList(FindingAidsPermissionMixin, TemplateView):
     template_name = 'finding_aids/template_view/list.html'
 
     def get_context_data(self, **kwargs):
@@ -25,7 +24,7 @@ class FindingAidsTemplateList(TemplateView):
         return context
 
 
-class FindingAidsTemplateListJson(BaseDatatableView):
+class FindingAidsTemplateListJson(FindingAidsPermissionMixin, BaseDatatableView):
     model = FindingAidsEntity
     columns = ['level', 'template_name', 'user_created', 'action']
     order_columns = ['folder_no', 'sequence_no', 'template_name']
@@ -56,7 +55,8 @@ class FindingAidsTemplateListJson(BaseDatatableView):
         return json_array
 
 
-class FindingAidsTemplateCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class FindingAidsTemplateCreate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+                                NamedFormsetsMixin, CreateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsTemplateForm
     template_name = 'finding_aids/template_view/form.html'
@@ -91,7 +91,8 @@ class FindingAidsTemplateCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, C
         return super(FindingAidsTemplateCreate, self).forms_valid(form, formset)
 
 
-class FindingAidsTemplateUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class FindingAidsTemplateUpdate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+                                NamedFormsetsMixin, UpdateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsTemplateForm
     template_name = 'finding_aids/template_view/form.html'
@@ -118,7 +119,7 @@ class FindingAidsTemplateUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, U
         return super(FindingAidsTemplateUpdate, self).forms_valid(form, formset)
 
 
-class FindingAidsTemplateDelete(AjaxDeleteView):
+class FindingAidsTemplateDelete(FindingAidsPermissionMixin, AjaxDeleteView):
     model = FindingAidsEntity
     template_name = 'finding_aids/template_view/delete.html'
     context_object_name = 'finding_aids'

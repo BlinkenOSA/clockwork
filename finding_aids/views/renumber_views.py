@@ -2,11 +2,12 @@ from django.views.generic import ListView
 from fm.views import JSONResponseMixin
 
 from container.models import Container
+from finding_aids.mixins import FindingAidsPermissionMixin
 from finding_aids.models import FindingAidsEntity
 from finding_aids.views.helper_functions import get_number_of_folders, get_number_of_items
 
 
-class FindingAidsNewFolderNumber(JSONResponseMixin, ListView):
+class FindingAidsNewFolderNumber(FindingAidsPermissionMixin, JSONResponseMixin, ListView):
     model = FindingAidsEntity
 
     def get(self, request, *args, **kwargs):
@@ -24,7 +25,7 @@ class FindingAidsNewFolderNumber(JSONResponseMixin, ListView):
         return self.render_json_response({'stats': stats})
 
 
-class FindingAidsNewItemNumber(JSONResponseMixin, ListView):
+class FindingAidsNewItemNumber(FindingAidsPermissionMixin, JSONResponseMixin, ListView):
     model = FindingAidsEntity
 
     def get(self, request, *args, **kwargs):

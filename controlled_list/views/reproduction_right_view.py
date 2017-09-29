@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import ReproductionRightForm
 from controlled_list.models import ReproductionRight
 
 
-class ReproductionRightList(TemplateView):
+class ReproductionRightPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = ReproductionRight
+
+
+class ReproductionRightList(ReproductionRightPermissionMixin, TemplateView):
     template_name = 'controlled_list/reproduction_right/list.html'
 
 
-class ReproductionRightListJson(BaseDatatableView):
+class ReproductionRightListJson(ReproductionRightPermissionMixin, BaseDatatableView):
     model = ReproductionRight
     columns = ['id', 'statement', 'action']
     order_columns = ['statement']
@@ -45,7 +50,7 @@ class ReproductionRightListJson(BaseDatatableView):
         return json_array
 
 
-class ReproductionRightCreate(AjaxCreateView):
+class ReproductionRightCreate(ReproductionRightPermissionMixin, AjaxCreateView):
     form_class = ReproductionRightForm
     model = ReproductionRight
     template_name = 'controlled_list/reproduction_right/form.html'
@@ -54,7 +59,7 @@ class ReproductionRightCreate(AjaxCreateView):
         return ugettext("ReproductionRight: %s was created successfully!") % self.object
 
 
-class ReproductionRightUpdate(AjaxUpdateView):
+class ReproductionRightUpdate(ReproductionRightPermissionMixin, AjaxUpdateView):
     form_class = ReproductionRightForm
     model = ReproductionRight
     template_name = 'controlled_list/reproduction_right/form.html'

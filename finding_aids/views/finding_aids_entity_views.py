@@ -7,10 +7,12 @@ from fm.views import JSONResponseMixin, AjaxDeleteView
 
 from clockwork.mixins import InlineSuccessMessageMixin
 from finding_aids.forms import *
+from finding_aids.mixins import FindingAidsPermissionMixin
 from finding_aids.views.helper_functions import *
 
 
-class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class FindingAidsCreate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+                        NamedFormsetsMixin, CreateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsForm
     template_name = 'finding_aids/container_view/form.html'
@@ -59,7 +61,8 @@ class FindingAidsCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWit
         return super(FindingAidsCreate, self).forms_valid(form, formset)
 
 
-class FindingAidsUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class FindingAidsUpdate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+                        NamedFormsetsMixin, UpdateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsUpdateForm
     template_name = 'finding_aids/container_view/form.html'
@@ -148,7 +151,7 @@ def collect_initial(template, container):
     return initial
 
 
-class FindingAidsClone(JSONResponseMixin, DetailView):
+class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView):
     model = FindingAidsEntity
 
     def post(self, request, *args, **kwargs):
@@ -166,7 +169,7 @@ class FindingAidsClone(JSONResponseMixin, DetailView):
         return self.render_json_response(context)
 
 
-class FindingAidsDelete(AjaxDeleteView):
+class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
     model = FindingAidsEntity
     template_name = 'finding_aids/container_view/delete.html'
     context_object_name = 'finding_aids'

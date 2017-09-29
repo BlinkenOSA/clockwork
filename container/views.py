@@ -8,12 +8,17 @@ from fm.views import AjaxUpdateView
 
 from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 from container.forms import ContainerForm, ContainerUpdateForm
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
 
 
-class ContainerList(FormView):
+class ContainerPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Container
+
+
+class ContainerList(ContainerPermissionMixin, FormView):
     template_name = 'container/list.html'
     form_class = ContainerForm
 
@@ -28,7 +33,7 @@ class ContainerList(FormView):
         return context
 
 
-class ContainerListJson(BaseDatatableView):
+class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
     model = Container
     columns = ['container_no', 'identifier', 'carrier_type', 'primary_type', 'container_label',
                'number_of_fa_entities', 'navigate', 'action']
@@ -79,7 +84,7 @@ class ContainerListJson(BaseDatatableView):
         return json_array
 
 
-class ContainerCreate(CreateView):
+class ContainerCreate(ContainerPermissionMixin, CreateView):
     model = Container
     fields = ['archival_unit', 'primary_type', 'carrier_type', 'container_label']
 
@@ -104,14 +109,14 @@ class ContainerCreate(CreateView):
             return super(ContainerCreate, self).form_valid(form)
 
 
-class ContainerUpdate(SuccessMessageMixin, AjaxUpdateView):
+class ContainerUpdate(ContainerPermissionMixin, SuccessMessageMixin, AjaxUpdateView):
     model = Container
     form_class = ContainerUpdateForm
     template_name = 'container/form/form_update_container.html'
     success_message = ugettext("Container was updated successfully")
 
 
-class ContainerDelete(AjaxDeleteProtectedView):
+class ContainerDelete(ContainerPermissionMixin, AjaxDeleteProtectedView):
     model = Container
     template_name = 'container/delete.html'
     context_object_name = 'container'

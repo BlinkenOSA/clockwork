@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import CorporationRoleForm
 from controlled_list.models import CorporationRole
 
 
-class CorporationRoleList(TemplateView):
+class CorporationRolePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = CorporationRole
+
+
+class CorporationRoleList(CorporationRolePermissionMixin, TemplateView):
     template_name = 'controlled_list/corporation_role/list.html'
 
 
-class CorporationRoleListJson(BaseDatatableView):
+class CorporationRoleListJson(CorporationRolePermissionMixin, BaseDatatableView):
     model = CorporationRole
     columns = ['id', 'role', 'action']
     order_columns = ['role']
@@ -45,7 +50,7 @@ class CorporationRoleListJson(BaseDatatableView):
         return json_array
 
 
-class CorporationRoleCreate(AjaxCreateView):
+class CorporationRoleCreate(CorporationRolePermissionMixin, AjaxCreateView):
     form_class = CorporationRoleForm
     model = CorporationRole
     template_name = 'controlled_list/corporation_role/form.html'
@@ -54,7 +59,7 @@ class CorporationRoleCreate(AjaxCreateView):
         return ugettext("CorporationRole: %s was created successfully!") % self.object
 
 
-class CorporationRoleUpdate(AjaxUpdateView):
+class CorporationRoleUpdate(CorporationRolePermissionMixin, AjaxUpdateView):
     form_class = CorporationRoleForm
     model = CorporationRole
     template_name = 'controlled_list/corporation_role/form.html'

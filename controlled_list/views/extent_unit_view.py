@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import ExtentUnitForm
 from controlled_list.models import ExtentUnit
 
 
-class ExtentUnitList(TemplateView):
+class ExtentUnitPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = ExtentUnit
+
+
+class ExtentUnitList(ExtentUnitPermissionMixin, TemplateView):
     template_name = 'controlled_list/extent_unit/list.html'
 
 
-class ExtentUnitListJson(BaseDatatableView):
+class ExtentUnitListJson(ExtentUnitPermissionMixin, BaseDatatableView):
     model = ExtentUnit
     columns = ['id', 'unit', 'action']
     order_columns = ['unit']
@@ -45,7 +50,7 @@ class ExtentUnitListJson(BaseDatatableView):
         return json_array
 
 
-class ExtentUnitCreate(AjaxCreateView):
+class ExtentUnitCreate(ExtentUnitPermissionMixin, AjaxCreateView):
     form_class = ExtentUnitForm
     model = ExtentUnit
     template_name = 'controlled_list/extent_unit/form.html'
@@ -54,7 +59,7 @@ class ExtentUnitCreate(AjaxCreateView):
         return ugettext("ExtentUnit: %s was created successfully!") % self.object
 
 
-class ExtentUnitUpdate(AjaxUpdateView):
+class ExtentUnitUpdate(ExtentUnitPermissionMixin, AjaxUpdateView):
     form_class = ExtentUnitForm
     model = ExtentUnit
     template_name = 'controlled_list/extent_unit/form.html'

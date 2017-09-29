@@ -9,16 +9,19 @@ from datetime import date
 
 from accession.form import AccessionForm, AccessionItemsInlineForm
 from accession.models import Accession
-from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import InlineSuccessMessageMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
 
 
-class AccessionList(TemplateView):
+class AccessionPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Accession
+
+
+class AccessionList(AccessionPermissionMixin, TemplateView):
     template_name = 'accession/list.html'
 
 
-class AccessionListJson(BaseDatatableView):
+class AccessionListJson(AccessionPermissionMixin, BaseDatatableView):
     model = Accession
     columns = ['seq', 'transfer_date', 'title', 'action']
     order_columns = ['seq', 'transfer_date', 'title', '']
@@ -34,7 +37,7 @@ class AccessionListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            number_of_archival_units = ArchivalUnit.objects.filter(accessions_id=row.id).count()
+            number_of_archival_units = row.archivalunit_set.all().count()
             return render_to_string('accession/table_action_buttons.html',
                                     context={'id': row.id, 'number_of_archival_units': number_of_archival_units})
         elif column == 'transfer_date':
@@ -43,13 +46,13 @@ class AccessionListJson(BaseDatatableView):
             return super(AccessionListJson, self).render_column(row, column)
 
 
-class AccessionDetail(DetailView):
+class AccessionDetail(AccessionPermissionMixin, DetailView):
     model = Accession
     template_name = 'accession/detail.html'
     context_object_name = 'accession'
 
 
-class AccessionCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class AccessionCreate(AccessionPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
     model = Accession
     form_class = AccessionForm
     template_name = 'accession/form.html'
@@ -62,11 +65,11 @@ class AccessionCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithI
         year = date.today().year
         sequence = Accession.objects.filter(date_created__year=year).count()
         return {
-            'seq': '%d/%03d' % (year,sequence + 1)
+            'seq': '%d/%03d' % (year, sequence + 1)
         }
 
 
-class AccessionUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class AccessionUpdate(AccessionPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
     model = Accession
     form_class = AccessionForm
     template_name = 'accession/form.html'
@@ -76,7 +79,7 @@ class AccessionUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithI
     inlines_names = ['accession_items']
 
 
-class AccessionDelete(AjaxDeleteProtectedView):
+class AccessionDelete(AccessionPermissionMixin, AjaxDeleteProtectedView):
     model = Accession
     template_name = 'accession/delete.html'
     context_object_name = 'accession'

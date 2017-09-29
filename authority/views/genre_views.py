@@ -8,13 +8,18 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import GenreForm
 from authority.models import Genre
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 
 
-class GenreList(TemplateView):
+class GenrePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Genre
+
+
+class GenreList(GenrePermissionMixin, TemplateView):
     template_name = 'authority/genre/list.html'
 
 
-class GenreListJson(BaseDatatableView):
+class GenreListJson(GenrePermissionMixin, BaseDatatableView):
     model = Genre
     columns = ['id', 'genre', 'authority_url', 'action']
     order_columns = ['genre']
@@ -49,7 +54,7 @@ class GenreListJson(BaseDatatableView):
         return json_array
 
 
-class GenreCreate(AjaxCreateView):
+class GenreCreate(GenrePermissionMixin, AjaxCreateView):
     form_class = GenreForm
     model = Genre
     template_name = 'authority/genre/form.html'
@@ -64,7 +69,7 @@ class GenreCreate(AjaxCreateView):
         return results
 
 
-class GenreUpdate(AjaxUpdateView):
+class GenreUpdate(GenrePermissionMixin, AjaxUpdateView):
     form_class = GenreForm
     model = Genre
     template_name = 'authority/genre/form.html'
@@ -73,7 +78,7 @@ class GenreUpdate(AjaxUpdateView):
         return ugettext("Genre: %s was updated successfully!") % self.object
 
 
-class GenreDelete(AjaxDeleteProtectedView):
+class GenreDelete(GenrePermissionMixin, AjaxDeleteProtectedView):
     model = Genre
     template_name = 'authority/genre/delete.html'
     context_object_name = 'genre'

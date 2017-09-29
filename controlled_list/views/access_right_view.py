@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import AccessRightForm
 from controlled_list.models import AccessRight
 
 
-class AccessRightList(TemplateView):
+class AccessionPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = AccessRight
+
+
+class AccessRightList(AccessionPermissionMixin, TemplateView):
     template_name = 'controlled_list/access_rights/list.html'
 
 
-class AccessRightListJson(BaseDatatableView):
+class AccessRightListJson(AccessionPermissionMixin, BaseDatatableView):
     model = AccessRight
     columns = ['id', 'statement', 'action']
     order_columns = ['statement']
@@ -45,7 +50,7 @@ class AccessRightListJson(BaseDatatableView):
         return json_array
 
 
-class AccessRightCreate(AjaxCreateView):
+class AccessRightCreate(AccessionPermissionMixin, AjaxCreateView):
     form_class = AccessRightForm
     model = AccessRight
     template_name = 'controlled_list/access_rights/form.html'
@@ -54,7 +59,7 @@ class AccessRightCreate(AjaxCreateView):
         return ugettext("Access Right: %s was created successfully!") % self.object
 
 
-class AccessRightUpdate(AjaxUpdateView):
+class AccessRightUpdate(AccessionPermissionMixin, AjaxUpdateView):
     form_class = AccessRightForm
     model = AccessRight
     template_name = 'controlled_list/access_rights/form.html'

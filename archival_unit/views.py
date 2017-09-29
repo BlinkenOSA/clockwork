@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
@@ -10,6 +11,7 @@ from archival_unit.forms import FondsCreateForm, FondsUpdateForm, SubFondsCreate
     SubFondsUpdateForm, SeriesCreateForm, SeriesUpdateForm
 from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
+from clockwork.mixins import GeneralAllPermissionMixin
 from container.models import Container
 
 '''
@@ -19,7 +21,11 @@ from container.models import Container
 '''
 
 
-class FondsList(FormMixin, ListView):
+class ArchivalUnitPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = ArchivalUnit
+
+
+class FondsList(ArchivalUnitPermissionMixin, FormMixin, ListView):
     template_name = 'archival_unit/fonds.html'
     context_object_name = 'fonds'
     form_class = FondsCreateForm
@@ -28,7 +34,7 @@ class FondsList(FormMixin, ListView):
         return ArchivalUnit.objects.filter(level='F')
 
 
-class FondsListJson(BaseDatatableView):
+class FondsListJson(ArchivalUnitPermissionMixin, BaseDatatableView):
     columns = ['sort', 'reference_code', 'title', 'navigate', 'action']
     order_columns = ['sort', 'sort', '', '', '']
     max_display_length = 500
@@ -57,7 +63,7 @@ class FondsListJson(BaseDatatableView):
             return super(FondsListJson, self).render_column(row, column)
 
 
-class FondsCreate(AjaxCreateView):
+class FondsCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
     model = ArchivalUnit
     form_class = FondsCreateForm
     template_name = 'archival_unit/fonds_form.html'
@@ -77,7 +83,7 @@ class FondsCreate(AjaxCreateView):
         return super(FondsCreate, self).form_valid(form)
 
 
-class FondsUpdate(AjaxUpdateView):
+class FondsUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
     form_class = FondsUpdateForm
     template_name = 'archival_unit/fonds_form.html'
 
@@ -88,7 +94,7 @@ class FondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class FondsDelete(AjaxDeleteProtectedView):
+class FondsDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
     template_name = 'archival_unit/fonds_delete.html'
     context_object_name = 'fonds'
     success_message = ugettext("Fonds was deleted successfully!")
@@ -101,7 +107,7 @@ class FondsDelete(AjaxDeleteProtectedView):
 '''
 
 
-class SubFondsList(FormMixin, ListView):
+class SubFondsList(ArchivalUnitPermissionMixin, FormMixin, ListView):
     template_name = 'archival_unit/subfonds.html'
     form_class = SubFondsCreateForm
     context_object_name = 'fonds'
@@ -110,7 +116,7 @@ class SubFondsList(FormMixin, ListView):
         return ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
 
 
-class SubFondsListJson(BaseDatatableView):
+class SubFondsListJson(ArchivalUnitPermissionMixin, BaseDatatableView):
     columns = ['sort', 'reference_code', 'title', 'navigate', 'action']
     order_columns = ['sort', 'sort']
     max_display_length = 500
@@ -141,7 +147,7 @@ class SubFondsListJson(BaseDatatableView):
             return super(SubFondsListJson, self).render_column(row, column)
 
 
-class SubFondsCreate(AjaxCreateView):
+class SubFondsCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
     form_class = SubFondsCreateForm
     template_name = 'archival_unit/subfonds_form.html'
 
@@ -166,7 +172,7 @@ class SubFondsCreate(AjaxCreateView):
         return super(SubFondsCreate, self).form_valid(form)
 
 
-class SubFondsUpdate(AjaxUpdateView):
+class SubFondsUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
     model = ArchivalUnit
     form_class = SubFondsUpdateForm
     template_name = 'archival_unit/subfonds_form.html'
@@ -185,7 +191,7 @@ class SubFondsUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SubFondsDelete(AjaxDeleteProtectedView):
+class SubFondsDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
     template_name = 'archival_unit/subfonds_delete.html'
     context_object_name = 'subfonds'
     success_message = ugettext("Subfonds was deleted successfully!")
@@ -199,7 +205,7 @@ class SubFondsDelete(AjaxDeleteProtectedView):
 '''
 
 
-class SeriesList(FormMixin, ListView):
+class SeriesList(ArchivalUnitPermissionMixin, FormMixin, ListView):
     template_name = 'archival_unit/series.html'
     form_class = SeriesCreateForm
     context_object_name = 'subfonds'
@@ -208,7 +214,7 @@ class SeriesList(FormMixin, ListView):
         return ArchivalUnit.objects.get(reference_code_id=self.kwargs['parent_reference_code_id'])
 
 
-class SeriesListJson(BaseDatatableView):
+class SeriesListJson(ArchivalUnitPermissionMixin, BaseDatatableView):
     columns = ['sort', 'reference_code', 'title', 'action']
     order_columns = ['sort', 'sort']
     max_display_length = 500
@@ -236,7 +242,7 @@ class SeriesListJson(BaseDatatableView):
             return super(SeriesListJson, self).render_column(row, column)
 
 
-class SeriesCreate(AjaxCreateView):
+class SeriesCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
     model = ArchivalUnit
     form_class = SeriesCreateForm
     template_name = 'archival_unit/series_form.html'
@@ -265,7 +271,7 @@ class SeriesCreate(AjaxCreateView):
         return super(SeriesCreate, self).form_valid(form)
 
 
-class SeriesUpdate(AjaxUpdateView):
+class SeriesUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
     form_class = SeriesUpdateForm
     template_name = 'archival_unit/series_form.html'
 
@@ -286,7 +292,7 @@ class SeriesUpdate(AjaxUpdateView):
         return ugettext("%s was updated successfully!") % self.object.reference_code
 
 
-class SeriesDelete(AjaxDeleteProtectedView):
+class SeriesDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
     model = ArchivalUnit
     template_name = 'archival_unit/series_delete.html'
     context_object_name = 'series'

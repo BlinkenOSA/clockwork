@@ -7,17 +7,21 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInlinesView
 
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import InlineSuccessMessageMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
     PlacesInline, TYPE_CHOICES
 from isaar.models import Isaar
 
 
-class IsaarList(TemplateView):
+class IsaarPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Isaar
+
+
+class IsaarList(IsaarPermissionMixin, TemplateView):
     template_name = 'isaar/list.html'
 
 
-class IsaarListJson(BaseDatatableView):
+class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
     model = Isaar
     columns = ['id', 'name', 'type', 'status', 'action']
     order_columns = ['id', 'name', '', '', '']
@@ -56,7 +60,7 @@ class IsaarListJson(BaseDatatableView):
         return json_array
 
 
-class IsaarDetail(DetailView):
+class IsaarDetail(IsaarPermissionMixin, DetailView):
     model = Isaar
     template_name = 'isaar/detail.html'
     context_object_name = 'isaar'
@@ -67,7 +71,7 @@ class IsaarDetail(DetailView):
         return context
 
 
-class IsaarCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class IsaarCreate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
     model = Isaar
     form_class = IsaarForm
     template_name = 'isaar/form.html'
@@ -77,7 +81,7 @@ class IsaarCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlin
     inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
-class IsaarUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class IsaarUpdate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
     model = Isaar
     form_class = IsaarForm
     template_name = 'isaar/form.html'
@@ -87,7 +91,7 @@ class IsaarUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlin
     inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
-class IsaarDelete(AjaxDeleteProtectedView):
+class IsaarDelete(IsaarPermissionMixin, AjaxDeleteProtectedView):
     model = Isaar
     template_name = 'isaar/delete.html'
     context_object_name = 'isaar'

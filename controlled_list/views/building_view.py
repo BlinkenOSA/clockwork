@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import BuildingForm
 from controlled_list.models import Building
 
 
-class BuildingList(TemplateView):
+class BuildingPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Building
+
+
+class BuildingList(BuildingPermissionMixin, TemplateView):
     template_name = 'controlled_list/building/list.html'
 
 
-class BuildingListJson(BaseDatatableView):
+class BuildingListJson(BuildingPermissionMixin, BaseDatatableView):
     model = Building
     columns = ['id', 'building', 'action']
     order_columns = ['building']
@@ -45,7 +50,7 @@ class BuildingListJson(BaseDatatableView):
         return json_array
 
 
-class BuildingCreate(AjaxCreateView):
+class BuildingCreate(BuildingPermissionMixin, AjaxCreateView):
     form_class = BuildingForm
     model = Building
     template_name = 'controlled_list/building/form.html'
@@ -54,7 +59,7 @@ class BuildingCreate(AjaxCreateView):
         return ugettext("Building: %s was created successfully!") % self.object
 
 
-class BuildingUpdate(AjaxUpdateView):
+class BuildingUpdate(BuildingPermissionMixin, AjaxUpdateView):
     form_class = BuildingForm
     model = Building
     template_name = 'controlled_list/building/form.html'

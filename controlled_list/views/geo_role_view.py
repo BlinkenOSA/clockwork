@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import GeoRoleForm
 from controlled_list.models import GeoRole
+
+
+class GeoRolePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = GeoRole
 
 
 class GeoRoleList(TemplateView):
     template_name = 'controlled_list/geo_role/list.html'
 
 
-class GeoRoleListJson(BaseDatatableView):
+class GeoRoleListJson(GeoRolePermissionMixin, BaseDatatableView):
     model = GeoRole
     columns = ['id', 'role', 'action']
     order_columns = ['role']
@@ -45,7 +50,7 @@ class GeoRoleListJson(BaseDatatableView):
         return json_array
 
 
-class GeoRoleCreate(AjaxCreateView):
+class GeoRoleCreate(GeoRolePermissionMixin, AjaxCreateView):
     form_class = GeoRoleForm
     model = GeoRole
     template_name = 'controlled_list/geo_role/form.html'
@@ -54,7 +59,7 @@ class GeoRoleCreate(AjaxCreateView):
         return ugettext("GeoRole: %s was created successfully!") % self.object
 
 
-class GeoRoleUpdate(AjaxUpdateView):
+class GeoRoleUpdate(GeoRolePermissionMixin, AjaxUpdateView):
     form_class = GeoRoleForm
     model = GeoRole
     template_name = 'controlled_list/geo_role/form.html'

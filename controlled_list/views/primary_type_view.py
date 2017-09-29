@@ -7,15 +7,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import PrimaryTypeForm
 from controlled_list.models import PrimaryType
 
 
-class PrimaryTypeList(TemplateView):
+class PrimaryTypePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = PrimaryType
+
+
+class PrimaryTypeList(PrimaryTypePermissionMixin, TemplateView):
     template_name = 'controlled_list/primary_type/list.html'
 
 
-class PrimaryTypeListJson(BaseDatatableView):
+class PrimaryTypeListJson(PrimaryTypePermissionMixin, BaseDatatableView):
     model = PrimaryType
     columns = ['id', 'type', 'action']
     order_columns = ['type']
@@ -47,7 +52,7 @@ class PrimaryTypeListJson(BaseDatatableView):
         return json_array
 
 
-class PrimaryTypeCreate(AjaxCreateView):
+class PrimaryTypeCreate(PrimaryTypePermissionMixin, AjaxCreateView):
     form_class = PrimaryTypeForm
     model = PrimaryType
     template_name = 'controlled_list/primary_type/form.html'
@@ -56,7 +61,7 @@ class PrimaryTypeCreate(AjaxCreateView):
         return ugettext("PrimaryType: %s was created successfully!") % self.object
 
 
-class PrimaryTypeUpdate(AjaxUpdateView):
+class PrimaryTypeUpdate(PrimaryTypePermissionMixin, AjaxUpdateView):
     form_class = PrimaryTypeForm
     model = PrimaryType
     template_name = 'controlled_list/primary_type/form.html'
@@ -65,7 +70,7 @@ class PrimaryTypeUpdate(AjaxUpdateView):
         return ugettext("PrimaryType: %s was updated successfully!") % self.object
 
 
-class PrimaryTypeJSONList(JSONDataView):
+class PrimaryTypeJSONList(PrimaryTypePermissionMixin, JSONDataView):
     def get_context_data(self, **kwargs):
         context = super(PrimaryTypeJSONList, self).get_context_data(**kwargs)
         context_pieces = []

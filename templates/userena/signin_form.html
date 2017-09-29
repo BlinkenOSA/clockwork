@@ -1,0 +1,50 @@
+{% extends 'userena/base_login.html' %}
+
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block login-title %}
+    {% trans 'Clockwork AMS - Login' %}
+{% endblock %}
+
+{% block login-body %}
+    <legend>{% trans "Sign in to start working" %}</legend>
+    <form action="" method="post">
+        {% csrf_token %}
+        <fieldset>
+            {% include 'nonfield-errors.html' %}
+            {% for field in form %}
+                {# Displaying checkboxes differently #}
+                {% if field.name != 'remember_me' %}
+                    <p>
+                        {% bootstrap_field field %}
+                    </p>
+                {% endif %}
+
+            {% endfor %}
+
+        </fieldset>
+
+        <div class="row">
+            <div class="col-xs-8">
+                {% for field in form %}
+                    {% if field.name == 'remember_me' %}
+                        <p class="checkbox">
+                            <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block" formnovalidate>{% trans 'Sign In'%}</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    </form>
+
+    <!--
+    <a href="{% url 'userena_password_reset' %}">{% trans 'I forgot my password' %}</a><br>
+    -->
+{% endblock %}

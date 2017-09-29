@@ -1,27 +1,30 @@
-from braces.views import JSONResponseMixin
-from django.contrib import messages
+from braces.views import JSONResponseMixin, PermissionRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import FormView, DeleteView, DetailView
+from django.views.generic import FormView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from fm.views import AjaxDeleteView
 
 from archival_unit.models import ArchivalUnit
-from clockwork.mixins import InlineSuccessMessageMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
 from isad.forms import IsadArchivalUnitForm, IsadForm, IsadCreatorInline, IsadExtentInline, IsadCarrierInline, \
     IsadRelatedFindingAidsInline, IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline
 from isad.models import Isad
 
 
-class IsadList(FormView):
+class IsadPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Isad
+
+
+class IsadList(IsadPermissionMixin, FormView):
     template_name = 'isad/list.html'
     form_class = IsadArchivalUnitForm
 
 
-class IsadListJson(BaseDatatableView):
+class IsadListJson(IsadPermissionMixin, BaseDatatableView):
     model = Isad
     columns = ['reference_code', 'title', 'view-edit-delete', 'action']
     order_columns = ['reference_code', 'title', '', '']
@@ -56,13 +59,13 @@ class IsadListJson(BaseDatatableView):
         return json_array
 
 
-class IsadDetail(DetailView):
+class IsadDetail(IsadPermissionMixin, DetailView):
     model = Isad
     template_name = 'isad/detail.html'
     context_object_name = 'isad'
 
 
-class IsadCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class IsadCreate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
     model = Isad
     form_class = IsadForm
     template_name = 'isad/form.html'
@@ -88,7 +91,7 @@ class IsadCreate(InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInline
         return super(IsadCreate, self).forms_valid(form, formset)
 
 
-class IsadUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class IsadUpdate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
     model = Isad
     form_class = IsadForm
     template_name = 'isad/form.html'
@@ -100,7 +103,7 @@ class IsadUpdate(InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInline
                      'location_of_copies']
 
 
-class IsadDelete(AjaxDeleteView):
+class IsadDelete(IsadPermissionMixin, AjaxDeleteView):
     model = Isad
     template_name = 'isad/delete.html'
     context_object_name = 'isad'
@@ -110,7 +113,7 @@ class IsadDelete(AjaxDeleteView):
         return {'status': 'ok', 'message': msg}
 
 
-class IsadAction(JSONResponseMixin, DetailView):
+class IsadAction(IsadPermissionMixin, JSONResponseMixin, DetailView):
     model = Isad
 
     def post(self, request, *args, **kwargs):

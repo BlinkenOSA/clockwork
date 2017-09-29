@@ -7,15 +7,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import CarrierTypeForm
 from controlled_list.models import CarrierType
 
 
-class CarrierTypeList(TemplateView):
+class CarrierTypePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = CarrierType
+
+
+class CarrierTypeList(CarrierTypePermissionMixin, TemplateView):
     template_name = 'controlled_list/carrier_type/list.html'
 
 
-class CarrierTypeListJson(BaseDatatableView):
+class CarrierTypeListJson(CarrierTypePermissionMixin, BaseDatatableView):
     model = CarrierType
     columns = ['id', 'type', 'action']
     order_columns = ['type']
@@ -47,7 +52,7 @@ class CarrierTypeListJson(BaseDatatableView):
         return json_array
 
 
-class CarrierTypeCreate(AjaxCreateView):
+class CarrierTypeCreate(CarrierTypePermissionMixin, AjaxCreateView):
     form_class = CarrierTypeForm
     model = CarrierType
     template_name = 'controlled_list/carrier_type/form.html'
@@ -56,7 +61,7 @@ class CarrierTypeCreate(AjaxCreateView):
         return ugettext("CarrierType: %s was created successfully!") % self.object
 
 
-class CarrierTypeUpdate(AjaxUpdateView):
+class CarrierTypeUpdate(CarrierTypePermissionMixin, AjaxUpdateView):
     form_class = CarrierTypeForm
     model = CarrierType
     template_name = 'controlled_list/carrier_type/form.html'
@@ -65,7 +70,7 @@ class CarrierTypeUpdate(AjaxUpdateView):
         return ugettext("CarrierType: %s was updated successfully!") % self.object
 
 
-class CarrierTypeJSONList(JSONDataView):
+class CarrierTypeJSONList(CarrierTypePermissionMixin, JSONDataView):
     def get_context_data(self, **kwargs):
         context = super(CarrierTypeJSONList, self).get_context_data(**kwargs)
         context_pieces = []

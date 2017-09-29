@@ -9,16 +9,21 @@ from django.db.models import Q, ProtectedError
 from fm.views import AjaxCreateView, AjaxDeleteView
 
 from accession.models import Accession
+from clockwork.mixins import GeneralAllPermissionMixin
 from donor.models import Donor
 from donor.forms import DonorForm
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 
-class DonorList(TemplateView):
+class DonorPermissionMixin(GeneralAllPermissionMixin):
+    permission_model = Donor
+
+
+class DonorList(DonorPermissionMixin, TemplateView):
     template_name = 'donor/list.html'
 
 
-class DonorListJson(BaseDatatableView):
+class DonorListJson(DonorPermissionMixin, BaseDatatableView):
     model = Donor
     columns = ['id', 'name', 'address', 'action']
     order_columns = ['id', 'name', '', '']
@@ -46,13 +51,13 @@ class DonorListJson(BaseDatatableView):
             return super(DonorListJson, self).render_column(row, column)
 
 
-class DonorDetail(DetailView):
+class DonorDetail(DonorPermissionMixin, DetailView):
     model = Donor
     template_name = 'donor/detail.html'
     context_object_name = 'donor'
 
 
-class DonorCreate(SuccessMessageMixin, CreateView):
+class DonorCreate(DonorPermissionMixin, SuccessMessageMixin, CreateView):
     model = Donor
     form_class = DonorForm
     template_name = 'donor/form.html'
@@ -60,7 +65,7 @@ class DonorCreate(SuccessMessageMixin, CreateView):
     success_message = ugettext("%(name)s was created successfully")
 
 
-class DonorUpdate(SuccessMessageMixin, UpdateView):
+class DonorUpdate(DonorPermissionMixin, SuccessMessageMixin, UpdateView):
     model = Donor
     form_class = DonorForm
     template_name = 'donor/form.html'
@@ -68,7 +73,7 @@ class DonorUpdate(SuccessMessageMixin, UpdateView):
     success_message = ugettext("%(name)s was updated successfully")
 
 
-class DonorDelete(AjaxDeleteView):
+class DonorDelete(DonorPermissionMixin, AjaxDeleteView):
     model = Donor
     template_name = 'donor/delete.html'
     context_object_name = 'donor'
@@ -93,7 +98,7 @@ class DonorDelete(AjaxDeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DonorPopupCreate(SuccessMessageMixin, AjaxCreateView):
+class DonorPopupCreate(DonorPermissionMixin, SuccessMessageMixin, AjaxCreateView):
     model = Donor
     form_class = DonorForm
     template_name = 'donor/popup/form_popup.html'

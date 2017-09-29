@@ -5,15 +5,20 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
+from clockwork.mixins import GeneralAllPermissionMixin
 from controlled_list.forms import LanguageUsageForm
 from controlled_list.models import LanguageUsage
 
 
-class LanguageUsageList(TemplateView):
+class LanguageUsagePermissionMixin(GeneralAllPermissionMixin):
+    permission_model = LanguageUsage
+
+
+class LanguageUsageList(LanguageUsagePermissionMixin, TemplateView):
     template_name = 'controlled_list/language_usage/list.html'
 
 
-class LanguageUsageListJson(BaseDatatableView):
+class LanguageUsageListJson(LanguageUsagePermissionMixin, BaseDatatableView):
     model = LanguageUsage
     columns = ['id', 'usage', 'action']
     order_columns = ['usage']
@@ -45,7 +50,7 @@ class LanguageUsageListJson(BaseDatatableView):
         return json_array
 
 
-class LanguageUsageCreate(AjaxCreateView):
+class LanguageUsageCreate(LanguageUsagePermissionMixin, AjaxCreateView):
     form_class = LanguageUsageForm
     model = LanguageUsage
     template_name = 'controlled_list/language_usage/form.html'
@@ -54,7 +59,7 @@ class LanguageUsageCreate(AjaxCreateView):
         return ugettext("LanguageUsage: %s was created successfully!") % self.object.usage
 
 
-class LanguageUsageUpdate(AjaxUpdateView):
+class LanguageUsageUpdate(LanguageUsagePermissionMixin, AjaxUpdateView):
     form_class = LanguageUsageForm
     model = LanguageUsage
     template_name = 'controlled_list/language_usage/form.html'

@@ -19,3 +19,4 @@ six==1.10.0
 uuid==1.30
 -e git://github.com/JoshBone/django_cloneable.git#egg=django_cloneable
 -e git://github.com/JoshBone/django-extra-views.git#egg=extra-views
+django-userena==2.0.1
