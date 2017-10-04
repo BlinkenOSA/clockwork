@@ -23,16 +23,20 @@ class ContainerPermissionMixin(GeneralAllPermissionMixin):
 class ContainerAllowedArchivalUnitMixin(object):
     def get(self, request, *args, **kwargs):
         user = request.user
-        if 'archival_unit' in self.kwargs:
-            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
-        else:
-            container = Container.objects.get(pk=self.kwargs['pk'])
-            archival_unit = container.archival_unit
 
-        if archival_unit in user.user_profile.allowed_archival_units.all():
-            return super(ContainerAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        if user.user_profile.allowed_archival_units.count():
+            if 'archival_unit' in self.kwargs:
+                archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
+            else:
+                container = Container.objects.get(pk=self.kwargs['pk'])
+                archival_unit = container.archival_unit
+
+            if archival_unit in user.user_profile.allowed_archival_units.all():
+                return super(ContainerAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+            else:
+                raise PermissionDenied
         else:
-            raise PermissionDenied
+            return super(ContainerAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
 
 
 class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, FormView):

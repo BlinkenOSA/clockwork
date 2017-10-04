@@ -14,21 +14,29 @@ class FindingAidsPermissionMixin(GeneralAllPermissionMixin):
 class FindingAidsTemplateAllowedArchivalUnitMixin(object):
     def get(self, request, *args, **kwargs):
         user = request.user
-        archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['series_id'])
 
-        if archival_unit in user.user_profile.allowed_archival_units.all():
-            return super(FindingAidsTemplateAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        if user.user_profile.allowed_archival_units.count():
+            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['series_id'])
+
+            if archival_unit in user.user_profile.allowed_archival_units.all():
+                return super(FindingAidsTemplateAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+            else:
+                raise PermissionDenied
         else:
-            raise PermissionDenied
+            return super(FindingAidsTemplateAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
 
 
 class FindingAidsAllowedArchivalUnitMixin(object):
     def get(self, request, *args, **kwargs):
         user = request.user
-        container = get_object_or_404(Container, pk=self.kwargs['container_id'])
-        archival_unit = container.archival_unit
 
-        if archival_unit in user.user_profile.allowed_archival_units.all():
-            return super(FindingAidsAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        if user.user_profile.allowed_archival_units.count():
+            container = get_object_or_404(Container, pk=self.kwargs['container_id'])
+            archival_unit = container.archival_unit
+
+            if archival_unit in user.user_profile.allowed_archival_units.all():
+                return super(FindingAidsAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+            else:
+                raise PermissionDenied
         else:
-            raise PermissionDenied
+            return super(FindingAidsAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)

@@ -24,15 +24,19 @@ class IsadPermissionMixin(GeneralAllPermissionMixin):
 class IsadAllowedArchivalUnitMixin(object):
     def get(self, request, *args, **kwargs):
         user = request.user
-        if 'archival_unit' in self.kwargs:
-            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
-        else:
-            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['pk'])
 
-        if archival_unit in user.user_profile.allowed_archival_units.all():
-            return super(IsadAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        if user.user_profile.allowed_archival_units.count():
+            if 'archival_unit' in self.kwargs:
+                archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
+            else:
+                archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['pk'])
+
+            if archival_unit in user.user_profile.allowed_archival_units.all():
+                return super(IsadAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+            else:
+                raise PermissionDenied
         else:
-            raise PermissionDenied
+            return super(IsadAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
 
 
 class IsadList(IsadPermissionMixin, FormView):
