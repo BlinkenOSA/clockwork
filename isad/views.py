@@ -1,12 +1,14 @@
-from braces.views import JSONResponseMixin, PermissionRequiredMixin
+from braces.views import JSONResponseMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from fm.views import AjaxDeleteView
+from django.core.exceptions import PermissionDenied
 
 from archival_unit.models import ArchivalUnit
 from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
@@ -19,9 +21,25 @@ class IsadPermissionMixin(GeneralAllPermissionMixin):
     permission_model = Isad
 
 
+class IsadAllowedArchivalUnitMixin(object):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if 'archival_unit' in self.kwargs:
+            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
+        else:
+            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['pk'])
+
+        if archival_unit in user.user_profile.allowed_archival_units.all():
+            return super(IsadAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+
 class IsadList(IsadPermissionMixin, FormView):
     template_name = 'isad/list.html'
-    form_class = IsadArchivalUnitForm
+
+    def get_form(self, form_class=None):
+        return IsadArchivalUnitForm(user=self.request.user)
 
 
 class IsadListJson(IsadPermissionMixin, BaseDatatableView):
@@ -29,6 +47,13 @@ class IsadListJson(IsadPermissionMixin, BaseDatatableView):
     columns = ['reference_code', 'title', 'view-edit-delete', 'action']
     order_columns = ['reference_code', 'title', '', '']
     max_display_length = 500
+
+    def get_initial_queryset(self):
+        user = self.request.user
+        if len(user.user_profile.allowed_archival_units.all()) > 0:
+            return Isad.objects.filter(archival_unit__in=user.user_profile.allowed_archival_units.all())
+        else:
+            return Isad.objects.all()
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -65,7 +90,8 @@ class IsadDetail(IsadPermissionMixin, DetailView):
     context_object_name = 'isad'
 
 
-class IsadCreate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, CreateWithInlinesView):
+class IsadCreate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
+                 NamedFormsetsMixin, CreateWithInlinesView):
     model = Isad
     form_class = IsadForm
     template_name = 'isad/form.html'
@@ -91,7 +117,8 @@ class IsadCreate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMi
         return super(IsadCreate, self).forms_valid(form, formset)
 
 
-class IsadUpdate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class IsadUpdate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
+                 NamedFormsetsMixin, UpdateWithInlinesView):
     model = Isad
     form_class = IsadForm
     template_name = 'isad/form.html'
@@ -103,7 +130,7 @@ class IsadUpdate(IsadPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMi
                      'location_of_copies']
 
 
-class IsadDelete(IsadPermissionMixin, AjaxDeleteView):
+class IsadDelete(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, AjaxDeleteView):
     model = Isad
     template_name = 'isad/delete.html'
     context_object_name = 'isad'
@@ -113,7 +140,7 @@ class IsadDelete(IsadPermissionMixin, AjaxDeleteView):
         return {'status': 'ok', 'message': msg}
 
 
-class IsadAction(IsadPermissionMixin, JSONResponseMixin, DetailView):
+class IsadAction(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, JSONResponseMixin, DetailView):
     model = Isad
 
     def post(self, request, *args, **kwargs):

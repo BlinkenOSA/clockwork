@@ -3,11 +3,11 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from container.models import Container
-from finding_aids.mixins import FindingAidsPermissionMixin
+from finding_aids.mixins import FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin
 from finding_aids.models import FindingAidsEntity
 
 
-class FindingAidsInContainerList(FindingAidsPermissionMixin, TemplateView):
+class FindingAidsInContainerList(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin, TemplateView):
     template_name = 'finding_aids/container_view/list.html'
 
     def get_context_data(self, **kwargs):

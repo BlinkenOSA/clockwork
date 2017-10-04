@@ -35,6 +35,22 @@ class ArchivalUnit(models.Model):
     user_updated = models.CharField(max_length=100, blank=True)
     date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
+    def get_fonds(self):
+        if self.level == 'F':
+            return self
+        elif self.level == 'SF':
+            return self.parent
+        else:
+            return self.parent.parent
+
+    def get_subfonds(self):
+        if self.level == 'F':
+            return None
+        elif self.level == 'SF':
+            return self
+        else:
+            return self.parent
+
     def save(self, **kwargs):
         self.sort = '%04d%04d%04d' % (self.fonds, self.subfonds, self.series)
 

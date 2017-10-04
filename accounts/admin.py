@@ -3,4 +3,14 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
+
 # Register your models here.
+from accounts.forms import UserProfileAdminForm
+from accounts.models import UserProfile
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    exclude = ('user',)
+    form = UserProfileAdminForm
+
+admin.site.register(UserProfile, UserProfileAdmin)

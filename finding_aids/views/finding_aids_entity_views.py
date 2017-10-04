@@ -7,11 +7,11 @@ from fm.views import JSONResponseMixin, AjaxDeleteView
 
 from clockwork.mixins import InlineSuccessMessageMixin
 from finding_aids.forms import *
-from finding_aids.mixins import FindingAidsPermissionMixin
+from finding_aids.mixins import FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin
 from finding_aids.views.helper_functions import *
 
 
-class FindingAidsCreate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
                         NamedFormsetsMixin, CreateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsForm
@@ -61,7 +61,7 @@ class FindingAidsCreate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
         return super(FindingAidsCreate, self).forms_valid(form, formset)
 
 
-class FindingAidsUpdate(FindingAidsPermissionMixin, InlineSuccessMessageMixin,
+class FindingAidsUpdate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
                         NamedFormsetsMixin, UpdateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsUpdateForm

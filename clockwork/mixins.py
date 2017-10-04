@@ -78,4 +78,4 @@ class GeneralAllPermissionMixin(PermissionRequiredMixin):
             )
         content_type = ContentType.objects.get_for_model(self.permission_model)
         permissions = Permission.objects.filter(content_type=content_type)
-        return tuple("%s.%s" % (p.content_type, p.codename) for p in permissions)
+        return tuple("%s.%s" % (p.content_type.app_label, p.codename) for p in permissions)

@@ -19,30 +19,64 @@ IMG_FLAG = ' <span class="flag"></span>'
 
 
 class FindingAidsArchivalUnitForm(Form):
-    fonds = ModelChoiceField(
-        queryset=ArchivalUnit.objects.all(),
-        label='Fonds',
-        widget=ModelSelect2Widget(
-            queryset=ArchivalUnit.objects.filter(level='F'),
-            search_fields=['title__icontains', 'reference_code__icontains'],
-        )
-    )
-    subfonds = ModelChoiceField(
-        queryset=ArchivalUnit.objects.all(),
-        widget=ModelSelect2Widget(
-            queryset=ArchivalUnit.objects.filter(level='SF').order_by('fonds', 'subfonds', 'series'),
-            search_fields=['title__icontains', 'reference_code__icontains'],
-            dependent_fields={'fonds': 'parent'}
-        )
-    )
-    series = ModelChoiceField(
-        queryset=ArchivalUnit.objects.all(),
-        widget=ModelSelect2Widget(
-            queryset=ArchivalUnit.objects.filter(level='S').order_by('fonds', 'subfonds', 'series'),
-            search_fields=['title__icontains', 'reference_code__icontains'],
-            dependent_fields={'subfonds': 'parent'}
-        )
-    )
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(FindingAidsArchivalUnitForm, self).__init__(*args, **kwargs)
+        qs = user.user_profile.allowed_archival_units.all().order_by('fonds', 'subfonds', 'series')
+        qs_subfonds = ArchivalUnit.objects.filter(children__in=qs, level='SF').order_by('fonds', 'subfonds', 'series')
+        qs_fonds = ArchivalUnit.objects.filter(children__in=qs_subfonds, level='F').order_by('fonds',
+                                                                                             'subfonds', 'series')
+
+        # If User is restricted to a particular series
+        if len(qs) > 0:
+            self.fields['fonds'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                widget=ModelSelect2Widget(
+                    queryset=qs_fonds,
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                )
+            )
+            self.fields['subfonds'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                widget=ModelSelect2Widget(
+                    queryset=qs_subfonds,
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                    dependent_fields={'fonds': 'parent'}
+                )
+            )
+            self.fields['series'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                widget=ModelSelect2Widget(
+                    queryset=qs,
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                    dependent_fields={'subfonds': 'parent'}
+                )
+            )
+        else:
+            self.fields['fonds'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                label='Fonds',
+                widget=ModelSelect2Widget(
+                    queryset=ArchivalUnit.objects.filter(level='F'),
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                )
+            )
+            self.fields['subfonds'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                widget=ModelSelect2Widget(
+                    queryset=ArchivalUnit.objects.filter(level='SF').order_by('fonds', 'subfonds', 'series'),
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                    dependent_fields={'fonds': 'parent'}
+                )
+            )
+            self.fields['series'] = ModelChoiceField(
+                queryset=ArchivalUnit.objects.all(),
+                widget=ModelSelect2Widget(
+                    queryset=ArchivalUnit.objects.filter(level='S').order_by('fonds', 'subfonds', 'series'),
+                    search_fields=['title__icontains', 'reference_code__icontains'],
+                    dependent_fields={'subfonds': 'parent'}
+                )
+            )
 
 
 class FindingAidsTemplateSelectForm(Form):

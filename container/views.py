@@ -1,5 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, CreateView
@@ -18,7 +20,22 @@ class ContainerPermissionMixin(GeneralAllPermissionMixin):
     permission_model = Container
 
 
-class ContainerList(ContainerPermissionMixin, FormView):
+class ContainerAllowedArchivalUnitMixin(object):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if 'archival_unit' in self.kwargs:
+            archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
+        else:
+            container = Container.objects.get(pk=self.kwargs['pk'])
+            archival_unit = container.archival_unit
+
+        if archival_unit in user.user_profile.allowed_archival_units.all():
+            return super(ContainerAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+
+class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, FormView):
     template_name = 'container/list.html'
     form_class = ContainerForm
 
@@ -109,14 +126,14 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
             return super(ContainerCreate, self).form_valid(form)
 
 
-class ContainerUpdate(ContainerPermissionMixin, SuccessMessageMixin, AjaxUpdateView):
+class ContainerUpdate(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, SuccessMessageMixin, AjaxUpdateView):
     model = Container
     form_class = ContainerUpdateForm
     template_name = 'container/form/form_update_container.html'
     success_message = ugettext("Container was updated successfully")
 
 
-class ContainerDelete(ContainerPermissionMixin, AjaxDeleteProtectedView):
+class ContainerDelete(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, AjaxDeleteProtectedView):
     model = Container
     template_name = 'container/delete.html'
     context_object_name = 'container'
