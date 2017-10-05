@@ -1,0 +1,11 @@
+{% if created_by and updated_by %}
+    <div class="col-md-6">
+        <p><strong>Created by</strong></p>
+        <p class="text-muted">{{ created_by }} on {{ created_on }}</p>
+    </div>
+
+    <div class="col-md-6">
+        <p><strong>Updated by</strong></p>
+        <p class="text-muted">{{ updated_by }} on {{ updated_on }}</p>
+    </div>
+{% endif %}

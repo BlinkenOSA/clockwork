@@ -8,7 +8,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import CountryForm
 from authority.models import Country
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from donor.models import Donor
 from finding_aids.models import FindingAidsEntityAssociatedCountry
 
@@ -71,7 +71,7 @@ class CountryCreate(CountryPermissionMixin, AjaxCreateView):
         return ugettext("Country: %s was created successfully!") % self.object.country
 
 
-class CountryUpdate(CountryPermissionMixin, AjaxUpdateView):
+class CountryUpdate(CountryPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = CountryForm
     model = Country
     template_name = 'authority/country/form.html'

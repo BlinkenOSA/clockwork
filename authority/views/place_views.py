@@ -7,7 +7,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView, AjaxDeleteView
 
 from authority.forms import PlaceForm
 from authority.models import Place
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from finding_aids.models import FindingAidsEntityAssociatedPlace
 
 
@@ -71,7 +71,7 @@ class PlaceCreate(AccessionPermissionMixin, AjaxCreateView):
         return results
 
 
-class PlaceUpdate(AccessionPermissionMixin, AjaxUpdateView):
+class PlaceUpdate(AccessionPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = PlaceForm
     model = Place
     template_name = 'authority/place/form.html'

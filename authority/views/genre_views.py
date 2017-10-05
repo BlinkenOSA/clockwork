@@ -8,7 +8,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import GenreForm
 from authority.models import Genre
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 
 
 class GenrePermissionMixin(GeneralAllPermissionMixin):
@@ -69,7 +69,7 @@ class GenreCreate(GenrePermissionMixin, AjaxCreateView):
         return results
 
 
-class GenreUpdate(GenrePermissionMixin, AjaxUpdateView):
+class GenreUpdate(GenrePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = GenreForm
     model = Genre
     template_name = 'authority/genre/form.html'

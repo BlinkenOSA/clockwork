@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from controlled_list.forms import ExtentUnitForm
 from controlled_list.models import ExtentUnit
 
@@ -59,7 +59,7 @@ class ExtentUnitCreate(ExtentUnitPermissionMixin, AjaxCreateView):
         return ugettext("ExtentUnit: %s was created successfully!") % self.object
 
 
-class ExtentUnitUpdate(ExtentUnitPermissionMixin, AjaxUpdateView):
+class ExtentUnitUpdate(ExtentUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = ExtentUnitForm
     model = ExtentUnit
     template_name = 'controlled_list/extent_unit/form.html'

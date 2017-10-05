@@ -5,7 +5,7 @@ from django.views.generic import DetailView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
 from fm.views import JSONResponseMixin, AjaxDeleteView
 
-from clockwork.mixins import InlineSuccessMessageMixin
+from clockwork.mixins import InlineSuccessMessageMixin, AuditTrailContextMixin
 from finding_aids.forms import *
 from finding_aids.mixins import FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin
 from finding_aids.views.helper_functions import *
@@ -61,8 +61,8 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
         return super(FindingAidsCreate, self).forms_valid(form, formset)
 
 
-class FindingAidsUpdate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
-                        NamedFormsetsMixin, UpdateWithInlinesView):
+class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, FindingAidsAllowedArchivalUnitMixin,
+                        InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsUpdateForm
     template_name = 'finding_aids/container_view/form.html'

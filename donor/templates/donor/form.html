@@ -46,10 +46,11 @@
 
 {% block box-1-footer %}
     <div class="pull-right">
-            <a class="btn btn-default" href="{% url 'donor:list' %}">
-                <i class="fa fa-times"></i>
-                {% trans 'Cancel' %}
-            </a>
+        <a class="btn btn-default" href="{% url 'donor:list' %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Cancel' %}
+        </a>
+        {% include 'audit_trail.html' %}
     </div>
 
     <button type="submit" class="btn btn-primary" formnovalidate>

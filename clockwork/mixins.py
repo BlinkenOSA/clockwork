@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 from django.http import JsonResponse
@@ -79,3 +79,20 @@ class GeneralAllPermissionMixin(PermissionRequiredMixin):
         content_type = ContentType.objects.get_for_model(self.permission_model)
         permissions = Permission.objects.filter(content_type=content_type)
         return tuple("%s.%s" % (p.content_type.app_label, p.codename) for p in permissions)
+
+
+class AuditTrailContextMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(AuditTrailContextMixin, self).get_context_data(**kwargs)
+
+        if self.object.user_created:
+            user_created = User.objects.get(username=self.object.user_created)
+            context['created_by'] = "%s, %s" % (user_created.first_name, user_created.last_name)
+            context['created_on'] = self.object.date_created
+
+        if self.object.user_updated:
+            user_updated = User.objects.get(username=self.object.user_updated)
+            context['updated_by'] = "%s, %s" % (user_updated.first_name, user_updated.last_name)
+            context['updated_on'] = self.object.date_updated
+
+        return context

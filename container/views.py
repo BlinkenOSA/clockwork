@@ -10,7 +10,7 @@ from fm.views import AjaxUpdateView
 
 from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from container.forms import ContainerForm, ContainerUpdateForm
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
@@ -130,7 +130,8 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
             return super(ContainerCreate, self).form_valid(form)
 
 
-class ContainerUpdate(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, SuccessMessageMixin, AjaxUpdateView):
+class ContainerUpdate(ContainerPermissionMixin, AuditTrailContextMixin, ContainerAllowedArchivalUnitMixin,
+                      SuccessMessageMixin, AjaxUpdateView):
     model = Container
     form_class = ContainerUpdateForm
     template_name = 'container/form/form_update_container.html'

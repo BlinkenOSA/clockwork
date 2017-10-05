@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from controlled_list.forms import CorporationRoleForm
 from controlled_list.models import CorporationRole
 
@@ -59,7 +59,7 @@ class CorporationRoleCreate(CorporationRolePermissionMixin, AjaxCreateView):
         return ugettext("CorporationRole: %s was created successfully!") % self.object
 
 
-class CorporationRoleUpdate(CorporationRolePermissionMixin, AjaxUpdateView):
+class CorporationRoleUpdate(CorporationRolePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = CorporationRoleForm
     model = CorporationRole
     template_name = 'controlled_list/corporation_role/form.html'

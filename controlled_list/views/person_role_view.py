@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from controlled_list.forms import PersonRoleForm
 from controlled_list.models import PersonRole
 
@@ -65,7 +65,7 @@ class PersonRoleCreate(PersonRolePermissionMixin, AjaxCreateView):
         return results
 
 
-class PersonRoleUpdate(PersonRolePermissionMixin, AjaxUpdateView):
+class PersonRoleUpdate(PersonRolePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = PersonRoleForm
     model = PersonRole
     template_name = 'controlled_list/person_role/form.html'

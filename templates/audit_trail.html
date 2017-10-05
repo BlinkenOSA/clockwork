@@ -1,0 +1,9 @@
+{% if created_by and updated_by %}
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+       <i class="fa fa-info"></i> Info <span class="fa fa-caret-down"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="#"><i class="fa fa-plus"></i> <strong>Created by:</strong> {{ created_by }} on {{ created_on }}</a></li>
+        <li><a href="#"><i class="fa fa-edit"></i><strong>Updated by:</strong> {{ updated_by }} on {{ updated_on }}</a></li>
+    </ul>
+{% endif %}

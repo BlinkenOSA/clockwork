@@ -9,7 +9,7 @@ from authority.forms import CorporationForm, CorporationOtherNamesInLine
 from authority.models import Corporation
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from finding_aids.models import FindingAidsEntityAssociatedCorporation
 
 
@@ -75,7 +75,7 @@ class CorporationCreate(CorporationPermissionMixin, NamedFormsetsMixin, CreateWi
         return results
 
 
-class CorporationUpdate(CorporationPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
+class CorporationUpdate(CorporationPermissionMixin, AuditTrailContextMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'

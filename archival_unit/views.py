@@ -11,7 +11,7 @@ from archival_unit.forms import FondsCreateForm, FondsUpdateForm, SubFondsCreate
     SubFondsUpdateForm, SeriesCreateForm, SeriesUpdateForm
 from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from container.models import Container
 
 '''
@@ -83,7 +83,7 @@ class FondsCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
         return super(FondsCreate, self).form_valid(form)
 
 
-class FondsUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
+class FondsUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = FondsUpdateForm
     template_name = 'archival_unit/fonds_form.html'
 
@@ -172,7 +172,7 @@ class SubFondsCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
         return super(SubFondsCreate, self).form_valid(form)
 
 
-class SubFondsUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
+class SubFondsUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     model = ArchivalUnit
     form_class = SubFondsUpdateForm
     template_name = 'archival_unit/subfonds_form.html'
@@ -271,7 +271,7 @@ class SeriesCreate(ArchivalUnitPermissionMixin, AjaxCreateView):
         return super(SeriesCreate, self).form_valid(form)
 
 
-class SeriesUpdate(ArchivalUnitPermissionMixin, AjaxUpdateView):
+class SeriesUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = SeriesUpdateForm
     template_name = 'archival_unit/series_form.html'
 

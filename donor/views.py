@@ -9,7 +9,7 @@ from django.db.models import Q, ProtectedError
 from fm.views import AjaxCreateView, AjaxDeleteView
 
 from accession.models import Accession
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from donor.models import Donor
 from donor.forms import DonorForm
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -65,7 +65,7 @@ class DonorCreate(DonorPermissionMixin, SuccessMessageMixin, CreateView):
     success_message = ugettext("%(name)s was created successfully")
 
 
-class DonorUpdate(DonorPermissionMixin, SuccessMessageMixin, UpdateView):
+class DonorUpdate(DonorPermissionMixin, AuditTrailContextMixin, SuccessMessageMixin, UpdateView):
     model = Donor
     form_class = DonorForm
     template_name = 'donor/form.html'

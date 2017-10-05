@@ -8,7 +8,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import SubjectForm
 from authority.models import Subject
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 
 
 class SubjectPermissionMixin(GeneralAllPermissionMixin):
@@ -70,7 +70,7 @@ class SubjectCreate(SubjectPermissionMixin, AjaxCreateView):
         return results
 
 
-class SubjectUpdate(SubjectPermissionMixin, AjaxUpdateView):
+class SubjectUpdate(SubjectPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = SubjectForm
     model = Subject
     template_name = 'authority/subject/form.html'

@@ -7,7 +7,7 @@ from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInl
 from fm.views import AjaxDeleteView
 
 from archival_unit.models import ArchivalUnit
-from clockwork.mixins import InlineSuccessMessageMixin
+from clockwork.mixins import InlineSuccessMessageMixin, AuditTrailContextMixin
 from finding_aids.forms import FindingAidsAssociatedPeopleInline, \
     FindingAidsAssociatedCorporationInline, FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, \
     FindingAidsLanguageInline, FindingAidsExtentInline, FindingAidsTemplateForm
@@ -91,8 +91,9 @@ class FindingAidsTemplateCreate(FindingAidsPermissionMixin, FindingAidsTemplateA
         return super(FindingAidsTemplateCreate, self).forms_valid(form, formset)
 
 
-class FindingAidsTemplateUpdate(FindingAidsPermissionMixin, FindingAidsTemplateAllowedArchivalUnitMixin,
-                                InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class FindingAidsTemplateUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin,
+                                FindingAidsTemplateAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
+                                NamedFormsetsMixin, UpdateWithInlinesView):
     model = FindingAidsEntity
     form_class = FindingAidsTemplateForm
     template_name = 'finding_aids/template_view/form.html'

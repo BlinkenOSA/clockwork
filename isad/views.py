@@ -11,7 +11,7 @@ from fm.views import AjaxDeleteView
 from django.core.exceptions import PermissionDenied
 
 from archival_unit.models import ArchivalUnit
-from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin, AuditTrailContextMixin
 from isad.forms import IsadArchivalUnitForm, IsadForm, IsadCreatorInline, IsadExtentInline, IsadCarrierInline, \
     IsadRelatedFindingAidsInline, IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline
 from isad.models import Isad
@@ -88,12 +88,6 @@ class IsadListJson(IsadPermissionMixin, BaseDatatableView):
         return json_array
 
 
-class IsadDetail(IsadPermissionMixin, DetailView):
-    model = Isad
-    template_name = 'isad/detail.html'
-    context_object_name = 'isad'
-
-
 class IsadCreate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
                  NamedFormsetsMixin, CreateWithInlinesView):
     model = Isad
@@ -121,7 +115,7 @@ class IsadCreate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSucces
         return super(IsadCreate, self).forms_valid(form, formset)
 
 
-class IsadUpdate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
+class IsadUpdate(IsadPermissionMixin, AuditTrailContextMixin, IsadAllowedArchivalUnitMixin, InlineSuccessMessageMixin,
                  NamedFormsetsMixin, UpdateWithInlinesView):
     model = Isad
     form_class = IsadForm

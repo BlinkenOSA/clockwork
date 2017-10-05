@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from controlled_list.forms import KeywordForm
 from controlled_list.models import Keyword
 
@@ -59,7 +59,7 @@ class KeywordCreate(KeywordPermissionMixin, AjaxCreateView):
         return ugettext("Keyword: %s was created successfully!") % self.object
 
 
-class KeywordUpdate(KeywordPermissionMixin, AjaxUpdateView):
+class KeywordUpdate(KeywordPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = KeywordForm
     model = Keyword
     template_name = 'controlled_list/keyword/form.html'

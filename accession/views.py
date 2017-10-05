@@ -10,7 +10,7 @@ from datetime import date
 from accession.form import AccessionForm, AccessionItemsInlineForm
 from accession.models import Accession
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin, AuditTrailContextMixin
 
 
 class AccessionPermissionMixin(GeneralAllPermissionMixin):
@@ -69,7 +69,8 @@ class AccessionCreate(AccessionPermissionMixin, InlineSuccessMessageMixin, Named
         }
 
 
-class AccessionUpdate(AccessionPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class AccessionUpdate(AccessionPermissionMixin, AuditTrailContextMixin, InlineSuccessMessageMixin,
+                      NamedFormsetsMixin, UpdateWithInlinesView):
     model = Accession
     form_class = AccessionForm
     template_name = 'accession/form.html'

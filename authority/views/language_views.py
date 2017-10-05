@@ -8,7 +8,7 @@ from fm.views import AjaxCreateView, AjaxUpdateView
 from authority.forms import LanguageForm
 from authority.models import Language, PersonOtherFormat, CorporationOtherFormat
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from finding_aids.models import FindingAidsEntityLanguage
 
 
@@ -72,7 +72,7 @@ class LanguageCreate(LanguagePermissionMixin, AjaxCreateView):
         return ugettext("Language: %s was created successfully!") % self.object.language
 
 
-class LanguageUpdate(LanguagePermissionMixin, AjaxUpdateView):
+class LanguageUpdate(LanguagePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = LanguageForm
     model = Language
     template_name = 'authority/language/form.html'

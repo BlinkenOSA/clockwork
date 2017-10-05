@@ -7,7 +7,7 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInlinesView
 
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
-from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin
+from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin, AuditTrailContextMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
     PlacesInline, TYPE_CHOICES
 from isaar.models import Isaar
@@ -81,7 +81,8 @@ class IsaarCreate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsets
     inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
-class IsaarUpdate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsetsMixin, UpdateWithInlinesView):
+class IsaarUpdate(IsaarPermissionMixin, AuditTrailContextMixin, InlineSuccessMessageMixin,
+                  NamedFormsetsMixin, UpdateWithInlinesView):
     model = Isaar
     form_class = IsaarForm
     template_name = 'isaar/form.html'

@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxCreateView, AjaxUpdateView
 
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from controlled_list.forms import GeoRoleForm
 from controlled_list.models import GeoRole
 
@@ -59,7 +59,7 @@ class GeoRoleCreate(GeoRolePermissionMixin, AjaxCreateView):
         return ugettext("GeoRole: %s was created successfully!") % self.object
 
 
-class GeoRoleUpdate(GeoRolePermissionMixin, AjaxUpdateView):
+class GeoRoleUpdate(GeoRolePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
     form_class = GeoRoleForm
     model = GeoRole
     template_name = 'controlled_list/geo_role/form.html'

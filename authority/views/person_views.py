@@ -9,7 +9,7 @@ from authority.forms import PersonForm, PersonOtherNamesInLine
 from authority.models import Person
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.inlineform import CreateWithInlinesAjaxView, UpdateWithInlinesAjaxView
-from clockwork.mixins import GeneralAllPermissionMixin
+from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from finding_aids.models import FindingAidsEntityAssociatedPerson
 
 
@@ -78,7 +78,7 @@ class PersonCreate(PersonPermissionMixin, NamedFormsetsMixin, CreateWithInlinesA
         return results
 
 
-class PersonUpdate(PersonPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
+class PersonUpdate(PersonPermissionMixin, AuditTrailContextMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     form_class = PersonForm
     model = Person
     template_name = 'authority/person/form.html'
