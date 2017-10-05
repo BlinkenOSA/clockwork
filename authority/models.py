@@ -11,6 +11,12 @@ class Country(models.Model):
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     country = models.CharField(unique=True, max_length=100)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.country
 
@@ -27,6 +33,12 @@ class Language(models.Model):
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     language = models.CharField(unique=True, max_length=100)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.language
 
@@ -41,6 +53,12 @@ class Place(models.Model):
     authority_url = models.CharField(max_length=200, blank=True, null=True)
     place = models.CharField(unique=True, max_length=100)
     other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     def __unicode__(self):
         return self.place
@@ -57,6 +75,12 @@ class Person(models.Model):
     wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=150, blank=True, null=True)
     other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     def __unicode__(self):
         return ', '.join((self.last_name, self.first_name))
@@ -87,6 +111,12 @@ class Corporation(models.Model):
     authority_url = models.CharField(max_length=150, blank=True, null=True)
     other_url = models.CharField(max_length=150, blank=True, null=True)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.name
 
@@ -113,6 +143,12 @@ class Genre(models.Model):
     authority_url = models.CharField(max_length=150, blank=True, null=True)
     other_url = models.CharField(max_length=150, blank=True, null=True)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.genre
 
@@ -127,6 +163,12 @@ class Subject(models.Model):
     wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=150, blank=True, null=True)
     other_url = models.CharField(max_length=150, blank=True, null=True)
+
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     def __unicode__(self):
         return self.subject

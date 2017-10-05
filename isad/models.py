@@ -66,6 +66,12 @@ class Isad(models.Model):
     # Published
     published = models.BooleanField(default=False)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     class Meta:
         db_table = 'isad_recrods'
 

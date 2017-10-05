@@ -44,6 +44,12 @@ class CorporationRole(models.Model):
     id = models.AutoField(primary_key=True)
     role = models.CharField(unique=True, max_length=100)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.role
 
@@ -68,6 +74,12 @@ class GeoRole(models.Model):
     id = models.AutoField(primary_key=True)
     role = models.CharField(unique=True, max_length=100)
 
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+
     def __unicode__(self):
         return self.role
 
@@ -79,6 +91,12 @@ class GeoRole(models.Model):
 class Keyword(models.Model):
     id = models.AutoField(primary_key=True)
     keyword = models.CharField(unique=True, max_length=100)
+
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     def __unicode__(self):
         return self.keyword
@@ -115,6 +133,12 @@ class Locale(models.Model):
 class PersonRole(models.Model):
     id = models.AutoField(primary_key=True)
     role = models.CharField(unique=True, max_length=100)
+
+    user_created = models.CharField(max_length=100, blank=True)
+    date_created = models.DateTimeField(blank=True, auto_now_add=True)
+
+    user_updated = models.CharField(max_length=100, blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     def __unicode__(self):
         return self.role
