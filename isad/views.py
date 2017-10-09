@@ -146,10 +146,10 @@ class IsadAction(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, JSONResponse
         isad = self.get_object()
 
         if action == 'publish':
-            isad.published = True
+            isad.publish(request.user)
 
         if action == 'unpublish':
-            isad.published = False
+            isad.unpublish()
 
         isad.save()
 

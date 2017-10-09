@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
+from datetime import datetime
 from django.db import models
+from django.utils import timezone
 from django_date_extensions.fields import ApproximateDateField
 
 from archival_unit.models import ArchivalUnit
@@ -65,6 +67,8 @@ class Isad(models.Model):
 
     # Published
     published = models.BooleanField(default=False)
+    user_published = models.CharField(max_length=100, blank=True)
+    date_published = models.DateTimeField(blank=True, null=True)
 
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)
@@ -74,6 +78,16 @@ class Isad(models.Model):
 
     class Meta:
         db_table = 'isad_recrods'
+
+    def publish(self, user):
+        self.published = True
+        self.user_published = user.username
+        self.date_published = timezone.now()
+
+    def unpublish(self):
+        self.published = False
+        self.user_published = ""
+        self.date_published = None
 
 
 class IsadCreator(models.Model):
