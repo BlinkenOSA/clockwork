@@ -5,5 +5,8 @@
     <ul class="dropdown-menu">
         <li><a href="#"><i class="fa fa-plus"></i> <strong>Created by:</strong> {{ created_by }} on {{ created_on }}</a></li>
         <li><a href="#"><i class="fa fa-edit"></i><strong>Updated by:</strong> {{ updated_by }} on {{ updated_on }}</a></li>
+        {% if published_by %}
+            <li><a href="#"><i class="fa fa-cloud-upload"></i><strong>Published by:</strong> {{ published_by }} on {{ published_on }}</a></li>
+        {% endif %}
     </ul>
 {% endif %}
