@@ -68,14 +68,17 @@
 {% endblock %}
 
 {% block box-2-footer %}
+    <a href="{% url 'finding_aids:finding_aids_template_list' archival_unit.id %}" class="btn btn-default">
+        <i class="fa fa-copy"></i> Edit Templates
+    </a>
+
     <div class="pull-right">
+        <a id="publish_all" href="{% url 'container:publish' 'publish' archival_unit.id 'all' %}" class="btn btn-default">
+            <i class="fa fa-cloud-upload"></i> Publish All
+        </a>
         <a class="btn btn-default" href="{% url 'finding_aids:choose_archival_unit' %}">
             <i class="fa fa-times"></i>
             {% trans 'Cancel' %}
-        </a>
-
-        <a href="{% url 'finding_aids:finding_aids_template_list' archival_unit.id %}" class="btn btn-default">
-            <i class="fa fa-copy"></i> Edit Templates
         </a>
     </div>
 {% endblock %}

@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from fm.views import AjaxUpdateView
+from fm.views import AjaxUpdateView, JSONResponseMixin
 
 from archival_unit.models import ArchivalUnit
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
@@ -86,7 +86,7 @@ class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
             self.number_of_fa_entities = FindingAidsEntity.objects.filter(container__id=row.id).count()
             return self.number_of_fa_entities
         elif column == 'navigate':
-            return render_to_string(template_name='container/table_navigate_buttons.html', context={'container': row.id})
+            return render_to_string(template_name='container/table_navigate_buttons.html', context={'container': row})
         elif column == 'action':
             return render_to_string(template_name='container/table_action_buttons.html',
                                     context={'container': row.id, 'number_of_fa_entities': self.number_of_fa_entities})
@@ -123,7 +123,7 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
                 'container_label': container.container_label,
                 'number_of_fa_entities': 0,
                 'action': render_to_string('container/table_action_buttons.html', context={'container': container.id}),
-                'navigate': render_to_string('container/table_navigate_buttons.html', context={'container': container.id})
+                'navigate': render_to_string('container/table_navigate_buttons.html', context={'container': container})
             }
             return JsonResponse(data)
         else:
@@ -145,4 +145,50 @@ class ContainerDelete(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixi
     success_message = ugettext("Container was deleted successfully!")
     error_message = ugettext("Container is not empty, please select an empty one to delete!")
 
+
+class ContainerAction(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin, JSONResponseMixin, DetailView):
+    model = Container
+
+    def post(self, request, *args, **kwargs):
+        action = self.kwargs['action']
+        archival_unit = self.kwargs['archival_unit']
+        pk = self.kwargs['pk']
+
+        if pk == 'all':
+            containers = Container.objects.filter(archival_unit=archival_unit)
+        else:
+            containers = [self.get_object(),]
+
+        for container in containers:
+            finding_aids = FindingAidsEntity.objects.filter(container=container)
+            number_of_fa_entities = len(finding_aids)
+
+            if action == 'publish':
+                container.publish(request.user)
+                for fa in finding_aids:
+                    fa.publish(request.user)
+
+            if action == 'unpublish':
+                container.unpublish()
+                for fa in finding_aids:
+                    fa.unpublish()
+
+        if pk == 'all':
+            context = {
+                'status': 'ok'
+            }
+        else:
+            context = {
+                'DT_rowId': container.id,
+                'container_no': '%s/%s' % (container.archival_unit.reference_code, container.container_no),
+                'primary_type': container.primary_type.type,
+                'carrier_type': container.carrier_type.type,
+                'identifier': "%s (%s)" % (container.permanent_id, container.legacy_id) if container.legacy_id else container.permanent_id,
+                'number_of_fa_entities': number_of_fa_entities,
+                'navigate': render_to_string('container/table_navigate_buttons.html', context={'container': container}),
+                'action': render_to_string('container/table_action_buttons.html',
+                                           context={'container': container.id,
+                                                    'number_of_fa_entities': number_of_fa_entities})
+            }
+        return self.render_json_response(context)
 

@@ -64,3 +64,33 @@ $(function() {
         }
 	});
 });
+
+$('tbody').on('click','.btn-action',function(e) {
+	e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.row('#' + data['DT_rowId']).data(data);
+			},
+			error: function () {
+			},
+			url: $(this).attr("href"),
+			cache: false
+		});
+});
+
+$('#publish_all').on('click', function(e) {
+	e.preventDefault();
+	if (window.confirm("Are you sure you want to set all the 'Finding Aids entries' ready for publish?")) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.ajax.reload();
+			},
+			error: function () {
+			},
+			url: $(this).attr("href"),
+			cache: false
+		});
+	}
+});
