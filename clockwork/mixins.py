@@ -95,4 +95,10 @@ class AuditTrailContextMixin(object):
             context['updated_by'] = "%s, %s" % (user_updated.first_name, user_updated.last_name)
             context['updated_on'] = self.object.date_updated
 
+        if hasattr(self.object, 'user_published'):
+            if self.object.user_published:
+                user_published = User.objects.get(username=self.object.user_published)
+                context['published_by'] = "%s, %s" % (user_published.first_name, user_published.last_name)
+                context['published_on'] = self.object.date_published
+
         return context
