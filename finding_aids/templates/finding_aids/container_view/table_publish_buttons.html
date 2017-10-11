@@ -1,15 +1,11 @@
 <div class="btn-group">
-    <a href="{% url 'finding_aids:clone' container_id id %}" class="btn btn-default btn-xs btn-clone">
-        <i class="fa fa-clone"></i>
-    </a>
-</div>
-
-<div class="btn-group">
-    <a class="btn btn-default btn-xs" href="{% url 'finding_aids:update' container_id id %}">
-        <i class="fa fa-edit"></i>
-    </a>
-    <a class="btn btn-default btn-xs fm-delete" href="{% url 'finding_aids:delete' container_id id %}"
-       data-fm-head="<i class='fa fa-archive'></i>Delete Finding Aids Entry" data-fm-callback="reloadTable">
-        <i class="fa fa-trash-o"></i>
-    </a>
+    {% if finding_aids_entity.published %}
+        <a href="/finding_aids/action/unpublish/{{ finding_aids_entity.container.id }}/{{ finding_aids_entity.id }}/" class="btn btn-success btn-xs btn-action">
+            <i class="fa fa-cloud-upload"></i>
+        </a>
+    {% else %}
+        <a href="/finding_aids/action/publish/{{ finding_aids_entity.container.id }}/{{ finding_aids_entity.id }}/" class="btn btn-danger btn-xs btn-action">
+            <i class="fa fa-cloud-upload"></i>
+        </a>
+    {% endif %}
 </div>

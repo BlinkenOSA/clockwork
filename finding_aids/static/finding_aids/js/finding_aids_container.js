@@ -4,11 +4,12 @@ var table = $('#fa_table').DataTable({
 	"serverSide": true,
 	"ajax": "/finding_aids/datatable/" + containerID ,
 	"columns": [
-       { "data": 'level', "width": "20%", "class": "call_no_column"},
-	   { "data": 'title', "width": "25%" },
-	   { "data": 'title_original', "width": "25%" },
-	   { "data": 'date', "width": "20%" },
-       { "data": 'action', "width": "10%", "class": "action_column" },
+       	{ "data": 'level', "width": "20%", "class": "call_no_column"},
+	   	{ "data": 'title', "width": "20%" },
+	   	{ "data": 'title_original', "width": "20%" },
+	   	{ "data": 'date', "width": "20%" },
+       	{ "data": 'action', "width": "10%", "class": "action_column" },
+		{ "data": 'publish', "width": "10%", "class": "action_column" },
 	],
     "rowCallback": function( row, data, index ) {
       if ( data.item_no != 0 ) {
@@ -81,6 +82,41 @@ $('tbody').on('click','.btn-clone',function(e) {
       url: $(this).attr("href"),
       cache: false
     });
+});
+
+
+$('tbody').on('click','.btn-action',function(e) {
+	e.preventDefault();
+	var msg = "Are you sure you want to 'Publish/Unpublish' the Finding Aids record?";
+	if (window.confirm(msg)) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.row('#' + data['DT_rowId']).data(data);
+			},
+			error: function () {
+			},
+			url: $(this).attr("href"),
+			cache: false
+		});
+	}
+});
+
+$('#publish_all').on('click', function(e) {
+	e.preventDefault();
+	var msg = "Are you sure you want to set all the Finding Aids entries 'Ready for publish'?";
+	if (window.confirm(msg)) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.ajax.reload();
+			},
+			error: function () {
+			},
+			url: $(this).attr("href"),
+			cache: false
+		});
+	}
 });
 
 $(function() {

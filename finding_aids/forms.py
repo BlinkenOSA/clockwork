@@ -98,7 +98,7 @@ class FindingAidsBaseForm(ModelForm):
 
     class Meta:
         model = FindingAidsEntity
-        fields = '__all__'
+        exclude = '__all__'
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
             'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
@@ -146,15 +146,17 @@ class FindingAidsForm(FindingAidsBaseForm):
     level_hidden = CharField(widget=HiddenInput(), required=False)
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['title']
 
     def clean_date_from(self):
         if not self.cleaned_data['date_from']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['date_from']
 
 
 class FindingAidsTemplateForm(FindingAidsBaseForm):
@@ -164,6 +166,7 @@ class FindingAidsTemplateForm(FindingAidsBaseForm):
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['template_name']
 
 
 class FindingAidsUpdateForm(FindingAidsBaseForm):
@@ -172,15 +175,17 @@ class FindingAidsUpdateForm(FindingAidsBaseForm):
                         widget=Select(attrs={'disabled': True}))
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['title']
 
     def clean_date_from(self):
         if not self.cleaned_data['date_from']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['date_from']
 
 
 class FindingAidsTemplateUpdateForm(FindingAidsBaseForm):
@@ -190,6 +195,7 @@ class FindingAidsTemplateUpdateForm(FindingAidsBaseForm):
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
             raise ValidationError(ugettext("This field is mandatory."))
+        return self.cleaned_data['template_name']
 
 
 class FindingAidsAssociatedPeopleForm(ModelForm):

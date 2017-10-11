@@ -1,5 +1,6 @@
 from django.db.models import AutoField, UUIDField, ForeignKey
 from django.http import HttpResponseRedirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from extra_views import NamedFormsetsMixin, CreateWithInlinesView, UpdateWithInlinesView
@@ -200,3 +201,58 @@ class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
             return self.render_json_response(self.get_success_result())
         else:
             return HttpResponseRedirect(success_url)
+
+
+class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUnitMixin, JSONResponseMixin, DetailView):
+    model = FindingAidsEntity
+
+    def post(self, request, *args, **kwargs):
+        action = self.kwargs['action']
+        container = self.kwargs['container_id']
+        pk = self.kwargs['pk']
+
+        if pk == 'all':
+            finding_aids_entities = FindingAidsEntity.objects.filter(container=container)
+        else:
+            finding_aids_entities = [self.get_object(), ]
+
+        for finding_aids in finding_aids_entities:
+            if action == 'publish':
+                finding_aids.publish(request.user)
+
+            if action == 'unpublish':
+                finding_aids.unpublish()
+
+        if pk == 'all':
+            context = {
+                'status': 'ok'
+            }
+        else:
+            finding_aids = finding_aids_entities[0]
+            dates = [str(finding_aids.date_from) if finding_aids.date_from else "",
+                     str(finding_aids.date_to) if finding_aids.date_to else ""]
+
+            folder_no = finding_aids.container.archival_unit.reference_code + '/' + \
+                        str(finding_aids.container.container_no) + \
+                        ':' + str(finding_aids.folder_no)
+            if finding_aids.level == 'F':
+                icon = '<i class="fa fa-folder-open-o"></i>'
+                level = '<span class="call_no_folder">' + icon + folder_no + '</span>'
+            else:
+                icon = '<i class="fa fa-file-o"></i>'
+                level = '<span class="call_no_item">' + icon + folder_no + '-' + str(finding_aids.sequence_no) + '</span>'
+
+            context = {
+                'DT_rowId': finding_aids.id,
+                'level': level,
+                'title': finding_aids.title,
+                'title_original': finding_aids.title_original,
+                'date':  ' - '.join(filter(None, dates)),
+                'action': render_to_string('finding_aids/container_view/table_action_buttons.html',
+                                           context={'container_id': finding_aids.container.id, 'id': finding_aids.id}),
+                'publish': render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
+                    'finding_aids_entity': finding_aids
+                })
+            }
+
+        return self.render_json_response(context)

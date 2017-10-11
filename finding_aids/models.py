@@ -2,9 +2,8 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext
+from django.utils import timezone
 from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
 
@@ -83,14 +82,31 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     note_original = models.CharField(max_length=300, blank=True, null=True)
     internal_note = models.CharField(max_length=300, blank=True, null=True)
 
+    # Published
+    published = models.BooleanField(default=False)
+    user_published = models.CharField(max_length=100, blank=True)
+    date_published = models.DateTimeField(blank=True, null=True)
+
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)
 
     user_updated = models.CharField(max_length=100, blank=True)
-    date_updated = models.DateTimeField(blank=True, null=True, auto_now=True)
+    date_updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'fa_entities'
+
+    def publish(self, user):
+        self.published = True
+        self.user_published = user.username
+        self.date_published = timezone.now()
+        self.save()
+
+    def unpublish(self):
+        self.published = False
+        self.user_published = ""
+        self.date_published = None
+        self.save()
 
     def save(self, **kwargs):
         if self.is_template:
@@ -109,7 +125,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     def __unicode__(self):
         if self.is_template:
-            return self.template_name
+            return self.template_name or u''
         else:
             return "%s - %s" % (self.archival_reference_code, self.title)
 

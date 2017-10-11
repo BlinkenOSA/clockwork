@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^(?P<container_id>\d+)/create_template/(?P<template_id>\d+)$', FindingAidsCreateFromTemplate.as_view(),
         name='create_from_template'),
 
+    url(r'^action/(?P<action>\w+)/(?P<container_id>\w+)/(?P<pk>\w+)/$', FindingAidsAction.as_view(), name='publish'),
+
     url(r'^datatable/(?P<container_id>\d+)/$', FindingAidsInContainerListJson.as_view(),
         name='finding_aids_container_list_json'),
 

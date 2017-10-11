@@ -49,6 +49,7 @@
                 <th>{% trans 'Title Original' %}</th>
                 <th>{% trans 'Date' %}</th>
                 <th>{% trans 'Action' %}</th>
+                <th>{% trans 'Publish' %}</th>
             </tr>
         </thead>
     </table>
@@ -76,15 +77,17 @@
             </ul>
         </div>
         {% endif %}
+        <a href="{% url 'finding_aids:finding_aids_template_list' container.archival_unit.id %}" class="btn btn-default">
+            <i class="fa fa-copy"></i> Edit Templates
+        </a>
     </div>
 
     <div class="pull-right">
         <a href="{% url 'container:list_with_archival_unit' container.archival_unit.id %}" class="btn btn-default">
             <i class="fa fa-hand-o-left"></i> Back to Containers
         </a>
-
-        <a href="{% url 'finding_aids:finding_aids_template_list' container.archival_unit.id %}" class="btn btn-default">
-            <i class="fa fa-copy"></i> Edit Templates
+        <a id="publish_all" href="{% url 'finding_aids:publish' 'publish' container.id 'all' %}" class="btn btn-default">
+            <i class="fa fa-cloud-upload"></i> Publish All
         </a>
     </div>
 {% endblock %}
