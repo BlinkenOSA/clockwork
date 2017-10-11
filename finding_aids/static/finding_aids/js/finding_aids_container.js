@@ -87,8 +87,9 @@ $('tbody').on('click','.btn-clone',function(e) {
 
 $('tbody').on('click','.btn-action',function(e) {
 	e.preventDefault();
+	var url = $(this).attr("href");
 	var msg = "Are you sure you want to 'Publish/Unpublish' the Finding Aids record?";
-	if (window.confirm(msg)) {
+	alertify.confirm(msg, function (e) {
 		$.ajax({
 			type: 'POST',
 			success: function (data) {
@@ -96,16 +97,17 @@ $('tbody').on('click','.btn-action',function(e) {
 			},
 			error: function () {
 			},
-			url: $(this).attr("href"),
+			url: url,
 			cache: false
 		});
-	}
+	});
 });
 
 $('#publish_all').on('click', function(e) {
 	e.preventDefault();
+	var url = $(this).attr("href");
 	var msg = "Are you sure you want to set all the Finding Aids entries 'Ready for publish'?";
-	if (window.confirm(msg)) {
+	alertify.confirm(msg, function (e) {
 		$.ajax({
 			type: 'POST',
 			success: function (data) {
@@ -113,10 +115,10 @@ $('#publish_all').on('click', function(e) {
 			},
 			error: function () {
 			},
-			url: $(this).attr("href"),
+			url: url,
 			cache: false
 		});
-	}
+	});
 });
 
 $(function() {

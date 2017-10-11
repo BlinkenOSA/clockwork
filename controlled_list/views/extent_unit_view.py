@@ -59,7 +59,7 @@ class ExtentUnitCreate(ExtentUnitPermissionMixin, AjaxCreateView):
         return ugettext("ExtentUnit: %s was created successfully!") % self.object
 
 
-class ExtentUnitUpdate(ExtentUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
+class ExtentUnitUpdate(ExtentUnitPermissionMixin, AjaxUpdateView):
     form_class = ExtentUnitForm
     model = ExtentUnit
     template_name = 'controlled_list/extent_unit/form.html'

@@ -3,15 +3,8 @@
 {% if form.errors %}
     <script>
         $( document ).ready(function() {
-            $( document ).ready(function() {
-                new Noty({
-                    type: 'error',
-                    theme: 'bootstrap-v3',
-                    text: 'You have errors on your form, please correct them before continue.',
-                    timeout: 3000,
-                    closeWith: ['click', 'button']
-                }).show()
-            })
+            alertify.logPosition("bottom right");
+            alertify.delay(5000).error("You have errors on your form, please correct them before continue.");
         })
     </script>
 {% endif %}

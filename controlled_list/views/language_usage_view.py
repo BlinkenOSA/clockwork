@@ -59,7 +59,7 @@ class LanguageUsageCreate(LanguageUsagePermissionMixin, AjaxCreateView):
         return ugettext("LanguageUsage: %s was created successfully!") % self.object.usage
 
 
-class LanguageUsageUpdate(LanguageUsagePermissionMixin, AuditTrailContextMixin, AjaxUpdateView):
+class LanguageUsageUpdate(LanguageUsagePermissionMixin, AjaxUpdateView):
     form_class = LanguageUsageForm
     model = LanguageUsage
     template_name = 'controlled_list/language_usage/form.html'

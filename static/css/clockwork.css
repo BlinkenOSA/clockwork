@@ -238,3 +238,7 @@ div.required label:after {
     color: #cc0d1c;
     content: " *";
 }
+
+.alertify-logs {
+    z-index: 9999 !important;
+}

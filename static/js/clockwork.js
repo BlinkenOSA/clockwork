@@ -33,11 +33,6 @@ $('.modal').on('hidden.bs.modal', function(e) {
 });
 
 function displayMessage(message) {
-    new Noty({
-        type: 'success',
-        theme: 'bootstrap-v3',
-        text: message,
-        timeout: 1000,
-        closeWith: ['click', 'button']
-    }).show()
+	alertify.logPosition("top right");
+	alertify.delay(5000).success(message);
 }
