@@ -94,7 +94,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     date_updated = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        db_table = 'fa_entities'
+        db_table = 'finding_aids_entities'
 
     def publish(self, user):
         self.published = True

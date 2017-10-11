@@ -165,6 +165,10 @@ class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView
         new_obj.folder_no = new_numbers['folder_no']
         new_obj.sequence_no = new_numbers['sequence_no']
 
+        new_obj.published = False
+        new_obj.user_published = ""
+        new_obj.date_published = None
+
         new_obj.save()
         context = {'success': 'ok'}
         return self.render_json_response(context)
