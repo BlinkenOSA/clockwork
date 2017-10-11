@@ -55,7 +55,7 @@ class IsadForm(ModelForm):
 
     class Meta:
         model = Isad
-        exclude = ['archival_unit']
+        exclude = ['archival_unit', 'published', 'user_published', 'date_published']
         labels = {
             'year_from': ugettext('Date (From)'),
             'year_to': ugettext('Date (To)'),
