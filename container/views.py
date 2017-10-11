@@ -57,7 +57,7 @@ class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin,
 class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
     model = Container
     columns = ['container_no', 'identifier', 'carrier_type', 'primary_type', 'container_label',
-               'number_of_fa_entities', 'navigate', 'action']
+               'number_of_fa_entities', 'navigate', 'action', 'publish']
     order_columns = ['primary_type', 'container_no']
     max_display_length = 500
     number_of_fa_entities = 0
@@ -82,14 +82,18 @@ class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
                 return row.permanent_id
         elif column == 'carrier_type':
             return row.carrier_type.type
-        elif column == 'number_of_fa_entities':
-            self.number_of_fa_entities = FindingAidsEntity.objects.filter(container__id=row.id).count()
-            return self.number_of_fa_entities
         elif column == 'navigate':
             return render_to_string(template_name='container/table_navigate_buttons.html', context={'container': row})
         elif column == 'action':
+            self.number_of_fa_entities = FindingAidsEntity.objects.filter(container__id=row.id).count()
             return render_to_string(template_name='container/table_action_buttons.html',
                                     context={'container': row.id, 'number_of_fa_entities': self.number_of_fa_entities})
+        elif column == 'publish':
+            number_of_fa_published = FindingAidsEntity.objects.filter(container__id=row.id, published=True).count()
+            return render_to_string(template_name='container/table_publish_buttons.html', context={
+                'container': row,
+                'number_of_fa_entities': self.number_of_fa_entities,
+                'number_of_fa_published': number_of_fa_published})
         else:
             return super(ContainerListJson, self).render_column(row, column)
 
@@ -157,38 +161,44 @@ class ContainerAction(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixi
         if pk == 'all':
             containers = Container.objects.filter(archival_unit=archival_unit)
         else:
-            containers = [self.get_object(),]
+            containers = [self.get_object(), ]
 
         for container in containers:
             finding_aids = FindingAidsEntity.objects.filter(container=container)
             number_of_fa_entities = len(finding_aids)
 
             if action == 'publish':
-                container.publish(request.user)
                 for fa in finding_aids:
                     fa.publish(request.user)
 
             if action == 'unpublish':
-                container.unpublish()
                 for fa in finding_aids:
                     fa.unpublish()
+
+            number_of_fa_published = FindingAidsEntity.objects.filter(container=container, published=True).count()
 
         if pk == 'all':
             context = {
                 'status': 'ok'
             }
         else:
+            container = containers[0]
             context = {
                 'DT_rowId': container.id,
                 'container_no': '%s/%s' % (container.archival_unit.reference_code, container.container_no),
                 'primary_type': container.primary_type.type,
                 'carrier_type': container.carrier_type.type,
                 'identifier': "%s (%s)" % (container.permanent_id, container.legacy_id) if container.legacy_id else container.permanent_id,
-                'number_of_fa_entities': number_of_fa_entities,
                 'navigate': render_to_string('container/table_navigate_buttons.html', context={'container': container}),
                 'action': render_to_string('container/table_action_buttons.html',
                                            context={'container': container.id,
-                                                    'number_of_fa_entities': number_of_fa_entities})
+                                                    'number_of_fa_entities': number_of_fa_entities}),
+                'publish': render_to_string('container/table_publish_buttons.html',
+                                            context={'container': container,
+                                                     'number_of_fa_entities': number_of_fa_entities,
+                                                     'number_of_fa_published': number_of_fa_published
+                                                     }
+                                            )
             }
         return self.render_json_response(context)
 

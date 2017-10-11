@@ -1,0 +1,20 @@
+<div class="btn-group ">
+    {% if number_of_fa_entities > 0 %}
+        {% if number_of_fa_entities == number_of_fa_published %}
+            <a href="/container/action/unpublish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-success btn-xs btn-action">
+                <i class="fa fa-cloud-upload"></i>
+            </a>
+        {% else %}
+            <a href="/container/action/publish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-danger btn-xs btn-action">
+                <i class="fa fa-cloud-upload"></i>
+            </a>
+        {% endif %}
+    {% else %}
+        <a href="#" class="btn btn-default btn-xs" disabled="">
+            <i class="fa fa-cloud-upload"></i>
+        </a>
+    {% endif %}
+    <a href="#" class="btn btn-default btn-xs">
+        {{ number_of_fa_entities }} / {{ number_of_fa_published }}
+    </a>
+</div>

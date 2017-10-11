@@ -1,11 +1,8 @@
 from __future__ import unicode_literals
 
-from datetime import datetime
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
-from django.utils import timezone
-
 from archival_unit.models import ArchivalUnit
 
 
@@ -23,11 +20,6 @@ class Container(models.Model):
     legacy_id = models.CharField(max_length=50, blank=True, null=True)
     old_id = models.IntegerField(blank=True, null=True)
 
-    # Published
-    published = models.BooleanField(default=False)
-    user_published = models.CharField(max_length=100, blank=True)
-    date_published = models.DateTimeField(blank=True, null=True)
-
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)
 
@@ -39,18 +31,6 @@ class Container(models.Model):
 
     def __unicode__(self):
         return "Container #%s / %s" % (self.container_no, self.carrier_type)
-
-    def publish(self, user):
-        self.published = True
-        self.user_published = user.username
-        self.date_published = timezone.now()
-        self.save()
-
-    def unpublish(self):
-        self.published = False
-        self.user_published = ""
-        self.date_published = None
-        self.save()
 
 
 @receiver(post_delete)

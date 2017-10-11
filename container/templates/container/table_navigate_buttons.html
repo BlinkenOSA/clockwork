@@ -1,13 +1,4 @@
 <div class="btn-group ">
-    {% if container.published %}
-        <a href="/container/action/unpublish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-success btn-xs btn-action">
-            <i class="fa fa-cloud-upload"></i>
-        </a>
-    {% else %}
-        <a href="/container/action/publish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-danger btn-xs btn-action">
-            <i class="fa fa-cloud-upload"></i>
-        </a>
-    {% endif %}
     <a class="btn btn-default btn-xs btn-container" href="{% url 'finding_aids:finding_aids_container_list' container.id %}">
         <i class="fa fa-hand-o-right"></i>
     </a>

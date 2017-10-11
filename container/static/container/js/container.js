@@ -9,9 +9,9 @@ var table = $('#container_table').DataTable({
 	   { "data": 'identifier', "width": "20%" },
 	   { "data": 'carrier_type', "width": "15%" },
 	   { "data": 'primary_type', "width": "15%" },
-	   { "data": 'number_of_fa_entities', "width": "10%" },
 	   { "data": 'action', "width": "10%", "class": "action_column" },
-	   { "data": 'navigate', "width": "10%", "class": "action_column" }
+	   { "data": 'navigate', "width": "10%", "class": "action_column" },
+	   { "data": 'publish', "width": "10%", "class": "action_column" }
 	],
 	"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
 	"paging":    true,
@@ -67,6 +67,8 @@ $(function() {
 
 $('tbody').on('click','.btn-action',function(e) {
 	e.preventDefault();
+	var msg = "Are you sure you want to 'Publish/Unpublish' all the Finding Aids records in the seleced Container?";
+	if (window.confirm(msg)) {
 		$.ajax({
 			type: 'POST',
 			success: function (data) {
@@ -77,11 +79,13 @@ $('tbody').on('click','.btn-action',function(e) {
 			url: $(this).attr("href"),
 			cache: false
 		});
+	}
 });
 
 $('#publish_all').on('click', function(e) {
 	e.preventDefault();
-	if (window.confirm("Are you sure you want to set all the 'Finding Aids entries' ready for publish?")) {
+	var msg = "Are you sure you want to set all the Containers and the Finding Aids entries under them as 'Ready for publish'?";
+	if (window.confirm(msg)) {
 		$.ajax({
 			type: 'POST',
 			success: function (data) {
