@@ -33,6 +33,6 @@ $('.modal').on('hidden.bs.modal', function(e) {
 });
 
 function displayMessage(message) {
-	alertify.logPosition("top right");
+    alertify.logPosition("bottom left");
 	alertify.delay(5000).success(message);
 }

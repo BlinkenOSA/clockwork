@@ -5,7 +5,7 @@
         {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
             <script>
                 $( document ).ready(function() {
-                    alertify.logPosition("top right");
+                    alertify.logPosition("bottom left");
                     alertify.delay(5000).success("{{ message }}");
                 })
             </script>

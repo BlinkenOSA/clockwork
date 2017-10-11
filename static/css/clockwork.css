@@ -239,6 +239,10 @@ div.required label:after {
     content: " *";
 }
 
+.alertify {
+    z-index: 9999 !important;
+}
+
 .alertify-logs {
     z-index: 9999 !important;
 }
