@@ -89,9 +89,22 @@ ENV/
 .ropeproject
 
 .idea/
-static/thirdparty/editor/*
-static/thirdparty/datatables/*
-static/thirdparty/flag-css/*
-static/thirdparty/django-dynamic-formset/*
-static/thirdparty/noty/*
+
+static/css/
+!static/css/clockwork.css
+
+static/img
+
+static/js/
+!static/js/ajax-post.js
+!static/js/clockwork.js
+!static/js/subform.js
+
+static/media/
+static/plugins/
+
+static/thirdparty/
+!static/thirdparty/django-dynamic-formset
+!static/thirdparty/fm
+
 */migrations/0*
