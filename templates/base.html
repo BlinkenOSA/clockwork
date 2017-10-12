@@ -5,21 +5,19 @@
 <html lang="en">
 <head>
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/bootstrap/dist/css/bootstrap.min.css' %}">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/font-awesome/css/font-awesome.min.css' %}">
-
-    <!-- Ionicons -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap/ionicons.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/font-awesome/css/font-awesome.min.css' %}">
 
     <!-- Alertify -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/alertify/css/alertify.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/alertifyjs/dist/css/alertify.css' %}">
 
     <!-- AdminLTE -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/AdminLTE.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/skins/skin-blue.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/clockwork.css' %}">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/admin-lte/dist/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/admin-lte/dist/css/skins/skin-blue.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'clockwork/css/clockwork.css' %}">
 
     {% block css %}
     {% endblock %}
@@ -74,7 +72,7 @@
                 </form>
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
+                <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="{% if 'dashboard' in request.path %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
@@ -136,7 +134,7 @@
                     {% endif %}
 
                     {% if perms.finding_aids %}
-                        <li class="{% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
+                        <li class="treeview {% if 'finding_aids' in request.path or 'container' in request.path %}active{% endif %}">
                             <a href="#">
                                 <i class="fa fa-file-o"></i>
                                 <span>{% trans 'Finding Aids' %}</span>
@@ -166,7 +164,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 {% if perms.authority %}
-                                    <li class="{% if 'authority' in request.path %}active{% endif %}">
+                                    <li class="treeview {% if 'authority' in request.path %}active{% endif %}">
                                         <a href="#">
                                             {% trans 'Authority Lists' %}
                                             <span class="pull-right-container">
@@ -235,7 +233,7 @@
                                 {% endif %}
 
                                 {% if perms.controlled_list %}
-                                <li class="{% if 'controlled_list' in request.path %}active{% endif %}">
+                                <li class="treeview {% if 'controlled_list' in request.path %}active{% endif %}">
                                     <a href="#">
                                         {% trans 'Controlled Values' %}
                                         <span class="pull-right-container">
@@ -389,20 +387,13 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery 2.2.3 -->
-    <script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-
-    <!-- SlimScroll -->
-    <script src="{% static 'plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
-    <!-- FastClick -->
-    <script src="{% static 'plugins/fastclick/fastclick.min.js' %}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static 'js/app.min.js' %}"></script>
-
-    <script src="{% static 'thirdparty/alertify/js/alertify.js' %}"></script>
-    <script src="{% static 'js/clockwork.js' %}"></script>
+    <script src="{% static 'components/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'components/fastclick/lib/fastclick.js' %}"></script>
+    <script src="{% static 'components/admin-lte/dist/js/adminlte.min.js' %}"></script>
+    <script src="{% static 'components/alertifyjs/dist/js/alertify.js' %}"></script>
+    <script src="{% static 'clockwork/js/clockwork.js' %}"></script>
 
     {% block js %}
     {% endblock %}

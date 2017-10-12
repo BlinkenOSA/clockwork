@@ -9,21 +9,8 @@ __pycache__/
 build/
 .idea/
 
-static/css/
-!static/css/clockwork.css
-
 static/img
-
-static/js/
-!static/js/ajax-post.js
-!static/js/clockwork.js
-!static/js/subform.js
-
+static/components/
 static/media/
-static/plugins/
-
-static/thirdparty/
-!static/thirdparty/django-dynamic-formset
-!static/thirdparty/fm
 
 */migrations/0*

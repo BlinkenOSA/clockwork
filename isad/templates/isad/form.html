@@ -4,7 +4,7 @@
 {% load staticfiles %}
 
 {% block css_page %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/flag-css/flag-css.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/flag-css/dist/css/flag-css.min.css' %}">
 {% endblock %}
 
 {% block js_page %}
@@ -19,7 +19,6 @@
             placeholder: '- Select Country -'
         });
     </script>
-    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="{% static 'isad/js/isad-form.js' %}"></script>
 {% endblock %}
 

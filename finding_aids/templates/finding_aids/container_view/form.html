@@ -4,13 +4,14 @@
 {% load staticfiles %}
 
 {% block css_page %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/flag-css/flag-css.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/flag-css/dist/css/flag-css.min.css' %}">
 {% endblock %}
 
 {% block js_page %}
-    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
     <script src="{% static 'authority/js/authority-form.js' %}"></script>
     <script src="{% static 'finding_aids/js/finding_aids-form.js' %}"></script>
 {% endblock %}

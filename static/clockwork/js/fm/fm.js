@@ -217,9 +217,9 @@
                 }
                 params['data'] = data;
                 disable_modal_buttons();
-                $.ajax(params).success(function (data) {
+                $.ajax(params).done(function (data) {
                     process_response_data(data, options);
-                }).error(function () {
+                }).fail(function () {
                     enable_modal_buttons();
                     modal_body.text(global_options.modal_load_error);
                 });

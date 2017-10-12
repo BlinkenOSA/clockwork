@@ -4,15 +4,15 @@
 {% load staticfiles %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'thirdparty/datatables/DataTables-1.10.13/css/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
 
     {% block css_page %}
     {% endblock %}
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'thirdparty/datatables/DataTables-1.10.13/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
 
     {% block js_page %}
     {% endblock %}
