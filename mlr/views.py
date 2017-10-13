@@ -40,9 +40,9 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
         if column == 'series':
             return row.series.reference_code
         if column == 'building':
-            return row.building.building
+            return row.building.building if row.building else ""
         elif column == 'carrier_type':
-            return row.carrier_type.type
+            return row.carrier_type.type if row.carrier_type else ""
         elif column == 'action':
             return render_to_string('mlr/table_action_buttons.html',
                                     context={'id': row.id})
