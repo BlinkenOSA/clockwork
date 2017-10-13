@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^container/', include('container.urls', namespace='container')),
     url(r'^finding_aids/', include('finding_aids.urls', namespace='finding_aids')),
 
+    url(r'^mlr/', include('mlr.urls', namespace='mlr')),
+
     url(r'^accounts/', include('userena.urls')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
