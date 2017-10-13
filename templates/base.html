@@ -249,6 +249,14 @@
                                                 </a>
                                             </li>
                                         {% endif %}
+                                        {% if perms.controlled_list.add_archival_unit_theme %}
+                                            <li class="{% if 'archival_unit_theme' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:archival_unit_theme_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Archival Unit Themes' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
                                         {% if perms.controlled_list.add_building %}
                                             <li class="{% if 'building' in request.path %}active{% endif %}">
                                                 <a href="{% url 'controlled_list:building_list' %}">

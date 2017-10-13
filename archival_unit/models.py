@@ -12,6 +12,7 @@ class ArchivalUnit(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', db_index=True,
                                on_delete=models.PROTECT)
     accession = models.ManyToManyField('accession.Accession', blank=True)
+    theme = models.ManyToManyField('controlled_list.ArchivalUnitTheme', blank=True)
 
     fonds = models.IntegerField()
     subfonds = models.IntegerField(default=0)

@@ -14,6 +14,18 @@ class AccessRight(models.Model):
         ordering = ['statement']
 
 
+class ArchivalUnitTheme(models.Model):
+    id = models.AutoField(primary_key=True)
+    theme = models.CharField(unique=True, max_length=200)
+
+    def __unicode__(self):
+        return self.theme
+
+    class Meta:
+        db_table = 'controlled_archival_unit_themes'
+        ordering = ['theme']
+
+
 class Building(models.Model):
     id = models.AutoField(primary_key=True)
     building = models.CharField(max_length=50)

@@ -3,12 +3,13 @@ from django.db.models import Q
 from django.forms import ModelForm, TextInput, HiddenInput
 from accession.widgets import AccessionsSelect2Widget
 from archival_unit.models import ArchivalUnit
+from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
 
 
 class BaseModelForm(ModelForm):
     class Meta:
         model = ArchivalUnit
-        fields = ("fonds", "subfonds", "series", "title", "acronym", "accession")
+        fields = ("fonds", "subfonds", "series", "title", "acronym", "accession", "theme")
 
 
 class FondsCreateForm(BaseModelForm):
@@ -16,7 +17,8 @@ class FondsCreateForm(BaseModelForm):
         widgets = {
             'subfonds': HiddenInput(),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
 
@@ -40,7 +42,8 @@ class SubFondsCreateForm(BaseModelForm):
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
 
@@ -66,7 +69,8 @@ class SeriesCreateForm(BaseModelForm):
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'subfonds': TextInput(attrs={'readonly': True}),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
 

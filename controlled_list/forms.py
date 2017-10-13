@@ -8,6 +8,12 @@ class AccessRightForm(ModelForm):
         fields = '__all__'
 
 
+class ArchivalUnitThemeForm(ModelForm):
+    class Meta:
+        model = ArchivalUnitTheme
+        fields = '__all__'
+
+
 class BuildingForm(ModelForm):
     class Meta:
         model = Building

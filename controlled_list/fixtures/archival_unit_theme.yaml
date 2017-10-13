@@ -1,0 +1,14 @@
+- model: controlled_list.ArchivalUnitTheme
+  pk: 1
+  fields:
+    theme: Communism & Cold War
+
+- model: controlled_list.ArchivalUnitTheme
+  pk: 2
+  fields:
+    theme: Human Rights
+
+- model: controlled_list.ArchivalUnitTheme
+  pk: 3
+  fields:
+    theme: Civil Society

@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from controlled_list.views.access_right_view import *
+from controlled_list.views.archival_unit_theme_view import *
 from controlled_list.views.building_view import *
 from controlled_list.views.carrier_type_view import *
 from controlled_list.views.corporation_role_view import *
@@ -18,6 +19,11 @@ urlpatterns = [
     url(r'^access_rights/create/$', AccessRightCreate.as_view(), name='access_rights_create'),
     url(r'^access_rights/update/(?P<pk>\d+)/$', AccessRightUpdate.as_view(), name='access_rights_update'),
     url(r'^access_rights/datatable/$', AccessRightListJson.as_view(), name='access_rights_list_json'),
+
+    url(r'^archival_unit_theme/$', ArchivalUnitThemeList.as_view(), name='archival_unit_theme_list'),
+    url(r'^archival_unit_theme/create/$', ArchivalUnitThemeCreate.as_view(), name='archival_unit_theme_create'),
+    url(r'^archival_unit_theme/update/(?P<pk>\d+)/$', ArchivalUnitThemeUpdate.as_view(), name='archival_unit_theme_update'),
+    url(r'^archival_unit_theme/datatable/$', ArchivalUnitThemeListJson.as_view(), name='archival_unit_theme_list_json'),
 
     url(r'^building/$', BuildingList.as_view(), name='building_list'),
     url(r'^building/create/$', BuildingCreate.as_view(), name='building_create'),
