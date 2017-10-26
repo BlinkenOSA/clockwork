@@ -22,6 +22,9 @@ class ArchivalUnit(models.Model):
 
     title = models.CharField(max_length=500)
     title_full = models.CharField(max_length=2000, blank=True, null=True)
+    title_original = models.CharField(max_length=500, blank=True, null=True)
+    original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
+
     acronym = models.CharField(max_length=50, blank=True, null=True)
     reference_code = models.CharField(max_length=20)
     reference_code_id = models.CharField(max_length=20)

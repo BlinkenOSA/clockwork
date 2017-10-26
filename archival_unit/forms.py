@@ -1,6 +1,9 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import ModelForm, TextInput, HiddenInput
+from django.utils.translation import ugettext
+
 from accession.widgets import AccessionsSelect2Widget
 from archival_unit.models import ArchivalUnit
 from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
@@ -9,11 +12,19 @@ from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
 class BaseModelForm(ModelForm):
     class Meta:
         model = ArchivalUnit
-        fields = ("fonds", "subfonds", "series", "title", "acronym", "accession", "theme")
+        fields = ("fonds", "subfonds", "series", "title", "title_original", "original_locale", "acronym", "accession", "theme")
+
+    def clean(self):
+        if self.cleaned_data["title_original"] and not self.cleaned_data["original_locale"]:
+            raise ValidationError({'original_locale': ugettext("Original langauge should be selected.")})
 
 
 class FondsCreateForm(BaseModelForm):
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'subfonds': HiddenInput(),
             'series': HiddenInput(),
@@ -39,6 +50,10 @@ class SubFondsCreateForm(BaseModelForm):
     fonds_acronym = forms.CharField(label='Fonds Acronym', required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'series': HiddenInput(),
@@ -66,6 +81,10 @@ class SeriesCreateForm(BaseModelForm):
     subfonds_acronym = forms.CharField(label='Subfonds Acronym', required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'subfonds': TextInput(attrs={'readonly': True}),
