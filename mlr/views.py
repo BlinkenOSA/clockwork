@@ -23,7 +23,7 @@ class MLRList(MLRPermissionMixin, TemplateView):
 
 class MLRListJson(MLRPermissionMixin, BaseDatatableView):
     model = MLREntity
-    columns = ['id', 'series', 'carrier_type', 'building', 'module', 'row', 'section', 'shelf', 'action']
+    columns = ['id', 'series', 'carrier_type', 'building', 'mrss', 'action']
     order_columns = ['id', 'series', 'carrier_type']
     max_display_length = 500
 
@@ -31,8 +31,8 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
         search = self.request.GET.get(u'search[value]', None)
         if search:
             qs = qs.filter(
-                Q(series__icontains=search) |
-                Q(carrier_type__icontains=search)
+                Q(series__reference_code__icontains=search) |
+                Q(carrier_type__type__icontains=search)
             )
         return qs
 
@@ -43,6 +43,12 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
             return row.building.building if row.building else ""
         elif column == 'carrier_type':
             return row.carrier_type.type if row.carrier_type else ""
+        elif column == 'mrss':
+            module = str(row.module) if row.module else "-"
+            r = str(row.row) if row.row else "-"
+            section = str(row.section) if row.section else "-"
+            shelf = str(row.shelf) if row.shelf else "-"
+            return "%s / %s / %s / %s" % (module, r, section, shelf)
         elif column == 'action':
             return render_to_string('mlr/table_action_buttons.html',
                                     context={'id': row.id})
