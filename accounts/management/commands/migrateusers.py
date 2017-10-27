@@ -10,10 +10,10 @@ class Command(BaseCommand):
     help = 'Migrate users from the migradion DB.'
 
     def handle(self, *args, **options):
-        if 'migration' in settings.DATABASES.keys():
-            cnx = mysql.connector.connect(user=settings.DATABASES['migration']['USER'],
-                                          password=settings.DATABASES['migration']['PASSWORD'],
-                                          host=settings.DATABASES['migration']['HOST'],
+        if settings.MIGRATION_DB:
+            cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
+                                          password=settings.MIGRATION_DB['PASSWORD'],
+                                          host=settings.MIGRATION_DB['HOST'],
                                           database='clkwrk_import_users')
             cursor = cnx.cursor(dictionary=True, buffered=True)
 
