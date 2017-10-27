@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
-    help = 'Creates the default groups and permissions need to run Clockwork AMS.'
+    help = 'Migrate users from the migradion DB.'
 
     def handle(self, *args, **options):
         if 'migration' in settings.DATABASES.keys():
