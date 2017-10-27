@@ -1866,3 +1866,10 @@
     country: British Antarctic Territory
     alpha2: AQ
     alpha3: ATA
+
+- model: authority.country
+  pk: 273
+  fields:
+    country: Kosovo
+    alpha2: XK
+    alpha3: XKX
