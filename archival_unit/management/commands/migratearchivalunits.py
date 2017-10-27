@@ -11,10 +11,10 @@ class Command(BaseCommand):
     help = 'Migrate ArchivalUnits.'
 
     def handle(self, *args, **options):
-        if 'migration' in settings.DATABASES.keys():
-            cnx = mysql.connector.connect(user=settings.DATABASES['migration']['USER'],
-                                          password=settings.DATABASES['migration']['PASSWORD'],
-                                          host=settings.DATABASES['migration']['HOST'],
+        if settings.MIGRATION_DB:
+            cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
+                                          password=settings.MIGRATION_DB['PASSWORD'],
+                                          host=settings.MIGRATION_DB['HOST'],
                                           database='clkwrk_import_new_fonds')
             self.insert_fonds(cnx)
             self.insert_subfonds(cnx)
