@@ -95,6 +95,9 @@ class FondsUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUpdat
 
 
 class FondsDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     template_name = 'archival_unit/fonds_delete.html'
     context_object_name = 'fonds'
     success_message = ugettext("Fonds was deleted successfully!")
@@ -192,6 +195,9 @@ class SubFondsUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUp
 
 
 class SubFondsDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     template_name = 'archival_unit/subfonds_delete.html'
     context_object_name = 'subfonds'
     success_message = ugettext("Subfonds was deleted successfully!")
@@ -293,6 +299,9 @@ class SeriesUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUpda
 
 
 class SeriesDelete(ArchivalUnitPermissionMixin, AjaxDeleteProtectedView):
+    def get_object(self, queryset=None):
+        return ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id'])
+
     model = ArchivalUnit
     template_name = 'archival_unit/series_delete.html'
     context_object_name = 'series'
