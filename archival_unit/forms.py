@@ -32,13 +32,6 @@ class FondsCreateForm(BaseModelForm):
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
-    def clean_fonds(self):
-        fonds = self.cleaned_data['fonds']
-        if fonds <= 0:
-            raise ValidationError(ugettext("Should be not less than 0."))
-        else:
-            return fonds
-
 
 class FondsUpdateForm(FondsCreateForm):
     def save(self, commit=True, *args, **kwargs):
@@ -67,24 +60,6 @@ class SubFondsCreateForm(BaseModelForm):
             'accession': AccessionsSelect2Widget(),
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        subfonds = self.cleaned_data['subfonds']
-        if not title:
-            if subfonds != 0:
-                raise ValidationError(ugettext("Title is mandatory."))
-            else:
-                return title
-        else:
-            return title
-
-    def clean_subfonds(self):
-        subfonds = self.cleaned_data['subfonds']
-        if subfonds < 0:
-            raise ValidationError(ugettext("Should be not less than 0."))
-        else:
-            return subfonds
 
 
 class SubFondsUpdateForm(SubFondsCreateForm):
@@ -116,20 +91,6 @@ class SeriesCreateForm(BaseModelForm):
             'accession': AccessionsSelect2Widget(),
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if not title:
-            raise ValidationError(ugettext("Title is mandatory."))
-        else:
-            return title
-
-    def clean_series(self):
-        series = self.cleaned_data['series']
-        if series <= 0:
-            raise ValidationError(ugettext("Should be bigger than 0."))
-        else:
-            return series
 
 
 class SeriesUpdateForm(SeriesCreateForm):
