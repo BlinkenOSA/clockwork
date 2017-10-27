@@ -2,7 +2,10 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import ugettext
+
 from validators import validate_level, validate_status
 
 
@@ -20,7 +23,7 @@ class ArchivalUnit(models.Model):
 
     sort = models.CharField(max_length=12, blank=True)
 
-    title = models.CharField(max_length=500)
+    title = models.CharField(max_length=500, blank=True, null=True)
     title_full = models.CharField(max_length=2000, blank=True, null=True)
     title_original = models.CharField(max_length=500, blank=True, null=True)
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
@@ -64,6 +67,8 @@ class ArchivalUnit(models.Model):
             self.title_full = self.reference_code + ' ' + self.title
 
         elif self.level == 'SF':
+            if self.subfonds == 0:
+                self.title = "-"
             self.reference_code = 'HU OSA ' + str(self.fonds) + '-' + str(self.subfonds)
             self.reference_code_id = 'hu_osa_' + str(self.fonds) + '-' + str(self.subfonds)
             fonds_title = self.parent.title
