@@ -1,7 +1,7 @@
 /**
  *
  */
-var table = $('#donor_table').dataTable({
+var table = $('#donor_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [

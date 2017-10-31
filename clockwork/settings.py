@@ -110,9 +110,16 @@ DATABASES = {
         'PASSWORD': 'Vizipoki304',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
-
-    }
+    },
 }
+
+MIGRATION_DB = {
+    'USER': 'clkwrk',
+    'PASSWORD': 'clkwrk1209',
+    'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    'PORT': '',                      # Set to empty string for default.
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
