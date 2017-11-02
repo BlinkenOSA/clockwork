@@ -9,7 +9,7 @@ from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInl
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin, AuditTrailContextMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
-    PlacesInline, TYPE_CHOICES
+    PlacesInline, TYPE_CHOICES, ParallelNamesInline
 from isaar.models import Isaar
 
 
@@ -77,8 +77,8 @@ class IsaarCreate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsets
     template_name = 'isaar/form.html'
     success_url = reverse_lazy('isaar:list')
     success_message = ugettext("%(name)s was created successfully")
-    inlines = [OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
-    inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
+    inlines = [OtherNamesInline, ParallelNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
+    inlines_names = ['other_names', 'parallel_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
 class IsaarUpdate(IsaarPermissionMixin, AuditTrailContextMixin, InlineSuccessMessageMixin,
@@ -88,8 +88,8 @@ class IsaarUpdate(IsaarPermissionMixin, AuditTrailContextMixin, InlineSuccessMes
     template_name = 'isaar/form.html'
     success_url = reverse_lazy('isaar:list')
     success_message = ugettext("%(name)s was updated successfully")
-    inlines = [OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
-    inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
+    inlines = [OtherNamesInline, ParallelNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
+    inlines_names = ['other_names', 'parallel_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
 class IsaarDelete(IsaarPermissionMixin, AjaxDeleteProtectedView):

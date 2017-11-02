@@ -4,7 +4,7 @@ from extra_views import InlineFormSet
 
 from authority.widgets import LanguageSelect2MultipleWidget
 from isaar.models import Isaar, IsaarOtherName, IsaarRelationship, IsaarStandardizedName, IsaarCorporateBodyIdentifier, \
-    IsaarPlaceQualifier, IsaarPlace
+    IsaarPlaceQualifier, IsaarPlace, IsaarParallelName
 
 TYPE_CHOICES = (
     ('' , ugettext('- Select Entity Type - ')),
@@ -59,6 +59,22 @@ class OtherNamesInline(InlineFormSet):
     form_class = OtherNamesForm
     can_delete = True
     prefix = 'other_names'
+
+
+class ParallelNamesForm(ModelForm):
+    class Meta:
+        fields = ('name',)
+        widgets = {
+            'name': TextInput(attrs={'placeholder': ugettext('Parallel Form of Name')}),
+        }
+
+
+class ParallelNamesInline(InlineFormSet):
+    extra = 1
+    model = IsaarParallelName
+    form_class = ParallelNamesForm
+    can_delete = True
+    prefix = 'parallel_names'
 
 
 class StandardizedNamesForm(ModelForm):

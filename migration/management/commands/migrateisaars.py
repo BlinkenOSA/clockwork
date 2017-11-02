@@ -1,17 +1,13 @@
 # coding: utf-8
-import calendar
-
 import mysql.connector
+from datetime import datetime
 from django.core.management import BaseCommand
 from django.conf import settings
 from django.db import IntegrityError
-from django.contrib.auth.models import User
 from pytz import timezone
 
-from accession.models import Accession, AccessionMethod, AccessionCopyrightStatus, AccessionItem
-from archival_unit.models import ArchivalUnit
-from controlled_list.models import Building
-from donor.models import Donor
+from isaar.models import Isaar, IsaarStandardizedName, IsaarOtherName, IsaarParallelName
+from migration.management.commands.common_functions import get_user, get_approx_date, get_approx_date_from_string
 
 
 class Command(BaseCommand):
@@ -22,7 +18,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_isaar')
+                                          database='clkwrk_import_isad')
 
             sql = "SELECT * FROM isaar ORDER BY FondsID, SubfondsID, SeriesID"
 
@@ -32,186 +28,67 @@ class Command(BaseCommand):
             tz_budapest = timezone('Europe/Budapest')
 
             for row in cursor:
-                created_by = self.get_user(row['CreatedBy'])
-                updated_by = self.get_user(row['ChangedBy'])
-                method = self.get_accession_method(row['Method'])
-                building = self.get_building(row['Building'])
+                created_by = get_user(row['Last edited by']).username
+                updated_by = get_user(row['Last edited by']).username
 
-                donor = Donor.objects.filter(old_id=row['DonorID']).first()
+                last_edited = self.get_last_edited(row['Last edited'])
 
-                creation_date_from = self.get_approx_date(row['Year1'], row['Month1'], row['Day1'])
-                creation_date_to = self.get_approx_date(row['Year2'], row['Month2'], row['Day2'])
+                isaar = Isaar(
+                    legacy_id=row['ID'],
+                    name=row['Authority Entry'],
+                    type=row['Type of Archival Authority Record'][0],
+                    date_existence_from=get_approx_date_from_string(row['DateFrom']),
+                    date_existence_to=get_approx_date_from_string(row['DateTo']),
+                    function=row['Mandate, functions and sphere of activity'],
+                    legal_status=row['Legal status'],
+                    internal_structure=row['Administrative structure'],
+                    internal_note=row["Archivist's Note"],
+                    history=row['Other significant information'],
+                    user_created=created_by,
+                    user_updated=updated_by,
+                    status='Final' if row['CanGoPublic'] == 1 else 'Draft'
+                )
 
-                copyright_status = self.get_copyright_status(row['Copyright'])
+                try:
+                    isaar.save()
+                    print ("Inserting %s" % isaar.name)
 
-                if not donor:
-                    print ("Check donor - %s" % row['DonorID'])
-                else:
-                    accession = Accession(
-                        seq='%d/%03d' % (row['Year'], row['No']),
-                        title=row['FondsName'] if row['FondsName'] else 'Accession to Fonds %s' % row['FondsID'],
-                        transfer_date=transfer_date,
-                        description=row['Description'],
-                        method=method,
-                        building=building,
-                        module=row['Module'],
-                        row=row['Row'],
-                        section=row['Section'],
-                        shelf=row['Shelf'],
-                        donor=donor,
-                        creation_date_from=creation_date_from,
-                        creation_date_to=creation_date_to,
-                        copyright_status=copyright_status,
-                        copyright_note=row['Copyright'],
-                        note=row['Notes'],
-                        user_created=created_by.username,
-                        user_updated=updated_by.username
-                    )
+                    self.get_parallel_names(row['Parallel Entry/Entries'], isaar)
+                    self.get_other_names(row['Non-preferred Term(s)'], isaar)
 
-                    try:
-                        accession.save()
-                        print ("Inserting %s" % accession.seq)
+                    isaar.date_created = tz_budapest.localize(last_edited)
+                    isaar.date_updated = tz_budapest.localize(last_edited)
+                    isaar.save()
 
-                        archival_unit = ArchivalUnit.objects.filter(level='F', fonds=row['FondsID']).first()
-                        if archival_unit:
-                            archival_unit.accession.add(accession)
-                            archival_unit.save()
-
-                        accession_items = self.collect_accession_items(cnx, row)
-                        for accession_item in accession_items:
-                            item = AccessionItem(
-                                accession=accession,
-                                quantity=accession_item[0],
-                                container=accession_item[1],
-                                content=accession_item[2]
-                            )
-                            item.save()
-
-                        accession.date_created = tz_budapest.localize(created_date)
-                        accession.save()
-
-                    except IntegrityError as e:
-                        print ('Error with %s: %s' % (accession.seq, e.args[1]))
+                except IntegrityError as e:
+                    print ('Error with %s: %s' % (isaar.name.encode('utf-8'), e.args[1]))
 
             cnx.close()
         else:
             print ("Missing 'migration' database setting in 'settings.py'")
 
-    def get_accession_method(self, method):
-        method_map = {
-            'Deposit': 'Deposit (Non OSF)',
-            'Donation (Non-Soros)': 'Donation (non-OSF)',
-            'Donation (Soros records)': 'Donation (OSF)',
-            'Internal transfer, OSA': 'OSA creation',
-            'OSA Capture (AV)': 'OSA capture',
-            'OSA records': 'OSA creation',
-            'Purchase': 'OSA purchase',
-            'Unknown': 'Unknown'
-        }
-        if method:
-            return AccessionMethod.objects.filter(method=method_map[method]).first()
+    def get_other_names(self, data, isaar):
+        if data:
+            entries = data.split(';')
+            for entry in entries:
+                isn = IsaarStandardizedName(
+                    isaar=isaar,
+                    name=entry.strip()
+                )
+                isn.save()
+
+    def get_parallel_names(self, data, isaar):
+        if data:
+            entries = data.split(',')
+            for entry in entries:
+                ipn = IsaarParallelName(
+                    isaar=isaar,
+                    name=entry.strip()
+                )
+                ipn.save()
+
+    def get_last_edited(self, last_edited):
+        if last_edited:
+            return datetime.strptime(last_edited, '%m/%d/%Y %I:%M:%S %p')
         else:
-            return AccessionMethod.objects.filter(method='Unknown').first()
-
-    def get_building(self, building):
-        building_map = {
-            'arany janos': 'Arany Janos u. 32.',
-            'L': 'Arany Janos u. 32.',
-            'Oktober 6': 'Oktober 6. u.',
-            'Oktober 6 Vault Room': 'Oktober 6. u.',
-            'Arany János u. 32': 'Arany Janos u. 32.',
-            'Arany J. u. 32.': 'Arany Janos u. 32.',
-            'Arany Janos 32': 'Arany Janos u. 32.',
-            'Arany Janos 32.': 'Arany Janos u. 32.',
-            'Asrany Janos 32': 'Arany Janos u. 32.',
-            'Arany János utca 32.': 'Arany Janos u. 32.',
-            'Aranu Janos u.32': 'Arany Janos u. 32.',
-            'Arany János u. 32.': 'Arany Janos u. 32.',
-            'Arany János u.  32': 'Arany Janos u. 32.',
-            'Arany J. u. 32': 'Arany Janos u. 32.',
-            'Budapest V., Arany János utca 32.': 'Arany Janos u. 32.',
-            'Kerepesi Storage': 'Kerepesi',
-            'Oktober 6. Vault Room': 'Oktober 6. u.',
-            'Arany Janos u. 32': 'Arany Janos u. 32.',
-            'Arany János u. 32': 'Arany Janos u. 32.',
-            'Arany János 32': 'Arany Janos u. 32.',
-            'Arany Janos utca 32.': 'Arany Janos u. 32.'
-        }
-        if building:
-            try:
-                return Building.objects.filter(building=building_map[building.encode('utf-8')]).first()
-            except KeyError:
-                pass
-        else:
-            return None
-
-    def get_copyright_status(self, copyright):
-        copyright_map = {
-            'n/a': 'Unknown',
-            'Copyright held by donor': 'Copyright held by Donor',
-            'Copyright held by creator (other than donor)': 'Copyright held by Creator',
-            'Copyright held by the producer': 'Copyright held by Other',
-            'Copyright held by the CEU-Regents': 'Copyright held by Other',
-            'Copyright held by other (see notes)': 'Copyright held by Other',
-            'Copyright held by the New York State Board of Rege': 'Copyright held by Other',
-            'Open Society Institute': 'Copyright held by OSF',
-            'Yugoslav Television': 'Copyright held by Creator',
-            'Unknown': 'Unknown',
-            'Copyright held by AJC': 'Copyright held by Other'
-        }
-        if copyright:
-            if 'Copyright held by:' in copyright:
-                return AccessionCopyrightStatus.objects.filter(status='Copyright held by Donor').first()
-            else:
-                return AccessionCopyrightStatus.objects.filter(status=copyright_map[copyright]).first()
-        else:
-            return AccessionCopyrightStatus.objects.filter(status='Unknown').first()
-
-    def get_approx_date(self, year, month, day):
-        if year:
-            back = "%04d" % year
-
-            if month:
-                month = list(calendar.month_name).index(month)
-                back += "-%02d" % month
-            else:
-                back += "-00"
-
-            if day:
-                back += "-%02d" % day
-            else:
-                back += "-00"
-            return back
-        else:
-            return None
-
-    def get_user(self, old_user):
-        old_user = old_user.lower().strip() if old_user else None
-        if old_user:
-            cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
-                                          password=settings.MIGRATION_DB['PASSWORD'],
-                                          host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_users')
-            cursor = cnx.cursor(buffered=True, dictionary=True)
-            SQL = 'SELECT * FROM users WHERE olduser = %s'
-            cursor.execute(SQL, (old_user,))
-
-            if cursor.rowcount:
-                rec = cursor.fetchone()
-                return User.objects.filter(username=rec['username']).first()
-            else:
-                return User.objects.filter(username='finding.aids').first()
-        else:
-            return User.objects.filter(username='finding.aids').first()
-
-    def collect_accession_items(self, cnx, accession):
-        items = []
-        sql_accession_items = "SELECT * FROM accessioneditems " \
-                              "WHERE FondsID = %s AND AccessionYear = %s AND AccessionNo = %s"
-
-        cursor = cnx.cursor(dictionary=True, buffered=True)
-        cursor.execute(sql_accession_items, (accession['FondsID'], accession['Year'], accession['No']))
-
-        for row in cursor:
-            items.append([row['Quantity'], row['ContTypeName'], row['Description']])
-        return items
+            return datetime.now()
