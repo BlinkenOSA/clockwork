@@ -15,26 +15,23 @@ from donor.models import Donor
 
 
 class Command(BaseCommand):
-    help = 'Migrate Accession Records.'
+    help = 'Migrate ISAAR Records.'
 
     def handle(self, *args, **options):
         if settings.MIGRATION_DB:
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_accession')
+                                          database='clkwrk_import_isaar')
 
-            sql_accession = "SELECT accession.* FROM accession ORDER BY Year, No, FondsID"
+            sql = "SELECT * FROM isaar ORDER BY FondsID, SubfondsID, SeriesID"
 
             cursor = cnx.cursor(dictionary=True, buffered=True)
-            cursor.execute(sql_accession)
+            cursor.execute(sql)
 
             tz_budapest = timezone('Europe/Budapest')
 
             for row in cursor:
-                transfer_date = row['PreparedDate'] if row['PreparedDate'] else row['CreatedDate']
-                created_date = row['CreatedDate'] if row['CreatedDate'] else row['PreparedDate']
-
                 created_by = self.get_user(row['CreatedBy'])
                 updated_by = self.get_user(row['ChangedBy'])
                 method = self.get_accession_method(row['Method'])
