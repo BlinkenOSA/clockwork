@@ -59,7 +59,8 @@ PROJECT_APPS = [
     'isad',
     'container',
     'finding_aids',
-    'mlr'
+    'mlr',
+    'migration'
 ]
 
 INSTALLED_APPS = PREREQ_APP + PROJECT_APPS
