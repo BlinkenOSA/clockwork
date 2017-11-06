@@ -1130,7 +1130,7 @@
   fields:
     language: Tibetan
     iso_639_1: bo
-    iso_639_2: tib
+    iso_639_2: bod
 
 - model: authority.language
   pk: 163
@@ -1285,3 +1285,24 @@
     language: Zulu
     iso_639_1: zu
     iso_639_2: zul
+
+- model: authority.language
+  pk: 185
+  fields:
+    language: Acholi
+    iso_639_1:
+    iso_639_2: ach
+
+- model: authority.language
+  pk: 186
+  fields:
+    language: Serbo-Croatian
+    iso_639_1: sh
+    iso_639_2: hbs
+
+- model: authority.language
+  pk: 187
+  fields:
+    language: Romany
+    iso_639_1:
+    iso_639_2: rom

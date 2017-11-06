@@ -27,7 +27,7 @@ class Country(models.Model):
 
 class Language(models.Model):
     id = models.AutoField(primary_key=True)
-    iso_639_1 = models.CharField(max_length=10)
+    iso_639_1 = models.CharField(max_length=10, blank=True, null=True)
     iso_639_2 = models.CharField(max_length=10, blank=True, null=True)
     wiki_url = models.CharField(max_length=150, blank=True, null=True)
     authority_url = models.CharField(max_length=200, blank=True, null=True)
@@ -44,6 +44,7 @@ class Language(models.Model):
 
     class Meta:
         db_table = 'authority_languages'
+        unique_together = ['iso_639_1', 'iso_639_2']
         ordering = ['language']
 
 

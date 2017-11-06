@@ -49,15 +49,16 @@ class IsadList(IsadPermissionMixin, FormView):
 class IsadListJson(IsadPermissionMixin, BaseDatatableView):
     model = Isad
     columns = ['reference_code', 'title', 'view-edit-delete', 'action']
-    order_columns = ['reference_code', 'title', '', '']
+    order_columns = ['archival_unit__sort', 'title']
     max_display_length = 500
 
     def get_initial_queryset(self):
         user = self.request.user
         if len(user.user_profile.allowed_archival_units.all()) > 0:
-            return Isad.objects.filter(archival_unit__in=user.user_profile.allowed_archival_units.all())
+            return Isad.objects.filter(archival_unit__in=user.user_profile.allowed_archival_units.all())\
+                .order_by('fonds', 'subfonds', 'series')
         else:
-            return Isad.objects.all()
+            return Isad.objects.all().order_by('fonds', 'subfonds', 'series')
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -95,9 +96,9 @@ class IsadCreate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSucces
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
     success_message = ugettext("ISAD(G) Record: %(reference_code)s was created successfully!")
-    inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
+    inlines = [IsadCreatorInline, IsadExtentInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
-    inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
+    inlines_names = ['creators', 'extents', 'related_finding_aids', 'location_of_originals',
                      'location_of_copies']
 
     def get_initial(self):
@@ -122,9 +123,9 @@ class IsadUpdate(IsadPermissionMixin, AuditTrailContextMixin, IsadAllowedArchiva
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
     success_message = ugettext("ISAD(G) Record: %(reference_code)s was updated successfully!")
-    inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
+    inlines = [IsadCreatorInline, IsadExtentInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
-    inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
+    inlines_names = ['creators', 'extents', 'related_finding_aids', 'location_of_originals',
                      'location_of_copies']
 
 

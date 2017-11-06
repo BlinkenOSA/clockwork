@@ -45,11 +45,11 @@ class IsadArchivalUnitForm(Form):
 
 class IsadForm(ModelForm):
     access_rights = ModelChoiceField(queryset=AccessRight.objects.all(),
-                                     empty_label=ugettext('- Choose Access Rights -'))
+                                     empty_label=ugettext('- Choose Access Rights -'), required=False)
     reproduction_rights = ModelChoiceField(queryset=ReproductionRight.objects.all(),
-                                           empty_label=ugettext('- Choose Reproduction Rights -'))
+                                           empty_label=ugettext('- Choose Reproduction Rights -'), required=False)
     rights_restriction_reason = ModelChoiceField(queryset=RightsRestrictionReason.objects.all(),
-                                                 empty_label=ugettext('- Choose Restriction Reason -'))
+                                                 empty_label=ugettext('- Choose Restriction Reason -'), required=False)
     original_locale = ModelChoiceField(queryset=Locale.objects.all(), empty_label=ugettext('- Choose Language -'),
                                        label=ugettext('Original metadata language'), required=False)
 
@@ -66,6 +66,9 @@ class IsadForm(ModelForm):
             'scope_and_content_narrative': ugettext('Scope and content (Narrative)'),
             'physical_characteristics': ugettext('Physical characteristics and technical requirements'),
             'rules_conventions': ugettext('Rules or conventions'),
+            'carrier_estimated': ugettext('Estimated amount of carriers'),
+            'access_rights_legacy': ugettext('Access rights (Legacy)'),
+            'reproduction_rights_legacy': ugettext('Reproduction rights (Legacy)'),
 
             'administrative_history_original': mark_safe(ugettext('Administrative / Biographical history - Original language') + IMG_FLAG),
             'archival_history_original': mark_safe(ugettext('Archival history - Original language') + IMG_FLAG),
@@ -77,7 +80,8 @@ class IsadForm(ModelForm):
             'publication_note_original': mark_safe(ugettext('Publication note - Original language') + IMG_FLAG),
             'note_original': mark_safe(ugettext('Note - Original language') + IMG_FLAG),
             'internal_note_original': mark_safe(ugettext('Internal note - Original language') + IMG_FLAG),
-            'archivists_note_original': mark_safe(ugettext('Archivists note - Original language') + IMG_FLAG)
+            'archivists_note_original': mark_safe(ugettext('Archivists note - Original language') + IMG_FLAG),
+            'carrier_estimated_original': mark_safe(ugettext('Estimated amount of carriers - Original language') + IMG_FLAG),
         }
         help_texts = {
             'year_from': ugettext('Date format: YYYY'),
@@ -98,7 +102,10 @@ class IsadForm(ModelForm):
             'internal_note': Textarea(attrs={'rows': 5}),
             'archivists_note': Textarea(attrs={'rows': 5}),
             'rules_conventions': Textarea(attrs={'rows': 5}),
-
+            'carrier_estimated': Textarea(attrs={'rows': 5}),
+            'carrier_estimated_original': Textarea(attrs={'rows': 5}),
+            'access_rights_legacy': Textarea(attrs={'rows': 5, 'readonly': True}),
+            'reproduction_rights_legacy': Textarea(attrs={'rows': 5, 'readonly': True}),
             'scope_and_content_abstract_original': Textarea(attrs={'rows': 4}),
             'scope_and_content_narrative_original': Textarea(attrs={'rows': 4}),
             'appraisal_original': Textarea(attrs={'rows': 4}),
@@ -110,7 +117,7 @@ class IsadForm(ModelForm):
             'archivists_note_original': Textarea(attrs={'rows': 5}),
         }
 
-    def clean(self):
+    def clean_isaar(self):
         creator_not_exists = True
         isaar = self.cleaned_data["isaar"]
         creators_total = int(self.data["creators-TOTAL_FORMS"])
@@ -119,35 +126,50 @@ class IsadForm(ModelForm):
             if creator != "":
                 creator_not_exists = False
         if creator_not_exists and not isaar:
-            raise ValidationError({'isaar': ugettext("Creator or Creator (ISAAR) should be selected.")})
+            raise ValidationError(ugettext("Creator or Creator (ISAAR) should be selected."))
 
+    def clean_access_rights(self):
+        if (not self.cleaned_data['access_rights']) or (not self.data['access_rights_legacy']):
+            raise ValidationError(ugettext("Access Rights or Access Rights (Legacy) should be entered."))
+
+    def clean_reproduction_rights(self):
+        if (not self.cleaned_data['reproduction_rights']) or (not self.data['reproduction_rights_legacy']):
+            raise ValidationError(ugettext("Reproduction Rights or Reproduction Rights (Legacy) should be entered."))
+
+    def clean_original_locale(self):
         original_exists = False
-        if self.cleaned_data["administrative_history_original"]:
+        if self.data["administrative_history_original"]:
             original_exists = True
-        if self.cleaned_data["archival_history_original"]:
+        if self.data["archival_history_original"]:
             original_exists = True
-        if self.cleaned_data["scope_and_content_abstract_original"]:
+        if self.data["scope_and_content_abstract_original"]:
             original_exists = True
-        if self.cleaned_data["scope_and_content_narrative_original"]:
+        if self.data["scope_and_content_narrative_original"]:
             original_exists = True
-        if self.cleaned_data["appraisal_original"]:
+        if self.data["appraisal_original"]:
             original_exists = True
-        if self.cleaned_data["system_of_arrangement_information_original"]:
+        if self.data["system_of_arrangement_information_original"]:
             original_exists = True
-        if self.cleaned_data["physical_characteristics_original"]:
+        if self.data["physical_characteristics_original"]:
             original_exists = True
-        if self.cleaned_data["note_original"]:
+        if self.data["note_original"]:
             original_exists = True
-        if self.cleaned_data["internal_note_original"]:
+        if self.data["internal_note_original"]:
             original_exists = True
-        if self.cleaned_data["archivists_note_original"]:
+        if self.data["archivists_note_original"]:
             original_exists = True
 
         if original_exists and not self.cleaned_data["original_locale"]:
-            raise ValidationError({'original_locale': ugettext("Original langauge should be selected.")})
+            raise ValidationError({ugettext("Original langauge should be selected.")})
 
+    def clean(self):
         if self.has_changed():
             self.cleaned_data["approved"] = False
+
+
+
+
+
 
 
 class IsadCreatorInline(InlineFormSet):
