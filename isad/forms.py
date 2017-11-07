@@ -1,11 +1,11 @@
 from django.core.exceptions import ValidationError
-from django.forms import Form, ModelChoiceField, Select, Textarea, HiddenInput, ModelForm, BooleanField
+from django.forms import Form, ModelChoiceField, Select, Textarea, ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
-from archival_unit.widgets import ArchivalUnitIsadSelect2Widget
+from archival_unit.widgets import ArchivalUnitFondsSelect2Widget
 from authority.widgets import LanguageSelect2MultipleWidget
 from controlled_list.models import AccessRight, ReproductionRight, RightsRestrictionReason, ExtentUnit, CarrierType, \
     Locale
@@ -22,25 +22,12 @@ IMG_FLAG = ' <span class="flag"></span>'
 
 
 class IsadArchivalUnitForm(Form):
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super(IsadArchivalUnitForm, self).__init__(*args, **kwargs)
-        qs = user.user_profile.allowed_archival_units.all()
-        # If User is restricted to a particular series
-        if len(qs) > 0:
-            self.fields['archival_unit'] = ModelChoiceField(
-                queryset=ArchivalUnit.objects.all(),
-                widget=ArchivalUnitIsadSelect2Widget(
-                    queryset=qs
-                )
-            )
-        else:
-            self.fields['archival_unit'] = ModelChoiceField(
-                queryset=ArchivalUnit.objects.all(),
-                widget=ArchivalUnitIsadSelect2Widget(
-                    queryset=ArchivalUnit.objects.filter(isad__isnull=True)
-                )
-            )
+    fonds = ModelChoiceField(
+        queryset=ArchivalUnit.objects.filter(level='F'),
+        widget=ArchivalUnitFondsSelect2Widget(
+            queryset=ArchivalUnit.objects.filter(level='F'),
+        )
+    )
 
 
 class IsadForm(ModelForm):
@@ -165,11 +152,6 @@ class IsadForm(ModelForm):
     def clean(self):
         if self.has_changed():
             self.cleaned_data["approved"] = False
-
-
-
-
-
 
 
 class IsadCreatorInline(InlineFormSet):
