@@ -7,6 +7,10 @@
     <script src="{% static 'mlr/js/mlr.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% trans 'Clockwork AMS - MLR' %}
+{% endblock %}
+
 {% block content-header %}
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
@@ -35,14 +39,5 @@
                     <th>{% trans 'Action' %}</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>{% trans 'Series' %}</th>
-                    <th>{% trans 'Carrier' %}</th>
-                    <th>{% trans 'Building' %}</th>
-                    <th>{% trans 'Module / Row/ Section / Shelf' %}</th>
-                    <th>{% trans 'Action' %}</th>
-                </tr>
-            </tfoot>
         </table>
 {% endblock %}

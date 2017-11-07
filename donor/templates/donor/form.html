@@ -13,6 +13,14 @@
     </script>
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit Donor - '%}{{ object.name }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create Donor' %}
+    {% endif %}
+{% endblock %}
+
 {% block notifications %}
     {% include 'notifications-errors.html' %}
 {% endblock %}
@@ -30,7 +38,11 @@
             {% trans 'Donors' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit Accession Record - '%}{{ object.name }}
+            {% else %}
+                {% trans 'Create Accession Record' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

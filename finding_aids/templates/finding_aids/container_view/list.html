@@ -13,6 +13,10 @@
     <script src="{% static 'finding_aids/js/finding_aids_container.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+   {% trans 'Clockwork AMS - Folders/Items' %}
+{% endblock %}
+
 {% block content-header %}
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
@@ -23,13 +27,13 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ container.archival_unit.title_full }}
+            {{ container.archival_unit.title_full|truncatechars:100 }}
         </li>
         <li>
             Container #{{ container.container_no }} / {{ container.carrier_type.type }}
         </li>
         <li class="active">
-            {% trans 'Finding Aids Records' %}
+            {% trans 'Folders/Items' %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

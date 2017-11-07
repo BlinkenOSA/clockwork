@@ -17,6 +17,14 @@
     {% include 'isaar/notifications-errors.html' %}
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit ISAAR/CPF - '%}{{ object.name }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create ISAAR/CPF' %}
+    {% endif %}
+{% endblock %}
+
 {% block content-header %}
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
@@ -27,7 +35,11 @@
             <i class="fa fa-male"></i>&nbsp;&nbsp;{% trans 'ISAAR/CPF' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit ISAAR/CPF - '%}{{ object.name }}
+            {% else %}
+                {% trans 'Create ISAAR/CPF' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

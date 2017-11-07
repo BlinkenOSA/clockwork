@@ -16,6 +16,14 @@
     <script src="{% static 'accession/js/accession-form.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit Accession Record - '%}{{ object.title }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create Accession Record' %}
+    {% endif %}
+{% endblock %}
+
 {% block notifications %}
     {% include 'accession/notifications-errors.html' %}
 {% endblock %}
@@ -33,7 +41,11 @@
             {% trans 'Accession Records' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit Accession Record - '%}{{ object.title }}
+            {% else %}
+                {% trans 'Create Accession Record' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->
