@@ -6,6 +6,7 @@ from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
+from archival_unit.widgets import ArchivalUnitSeriesContainersSelect2Widget
 from authority.widgets import *
 
 from controlled_list.models import Locale, PersonRole, CorporationRole, GeoRole, LanguageUsage, ExtentUnit
@@ -71,7 +72,7 @@ class FindingAidsArchivalUnitForm(Form):
             )
             self.fields['series'] = ModelChoiceField(
                 queryset=ArchivalUnit.objects.all(),
-                widget=ModelSelect2Widget(
+                widget=ArchivalUnitSeriesContainersSelect2Widget(
                     queryset=ArchivalUnit.objects.filter(level='S').order_by('fonds', 'subfonds', 'series'),
                     search_fields=['title__icontains', 'reference_code__icontains'],
                     dependent_fields={'subfonds': 'parent'}
