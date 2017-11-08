@@ -26,6 +26,7 @@ class Container(models.Model):
 
     class Meta:
         db_table = 'containers'
+        unique_together = ('archival_unit', 'container_no')
 
     def __unicode__(self):
         return "Container #%s / %s" % (self.container_no, self.carrier_type)

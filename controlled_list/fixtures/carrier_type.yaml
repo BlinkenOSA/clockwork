@@ -1,7 +1,7 @@
 - model: controlled_list.CarrierType
   pk: 1
   fields:
-    type: Archival Box
+    type: Archival box
     width: 125
     height: 265
     depth: 320
@@ -9,7 +9,7 @@
 - model: controlled_list.CarrierType
   pk: 2
   fields:
-    type: Archival Card Box
+    type: Archival card box
     width: 315
     height: 235
     depth: 170
@@ -169,7 +169,7 @@
 - model: controlled_list.CarrierType
   pk: 22
   fields:
-    type: Digital Container
+    type: Digital container
     width: 1
     height:
     depth:
