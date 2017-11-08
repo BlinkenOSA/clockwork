@@ -42,6 +42,8 @@ class CarrierType(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(unique=True, max_length=100)
     width = models.IntegerField()
+    height = models.IntegerField(blank=True, null=True)
+    depth = models.IntegerField(blank=True, null=True)
     old_id = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
