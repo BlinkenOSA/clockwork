@@ -3,14 +3,29 @@
  */
 var table = $('#mlr_table').DataTable({
 	"serverSide": true,
-	"ajax": "datatable",
+	"ajax": {
+		"url": "datatable",
+		"type": "GET",
+		"data": function(d){
+			d.fonds = $("#id_fonds").val();
+      	}
+	},
 	"columns": [
  	        { "data": "series", "width": "150px" },
-			{ "data": "carrier_type", "width": "200px", "sortable": false },
+			{ "data": "carrier_type", "width": "200px" },
             { "data": "building", "sortable": false },
-            { "data": "mrss", "sortable": false },
+            { "data": "mrss", "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
     ]
+});
+
+$('#id_fonds').on('change', function (evt) {
+	table.ajax.reload();
+});
+
+$('#mlr_filter_fonds_select_reset').on('click', function(e) {
+	e.preventDefault();
+	$("#id_fonds").val([]).trigger('change');
 });
 
 $(function() {

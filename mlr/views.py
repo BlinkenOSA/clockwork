@@ -4,12 +4,13 @@ from __future__ import unicode_literals
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxUpdateView
 
+from archival_unit.models import ArchivalUnit
 from clockwork.mixins import GeneralAllPermissionMixin
-from mlr.forms import MLRForm
+from mlr.forms import MLRForm, MLRListForm
 from mlr.models import MLREntity
 
 
@@ -17,15 +18,26 @@ class MLRPermissionMixin(GeneralAllPermissionMixin):
     permission_model = MLREntity
 
 
-class MLRList(MLRPermissionMixin, TemplateView):
-    template_name = 'mlr/list.html'
+class MLRList(MLRPermissionMixin, FormView):
+    template_name = "mlr/list.html"
+    form_class = MLRListForm
 
 
 class MLRListJson(MLRPermissionMixin, BaseDatatableView):
     model = MLREntity
     columns = ['id', 'series', 'carrier_type', 'building', 'mrss', 'action']
-    order_columns = ['id', 'series', 'carrier_type']
+    order_columns = ['series__sort', ['carrier_type', 'series__sort']]
     max_display_length = 500
+
+    def get_initial_queryset(self):
+        fonds = self.request.GET['fonds'] if 'fonds' in self.request.GET.keys() else ""
+
+        if fonds:
+            fonds = ArchivalUnit.objects.get(pk=fonds)
+            archival_units = ArchivalUnit.objects.filter(level='S', fonds=fonds.fonds)
+            return MLREntity.objects.filter(series__in=archival_units).order_by('series__sort')
+        else:
+            return MLREntity.objects.all().order_by('series__sort')
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
