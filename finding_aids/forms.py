@@ -9,12 +9,12 @@ from archival_unit.models import ArchivalUnit
 from archival_unit.widgets import ArchivalUnitSeriesContainersSelect2Widget
 from authority.widgets import *
 
-from controlled_list.models import Locale, PersonRole, CorporationRole, GeoRole, LanguageUsage, ExtentUnit
+from controlled_list.models import Locale, PersonRole, CorporationRole, GeoRole, LanguageUsage, ExtentUnit, DateType
 from controlled_list.widgets import PersonRoleSelect2Widget, GeoRoleSelect2Widget, KeywordSelect2MultipleWidget, \
-    LanguageUsageSelect2Widget, ExtentUnitSelect2Widget
+    LanguageUsageSelect2Widget, ExtentUnitSelect2Widget, DateTypeSelect2Widget, CorporationRoleSelect2Widget
 from finding_aids.models import FindingAidsEntity, FindingAidsEntityAssociatedPerson, \
     FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedCountry, FindingAidsEntityAssociatedPlace, \
-    FindingAidsEntityExtent, FindingAidsEntityLanguage
+    FindingAidsEntityExtent, FindingAidsEntityLanguage, FindingAidsEntityDate
 
 IMG_FLAG = ' <span class="flag"></span>'
 
@@ -220,6 +220,23 @@ class FindingAidsAssociatedPeopleInline(InlineFormSet):
     prefix = 'associated_people'
 
 
+class FindingAidsDateForm(ModelForm):
+    date_type = ModelChoiceField(
+        queryset=DateType.objects.all(),
+        widget=DateTypeSelect2Widget(attrs={'data-placeholder': '-- Select Date Type --'}),
+        required=False
+    )
+
+
+class FindingAidsDateInline(InlineFormSet):
+    extra = 1
+    model = FindingAidsEntityDate
+    fields = '__all__'
+    form_class = FindingAidsDateForm
+    can_delete = True
+    prefix = 'dates'
+
+
 class FindingAidsAssociatedCorporationForm(ModelForm):
     associated_corporation = ModelChoiceField(
         queryset=Corporation.objects.all(),
@@ -227,7 +244,7 @@ class FindingAidsAssociatedCorporationForm(ModelForm):
     )
     role = ModelChoiceField(
         queryset=CorporationRole.objects.all(),
-        widget=CorporationSelect2Widget(attrs={'data-placeholder': '-- Select Role --'}),
+        widget=CorporationRoleSelect2Widget(attrs={'data-placeholder': '-- Select Role --'}),
         required=False
     )
 

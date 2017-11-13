@@ -38,7 +38,7 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ container.archival_unit.title_full|truncatechars:100 }}
+            {{ container.archival_unit.title_full|truncatechars:40 }}
         </li>
         <li>
             Container #{{ container.container_no }} / {{ container.carrier_type.type }}
@@ -48,7 +48,7 @@
         </li>
         <li class="active">
             {% if object %}
-                {% trans 'Edit Folder/Item - '%}{{ object.title }}
+                {% trans 'Edit Folder/Item - '%}{{ object.title|truncatechars:40 }}
             {% else %}
                 {% trans 'Create Folder/Item' %}
             {% endif %}

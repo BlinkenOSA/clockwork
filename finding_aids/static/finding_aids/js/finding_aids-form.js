@@ -25,6 +25,7 @@ $('.django-select2').djangoSelect2();
 
 subformCreate('languages');
 subformCreate('extents');
+subformCreate('dates');
 subformCreate('associated_people');
 subformCreate('associated_corporations');
 subformCreate('associated_countries');

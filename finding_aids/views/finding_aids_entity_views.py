@@ -20,9 +20,9 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
     success_message = "%(title)s was created successfully"
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_container_list',
@@ -70,9 +70,9 @@ class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, Find
     success_message = ugettext("%(title)s was updated successfully")
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_container_list',

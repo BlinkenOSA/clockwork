@@ -16,6 +16,13 @@ class CorporationRoleSelect2Widget(ModelSelect2Widget):
     ]
 
 
+class DateTypeSelect2Widget(ModelSelect2Widget):
+    model = DateType
+    search_fields = [
+        'date_type__icontains'
+    ]
+
+
 class GeoRoleSelect2Widget(ModelSelect2Widget):
     model = GeoRole
     search_fields = [

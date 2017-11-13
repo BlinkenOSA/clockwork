@@ -20,6 +20,9 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     legacy_id = models.CharField(max_length=200, blank=True, null=True)
     archival_reference_code = models.CharField(max_length=50, blank=True, null=True)
 
+    old_id = models.CharField(max_length=12, blank=True, null=True)
+    catalog_id = models.CharField(max_length=12, blank=True, null=True)
+
     FINDING_AIDS_LEVEL = [('F', 'Folder'), ('I', 'Item')]
     level = models.CharField(max_length=1, choices=FINDING_AIDS_LEVEL, default='F')
 
@@ -78,9 +81,9 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     dimensions = models.TextField(max_length=200, blank=True, null=True)
 
     # Notes
-    note = models.CharField(max_length=300, blank=True, null=True)
-    note_original = models.CharField(max_length=300, blank=True, null=True)
-    internal_note = models.CharField(max_length=300, blank=True, null=True)
+    note = models.CharField(max_length=500, blank=True, null=True)
+    note_original = models.CharField(max_length=500, blank=True, null=True)
+    internal_note = models.CharField(max_length=500, blank=True, null=True)
 
     # Published
     published = models.BooleanField(default=False)
@@ -95,6 +98,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     class Meta:
         db_table = 'finding_aids_entities'
+        unique_together = ('container', 'folder_no', 'sequence_no')
 
     def publish(self, user):
         self.published = True
@@ -139,6 +143,14 @@ class FindingAidsEntityAlternativeTitle(models.Model):
 
     class Meta:
         db_table = 'finding_aids_alternative_titles'
+
+
+class FindingAidsEntityDate(models.Model):
+    id = models.AutoField(primary_key=True)
+    fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
+    date_from = ApproximateDateField()
+    date_to = ApproximateDateField(blank=True)
+    date_type = models.ForeignKey('controlled_list.DateType')
 
 
 class FindingAidsEntityCreator(models.Model):
