@@ -72,6 +72,18 @@ class CorporationRole(models.Model):
         ordering = ['role']
 
 
+class DateType(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_date_types'
+        ordering = ['type']
+
+
 class ExtentUnit(models.Model):
     id = models.AutoField(primary_key=True)
     unit = models.CharField(unique=True, max_length=100)

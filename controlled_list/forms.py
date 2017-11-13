@@ -32,6 +32,12 @@ class CorporationRoleForm(ModelForm):
         fields = '__all__'
 
 
+class DateTypeForm(ModelForm):
+    class Meta:
+        model = DateType
+        fields = '__all__'
+
+
 class ExtentUnitForm(ModelForm):
     class Meta:
         model = ExtentUnit

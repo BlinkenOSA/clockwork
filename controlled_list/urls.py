@@ -5,6 +5,7 @@ from controlled_list.views.archival_unit_theme_view import *
 from controlled_list.views.building_view import *
 from controlled_list.views.carrier_type_view import *
 from controlled_list.views.corporation_role_view import *
+from controlled_list.views.date_type_view import *
 from controlled_list.views.extent_unit_view import *
 from controlled_list.views.geo_role_view import *
 from controlled_list.views.keyword_view import *
@@ -22,7 +23,8 @@ urlpatterns = [
 
     url(r'^archival_unit_theme/$', ArchivalUnitThemeList.as_view(), name='archival_unit_theme_list'),
     url(r'^archival_unit_theme/create/$', ArchivalUnitThemeCreate.as_view(), name='archival_unit_theme_create'),
-    url(r'^archival_unit_theme/update/(?P<pk>\d+)/$', ArchivalUnitThemeUpdate.as_view(), name='archival_unit_theme_update'),
+    url(r'^archival_unit_theme/update/(?P<pk>\d+)/$', ArchivalUnitThemeUpdate.as_view(),
+        name='archival_unit_theme_update'),
     url(r'^archival_unit_theme/datatable/$', ArchivalUnitThemeListJson.as_view(), name='archival_unit_theme_list_json'),
 
     url(r'^building/$', BuildingList.as_view(), name='building_list'),
@@ -39,7 +41,12 @@ urlpatterns = [
     url(r'^corporation_role/create/$', CorporationRoleCreate.as_view(), name='corporation_role_create'),
     url(r'^corporation_role/update/(?P<pk>\d+)/$', CorporationRoleUpdate.as_view(), name='corporation_role_update'),
     url(r'^corporation_role/datatable/$', CorporationRoleListJson.as_view(), name='corporation_role_list_json'),
-    
+
+    url(r'^date_type/$', DateTypeList.as_view(), name='date_type_list'),
+    url(r'^date_type/create/$', DateTypeCreate.as_view(), name='date_type_create'),
+    url(r'^date_type/update/(?P<pk>\d+)/$', DateTypeUpdate.as_view(), name='date_type_update'),
+    url(r'^date_type/datatable/$', DateTypeListJson.as_view(), name='date_type_list_json'),
+
     url(r'^extent_unit/$', ExtentUnitList.as_view(), name='extent_unit_list'),
     url(r'^extent_unit/create/$', ExtentUnitCreate.as_view(), name='extent_unit_create'),
     url(r'^extent_unit/update/(?P<pk>\d+)/$', ExtentUnitUpdate.as_view(), name='extent_unit_update'),
@@ -72,17 +79,18 @@ urlpatterns = [
     
     url(r'^reproduction_right/$', ReproductionRightList.as_view(), name='reproduction_right_list'),
     url(r'^reproduction_right/create/$', ReproductionRightCreate.as_view(), name='reproduction_right_create'),
-    url(r'^reproduction_right/update/(?P<pk>\d+)/$', ReproductionRightUpdate.as_view(), name='reproduction_right_update'),
+    url(r'^reproduction_right/update/(?P<pk>\d+)/$', ReproductionRightUpdate.as_view(),
+        name='reproduction_right_update'),
     url(r'^reproduction_right/datatable/$', ReproductionRightListJson.as_view(), name='reproduction_right_list_json'),
     
     url(r'^rights_restriction_reason/$', RightsRestrictionReasonList.as_view(), name='rights_restriction_reason_list'),
-    url(r'^rights_restriction_reason/create/$', RightsRestrictionReasonCreate.as_view(), name='rights_restriction_reason_create'),
-    url(r'^rights_restriction_reason/update/(?P<pk>\d+)/$', RightsRestrictionReasonUpdate.as_view(), name='rights_restriction_reason_update'),
-    url(r'^rights_restriction_reason/datatable/$', RightsRestrictionReasonListJson.as_view(), name='rights_restriction_reason_list_json'),
+    url(r'^rights_restriction_reason/create/$', RightsRestrictionReasonCreate.as_view(),
+        name='rights_restriction_reason_create'),
+    url(r'^rights_restriction_reason/update/(?P<pk>\d+)/$', RightsRestrictionReasonUpdate.as_view(),
+        name='rights_restriction_reason_update'),
+    url(r'^rights_restriction_reason/datatable/$', RightsRestrictionReasonListJson.as_view(),
+        name='rights_restriction_reason_list_json'),
     
     url(r'^carrier_type/list.json', CarrierTypeJSONList.as_view(), name='carrier_type_json_list'),
     url(r'^primary_type/list.json', PrimaryTypeJSONList.as_view(), name='primary_type_json_list'),
-
-
-
 ]

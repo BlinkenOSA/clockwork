@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+<form role="form" class="form" method="POST" enctype="multipart/form-data" action>
+    {% include 'nonfield-errors.html' %}
+    {% csrf_token %}
+
+    <fieldset>
+        <div class="col-md-12">
+            {% bootstrap_field form.type %}
+        </div>
+    </fieldset>
+</form>
