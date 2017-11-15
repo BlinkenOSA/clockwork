@@ -159,7 +159,7 @@ class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView
         old_obj = FindingAidsEntity.objects.get(pk=kwargs['pk'])
         new_obj = old_obj.clone()
 
-        renumber_entries("clone", new_obj.level, new_obj.folder_no, new_obj.sequence_no)
+        renumber_entries("clone", new_obj)
         new_numbers = new_number(new_obj=new_obj)
 
         new_obj.folder_no = new_numbers['folder_no']
@@ -181,7 +181,7 @@ class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
     success_message = ugettext("Finding Aids record was deleted successfully!")
 
     def get_success_url(self):
-        container = self.object.container
+        container = self.obj.container
         return reverse_lazy('finding_aids:finding_aids_container_list', kwargs={'container_id': container.id})
 
     def get_success_message(self):
@@ -191,15 +191,11 @@ class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
         return {'status': 'ok', 'message': self.get_success_message()}
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.obj = self.get_object()
         success_url = self.get_success_url()
 
-        self.object.delete()
-
-        level = self.object.level
-        folder_no = self.object.folder_no
-        sequence_no = self.object.sequence_no
-        renumber_entries("delete", level, folder_no, sequence_no)
+        self.obj.delete()
+        renumber_entries("delete", self.obj)
 
         if self.request.is_ajax():
             return self.render_json_response(self.get_success_result())
@@ -253,7 +249,10 @@ class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
                 'title_original': finding_aids.title_original,
                 'date':  ' - '.join(filter(None, dates)),
                 'action': render_to_string('finding_aids/container_view/table_action_buttons.html',
-                                           context={'container_id': finding_aids.container.id, 'id': finding_aids.id}),
+                                           context={'container_id': finding_aids.container.id,
+                                                    'id': finding_aids.id,
+                                                    'published': finding_aids.published,
+                                                    'catalog_id': finding_aids.catalog_id}),
                 'publish': render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
                     'finding_aids_entity': finding_aids
                 })
