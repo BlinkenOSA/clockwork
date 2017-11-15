@@ -46,7 +46,10 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
             return ' - '.join(filter(None, dates))
         elif column == 'action':
             return render_to_string('finding_aids/container_view/table_action_buttons.html', context={
-                'container_id': row.container_id, 'id': row.id})
+                'container_id': row.container_id,
+                'id': row.id,
+                'catalog_id': row.catalog_id,
+                'published': row.published})
         elif column == 'publish':
             return render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
                 'finding_aids_entity': row

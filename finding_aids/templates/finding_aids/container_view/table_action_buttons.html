@@ -13,3 +13,11 @@
         <i class="fa fa-trash-o"></i>
     </a>
 </div>
+
+{% if published %}
+    <div class="btn-group">
+        <a href="http://catalog.osaarchivum.org/catalog/{{ catalog_id }}" target="_blank" class="btn btn-default btn-xs">
+            <i class="fa fa-globe"></i>
+        </a>
+    </div>
+{% endif %}
