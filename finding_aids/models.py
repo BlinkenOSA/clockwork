@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
+from hashids import Hashids
 
 from controlled_list.models import PrimaryType, PersonRole, CorporationRole, GeoRole, LanguageUsage
 from authority.models import Person, Place, Corporation, Country, Language
@@ -74,9 +75,9 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     physical_condition = models.CharField(max_length=200, blank=True, null=True)
 
-    time_start = models.TimeField(blank=True, null=True)
-    time_end = models.TimeField(blank=True, null=True)
-    duration = models.TimeField(blank=True, null=True)
+    time_start = models.DurationField(blank=True, null=True)
+    time_end = models.DurationField(blank=True, null=True)
+    duration = models.DurationField(blank=True, null=True)
 
     dimensions = models.TextField(max_length=200, blank=True, null=True)
 
@@ -98,7 +99,6 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     class Meta:
         db_table = 'finding_aids_entities'
-        unique_together = ('container', 'folder_no', 'sequence_no')
 
     def publish(self, user):
         self.published = True
@@ -125,6 +125,12 @@ class FindingAidsEntity(CloneableMixin, models.Model):
                                                                 self.container.container_no,
                                                                 self.folder_no,
                                                                 self.sequence_no)
+
+            # Add hashids
+            hashids = Hashids(salt="blinkenosa", min_length=10)
+            if not self.catalog_id:
+                self.catalog_id = hashids.encode(self.id)
+
         super(FindingAidsEntity, self).save()
 
     def __unicode__(self):
