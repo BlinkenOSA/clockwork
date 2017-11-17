@@ -1,0 +1,151 @@
+list_page:
+  title: Folders/Items
+  text: >
+
+list_page_template:
+  title: Folders/Items Templates
+  text: >
+
+edit_page: Finding Aids / Folders/Items
+  title: Folders/Items Create/Edit
+  text: >
+
+edit_page: Finding Aids / Folders/Items Template
+  title: Folders/Items Template Create/Edit
+  text: >
+
+level:
+  title: Level
+  text: >
+
+folder_no:
+  title: Folder Number
+  text: >
+
+legacy_id:
+  title: Legacy id
+  text: >
+
+original_locale:
+  title: Original locale
+  text: >
+
+title:
+  title: Title
+  text: >
+
+title_original:
+  title: Title - Original Language
+  text: >
+
+date_from:
+  title: Date from
+  text: >
+
+date_to:
+  title: Date to
+  text: >
+
+date_ca_span:
+  title: Date ca span
+  text: >
+
+dates:
+  title: Dates
+  text: >
+
+contents_summary:
+  title: Contents summary
+  text: >
+
+contents_summary_original:
+  title: Contents Summary - Original Language
+  text: >
+
+genre:
+  title: Form/Genre
+  text: >
+
+time_start:
+  title: Time start
+  text: >
+
+time_end:
+  title: Time end
+  text: >
+
+physical_condition:
+  title: Physical condition
+  text: >
+
+physical_description:
+  title: Physical description
+  text: >
+
+physical_description_original:
+  title: Physical Description - Original Language
+  text: >
+
+languages:
+  title: Languages
+  text: >
+
+language_statement:
+  title: Language statement
+  text: >
+
+language_statement_original:
+  title: Language Statement - Original Language
+  text: >
+
+extents:
+  title: Extents
+  text: >
+
+associated_people:
+  title: Associated People
+  text: >
+
+associated_corporations:
+  title: Associated Corporations
+  text: >
+
+associated_countries:
+  title: Associated Countries
+  text: >
+
+associated_places:
+  title: Associated Places
+  text: >
+
+spatial_coverage_country:
+  title: Spatial Coverage (Countries)
+  text: >
+
+spatial_coverage_place:
+  title: Spatial Coverage (Places)
+  text: >
+
+subject_person:
+  title: Subject (People)
+  text: >
+
+subject_corporation:
+  title: Subject (Corporations)
+  text: >
+
+subject_keyword:
+  title: Keywords
+  text: >
+
+note:
+  title: Note
+  text: >
+
+note_original:
+  title: Note original
+  text: >
+
+internal_note:
+  title: Internal note
+  text: >

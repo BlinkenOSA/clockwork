@@ -1,0 +1,181 @@
+list_page:
+  title: ISAD(G)
+  text: >
+        Create, modify and remove ISAD(G) records here. The table shows you the already existing ISAD(G) records in the system.
+
+edit_page:
+  title: ISAD(G) Create/Edit
+  text: >
+        Use the following form to create or modify ISAD(G) records. Highlighting a field will display information about its usage.
+
+year_from:
+  title: Year from
+  text: >
+
+year_to:
+  title: Year to
+  text: >
+
+original_locale:
+  title: Original metadata language
+  text: >
+
+creators:
+  title: Cretors
+  text: >
+
+isaar:
+  title: Creator (ISAAR)
+  text: >
+
+language:
+  title: Language
+  text: >
+
+access_rights:
+  title: Access rights
+  text: >
+
+access_rights_legacy:
+  title: Access rights (Legacy data)
+  text: >
+
+reproduction_rights:
+  title: Reproduction rights
+  text: >
+
+reproduction_rights_legacy:
+  title: Reproduction rights (Legacy data)
+  text: >
+
+accruals:
+  title: Accruals
+  text: >
+
+rights_restriction_reason:
+  title: Rights restriction reason
+  text: >
+
+date_predominant:
+  title: Predominant date
+  text: >
+
+extents:
+  title: Extent of the unit of description
+  text: >
+
+carrier_estimated:
+  title: Estimated amount of carriers
+  text: >
+
+carrier_estimated_original:
+  title: Estimated amount of carriers - Original language
+  text: >
+
+administrative_history:
+  title: Administrative / Biographical history
+  text: >
+
+administrative_history_original:
+  title: Administrative / Biographical history - Original language
+  text: >
+
+archival_history:
+  title: Archival history
+  text: >
+
+archival_history_original:
+  title: Archival history - Original language
+  text: >
+
+scope_and_content_abstract:
+  title: Scope and content (Abstract)
+  text: >
+
+scope_and_content_abstract_original:
+  title: Scope and content (Abstract) - Original language
+  text: >
+
+scope_and_content_narrative:
+  title: Scope and content (Narrative)
+  text: >
+
+scope_and_content_narrative_original:
+  title: Scope and content (Narrative) - Original language
+  text: >
+
+appraisal:
+  title: Appraisal
+  text: >
+
+appraisal_original:
+  title: Appraisal - Original language
+  text: >
+
+system_of_arrangement_information:
+  title: System of arrangement information
+  text: >
+
+system_of_arrangement_information_original:
+  title: System of arrangement information - Original language
+  text: >
+
+embargo:
+  title: Embargo
+  text: >
+
+physical_characteristics:
+  title: Physical characteristics and technical requirements
+  text: >
+
+physical_characteristics_original:
+  title: Physical characteristics and technical requirements - Original language
+  text: >
+
+related_finding_aids:
+  title: Related Finding Aids
+  text: >
+
+location_of_originals:
+  title: Location of Originals
+  text: >
+
+location_of_copies:
+  title: Location of Copies
+  text: >
+
+publication_note:
+  title: Publication note
+  text: >
+
+publication_note_original:
+  title: Publication note - Original language
+  text: >
+
+note:
+  title: Note
+  text: >
+
+note_original:
+  title: Note - Original language
+  text: >
+
+internal_note:
+  title: Internal note
+  text: >
+
+internal_note_original:
+  title: Internal note - Original language
+  text: >
+
+archivists_note:
+  title: Archivists note
+  text: >
+
+archivists_note_original:
+  title: Archivists note - Original language
+  text: >
+
+rules_conventions:
+  title: Rules or conventions
+  text: >

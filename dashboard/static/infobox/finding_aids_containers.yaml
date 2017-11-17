@@ -1,0 +1,19 @@
+list_page:
+  title: Finding Aids / Containers
+  text: >
+
+primary_type:
+  title: Primary type
+  text: >
+
+carrier_type:
+  title: Carrier type
+  text: >
+
+legacy_id:
+  title: Legacy id
+  text: >
+
+container_label:
+  title: Container label
+  text: >

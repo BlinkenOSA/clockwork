@@ -1,9 +1,20 @@
+list_page:
+  title: ISAAR-CPF
+  text: >
+        Create, modify and remove ISAAR records here. The table shows you the already existing ISAAR records in the system.
+
+edit_page:
+  title: ISAAR-CPF Create/Edit
+  text: >
+        Use the following form to create or modify ISAAR-CPF records. Highlighting a field will display information about its usage.
+
 type:
   title: Type of entity
   text: >
         <i>Purpose:</i><br/>To indicate whether the entity being described is a corporate body, person or family.<br/><br/>
         <i>Rule:</i><br/>
         Specify the type of entity (corporate body, person or family) that is being described in this authority record.
+
 name:
   title: Authorized form(s) of name
   text: >
@@ -13,6 +24,7 @@ name:
         Use dates, place, jurisdiction, occupation, epithet and other qualifiers as appropriate to distinguish the
         authorized form of name from those of other entities with similar names. Specify separately in the
         Rules and/or conventions element (5.4.3) which set of rules has been applied for this element.
+
 date_existence:
   title: Dates of existence
   text: >
@@ -22,6 +34,7 @@ date_existence:
         approximate dates of birth and death or, when these dates are not known, floruit dates. Where parallel
         systems of dating are used, equivalences may be recorded according to relevant conventions or rules.
         Specify in the Rules and/or conventions element (5.4.3) the system(s) of dating used, e.g. ISO 8601.
+
 other_names:
   title: Other forms of name
   text: >
@@ -33,6 +46,7 @@ other_names:
         B) other names of corporate bodies, for example, changes of name over time and their dates;<br/>
         C) other names of persons or families, for example, changes of name over time with their dates including pseudonyms, maiden names, etc;<br/>
         D) names and prenominal and postnominal titles of persons and families, e.g. titles of nobility, or titles of honour held by the individual or family
+
 standardized_names:
   title: Standardized forms of name according to other rules
   text: >
@@ -42,12 +56,14 @@ standardized_names:
         <i>Rule:</i><br/>Record the standardized form of name for the entity being described in accordance with other
         conventions or rules. Specify the rules and/or if appropriate the name of the agency by which these
         standardized forms of name have been constructed.
+
 corporate_body_identifiers:
   title: Identifiers for corporate bodies
   text: >
         <i>Purpose:</i><br/>To provide any numeric or alpha-numeric identifiers that are used to identify the corporate body.<br/><br/>
         <i>Rule:</i><br/>Record where possible any official number or other identifier (e.g. a company registration number) for
         the corporate body and reference the jurisdiction and scheme under which it has been allocated.
+
 places:
   title: Places
   text: >
@@ -55,6 +71,7 @@ places:
         based, lived or resided or had some other connection.<br/><br/>
         <i>Rule:</i><br/>Record the name of the predominant place(s)/jurisdiction(s), together with the nature and covering
         dates of the relationship with the entity.
+
 history:
   title: History
   text: >
@@ -63,18 +80,21 @@ history:
         of the entity being described. This may include information on gender, nationality, family and religious
         or political affiliations. Wherever possible, supply dates as an integral component of the narrative
         description.
+
 legal_status:
   title: Legal status
   text: >
         <i>Purpose:</i><br/>To indicate the legal status of a corporate body.<br/><br/>
         <i>Rule:</i><br/>Record the legal status and where appropriate the type of corporate body together with the covering
         dates when this status applied.
+
 function:
   title: Functions, occupations and activities
   text: >
         <i>Purpose:</i><br/>To indicate the functions, occupations and activities performed by the corporate body, person or family.<br/><br/>
         <i>Rule:</i><br/>Record the functions, occupations and activities performed by the entity being described, together with
         the covering dates when useful. If necessary, describe the nature of the function, occupation or activity.
+
 mandate:
   title: Mandates/Sources of authority
   text: >
@@ -83,6 +103,7 @@ mandate:
         <i>Rule:</i><br/>Record any document, law, directive or charter which acts as a source of authority for the powers,
         functions and responsibilities of the entity being described, together with information on the
         jurisdiction(s) and covering dates when the mandate(s) applied or were changed.
+
 internal_structure:
   title: Internal structure/Geneology
   text: >
@@ -91,6 +112,7 @@ internal_structure:
         <i>Rules:</i><br/>Describe the internal structure of a corporate body and the dates of any changes to that structure that
         are significant to the understanding of the way that corporate body conducted its affairs (e.g. by means of dated organization charts).
         Describe the genealogy of a family (e.g. by means of a family tree) in a way that demonstrates the inter-relationships of its members with covering dates.
+
 general_context:
   title: General context
   text: >
@@ -98,6 +120,7 @@ general_context:
         context in which the corporate body, person or family operated, lived or was active.<br/><br/>
         <i>Rule:</i><br/>Provide any significant information on the social, cultural, economic, political and/or historical context
         in which the entity being described operated.
+
 institution_identifier:
   title: Institution identifiers
   text: >
@@ -106,6 +129,7 @@ institution_identifier:
         dissemninating the authority record or, alternatively, record a code for the agency in accordance with
         the national or international agency code standard. Include reference to any systems of identification
         used to identify the institutions (e.g. ISO 15511).
+
 old_id:
   title: Authority record identifier
   text: >
@@ -115,12 +139,14 @@ old_id:
         created in accordance with the latest version of ISO 3166 Codes for the representation of names of countries.<br/><br/>
         Where the creator of the authority record is an international organization, give the organizational
         identifier in place of the country code.
+
 language:
   title: Language(s) and script(s)
   text: >
         <i>Purpose:</i><br/>To indicate the language(s) and/or script(s) used to create the authority record.<br/><br/>
         <i>Rule:</i><br/>Record the language(s) and/or script(s) of the archival authority record. Include the appropriate
         ISO codes for languages (ISO 639-2) and/or scripts (ISO 15924 Codes for the representation of names of scripts).
+
 level_of_detail:
   title: Level of detail
   text: >
@@ -130,6 +156,7 @@ level_of_detail:
         rules, minimal records are those that consist only of the four essential elements of an ISAAR(CPF)
         compliant authority record (see 4.8), while full records are those that convey information for all
         relevant ISAAR(CPF) elements of description.
+
 status:
   title: Status
   text: >
@@ -137,6 +164,7 @@ status:
         the authority record.<br/><br/>
         <i>Rule:</i><br/>Record the current status of the authority record, indicating whether the record is a draft, finalized
         and/or revised or deleted.
+
 convention:
   title: Rules and/or conventions
   text: >
@@ -146,11 +174,13 @@ convention:
         applied. Specify separately which rules have been applied for creating the Authorized form of name.
         Include reference to any system(s) of dating used to identify dates in this authority record (e.g. ISO
         8601).
+
 source:
   title: Sources
   text: >
         <i>Purpose:</i><br/>To identify the sources consulted in creating the authority record.<br/><br/>
         <i>Rule:</i><br/>Record the sources consulted in establishing the authority record.
+
 internal_note:
   title: Internal note
   text: >

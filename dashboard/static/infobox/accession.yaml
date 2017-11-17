@@ -1,0 +1,88 @@
+list_page:
+  title: Accession
+  text: >
+        Blablabla
+
+edit_page:
+  title: Accession Create/Edit
+  text: >
+
+seq:
+  title: Sequence Number
+  text: >
+
+creator:
+  title: Creator
+  text: >
+
+title:
+  title: Title
+  text: >
+
+donor:
+  title: Donor
+  text: >
+
+creation_date_from:
+  title: Creation date from
+  text: >
+
+creation_date_to:
+  title: Creation date to
+  text: >
+
+copyright_status:
+  title: Copyright status
+  text: >
+
+transfer_date:
+  title: Transfer date
+  text: >
+
+custodial_history:
+  title: Custodial history
+  text: >
+
+description:
+  title: Description
+  text: >
+
+accession_items:
+  title: Items
+  text: >
+
+method:
+  title: Accession method
+  text: >
+
+copyright_note:
+  title: Copyright note
+  text: >
+
+access_note:
+  title: Access note
+  text: >
+
+note:
+  title: Note
+  text: >
+
+building:
+  title: Building
+  text: >
+
+module:
+  title: Module
+  text: >
+
+row:
+  title: Row
+  text: >
+
+section:
+  title: Section
+  text: >
+
+shelf:
+  title: Shelf
+  text: >
