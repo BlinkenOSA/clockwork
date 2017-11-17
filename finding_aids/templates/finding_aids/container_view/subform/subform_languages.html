@@ -20,15 +20,6 @@
                 <div class="form-group">
                     <div class="input-group">
                         {% bootstrap_field form.language_usage show_label=false %}
-                        <div class="input-group-btn select2-nolabel-addon">
-                            <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:language_usage_create' %}"
-                                data-fm-head="<i class='fa fa-exchange'></i>Create Language Usage" data-fm-callback="selectField">
-                                <i class="fa fa-plus"></i>
-                            </a>
-                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:language_usage_list' %}" target="_blank">
-                                <i class="fa fa-list-alt"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
