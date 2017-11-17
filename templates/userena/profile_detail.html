@@ -25,11 +25,11 @@
 {% endblock %}
 
 {% block box-1-body %}
-    <img class="profile-user-img img-responsive img-circle" src="{{ user.user_profile.get_mugshot_url }}" alt="User profile picture">
-    <h3 class="profile-username text-center">{{ user.last_name }}, {{ user.first_name }} ({{ user.username }})</h3>
+    <img class="profile-user-img img-responsive img-circle" src="{{ profile.get_mugshot_url }}" alt="User profile picture">
+    <h3 class="profile-username text-center">{{ profile.user.last_name }}, {{ profile.user.first_name }} ({{ profile.user.username }})</h3>
     <p class="text-muted text-center">
         <strong>In Group: </strong>
-        {% for group in user.groups.all %}
+        {% for group in profile.user.groups.all %}
             {% if not forloop.first %}, {% endif %}
             {{ group }}
         {% endfor %}
@@ -37,14 +37,14 @@
     <ul class="list-group list-group-unbordered">
         {% if profile.user.email and not hide_email %}
             <li class="list-group-item">
-                <b>E-mail</b> <a class="pull-right">{{ user.email }}</a>
+                <b>E-mail</b> <a class="pull-right">{{ profile.user.email }}</a>
             </li>
         {% endif %}
         <li class="list-group-item">
-            <b>Last login</b> <a class="pull-right">{{ user.last_login }}</a>
+            <b>Last login</b> <a class="pull-right">{{ profile.user.last_login }}</a>
         </li>
         <li class="list-group-item">
-            <b>Member since</b> <a class="pull-right">{{ user.date_joined }}</a>
+            <b>Member since</b> <a class="pull-right">{{ profile.user.date_joined }}</a>
         </li>
     </ul>
 {% endblock %}
@@ -52,17 +52,17 @@
 {% block box-1-footer %}
     <div class="row">
         <div class="col-xs-12">
-            <a href="{% url 'userena_profile_edit' user.username %}" class="btn btn-default btn-block"><i class="fa fa-user"></i> {% trans "Edit Profile" %}</a>
+            <a href="{% url 'userena_profile_edit' profile.user.username %}" class="btn btn-default btn-block"><i class="fa fa-user"></i> {% trans "Edit Profile" %}</a>
         </div>
     </div><br/>
     <div class="row">
         <div class="col-xs-12">
-            <a href="{% url 'userena_password_change' user.username %}" class="btn btn-default btn-block"><i class="fa fa-key"></i> {% trans "Change password" %}</a>
+            <a href="{% url 'userena_password_change' profile.user.username %}" class="btn btn-default btn-block"><i class="fa fa-key"></i> {% trans "Change password" %}</a>
         </div>
     </div><br/>
     <div class="row">
         <div class="col-xs-12">
-            <a href="{% url 'userena_email_change' user.username %}" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> {% trans "Change email" %}</a>
+            <a href="{% url 'userena_email_change' profile.user.username %}" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> {% trans "Change email" %}</a>
         </div>
     </div><br/>
     <div class="row">
