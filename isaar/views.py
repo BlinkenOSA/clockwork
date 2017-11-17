@@ -24,7 +24,7 @@ class IsaarList(IsaarPermissionMixin, TemplateView):
 class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
     model = Isaar
     columns = ['id', 'name', 'type', 'status', 'action']
-    order_columns = ['id', 'name', '', '', '']
+    order_columns = ['name']
     max_display_length = 500
 
     def filter_queryset(self, qs):
