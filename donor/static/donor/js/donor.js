@@ -5,10 +5,9 @@ var table = $('#donor_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
- 	       { "width": "60px" },
- 	       null,
- 	       null,
-		   { "width": "100px", "class": "action_column" }
+ 	       { "data": 'name' },
+ 	       { "data": 'address', "sortable": false },
+		   { "data": 'action', "sortable": false, "width": "100px", "class": "action_column" }
  	 ],
 });
 

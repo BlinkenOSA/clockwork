@@ -26,7 +26,7 @@ class DonorList(DonorPermissionMixin, TemplateView):
 class DonorListJson(DonorPermissionMixin, BaseDatatableView):
     model = Donor
     columns = ['id', 'name', 'address', 'action']
-    order_columns = ['id', 'name', '', '']
+    order_columns = ['name',]
     max_display_length = 500
 
     def filter_queryset(self, qs):
@@ -49,6 +49,17 @@ class DonorListJson(DonorPermissionMixin, BaseDatatableView):
                                     context={'id': row.id, 'accession_exist': accesson_exist})
         else:
             return super(DonorListJson, self).render_column(row, column)
+
+    def prepare_results(self, qs):
+        json_array = []
+        columns = self.get_columns()
+
+        for item in qs:
+            data = {"DT_RowId": item.id}
+            for column in columns:
+                data[column] = self.render_column(item, column)
+            json_array.append(data)
+        return json_array
 
 
 class DonorDetail(DonorPermissionMixin, DetailView):
