@@ -59,19 +59,6 @@ $('#isad_filter_series').on('click', function(e) {
 	$(this).addClass('active');
 })
 
-$('tbody').on('click','.btn-action',function(e) {
-	e.preventDefault();
-	$.ajax({
-      type: 'POST',
-	  success: function(data) {
-		  table.row('#' + data['DT_rowId']).data(data);
-	  },
-      error: function(){ },
-      url: $(this).attr("href"),
-      cache: false
-    });
-});
-
 $(function() {
 	$.fm({
 		modal_head_selector: '.modal-title',
@@ -82,5 +69,23 @@ $(function() {
                 displayMessage(data["message"]);
             }
         }
+	});
+});
+
+$('tbody').on('click','.btn-action',function(e) {
+	e.preventDefault();
+	var url = $(this).attr("href");
+	var msg = "Are you sure you want to 'Publish/Unpublish' the ISAD(G) record?";
+	alertify.confirm(msg, function (e) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.row('#' + data['DT_rowId']).data(data);
+			},
+			error: function () {
+			},
+			url: url,
+			cache: false
+		});
 	});
 });
