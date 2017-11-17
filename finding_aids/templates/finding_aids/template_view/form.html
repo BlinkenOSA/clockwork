@@ -38,14 +38,14 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ series.title_full|truncatechars:100 }}
+            {{ series.title_full|truncatechars:40 }}
         </li>
         <li>
             {% trans 'Finding Aids Templates' %}
         </li>
         <li class="active">
             {% if object %}
-                {% trans 'Edit Finding Aids Template - '%}{{ object.template_name }}
+                {% trans 'Edit Finding Aids Template - '%}{{ object.template_name|truncatechars:40 }}
             {% else %}
                 {% trans 'Create Finding Aids Template' %}
             {% endif %}

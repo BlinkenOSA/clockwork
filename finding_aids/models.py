@@ -126,12 +126,15 @@ class FindingAidsEntity(CloneableMixin, models.Model):
                                                                 self.folder_no,
                                                                 self.sequence_no)
 
+        super(FindingAidsEntity, self).save()
+
+        if not self.is_template:
             # Add hashids
             hashids = Hashids(salt="blinkenosa", min_length=10)
             if not self.catalog_id:
                 self.catalog_id = hashids.encode(self.id)
 
-        super(FindingAidsEntity, self).save()
+            super(FindingAidsEntity, self).save()
 
     def __unicode__(self):
         if self.is_template:

@@ -25,3 +25,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('isaar', 'list_page');

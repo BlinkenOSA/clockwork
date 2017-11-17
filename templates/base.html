@@ -81,24 +81,6 @@
                         </a>
                     </li>
 
-                    {% if perms.archival_unit %}
-                        <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
-                            <a href="{% url 'archival_unit:fonds' %}">
-                                <i class="fa fa-sitemap"></i>
-                                <span>{% trans "Archival Unit" %}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if perms.isaar %}
-                        <li class="{% if 'isaar' in request.path %}active{% endif %}">
-                            <a href="{% url 'isaar:list' %}">
-                                <i class="fa fa-male"></i>
-                                <span>{% trans "ISAAR/CPF" %}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-
                     {% if perms.accession or perms.donor %}
                         <li class="treeview {% if 'donor' in request.path or 'accession' in request.path %}active{% endif %}">
                             <a href="#">
@@ -121,6 +103,24 @@
                                     </li>
                                 {% endif %}
                             </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.archival_unit %}
+                        <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
+                            <a href="{% url 'archival_unit:fonds' %}">
+                                <i class="fa fa-sitemap"></i>
+                                <span>{% trans "Archival Unit" %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.isaar %}
+                        <li class="{% if 'isaar' in request.path %}active{% endif %}">
+                            <a href="{% url 'isaar:list' %}">
+                                <i class="fa fa-male"></i>
+                                <span>{% trans "ISAAR/CPF" %}</span>
+                            </a>
                         </li>
                     {% endif %}
 
@@ -377,7 +377,7 @@
                                 <span class="info-text-header">
                                     {% block infobox_header %}{% endblock %}
                                 </span>
-                                {% block infobox_text %}{% endblock %}
+                                <p></p>
                             </div>
                         </div>
                     </li>

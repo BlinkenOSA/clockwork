@@ -28,7 +28,7 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
 
     def get_initial_queryset(self):
         container = Container.objects.get(pk=self.kwargs['container_id'])
-        finding_aids_entities = FindingAidsEntity.objects.filter(container=container).order_by('folder_no')
+        finding_aids_entities = FindingAidsEntity.objects.filter(container=container).order_by('folder_no', 'sequence_no')
         return finding_aids_entities
 
     def render_column(self, row, column):

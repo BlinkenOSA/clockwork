@@ -77,7 +77,7 @@ class IsadListJson(IsadPermissionMixin, BaseDatatableView):
         if search:
             qs = qs.filter(
                 Q(reference_code__icontains=search) |
-                Q(title__country__icontains=search)
+                Q(title__icontains=search)
             )
         return qs
 

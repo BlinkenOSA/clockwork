@@ -25,9 +25,11 @@
         {% include 'isad/subform/subform_creators.html' %}
     </div>
     <div class="col-md-6">
-        <div class="input-group">
-            {% bootstrap_field form.isaar %}
-            {% include 'isad/subform/subform_isaar_addon.html' %}
+        <div class="form-group">
+            <div class="input-group">
+                {% bootstrap_field form.isaar %}
+                {% include 'isad/subform/subform_isaar_addon.html' %}
+            </div>
         </div>
         {% bootstrap_field form.language %}
     </div>
