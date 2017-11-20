@@ -28,7 +28,7 @@ class AccessionForm(ModelForm):
 
     class Meta:
         model = Accession
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'seq': ugettext('Accession Number')
         }

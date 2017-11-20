@@ -42,7 +42,8 @@ class IsadForm(ModelForm):
 
     class Meta:
         model = Isad
-        exclude = ['archival_unit', 'published', 'user_published', 'date_published']
+        exclude = ['archival_unit', 'published', 'user_published', 'date_published', 'user_created', 'date_created',
+                   'user_updated', 'date_updated']
         labels = {
             'year_from': ugettext('Date (From)'),
             'year_to': ugettext('Date (To)'),
@@ -114,14 +115,17 @@ class IsadForm(ModelForm):
                 creator_not_exists = False
         if creator_not_exists and not isaar:
             raise ValidationError(ugettext("Creator or Creator (ISAAR) should be selected."))
+        return isaar
 
     def clean_access_rights(self):
-        if (not self.cleaned_data['access_rights']) or (not self.data['access_rights_legacy']):
+        if (not self.cleaned_data['access_rights']) and (not self.data['access_rights_legacy']):
             raise ValidationError(ugettext("Access Rights or Access Rights (Legacy) should be entered."))
+        return self.cleaned_data['access_rights']
 
     def clean_reproduction_rights(self):
-        if (not self.cleaned_data['reproduction_rights']) or (not self.data['reproduction_rights_legacy']):
+        if (not self.cleaned_data['reproduction_rights']) and (not self.data['reproduction_rights_legacy']):
             raise ValidationError(ugettext("Reproduction Rights or Reproduction Rights (Legacy) should be entered."))
+        return self.cleaned_data['reproduction_rights']
 
     def clean_original_locale(self):
         original_exists = False
@@ -148,11 +152,15 @@ class IsadForm(ModelForm):
 
         if original_exists and not self.cleaned_data["original_locale"]:
             raise ValidationError({ugettext("Original langauge should be selected.")})
+        return self.cleaned_data['original_locale']
 
     def clean(self):
+        cleaned_data = self.cleaned_data
+
         if self.has_changed():
             self.cleaned_data["approved"] = False
 
+        return cleaned_data
 
 class IsadCreatorInline(InlineFormSet):
     extra = 1

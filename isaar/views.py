@@ -38,11 +38,9 @@ class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            accession_exist = row.accession_set.filter(pk=row.id).exists()
             isad_exist = row.isad_set.filter(pk=row.id).exists()
-            exist = accession_exist or isad_exist
             return render_to_string('isaar/table_action_buttons.html',
-                                    context={'id': row.id, 'exist': exist})
+                                    context={'id': row.id, 'exist': isad_exist})
         elif column == 'type':
             return dict(TYPE_CHOICES)[row.type]
         else:

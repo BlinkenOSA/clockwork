@@ -51,7 +51,7 @@ class Isaar(models.Model):
 
     class Meta:
         db_table = 'isaar_records'
-        ordering = ['old_id']
+        ordering = ['name']
 
 
 class IsaarRelationship(models.Model):

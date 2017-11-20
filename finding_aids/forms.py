@@ -147,7 +147,8 @@ class FindingAidsForm(FindingAidsBaseForm):
     level_hidden = CharField(widget=HiddenInput(), required=False)
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published',
+                   'user_created', 'date_created', 'user_updated', 'date_updated']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
@@ -176,7 +177,8 @@ class FindingAidsUpdateForm(FindingAidsBaseForm):
                         widget=Select(attrs={'disabled': True}))
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published',
+                   'user_created', 'date_created', 'user_updated', 'date_updated']
 
     def clean_title(self):
         if not self.cleaned_data['title']:

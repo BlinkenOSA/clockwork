@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django_date_extensions.fields import ApproximateDateField

@@ -11,7 +11,6 @@ class Accession(models.Model):
     seq = models.CharField(unique=True, max_length=10, blank=True, null=True)
 
     title = models.CharField(max_length=300)
-    creator = models.ManyToManyField('isaar.Isaar')
     transfer_date = ApproximateDateField()
     method = models.ForeignKey('AccessionMethod', on_delete=models.PROTECT)
     description = models.TextField(blank=True, null=True)
@@ -27,7 +26,7 @@ class Accession(models.Model):
     creation_date_from = ApproximateDateField(blank=True)
     creation_date_to = ApproximateDateField(blank=True)
     custodial_history = models.TextField(blank=True, null=True)
-    copyright_status = models.ForeignKey('AccessionCopyrightStatus', on_delete=models.PROTECT)
+    copyright_status = models.ForeignKey('AccessionCopyrightStatus', on_delete=models.PROTECT, blank=True, null=True)
     copyright_note = models.TextField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
 
