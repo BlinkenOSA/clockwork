@@ -24,6 +24,9 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     old_id = models.CharField(max_length=12, blank=True, null=True)
     catalog_id = models.CharField(max_length=12, blank=True, null=True)
 
+    DESCRIPTION_LEVEL = [('L1', 'Level 1'), ('L2', 'Level 2')]
+    description_level = models.CharField(max_length=2, choices=DESCRIPTION_LEVEL, default='L1')
+
     FINDING_AIDS_LEVEL = [('F', 'Folder'), ('I', 'Item')]
     level = models.CharField(max_length=1, choices=FINDING_AIDS_LEVEL, default='F')
 
@@ -116,7 +119,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
         if self.is_template:
             self.archival_reference_code = "%s-TEMPLATE" % self.archival_unit.reference_code
         else:
-            if self.level == 'F':
+            if self.description_level == 'L1':
                 self.archival_reference_code = "%s/%s:%s" % (self.container.archival_unit.reference_code,
                                                              self.container.container_no,
                                                              self.folder_no)
@@ -235,7 +238,8 @@ class FindingAidsEntityLanguage(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     language = models.ForeignKey('authority.Language', on_delete=models.PROTECT)
-    language_usage = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL, blank=True, null=True)
+    language_usage = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL,
+                                       blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_languages'

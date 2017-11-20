@@ -3,14 +3,16 @@
 {% load widget_tweaks %}
 
 <fieldset>
-    {% bootstrap_field form.level_hidden %}
     <div class="col-md-3">
-        {% bootstrap_field form.level %}
+        {% bootstrap_field form.description_level %}
     </div>
     <div class="col-md-3">
         {% bootstrap_field form.folder_no %}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
+        {% bootstrap_field form.level %}
+    </div>
+    <div class="col-md-3">
         {% bootstrap_field form.uuid %}
     </div>
 </fieldset>

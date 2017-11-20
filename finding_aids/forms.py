@@ -102,7 +102,8 @@ class FindingAidsBaseForm(ModelForm):
         exclude = '__all__'
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
-            'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
+            'folder_no': mark_safe(ugettext('Level 1 Number')),
+            'level': mark_safe(ugettext('Folder/Item')),
             'title_original': mark_safe(ugettext('Title - Original Language') + IMG_FLAG),
             'contents_summary_original': mark_safe(ugettext('Contents Summary - Original Language') + IMG_FLAG),
             'language_statement_original': mark_safe(ugettext('Language Statement - Original Language') + IMG_FLAG),
@@ -144,7 +145,7 @@ class FindingAidsBaseForm(ModelForm):
 
 
 class FindingAidsForm(FindingAidsBaseForm):
-    level_hidden = CharField(widget=HiddenInput(), required=False)
+    description_level_hidden = CharField(widget=HiddenInput(), required=False)
 
     class Meta(FindingAidsBaseForm.Meta):
         exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published',
@@ -163,7 +164,8 @@ class FindingAidsForm(FindingAidsBaseForm):
 
 class FindingAidsTemplateForm(FindingAidsBaseForm):
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level',
+                   'description_level']
 
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
@@ -172,7 +174,9 @@ class FindingAidsTemplateForm(FindingAidsBaseForm):
 
 
 class FindingAidsUpdateForm(FindingAidsBaseForm):
-    level_hidden = CharField(widget=HiddenInput(), required=False)
+    description_level = ChoiceField(required=False, choices=FindingAidsEntity.DESCRIPTION_LEVEL,
+                                    widget=Select(attrs={'disabled': True}))
+
     level = ChoiceField(required=False, choices=FindingAidsEntity.FINDING_AIDS_LEVEL,
                         widget=Select(attrs={'disabled': True}))
 
@@ -193,7 +197,8 @@ class FindingAidsUpdateForm(FindingAidsBaseForm):
 
 class FindingAidsTemplateUpdateForm(FindingAidsBaseForm):
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level',
+                   'description_level']
 
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:

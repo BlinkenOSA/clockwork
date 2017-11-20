@@ -48,15 +48,19 @@ $(function() {
 
 /* TEMP */
 
-$('#id_level').on('change', function() {
-	var selection = ($('#id_level').val());
+$('#id_description_level').on('change', function() {
+	var selection = ($('#id_description_level').val());
 	switch(selection) {
-		case 'F':
+		case 'L1':
 			calculateFolderNumber();
+			$("#id_level").prepend("<option value='F'>Folder</option>");
+			$('#id_level').val('F');
 			$('#id_folder_no').prop('readonly', true);
 			break;
-		case 'I':
+		case 'L2':
 			calculateItemNumber();
+			$('#id_level').val('I');
+			$("#id_level option[value='F']").remove();
 			$('#id_folder_no').prop('readonly', false);
 			break;
 	}
@@ -65,7 +69,6 @@ $('#id_level').on('change', function() {
 $('#id_folder_no').on('change', function() {
 	calculateItemNumber();
 });
-
 
 function calculateFolderNumber() {
 	$.ajax({

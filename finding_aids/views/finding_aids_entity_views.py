@@ -31,6 +31,7 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
     def get_initial(self):
         initial = {}
         container = Container.objects.get(pk=self.kwargs['container_id'])
+        initial['description_level'] = 'L1'
         initial['level'] = 'F'
         folder_no = get_number_of_folders(container.id) + 1
         initial['folder_no'] = folder_no
@@ -48,7 +49,7 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
         self.object.archival_unit = container.archival_unit
         self.object.container = container
         self.object.primary_type = container.primary_type
-        if self.object.level == 'I':
+        if self.object.description_level == 'L2':
             item_no = get_number_of_items(self.object.container.id, self.object.folder_no)
             self.object.sequence_no = item_no + 1
             self.object.archival_reference_code = "%s/%s:%s-%s" % (self.object.container.archival_unit.reference_code,
@@ -82,10 +83,6 @@ class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, Find
         context = super(FindingAidsUpdate, self).get_context_data(**kwargs)
         context['container'] = self.object.container
         return context
-
-    def get_initial(self):
-        initial = {'level_hidden': self.object.level}
-        return initial
 
     def forms_valid(self, form, formset):
         container = Container.objects.get(pk=self.kwargs['container_id'])
@@ -144,6 +141,7 @@ def collect_initial(template, container):
 
     # Set values
     initial['is_template'] = False
+    initial['description_level'] = 'L1'
     initial['level'] = 'F'
     folder_no = get_number_of_folders(container.id) + 1
     initial['folder_no'] = folder_no
@@ -233,14 +231,18 @@ class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
                      str(finding_aids.date_to) if finding_aids.date_to else ""]
 
             folder_no = finding_aids.container.archival_unit.reference_code + '/' + \
-                        str(finding_aids.container.container_no) + \
-                        ':' + str(finding_aids.folder_no)
+                str(finding_aids.container.container_no) + ':' + str(finding_aids.folder_no)
+
             if finding_aids.level == 'F':
                 icon = '<i class="fa fa-folder-open-o"></i>'
-                level = '<span class="call_no_folder">' + icon + folder_no + '</span>'
             else:
                 icon = '<i class="fa fa-file-o"></i>'
-                level = '<span class="call_no_item">' + icon + folder_no + '-' + str(finding_aids.sequence_no) + '</span>'
+
+            if finding_aids.description_level == 'L1':
+                level = '<span class="call_no_level_1">' + icon + folder_no + '</span>'
+            else:
+                level = '<span class="call_no_level_2">' + icon + folder_no + '-' \
+                        + str(finding_aids.sequence_no) + '</span>'
 
             context = {
                 'DT_rowId': finding_aids.id,
