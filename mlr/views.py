@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import csv
+
 from django.db.models import Q
+from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext
-from django.views.generic import TemplateView, FormView
+from django.views.generic import FormView, View
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from fm.views import AjaxUpdateView
 
@@ -86,3 +89,37 @@ class MLRUpdate(MLRPermissionMixin, AjaxUpdateView):
 
     def get_response_message(self):
         return ugettext("MLR was updated successfully!")
+
+
+class MLRExportCSV(View):
+    def get(self, request, *args, **kwargs):
+        if 'fonds_id' in request.GET:
+            archival_unit = ArchivalUnit.objects.get(id=request.GET['fonds_id'])
+            mlr_records = MLREntity.objects.filter(series__level='S',
+                                                   series__fonds=archival_unit.fonds).order_by('series__sort',
+                                                                                               'carrier_type__type')
+            file_name = "mlr_hu_osa_%s.csv" % archival_unit.fonds
+        else:
+            mlr_records = MLREntity.objects.all().order_by('series__sort', 'carrier_type__type')
+            file_name = 'mlr_all_archival_units.csv'
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=%s' % file_name
+
+        field_names = ['series', 'carrier', 'building', 'module', 'section', 'row', 'shelf']
+
+        writer = csv.DictWriter(response, delimiter=str(u";"), fieldnames=field_names)
+        writer.writeheader()
+
+        for mlr in mlr_records:
+            writer.writerow({
+                'series': mlr.series.reference_code,
+                'carrier': mlr.carrier_type.type,
+                'building': mlr.building,
+                'module': mlr.module,
+                'section': mlr.section,
+                'row': mlr.row,
+                'shelf': mlr.shelf
+            })
+
+        return response

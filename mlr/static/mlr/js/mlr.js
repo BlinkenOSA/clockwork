@@ -21,11 +21,13 @@ var table = $('#mlr_table').DataTable({
 
 $('#id_fonds').on('change', function (evt) {
 	table.ajax.reload();
+	$('#mlr_csv_export').attr('href', '/mlr/exportcsv?fonds_id=' + $(this).val());
 });
 
 $('#mlr_filter_fonds_select_reset').on('click', function(e) {
 	e.preventDefault();
 	$("#id_fonds").val([]).trigger('change');
+	$('#mlr_csv_export').attr('href', '/mlr/exportcsv');
 });
 
 $(function() {
