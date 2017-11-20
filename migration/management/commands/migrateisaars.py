@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from pytz import timezone
 
 from isaar.models import Isaar, IsaarStandardizedName, IsaarOtherName, IsaarParallelName
+from isad.models import Isad
 from migration.management.commands.common_functions import get_user, get_approx_date, get_approx_date_from_string
 
 
@@ -59,6 +60,19 @@ class Command(BaseCommand):
                     isaar.date_created = tz_budapest.localize(last_edited)
                     isaar.date_updated = tz_budapest.localize(last_edited)
                     isaar.save()
+
+                    # Add ISAAR to ISAD(G)
+                    ref_code = "HU OSA %s" % row['FondsID']
+                    if row['SubfondsID']:
+                        ref_code = "HU OSA %s-%s" % (row['FondsID'], row['SubfondsID'])
+                    if row['SeriesID']:
+                        ref_code = "HU OSA %s-%s-%s" % (row['FondsID'], row['SubfondsID'], row['SeriesID'])
+
+                    isad = Isad.objects.filter(reference_code=ref_code).first()
+
+                    if isad:
+                        isad.isaar.add(isaar)
+                        isad.save()
 
                 except IntegrityError as e:
                     print ('Error with %s: %s' % (isaar.name.encode('utf-8'), e.args[1]))

@@ -23,7 +23,7 @@ class IsaarList(IsaarPermissionMixin, TemplateView):
 
 class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
     model = Isaar
-    columns = ['id', 'name', 'type', 'status', 'action']
+    columns = ['id', 'name', 'type', 'isad', 'status', 'action']
     order_columns = ['name']
     max_display_length = 500
 
@@ -38,11 +38,19 @@ class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            isad_exist = row.isad_set.filter(pk=row.id).exists()
+            isad_exist = row.isad_set.exists()
             return render_to_string('isaar/table_action_buttons.html',
                                     context={'id': row.id, 'exist': isad_exist})
+        elif column == 'isad':
+            values = list(row.isad_set.values_list('reference_code', flat=True))
+            return ', '.join(values)
         elif column == 'type':
             return dict(TYPE_CHOICES)[row.type]
+        elif column == 'status':
+            if row.status == 'Draft':
+                return '<span class="label label-warning">draft</span>'
+            else:
+                return '<span class="label label-success">final</span>'
         else:
             return super(IsaarListJson, self).render_column(row, column)
 

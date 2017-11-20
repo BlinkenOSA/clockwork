@@ -7,7 +7,8 @@ var table = $('#isaar_table').dataTable({
 	"columns": [
 			{ "data": "name", "sortable": true },
             { "data": "type", "sortable": false },
-            { "data": "status", "sortable": false },
+			{ "data": "isad", "sortable": false },
+            { "data": "status", "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
     ]
 });
