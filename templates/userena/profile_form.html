@@ -86,6 +86,16 @@
                 {% bootstrap_field field %}
             {% endfor %}
         </fieldset>
+        {% if allowed_archival_units %}
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="id_privacy">Allowed Archival Units</label>
+                    {% for unit in allowed_archival_units %}
+                        <p>{{ unit.title_full }}</p>
+                    {% endfor %}
+                </div>
+            </fieldset>
+        {% endif %}
     </div>
 {% endblock %}
 

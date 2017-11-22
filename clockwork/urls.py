@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from django.contrib.auth import views as auth_views
+
+from accounts.views import custom_profile_edit
 from dashboard.views import DashboardView
 
 urlpatterns = [
@@ -25,7 +27,9 @@ urlpatterns = [
 
     url(r'^mlr/', include('mlr.urls', namespace='mlr')),
 
+    url(r'^accounts/(?P<username>[\@\.\+\w-]+)/edit/$', custom_profile_edit, name='profile_edit'),
     url(r'^accounts/', include('userena.urls')),
+
     url(r'^select2/', include('django_select2.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
