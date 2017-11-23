@@ -28,6 +28,9 @@ class Container(models.Model):
         db_table = 'containers'
         unique_together = ('archival_unit', 'container_no')
 
+    def get_reference_code(self):
+        return "%s/%s" % (self.archival_unit.reference_code, self.container_no)
+
     def __unicode__(self):
         return "Container #%s / %s" % (self.container_no, self.carrier_type)
 

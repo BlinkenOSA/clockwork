@@ -73,5 +73,29 @@
 {% endblock %}
 
 {% block box-2-title %}
-    {% trans 'History' %}
+    {% trans 'History (Last 20 activities)' %}
+{% endblock %}
+
+{% block box-2-body %}
+    <br/>
+    <div class="col-md-12">
+        {% if audit_log %}
+            <dl>
+            {% for log in audit_log %}
+                <dt>On {{ log.date }} your activities were:</dt>
+                <ul>
+                {% for activity in log.entries %}
+                    <li>
+                        {{ activity.module }} was {{ activity.action }}<br/>
+                        <i>
+                            {{ activity.text }}
+                        </i>
+
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </dl>
+        {% endif %}
+    </div>
 {% endblock %}

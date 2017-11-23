@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from django.contrib.auth import views as auth_views
 
-from accounts.views import custom_profile_edit
+from accounts.views import custom_profile_edit, custom_profile_detail
 from dashboard.views import DashboardView
 
 urlpatterns = [
@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^mlr/', include('mlr.urls', namespace='mlr')),
 
     url(r'^accounts/(?P<username>[\@\.\+\w-]+)/edit/$', custom_profile_edit, name='profile_edit'),
+    url(r'^accounts/(?P<username>(?!(signout|signup|signin)/)[\@\.\+\w-]+)/$', custom_profile_detail,
+        name='profile_detail'),
     url(r'^accounts/', include('userena.urls')),
 
     url(r'^select2/', include('django_select2.urls')),
