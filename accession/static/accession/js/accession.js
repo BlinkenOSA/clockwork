@@ -24,3 +24,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('accession', 'list_page');

@@ -89,3 +89,5 @@ $('tbody').on('click','.btn-action',function(e) {
 		});
 	});
 });
+
+infobox_call_and_update('isad', 'list_page');

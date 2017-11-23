@@ -23,3 +23,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('donor', 'list_page');
