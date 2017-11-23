@@ -3,14 +3,16 @@
 {% load widget_tweaks %}
 
 <fieldset>
-    {% bootstrap_field form.level_hidden %}
     <div class="col-md-3">
-        {% bootstrap_field form.level %}
+        {% bootstrap_field form.description_level %}
     </div>
     <div class="col-md-3">
         {% bootstrap_field form.folder_no %}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
+        {% bootstrap_field form.level %}
+    </div>
+    <div class="col-md-3">
         {% bootstrap_field form.uuid %}
     </div>
 </fieldset>
@@ -42,6 +44,11 @@
     </div>
     <div class="col-md-2">
         {% bootstrap_field form.date_ca_span %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-12">
+        {% include 'finding_aids/container_view/subform/subform_dates.html' %}
     </div>
 </fieldset>
 <fieldset>

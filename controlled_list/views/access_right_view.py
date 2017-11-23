@@ -10,15 +10,15 @@ from controlled_list.forms import AccessRightForm
 from controlled_list.models import AccessRight
 
 
-class AccessionPermissionMixin(GeneralAllPermissionMixin):
+class AccessRightMixin(GeneralAllPermissionMixin):
     permission_model = AccessRight
 
 
-class AccessRightList(AccessionPermissionMixin, TemplateView):
+class AccessRightList(AccessRightMixin, TemplateView):
     template_name = 'controlled_list/access_rights/list.html'
 
 
-class AccessRightListJson(AccessionPermissionMixin, BaseDatatableView):
+class AccessRightListJson(AccessRightMixin, BaseDatatableView):
     model = AccessRight
     columns = ['id', 'statement', 'action']
     order_columns = ['statement']
@@ -50,7 +50,7 @@ class AccessRightListJson(AccessionPermissionMixin, BaseDatatableView):
         return json_array
 
 
-class AccessRightCreate(AccessionPermissionMixin, AjaxCreateView):
+class AccessRightCreate(AccessRightMixin, AjaxCreateView):
     form_class = AccessRightForm
     model = AccessRight
     template_name = 'controlled_list/access_rights/form.html'
@@ -59,7 +59,7 @@ class AccessRightCreate(AccessionPermissionMixin, AjaxCreateView):
         return ugettext("Access Right: %s was created successfully!") % self.object
 
 
-class AccessRightUpdate(AccessionPermissionMixin, AjaxUpdateView):
+class AccessRightUpdate(AccessRightMixin, AjaxUpdateView):
     form_class = AccessRightForm
     model = AccessRight
     template_name = 'controlled_list/access_rights/form.html'

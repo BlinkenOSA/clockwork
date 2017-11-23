@@ -22,6 +22,7 @@
     "admin-lte": "adminLTE#^2.4.2",
     "alertifyjs": "^1.0.11",
     "select2-bootstrap-theme": "^0.1.0-beta.10",
-    "flag-css": "^0.0.12"
+    "flag-css": "^0.0.12",
+    "chart.js": "^2.7.1"
   }
 }

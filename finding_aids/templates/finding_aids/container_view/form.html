@@ -16,6 +16,14 @@
     <script src="{% static 'finding_aids/js/finding_aids-form.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit Folder/Item - '%}{{ object.title }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create Folder/Item' %}
+    {% endif %}
+{% endblock %}
+
 {% block notifications %}
     {% include 'notifications-errors.html' %}
 {% endblock %}
@@ -30,7 +38,7 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ container.archival_unit.title_full }}
+            {{ container.archival_unit.title_full|truncatechars:40 }}
         </li>
         <li>
             Container #{{ container.container_no }} / {{ container.carrier_type.type }}
@@ -39,7 +47,11 @@
             {% trans 'Finding Aids Records' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit Folder/Item - '%}{{ object.title|truncatechars:40 }}
+            {% else %}
+                {% trans 'Create Folder/Item' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

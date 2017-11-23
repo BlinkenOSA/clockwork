@@ -12,9 +12,10 @@ class Isaar(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     old_id = models.CharField(max_length=20, blank=True, null=True)
+    legacy_id = models.CharField(max_length=20, blank=True, null=True)
 
     # Required Values
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=255, unique=True)
     type = models.CharField(max_length=1, validators=[validate_type])
     date_existence_from = ApproximateDateField()
     date_existence_to = ApproximateDateField(blank=True)
@@ -50,7 +51,7 @@ class Isaar(models.Model):
 
     class Meta:
         db_table = 'isaar_records'
-        ordering = ['old_id']
+        ordering = ['name']
 
 
 class IsaarRelationship(models.Model):
@@ -59,6 +60,16 @@ class IsaarRelationship(models.Model):
 
     class Meta:
         db_table = 'isaar_relationships'
+
+
+class IsaarParallelName(models.Model):
+    id = models.AutoField(primary_key=True)
+    isaar = models.ForeignKey('Isaar', on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
+
+    class Meta:
+        db_table = 'isaar_parallel_names'
+        unique_together = ('isaar', 'name')
 
 
 class IsaarOtherName(models.Model):

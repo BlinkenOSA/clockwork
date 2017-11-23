@@ -3,26 +3,26 @@
 {% load widget_tweaks %}
 
 <fieldset>
- 	<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-4">
-            {% bootstrap_field form.reference_code|attr:"readonly:readonly" %}
-            {% bootstrap_field form.year_from %}
-        </div>
-        <div class="col-md-4">
-            {% bootstrap_field form.title|attr:"readonly:readonly" %}
-            {% bootstrap_field form.year_to %}
-        </div>
-        <div class="col-md-4">
-            {% bootstrap_field form.description_level|attr:"readonly:readonly" %}
-            {% bootstrap_field form.original_locale %}
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4">
+                {% bootstrap_field form.reference_code|attr:"readonly:readonly" %}
+                {% bootstrap_field form.year_from %}
+            </div>
+            <div class="col-md-4">
+                {% bootstrap_field form.title|attr:"readonly:readonly" %}
+                {% bootstrap_field form.year_to %}
+            </div>
+            <div class="col-md-4">
+                {% bootstrap_field form.description_level|attr:"readonly:readonly" %}
+                {% bootstrap_field form.original_locale %}
+            </div>
         </div>
     </div>
-    </div>
+</fieldset>
+<fieldset>
     <div class="col-md-6">
         {% include 'isad/subform/subform_creators.html' %}
-        {% bootstrap_field form.language %}
-        {% bootstrap_field form.accruals %}
     </div>
     <div class="col-md-6">
         <div class="form-group">
@@ -31,8 +31,24 @@
                 {% include 'isad/subform/subform_isaar_addon.html' %}
             </div>
         </div>
+        {% bootstrap_field form.language %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
         {% bootstrap_field form.access_rights %}
+        {% bootstrap_field form.access_rights_legacy %}
+    </div>
+    <div class="col-md-6">
         {% bootstrap_field form.reproduction_rights %}
+        {% bootstrap_field form.reproduction_rights_legacy %}
+    </div>
+</fieldset>
+<fieldset>
+    <div class="col-md-6">
+        {% bootstrap_field form.accruals %}
+    </div>
+    <div class="col-md-6">
         {% bootstrap_field form.rights_restriction_reason %}
     </div>
 </fieldset>

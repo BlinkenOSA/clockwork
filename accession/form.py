@@ -3,7 +3,6 @@ from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
 from accession.models import Accession, AccessionItem, AccessionCopyrightStatus, AccessionMethod
-from archival_unit.widgets import ArchivalUnitSelect2Widget
 from controlled_list.models import Building
 from donor.widgets import DonorSelect2Widget
 from isaar.widgets import IsaarRecordsSelect2Widget
@@ -29,7 +28,7 @@ class AccessionForm(ModelForm):
 
     class Meta:
         model = Accession
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'seq': ugettext('Accession Number')
         }
@@ -39,7 +38,6 @@ class AccessionForm(ModelForm):
             'creation_year_to': ugettext('Date format: YYYY')
         }
         widgets = {
-            'archival_unit': ArchivalUnitSelect2Widget(attrs={'data-placeholder': '- Select Archival Unit -'}),
             'creator': IsaarRecordsSelect2Widget(attrs={'data-placeholder': '- Select Creators -'}),
             'donor': DonorSelect2Widget(attrs={'data-placeholder': '- Select Donor -'}),
             'access_note': Textarea(attrs={'rows': 5}),

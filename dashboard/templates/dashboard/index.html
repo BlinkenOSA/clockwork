@@ -1,19 +1,28 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
+
 {% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+    {{ form.media.css }}
+    <link rel="stylesheet" href="{% static 'components/Ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/select2-bootstrap-theme/dist/select2-bootstrap.min.css' %}">
+{% endblock %}
+
+{% block js %}
+    {{ form.media.js }}
+    <script src="{% static 'components/chart.js/dist/Chart.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+{% endblock %}
 
 {% block title %}
     {% trans 'Clockwork AMS - Dashboard' %}
 {% endblock %}
 
-{% block content-title %}
-    <h1>{% trans 'Dashboard' %}</h1>
-{% endblock %}
-
 {% block content-header %}
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
-        <li>
+        <li class="active">
             <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
         </li>
     </ol>
@@ -21,5 +30,18 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Dashboard' %}</h1>
+    <div class="col-md-12">
+        {% include 'dashboard/boxes/select_archival_unit.html' %}
+    </div>
+    <div class="col-md-6">
+        {% include 'dashboard/boxes/statistics_linear_meters.html' %}
+        {% include 'dashboard/boxes/statistics_published_items.html' %}
+    </div>
+    <div class="col-md-6">
+        {% include 'dashboard/boxes/statistics_isad.html' %}
+        {% include 'dashboard/boxes/statistics_duration.html' %}
+    </div>
+    <div class="col-md-12">
+        {% include 'dashboard/boxes/statistics_carrier_types.html' %}
+    </div>
 {% endblock %}

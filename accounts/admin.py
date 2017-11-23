@@ -10,7 +10,6 @@ from accounts.models import UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    exclude = ('user',)
     form = UserProfileAdminForm
 
 admin.site.register(UserProfile, UserProfileAdmin)

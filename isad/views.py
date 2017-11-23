@@ -41,38 +41,60 @@ class IsadAllowedArchivalUnitMixin(object):
 
 class IsadList(IsadPermissionMixin, FormView):
     template_name = 'isad/list.html'
+    form_class = IsadArchivalUnitForm
 
-    def get_form(self, form_class=None):
-        return IsadArchivalUnitForm(user=self.request.user)
+    def get_context_data(self, **kwargs):
+        context = super(IsadList, self).get_context_data(**kwargs)
+        context['archival_unit_count'] = self.request.user.user_profile.allowed_archival_units.count()
+        return context
 
 
 class IsadListJson(IsadPermissionMixin, BaseDatatableView):
-    model = Isad
-    columns = ['reference_code', 'title', 'view-edit-delete', 'action']
-    order_columns = ['reference_code', 'title', '', '']
+    model = ArchivalUnit
+    columns = ['reference_code', 'title', 'level', 'view-edit-delete', 'action', 'status']
+    order_columns = [['fonds', 'subfonds', 'series'], 'title', '', ['isad__published', 'fonds', 'subfonds', 'series']]
     max_display_length = 500
 
     def get_initial_queryset(self):
         user = self.request.user
-        if len(user.user_profile.allowed_archival_units.all()) > 0:
-            return Isad.objects.filter(archival_unit__in=user.user_profile.allowed_archival_units.all())
+        level = self.request.GET['level'] if 'level' in self.request.GET.keys() else ""
+        fonds = self.request.GET['fonds'] if 'fonds' in self.request.GET.keys() else ""
+
+        allowed_archival_units = user.user_profile.allowed_archival_units.all()
+
+        if fonds:
+            archival_unit = ArchivalUnit.objects.get(pk=fonds)
+            return ArchivalUnit.objects.filter(level=level,
+                                               fonds=archival_unit.fonds).order_by('sort')
         else:
-            return Isad.objects.all()
+            if len(allowed_archival_units) > 0:
+                return allowed_archival_units.order_by('sort')
+            else:
+                return ArchivalUnit.objects.filter(level=level).order_by('sort')
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
         if search:
             qs = qs.filter(
                 Q(reference_code__icontains=search) |
-                Q(title__country__icontains=search)
+                Q(title__icontains=search)
             )
         return qs
 
     def render_column(self, row, column):
         if column == 'action':
-            return render_to_string('isad/table_publish_buttons.html', context={'isad': row})
+            if hasattr(row, 'isad'):
+                return render_to_string('isad/table_publish_buttons.html', context={'isad': row.isad})
+            else:
+                return render_to_string('isad/table_create_button.html', context={'id': row.id})
         elif column == 'view-edit-delete':
-            return render_to_string('isad/table_action_buttons.html', context={'id': row.id})
+            if hasattr(row, 'isad'):
+                return render_to_string('isad/table_action_buttons.html', context={'id': row.isad.id})
+            else:
+                return ""
+        elif column == 'status':
+            status = row.isad.published if hasattr(row, 'isad') else 'not exists'
+            return render_to_string('isad/table_isad_status.html', context={'status': status})
         else:
             return super(IsadListJson, self).render_column(row, column)
 
@@ -95,9 +117,9 @@ class IsadCreate(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, InlineSucces
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
     success_message = ugettext("ISAD(G) Record: %(reference_code)s was created successfully!")
-    inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
+    inlines = [IsadCreatorInline, IsadExtentInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
-    inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
+    inlines_names = ['creators', 'extents', 'related_finding_aids', 'location_of_originals',
                      'location_of_copies']
 
     def get_initial(self):
@@ -122,9 +144,9 @@ class IsadUpdate(IsadPermissionMixin, AuditTrailContextMixin, IsadAllowedArchiva
     template_name = 'isad/form.html'
     success_url = reverse_lazy('isad:list')
     success_message = ugettext("ISAD(G) Record: %(reference_code)s was updated successfully!")
-    inlines = [IsadCreatorInline, IsadExtentInline, IsadCarrierInline, IsadRelatedFindingAidsInline,
+    inlines = [IsadCreatorInline, IsadExtentInline, IsadRelatedFindingAidsInline,
                IsadLocationOfOriginalsInline, IsadLocationOfCopiesInline]
-    inlines_names = ['creators', 'extents', 'carriers', 'related_finding_aids', 'location_of_originals',
+    inlines_names = ['creators', 'extents', 'related_finding_aids', 'location_of_originals',
                      'location_of_copies']
 
 
@@ -154,10 +176,11 @@ class IsadAction(IsadPermissionMixin, IsadAllowedArchivalUnitMixin, JSONResponse
         isad.save()
 
         context = {
-            'DT_rowId': isad.id,
+            'DT_rowId': isad.archival_unit.id,
             'title': isad.title,
             'reference_code': isad.reference_code,
             'action': render_to_string('isad/table_publish_buttons.html', context={'isad': isad}),
-            'view-edit-delete': render_to_string('isad/table_action_buttons.html', context={'id': isad.id})
+            'view-edit-delete': render_to_string('isad/table_action_buttons.html', context={'id': isad.id}),
+            'status': render_to_string('isad/table_isad_status.html', context={'status': isad.published})
         }
         return self.render_json_response(context)

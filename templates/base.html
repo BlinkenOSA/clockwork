@@ -23,8 +23,8 @@
     {% endblock %}
 
     <!-- FAVICONS -->
-    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico'%}" type="image/x-icon">
-    <link rel="icon" href="{% static 'img/favicon/favicon.ico'%}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'clockwork/img/favicon.ico'%}" type="image/x-icon">
+    <link rel="icon" href="{% static 'clockwork/img/favicon.ico'%}" type="image/x-icon">
 
     <!-- Specifying a Webpage Icon for Web Clip
          Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
@@ -60,17 +60,6 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                  <input type="text" name="q" class="form-control" placeholder="Search...">
-                      <span class="input-group-btn">
-                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                        </button>
-                      </span>
-                </div>
-                </form>
-                <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
@@ -80,24 +69,6 @@
                             <span>{% trans "Dashboard" %}</span>
                         </a>
                     </li>
-
-                    {% if perms.archival_unit %}
-                        <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
-                            <a href="{% url 'archival_unit:fonds' %}">
-                                <i class="fa fa-sitemap"></i>
-                                <span>{% trans "Archival Unit" %}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if perms.isaar %}
-                        <li class="{% if 'isaar' in request.path %}active{% endif %}">
-                            <a href="{% url 'isaar:list' %}">
-                                <i class="fa fa-male"></i>
-                                <span>{% trans "ISAAR/CPF" %}</span>
-                            </a>
-                        </li>
-                    {% endif %}
 
                     {% if perms.accession or perms.donor %}
                         <li class="treeview {% if 'donor' in request.path or 'accession' in request.path %}active{% endif %}">
@@ -121,6 +92,24 @@
                                     </li>
                                 {% endif %}
                             </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.archival_unit %}
+                        <li class="{% if 'archival_unit' in request.path %}active{% endif %}">
+                            <a href="{% url 'archival_unit:fonds' %}">
+                                <i class="fa fa-sitemap"></i>
+                                <span>{% trans "Archival Unit" %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.isaar %}
+                        <li class="{% if 'isaar' in request.path %}active{% endif %}">
+                            <a href="{% url 'isaar:list' %}">
+                                <i class="fa fa-male"></i>
+                                <span>{% trans "ISAAR/CPF" %}</span>
+                            </a>
                         </li>
                     {% endif %}
 
@@ -249,6 +238,14 @@
                                                 </a>
                                             </li>
                                         {% endif %}
+                                        {% if perms.controlled_list.add_archival_unit_theme %}
+                                            <li class="{% if 'archival_unit_theme' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:archival_unit_theme_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Archival Unit Themes' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
                                         {% if perms.controlled_list.add_building %}
                                             <li class="{% if 'building' in request.path %}active{% endif %}">
                                                 <a href="{% url 'controlled_list:building_list' %}">
@@ -270,6 +267,14 @@
                                                 <a href="{% url 'controlled_list:corporation_role_list' %}">
                                                     <i class="fa fa-circle-o"></i>
                                                     <span>{% trans 'Corporation Roles' %}</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% if perms.controlled_list.add_datetype %}
+                                            <li class="{% if 'date_type' in request.path %}active{% endif %}">
+                                                <a href="{% url 'controlled_list:date_type_list' %}">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>{% trans 'Date Types' %}</span>
                                                 </a>
                                             </li>
                                         {% endif %}
@@ -333,7 +338,7 @@
                                             <li class="{% if 'rights_restriction_reason' in request.path %}active{% endif %}">
                                                 <a href="{% url 'controlled_list:rights_restriction_reason_list' %}">
                                                     <i class="fa fa-circle-o"></i>
-                                                    <span>{% trans 'Rights Restriction Reasons' %}</span>
+                                                    <span>{% trans 'Restriction Reasons' %}</span>
                                                 </a>
                                             </li>
                                         {% endif %}
@@ -341,6 +346,15 @@
                                 </li>
                                 {% endif %}
                             </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if perms.isad %}
+                        <li class="{% if 'mlr' in request.path %}active{% endif %}">
+                            <a href="{% url 'mlr:list' %}">
+                                <i class="fa fa-university"></i>
+                                <span>{% trans 'MLR' %}</span>
+                            </a>
                         </li>
                     {% endif %}
 
@@ -352,7 +366,7 @@
                                 <span class="info-text-header">
                                     {% block infobox_header %}{% endblock %}
                                 </span>
-                                {% block infobox_text %}{% endblock %}
+                                <p></p>
                             </div>
                         </div>
                     </li>

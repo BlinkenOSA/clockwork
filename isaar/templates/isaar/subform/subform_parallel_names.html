@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+
+<div class="form-group">
+    <label class="control-label">{% trans 'Parallel forms of name' %}</label>
+    {% for form in parallel_names %}
+        <div id="{{ form.prefix }}-row" class="parallel_names-subform row subform">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            <div class="col-md-11">
+                {% bootstrap_field form.name show_label=false %}
+            </div>
+            <div class="col-md-1">
+               {{ form.DELETE|add_class:"delete-row-hidden" }}
+            </div>
+        </div>
+    {% endfor %}
+    {{ parallel_names.management_form }}
+</div>

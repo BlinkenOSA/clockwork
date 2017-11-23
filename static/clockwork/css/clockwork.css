@@ -30,7 +30,7 @@ tbody td {
 }
 
 .nav-tabs-custom {
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
 }
 
 .select2-addon {
@@ -40,7 +40,7 @@ tbody td {
 
 .select2-nolabel-addon {
     vertical-align: top !important;
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 .btn-editor {
@@ -54,7 +54,7 @@ tbody td {
 .DTE_Header_Content h3 {
     font-size: 18px;
     font-weight: 500;
-    margin: 0px;
+    margin: 0;
 }
 
 .panel-fullscreen {
@@ -96,11 +96,9 @@ tbody td {
     width: 30px;
 }
 
-/*
-.call_no_item {
-    padding-left: 10px;
+.call_no_level_2 {
+    padding-left: 20px;
 }
-*/
 
 .layout-boxed {
     background-image: none !important;
@@ -219,7 +217,7 @@ tbody td {
 }
 
 .selection .archival_unit_title.level_F, .selection .archival_unit_title.level_SF, .selection .archival_unit_title.level_S {
-    padding: 0px;
+    padding: 0;
 }
 
 li.select2-search input {
@@ -249,4 +247,18 @@ div.required label:after {
 
 .alertify-logs {
     z-index: 9999 !important;
+}
+
+.input-group .select2-container {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    display: table;
+    table-layout: fixed;
+}
+
+.label-container {
+    margin-left: 10px;
 }

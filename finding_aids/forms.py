@@ -6,14 +6,15 @@ from django.utils.translation import ugettext
 from extra_views import InlineFormSet
 
 from archival_unit.models import ArchivalUnit
+from archival_unit.widgets import ArchivalUnitSeriesContainersSelect2Widget
 from authority.widgets import *
 
-from controlled_list.models import Locale, PersonRole, CorporationRole, GeoRole, LanguageUsage, ExtentUnit
+from controlled_list.models import Locale, PersonRole, CorporationRole, GeoRole, LanguageUsage, ExtentUnit, DateType
 from controlled_list.widgets import PersonRoleSelect2Widget, GeoRoleSelect2Widget, KeywordSelect2MultipleWidget, \
-    LanguageUsageSelect2Widget, ExtentUnitSelect2Widget
+    LanguageUsageSelect2Widget, ExtentUnitSelect2Widget, DateTypeSelect2Widget, CorporationRoleSelect2Widget
 from finding_aids.models import FindingAidsEntity, FindingAidsEntityAssociatedPerson, \
     FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedCountry, FindingAidsEntityAssociatedPlace, \
-    FindingAidsEntityExtent, FindingAidsEntityLanguage
+    FindingAidsEntityExtent, FindingAidsEntityLanguage, FindingAidsEntityDate
 
 IMG_FLAG = ' <span class="flag"></span>'
 
@@ -26,7 +27,6 @@ class FindingAidsArchivalUnitForm(Form):
         qs_subfonds = ArchivalUnit.objects.filter(children__in=qs, level='SF').order_by('fonds', 'subfonds', 'series')
         qs_fonds = ArchivalUnit.objects.filter(children__in=qs_subfonds, level='F').order_by('fonds',
                                                                                              'subfonds', 'series')
-
         # If User is restricted to a particular series
         if len(qs) > 0:
             self.fields['fonds'] = ModelChoiceField(
@@ -57,7 +57,7 @@ class FindingAidsArchivalUnitForm(Form):
                 queryset=ArchivalUnit.objects.all(),
                 label='Fonds',
                 widget=ModelSelect2Widget(
-                    queryset=ArchivalUnit.objects.filter(level='F'),
+                    queryset=ArchivalUnit.objects.filter(level='F').order_by('fonds', 'subfonds', 'series'),
                     search_fields=['title__icontains', 'reference_code__icontains'],
                 )
             )
@@ -71,7 +71,7 @@ class FindingAidsArchivalUnitForm(Form):
             )
             self.fields['series'] = ModelChoiceField(
                 queryset=ArchivalUnit.objects.all(),
-                widget=ModelSelect2Widget(
+                widget=ArchivalUnitSeriesContainersSelect2Widget(
                     queryset=ArchivalUnit.objects.filter(level='S').order_by('fonds', 'subfonds', 'series'),
                     search_fields=['title__icontains', 'reference_code__icontains'],
                     dependent_fields={'subfonds': 'parent'}
@@ -101,7 +101,8 @@ class FindingAidsBaseForm(ModelForm):
         exclude = '__all__'
         labels = {
             'uuid': mark_safe(ugettext('UUID')),
-            'folder_no': mark_safe(ugettext('Folder Number (if applicable)')),
+            'folder_no': mark_safe(ugettext('Level 1 Number')),
+            'level': mark_safe(ugettext('Folder/Item')),
             'title_original': mark_safe(ugettext('Title - Original Language') + IMG_FLAG),
             'contents_summary_original': mark_safe(ugettext('Contents Summary - Original Language') + IMG_FLAG),
             'language_statement_original': mark_safe(ugettext('Language Statement - Original Language') + IMG_FLAG),
@@ -143,10 +144,11 @@ class FindingAidsBaseForm(ModelForm):
 
 
 class FindingAidsForm(FindingAidsBaseForm):
-    level_hidden = CharField(widget=HiddenInput(), required=False)
+    description_level_hidden = CharField(widget=HiddenInput(), required=False)
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published',
+                   'user_created', 'date_created', 'user_updated', 'date_updated']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
@@ -161,7 +163,8 @@ class FindingAidsForm(FindingAidsBaseForm):
 
 class FindingAidsTemplateForm(FindingAidsBaseForm):
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level',
+                   'description_level']
 
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
@@ -170,12 +173,15 @@ class FindingAidsTemplateForm(FindingAidsBaseForm):
 
 
 class FindingAidsUpdateForm(FindingAidsBaseForm):
-    level_hidden = CharField(widget=HiddenInput(), required=False)
+    description_level = ChoiceField(required=False, choices=FindingAidsEntity.DESCRIPTION_LEVEL,
+                                    widget=Select(attrs={'disabled': True}))
+
     level = ChoiceField(required=False, choices=FindingAidsEntity.FINDING_AIDS_LEVEL,
                         widget=Select(attrs={'disabled': True}))
 
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published']
+        exclude = ['archival_unit', 'container', 'primary_type', 'published', 'user_published', 'date_published',
+                   'user_created', 'date_created', 'user_updated', 'date_updated']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
@@ -190,7 +196,8 @@ class FindingAidsUpdateForm(FindingAidsBaseForm):
 
 class FindingAidsTemplateUpdateForm(FindingAidsBaseForm):
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level']
+        exclude = ['archival_unit', 'container', 'primary_type', 'folder_no', 'archival_reference_code', 'level',
+                   'description_level']
 
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
@@ -219,6 +226,23 @@ class FindingAidsAssociatedPeopleInline(InlineFormSet):
     prefix = 'associated_people'
 
 
+class FindingAidsDateForm(ModelForm):
+    date_type = ModelChoiceField(
+        queryset=DateType.objects.all(),
+        widget=DateTypeSelect2Widget(attrs={'data-placeholder': '-- Select Date Type --'}),
+        required=False
+    )
+
+
+class FindingAidsDateInline(InlineFormSet):
+    extra = 1
+    model = FindingAidsEntityDate
+    fields = '__all__'
+    form_class = FindingAidsDateForm
+    can_delete = True
+    prefix = 'dates'
+
+
 class FindingAidsAssociatedCorporationForm(ModelForm):
     associated_corporation = ModelChoiceField(
         queryset=Corporation.objects.all(),
@@ -226,7 +250,7 @@ class FindingAidsAssociatedCorporationForm(ModelForm):
     )
     role = ModelChoiceField(
         queryset=CorporationRole.objects.all(),
-        widget=CorporationSelect2Widget(attrs={'data-placeholder': '-- Select Role --'}),
+        widget=CorporationRoleSelect2Widget(attrs={'data-placeholder': '-- Select Role --'}),
         required=False
     )
 

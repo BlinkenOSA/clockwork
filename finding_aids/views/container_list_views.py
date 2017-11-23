@@ -28,7 +28,7 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
 
     def get_initial_queryset(self):
         container = Container.objects.get(pk=self.kwargs['container_id'])
-        finding_aids_entities = FindingAidsEntity.objects.filter(container=container).order_by('folder_no')
+        finding_aids_entities = FindingAidsEntity.objects.filter(container=container).order_by('folder_no', 'sequence_no')
         return finding_aids_entities
 
     def render_column(self, row, column):
@@ -46,7 +46,10 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
             return ' - '.join(filter(None, dates))
         elif column == 'action':
             return render_to_string('finding_aids/container_view/table_action_buttons.html', context={
-                'container_id': row.container_id, 'id': row.id})
+                'container_id': row.container_id,
+                'id': row.id,
+                'catalog_id': row.catalog_id,
+                'published': row.published})
         elif column == 'publish':
             return render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
                 'finding_aids_entity': row

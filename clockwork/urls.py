@@ -4,14 +4,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from django.contrib.auth import views as auth_views
-from dashboard import views as dashboard_view
+
+from accounts.views import custom_profile_edit, custom_profile_detail
+from dashboard.views import DashboardView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', auth_views.login, name='login'),
     url(r'^logout/', auth_views.logout, name='logout'),
 
-    url(r'^$', dashboard_view.index, name='dashboard'),
+    url(r'^$', DashboardView.as_view(), name='dashboard'),
     url(r'^dashboard/', include('dashboard.urls', namespace='dashboard')),
     url(r'^controlled_list/', include('controlled_list.urls', namespace='controlled_list')),
     url(r'^archival_unit/', include('archival_unit.urls', namespace='archival_unit')),
@@ -23,7 +25,13 @@ urlpatterns = [
     url(r'^container/', include('container.urls', namespace='container')),
     url(r'^finding_aids/', include('finding_aids.urls', namespace='finding_aids')),
 
+    url(r'^mlr/', include('mlr.urls', namespace='mlr')),
+
+    url(r'^accounts/(?P<username>[\@\.\+\w-]+)/edit/$', custom_profile_edit, name='profile_edit'),
+    url(r'^accounts/(?P<username>(?!(signout|signup|signin)/)[\@\.\+\w-]+)/$', custom_profile_detail,
+        name='profile_detail'),
     url(r'^accounts/', include('userena.urls')),
+
     url(r'^select2/', include('django_select2.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

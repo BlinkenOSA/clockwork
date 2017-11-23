@@ -1,23 +1,43 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import ModelForm, TextInput, HiddenInput
+from django.utils.translation import ugettext
+
 from accession.widgets import AccessionsSelect2Widget
 from archival_unit.models import ArchivalUnit
+from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
 
 
 class BaseModelForm(ModelForm):
     class Meta:
         model = ArchivalUnit
-        fields = ("fonds", "subfonds", "series", "title", "acronym", "accession")
+        fields = ("fonds", "subfonds", "series", "title", "title_original", "original_locale", "acronym", "accession", "theme")
+
+    def clean(self):
+        if self.cleaned_data["title_original"] and not self.cleaned_data["original_locale"]:
+            raise ValidationError({'original_locale': ugettext("Original langauge should be selected.")})
 
 
 class FondsCreateForm(BaseModelForm):
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'subfonds': HiddenInput(),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
+
+    def clean_fonds(self):
+        fonds = self.cleaned_data['fonds']
+        if fonds <= 0:
+            raise ValidationError(ugettext("Should be not less than 0."))
+        else:
+            return fonds
 
 
 class FondsUpdateForm(FondsCreateForm):
@@ -37,11 +57,34 @@ class SubFondsCreateForm(BaseModelForm):
     fonds_acronym = forms.CharField(label='Fonds Acronym', required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        subfonds = self.cleaned_data['subfonds']
+        if not title:
+            if subfonds != 0:
+                raise ValidationError(ugettext("Title is mandatory."))
+            else:
+                return title
+        else:
+            return title
+
+    def clean_subfonds(self):
+        subfonds = self.cleaned_data['subfonds']
+        if subfonds < 0:
+            raise ValidationError(ugettext("Should be not less than 0."))
+        else:
+            return subfonds
 
 
 class SubFondsUpdateForm(SubFondsCreateForm):
@@ -63,11 +106,30 @@ class SeriesCreateForm(BaseModelForm):
     subfonds_acronym = forms.CharField(label='Subfonds Acronym', required=False, widget=TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta(BaseModelForm.Meta):
+        labels = {
+            'title_original': ugettext('Original Title'),
+            'original_locale': ugettext('Locale')
+        }
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'subfonds': TextInput(attrs={'readonly': True}),
-            'accession': AccessionsSelect2Widget()
+            'accession': AccessionsSelect2Widget(),
+            'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if not title:
+            raise ValidationError(ugettext("Title is mandatory."))
+        else:
+            return title
+
+    def clean_series(self):
+        series = self.cleaned_data['series']
+        if series <= 0:
+            raise ValidationError(ugettext("Should be bigger than 0."))
+        else:
+            return series
 
 
 class SeriesUpdateForm(SeriesCreateForm):

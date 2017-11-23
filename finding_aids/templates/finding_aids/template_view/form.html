@@ -16,6 +16,14 @@
     <script src="{% static 'finding_aids/js/finding_aids-form.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit Finding Aids Template - '%}{{ object.template_name }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create Finding Aids Template' %}
+    {% endif %}
+{% endblock %}
+
 {% block notifications %}
     {% include 'notifications-errors.html' %}
 {% endblock %}
@@ -30,13 +38,17 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ series.title_full }}
+            {{ series.title_full|truncatechars:40 }}
         </li>
         <li>
             {% trans 'Finding Aids Templates' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit Finding Aids Template - '%}{{ object.template_name|truncatechars:40 }}
+            {% else %}
+                {% trans 'Create Finding Aids Template' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

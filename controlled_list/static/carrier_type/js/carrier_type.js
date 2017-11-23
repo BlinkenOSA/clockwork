@@ -6,6 +6,9 @@ var table = $('#carrier_type_table').DataTable({
 	"ajax": "datatable",
 	"columns": [
 			{ "data": "type"},
+			{ "data": "width", "class": "action_column", "sortable": false, "width": "50px"},
+			{ "data": "height", "class": "action_column", "sortable": false, "width": "50px"},
+			{ "data": "depth", "class": "action_column", "sortable": false, "width": "50px"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
  	]
 });

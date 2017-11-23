@@ -8,6 +8,12 @@ class AccessRightForm(ModelForm):
         fields = '__all__'
 
 
+class ArchivalUnitThemeForm(ModelForm):
+    class Meta:
+        model = ArchivalUnitTheme
+        fields = '__all__'
+
+
 class BuildingForm(ModelForm):
     class Meta:
         model = Building
@@ -23,6 +29,12 @@ class CarrierTypeForm(ModelForm):
 class CorporationRoleForm(ModelForm):
     class Meta:
         model = CorporationRole
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
+
+
+class DateTypeForm(ModelForm):
+    class Meta:
+        model = DateType
         fields = '__all__'
 
 
@@ -35,13 +47,13 @@ class ExtentUnitForm(ModelForm):
 class GeoRoleForm(ModelForm):
     class Meta:
         model = GeoRole
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
 
 
 class KeywordForm(ModelForm):
     class Meta:
         model = Keyword
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
 
 
 class LanguageUsageForm(ModelForm):
@@ -59,7 +71,7 @@ class LocaleForm(ModelForm):
 class PersonRoleForm(ModelForm):
     class Meta:
         model = PersonRole
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
 
 
 class PrimaryTypeForm(ModelForm):

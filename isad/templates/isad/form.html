@@ -22,6 +22,14 @@
     <script src="{% static 'isad/js/isad-form.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% if object %}
+        {% trans 'Clockwork AMS - Edit ISAD(G) Records - '%}{{ object.title|truncatechars:100 }}
+    {% else %}
+        {% trans 'Clockwork AMS - Create ISAD(G) Record' %}
+    {% endif %}
+{% endblock %}
+
 {% block notifications %}
     {% include 'isad/notifications-errors.html' %}
 {% endblock %}
@@ -36,7 +44,11 @@
             <i class="fa fa-align-justify"></i>&nbsp;&nbsp;{% trans 'ISAD(G) Records' %}
         </li>
         <li class="active">
-            {% trans 'Create/Edit' %}
+            {% if object %}
+                {% trans 'Edit ISAD(G) Records - '%}{{ object.title|truncatechars:100 }}
+            {% else %}
+                {% trans 'Create ISAD(G) Record' %}
+            {% endif %}
         </li>
     </ol>
     <!-- END BREADCRUMBS -->

@@ -22,7 +22,7 @@ class CarrierTypeList(CarrierTypePermissionMixin, TemplateView):
 
 class CarrierTypeListJson(CarrierTypePermissionMixin, BaseDatatableView):
     model = CarrierType
-    columns = ['id', 'type', 'action']
+    columns = ['id', 'type', 'width', 'height', 'depth', 'action']
     order_columns = ['type']
     max_display_length = 500
 

@@ -20,9 +20,9 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
     success_message = "%(title)s was created successfully"
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_container_list',
@@ -31,6 +31,7 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
     def get_initial(self):
         initial = {}
         container = Container.objects.get(pk=self.kwargs['container_id'])
+        initial['description_level'] = 'L1'
         initial['level'] = 'F'
         folder_no = get_number_of_folders(container.id) + 1
         initial['folder_no'] = folder_no
@@ -48,7 +49,7 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
         self.object.archival_unit = container.archival_unit
         self.object.container = container
         self.object.primary_type = container.primary_type
-        if self.object.level == 'I':
+        if self.object.description_level == 'L2':
             item_no = get_number_of_items(self.object.container.id, self.object.folder_no)
             self.object.sequence_no = item_no + 1
             self.object.archival_reference_code = "%s/%s:%s-%s" % (self.object.container.archival_unit.reference_code,
@@ -70,9 +71,9 @@ class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, Find
     success_message = ugettext("%(title)s was updated successfully")
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_container_list',
@@ -82,10 +83,6 @@ class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, Find
         context = super(FindingAidsUpdate, self).get_context_data(**kwargs)
         context['container'] = self.object.container
         return context
-
-    def get_initial(self):
-        initial = {'level_hidden': self.object.level}
-        return initial
 
     def forms_valid(self, form, formset):
         container = Container.objects.get(pk=self.kwargs['container_id'])
@@ -144,6 +141,7 @@ def collect_initial(template, container):
 
     # Set values
     initial['is_template'] = False
+    initial['description_level'] = 'L1'
     initial['level'] = 'F'
     folder_no = get_number_of_folders(container.id) + 1
     initial['folder_no'] = folder_no
@@ -159,7 +157,7 @@ class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView
         old_obj = FindingAidsEntity.objects.get(pk=kwargs['pk'])
         new_obj = old_obj.clone()
 
-        renumber_entries("clone", new_obj.level, new_obj.folder_no, new_obj.sequence_no)
+        renumber_entries("clone", new_obj)
         new_numbers = new_number(new_obj=new_obj)
 
         new_obj.folder_no = new_numbers['folder_no']
@@ -181,7 +179,7 @@ class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
     success_message = ugettext("Finding Aids record was deleted successfully!")
 
     def get_success_url(self):
-        container = self.object.container
+        container = self.obj.container
         return reverse_lazy('finding_aids:finding_aids_container_list', kwargs={'container_id': container.id})
 
     def get_success_message(self):
@@ -191,15 +189,11 @@ class FindingAidsDelete(FindingAidsPermissionMixin, AjaxDeleteView):
         return {'status': 'ok', 'message': self.get_success_message()}
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.obj = self.get_object()
         success_url = self.get_success_url()
 
-        self.object.delete()
-
-        level = self.object.level
-        folder_no = self.object.folder_no
-        sequence_no = self.object.sequence_no
-        renumber_entries("delete", level, folder_no, sequence_no)
+        self.obj.delete()
+        renumber_entries("delete", self.obj)
 
         if self.request.is_ajax():
             return self.render_json_response(self.get_success_result())
@@ -237,14 +231,18 @@ class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
                      str(finding_aids.date_to) if finding_aids.date_to else ""]
 
             folder_no = finding_aids.container.archival_unit.reference_code + '/' + \
-                        str(finding_aids.container.container_no) + \
-                        ':' + str(finding_aids.folder_no)
+                str(finding_aids.container.container_no) + ':' + str(finding_aids.folder_no)
+
             if finding_aids.level == 'F':
                 icon = '<i class="fa fa-folder-open-o"></i>'
-                level = '<span class="call_no_folder">' + icon + folder_no + '</span>'
             else:
                 icon = '<i class="fa fa-file-o"></i>'
-                level = '<span class="call_no_item">' + icon + folder_no + '-' + str(finding_aids.sequence_no) + '</span>'
+
+            if finding_aids.description_level == 'L1':
+                level = '<span class="call_no_level_1">' + icon + folder_no + '</span>'
+            else:
+                level = '<span class="call_no_level_2">' + icon + folder_no + '-' \
+                        + str(finding_aids.sequence_no) + '</span>'
 
             context = {
                 'DT_rowId': finding_aids.id,
@@ -253,7 +251,10 @@ class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
                 'title_original': finding_aids.title_original,
                 'date':  ' - '.join(filter(None, dates)),
                 'action': render_to_string('finding_aids/container_view/table_action_buttons.html',
-                                           context={'container_id': finding_aids.container.id, 'id': finding_aids.id}),
+                                           context={'container_id': finding_aids.container.id,
+                                                    'id': finding_aids.id,
+                                                    'published': finding_aids.published,
+                                                    'catalog_id': finding_aids.catalog_id}),
                 'publish': render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
                     'finding_aids_entity': finding_aids
                 })

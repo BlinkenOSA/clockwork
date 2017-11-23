@@ -5,10 +5,10 @@ var table = $('#isaar_table').dataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
- 	        { "data": "id", "width": "50px" },
-			{ "data": "name", "sortable": false },
+			{ "data": "name", "sortable": true },
             { "data": "type", "sortable": false },
-            { "data": "status", "sortable": false },
+			{ "data": "isad", "sortable": false },
+            { "data": "status", "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
     ]
 });
@@ -25,3 +25,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('isaar', 'list_page');

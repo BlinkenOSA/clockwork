@@ -1,7 +1,7 @@
 /**
  *
  */
-var table = $('#accession_table').dataTable({
+var table = $('#accession_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
@@ -24,3 +24,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('accession', 'list_page');

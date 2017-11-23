@@ -14,6 +14,18 @@ class AccessRight(models.Model):
         ordering = ['statement']
 
 
+class ArchivalUnitTheme(models.Model):
+    id = models.AutoField(primary_key=True)
+    theme = models.CharField(unique=True, max_length=200)
+
+    def __unicode__(self):
+        return self.theme
+
+    class Meta:
+        db_table = 'controlled_archival_unit_themes'
+        ordering = ['theme']
+
+
 class Building(models.Model):
     id = models.AutoField(primary_key=True)
     building = models.CharField(max_length=50)
@@ -30,6 +42,8 @@ class CarrierType(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(unique=True, max_length=100)
     width = models.IntegerField()
+    height = models.IntegerField(blank=True, null=True)
+    depth = models.IntegerField(blank=True, null=True)
     old_id = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
@@ -56,6 +70,18 @@ class CorporationRole(models.Model):
     class Meta:
         db_table = 'controlled_corporation_roles'
         ordering = ['role']
+
+
+class DateType(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.CharField(unique=True, max_length=100)
+
+    def __unicode__(self):
+        return self.type
+
+    class Meta:
+        db_table = 'controlled_date_types'
+        ordering = ['type']
 
 
 class ExtentUnit(models.Model):

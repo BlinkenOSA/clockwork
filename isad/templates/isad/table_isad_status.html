@@ -1,0 +1,7 @@
+{% if status == 'not exists' %}
+    <span class="label label-danger">not exists</span>
+{% elif status %}
+    <span class="label label-success">published</span>
+{% else %}
+    <span class="label label-warning">draft</span>
+{% endif %}

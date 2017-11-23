@@ -13,6 +13,10 @@
     <script src="{% static 'container/js/container.js' %}"></script>
 {% endblock %}
 
+{% block title %}
+    {% trans 'Clockwork AMS - Finding Aids / Containers' %}
+{% endblock %}
+
 {% block content-header %}
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
@@ -23,7 +27,7 @@
             <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
         </li>
         <li>
-            {{ archival_unit.title_full }}
+            {{ archival_unit.title_full|truncatechars:100 }}
         </li>
         <li class="active">
             {% trans 'Containers' %}
@@ -48,7 +52,7 @@
 {% endblock %}
 
 {% block box-2-title %}
-    <i class="fa fa-archive"></i>{% trans 'Containers in ' %}'{{ archival_unit.reference_code }} {{ fonds_name }}:{{ subfonds_name }}:{{ series_name }}'
+    <i class="fa fa-archive"></i>{% trans 'Containers in ' %}'{{ archival_unit.title_full|truncatechars:100 }}'
 {% endblock %}
 
 {% block box-2-body %}

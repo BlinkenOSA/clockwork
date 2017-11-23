@@ -1,0 +1,48 @@
+list_page:
+  title: Donor
+  text: >
+        Blablabla
+
+edit_page:
+  title: Donor Create/Edit
+  text: >
+
+name:
+  title: Name
+  text: >
+
+phone:
+  title: Phone
+  text: >
+
+postal_code:
+  title: Postal code
+  text: >
+
+fax:
+  title: Fax
+  text: >
+
+country:
+  title: Country
+  text: >
+
+email:
+  title: Email
+  text: >
+
+city:
+  title: City
+  text: >
+
+website:
+  title: Website
+  text: >
+
+address:
+  title: Address
+  text: >
+
+note:
+  title: Note
+  text: >

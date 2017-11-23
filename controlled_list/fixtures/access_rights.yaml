@@ -12,3 +12,8 @@
   pk: 3
   fields:
     statement: Restricted
+
+- model: controlled_list.AccessRight
+  pk: 4
+  fields:
+    statement: Unknown

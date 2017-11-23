@@ -17,6 +17,7 @@ class Command(BaseCommand):
         grp_finding_aids, c = Group.objects.get_or_create(name='Finding Aids')
         grp_isaar, c = Group.objects.get_or_create(name='ISAAR')
         grp_isad, c = Group.objects.get_or_create(name='ISAD(G)')
+        grp_mlr, c = Group.objects.get_or_create(name='MLR')
 
         ct_accession = ContentType.objects.filter(app_label='accession')
         ct_archival_unit = ContentType.objects.filter(app_label='archival_unit')
@@ -27,6 +28,7 @@ class Command(BaseCommand):
         ct_finding_aids = ContentType.objects.filter(app_label='finding_aids')
         ct_isaar = ContentType.objects.filter(app_label='isaar')
         ct_isad = ContentType.objects.filter(app_label='isad')
+        ct_mlr = ContentType.objects.filter(app_label='mlr')
 
         # Set Accesson
         for ct in ct_accession:
@@ -54,6 +56,10 @@ class Command(BaseCommand):
         # Set ISAD(G)
         for ct in ct_isad:
             self.add_permissions(grp_isad, ct)
+
+        # Set MLR
+        for ct in ct_mlr:
+            self.add_permissions(grp_mlr, ct)
 
         # Set Finding Aids
         for ct in ct_finding_aids:

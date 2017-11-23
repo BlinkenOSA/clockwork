@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
+from hashids import Hashids
 
 from controlled_list.models import PrimaryType, PersonRole, CorporationRole, GeoRole, LanguageUsage
 from authority.models import Person, Place, Corporation, Country, Language
@@ -19,6 +20,12 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
     legacy_id = models.CharField(max_length=200, blank=True, null=True)
     archival_reference_code = models.CharField(max_length=50, blank=True, null=True)
+
+    old_id = models.CharField(max_length=12, blank=True, null=True)
+    catalog_id = models.CharField(max_length=12, blank=True, null=True)
+
+    DESCRIPTION_LEVEL = [('L1', 'Level 1'), ('L2', 'Level 2')]
+    description_level = models.CharField(max_length=2, choices=DESCRIPTION_LEVEL, default='L1')
 
     FINDING_AIDS_LEVEL = [('F', 'Folder'), ('I', 'Item')]
     level = models.CharField(max_length=1, choices=FINDING_AIDS_LEVEL, default='F')
@@ -71,16 +78,16 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     physical_condition = models.CharField(max_length=200, blank=True, null=True)
 
-    time_start = models.TimeField(blank=True, null=True)
-    time_end = models.TimeField(blank=True, null=True)
-    duration = models.TimeField(blank=True, null=True)
+    time_start = models.DurationField(blank=True, null=True)
+    time_end = models.DurationField(blank=True, null=True)
+    duration = models.DurationField(blank=True, null=True)
 
     dimensions = models.TextField(max_length=200, blank=True, null=True)
 
     # Notes
-    note = models.CharField(max_length=300, blank=True, null=True)
-    note_original = models.CharField(max_length=300, blank=True, null=True)
-    internal_note = models.CharField(max_length=300, blank=True, null=True)
+    note = models.CharField(max_length=500, blank=True, null=True)
+    note_original = models.CharField(max_length=500, blank=True, null=True)
+    internal_note = models.CharField(max_length=500, blank=True, null=True)
 
     # Published
     published = models.BooleanField(default=False)
@@ -112,7 +119,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
         if self.is_template:
             self.archival_reference_code = "%s-TEMPLATE" % self.archival_unit.reference_code
         else:
-            if self.level == 'F':
+            if self.description_level == 'L1':
                 self.archival_reference_code = "%s/%s:%s" % (self.container.archival_unit.reference_code,
                                                              self.container.container_no,
                                                              self.folder_no)
@@ -121,7 +128,16 @@ class FindingAidsEntity(CloneableMixin, models.Model):
                                                                 self.container.container_no,
                                                                 self.folder_no,
                                                                 self.sequence_no)
+
         super(FindingAidsEntity, self).save()
+
+        if not self.is_template:
+            # Add hashids
+            hashids = Hashids(salt="blinkenosa", min_length=10)
+            if not self.catalog_id:
+                self.catalog_id = hashids.encode(self.id)
+
+            super(FindingAidsEntity, self).save()
 
     def __unicode__(self):
         if self.is_template:
@@ -139,6 +155,14 @@ class FindingAidsEntityAlternativeTitle(models.Model):
 
     class Meta:
         db_table = 'finding_aids_alternative_titles'
+
+
+class FindingAidsEntityDate(models.Model):
+    id = models.AutoField(primary_key=True)
+    fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
+    date_from = ApproximateDateField()
+    date_to = ApproximateDateField(blank=True)
+    date_type = models.ForeignKey('controlled_list.DateType')
 
 
 class FindingAidsEntityCreator(models.Model):
@@ -214,7 +238,8 @@ class FindingAidsEntityLanguage(models.Model):
     id = models.AutoField(primary_key=True)
     fa_entity = models.ForeignKey('FindingAidsEntity', on_delete=models.CASCADE)
     language = models.ForeignKey('authority.Language', on_delete=models.PROTECT)
-    language_usage = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL, blank=True, null=True)
+    language_usage = models.ForeignKey('controlled_list.LanguageUsage', on_delete=models.SET_NULL,
+                                       blank=True, null=True)
 
     class Meta:
         db_table = 'finding_aids_languages'

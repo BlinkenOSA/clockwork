@@ -1,10 +1,10 @@
 <div class="btn-group">
     {% if isad.published %}
-        <a href="/isad/action/unpublish/{{ isad.id }}/" class="btn btn-success btn-xs btn-action">
-            <i class="fa fa-cloud-upload"></i>
+        <a href="/isad/action/unpublish/{{ isad.id }}/" class="btn btn-default btn-xs btn-action">
+            <i class="fa fa-cloud-download"></i>
         </a>
     {% else %}
-        <a href="/isad/action/publish/{{ isad.id }}/" class="btn btn-danger btn-xs btn-action">
+        <a href="/isad/action/publish/{{ isad.id }}/" class="btn btn-default btn-xs btn-action">
             <i class="fa fa-cloud-upload"></i>
         </a>
     {% endif %}

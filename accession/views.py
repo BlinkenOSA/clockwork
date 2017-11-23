@@ -41,7 +41,7 @@ class AccessionListJson(AccessionPermissionMixin, BaseDatatableView):
             return render_to_string('accession/table_action_buttons.html',
                                     context={'id': row.id, 'number_of_archival_units': number_of_archival_units})
         elif column == 'transfer_date':
-            return unicode(row.transfer_date)
+            return str(row.transfer_date)
         else:
             return super(AccessionListJson, self).render_column(row, column)
 

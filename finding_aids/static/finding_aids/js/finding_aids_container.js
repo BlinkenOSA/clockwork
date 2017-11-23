@@ -5,10 +5,9 @@ var table = $('#fa_table').DataTable({
 	"ajax": "/finding_aids/datatable/" + containerID ,
 	"columns": [
        	{ "data": 'level', "width": "20%", "class": "call_no_column"},
-	   	{ "data": 'title', "width": "20%" },
-	   	{ "data": 'title_original', "width": "20%" },
-	   	{ "data": 'date', "width": "20%" },
-       	{ "data": 'action', "width": "10%", "class": "action_column" },
+	   	{ "data": 'title', "width": "40%" },
+	   	{ "data": 'date', "width": "15%" },
+       	{ "data": 'action', "width": "15%", "class": "action_column" },
 		{ "data": 'publish', "width": "10%", "class": "action_column" },
 	],
     "rowCallback": function( row, data, index ) {

@@ -15,3 +15,5 @@ $(function() {
 	});
 });
 
+infobox_call_and_update('accession', 'edit_page');
+register_infobox('accession');

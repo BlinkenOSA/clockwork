@@ -1,0 +1,72 @@
+{% extends 'layout-box-table.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block css_page %}
+    {{ form.media.css }}
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/select2-bootstrap-theme/dist/select2-bootstrap.min.css' %}">
+{% endblock %}
+
+{% block js_page %}
+    {{ form.media.js }}
+    <script>
+        $('#id_fonds').djangoSelect2({
+            placeholder: '{% trans '- Select Fonds -' %}',
+            escapeMarkup: function (m) { return m; }
+        });
+    </script>
+    <script src="{% static 'mlr/js/mlr.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+    {% trans 'Clockwork AMS - MLR' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li class="active">
+            <i class="fa fa-university"></i>&nbsp;&nbsp;{% trans 'MLR' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'MLR' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                {% bootstrap_field form.fonds show_label=false %}
+                <div class="input-group-btn select2-nolabel-addon">
+                    <a id="mlr_filter_fonds_select_reset" class="btn btn-default select2-button" type="button" href="#">
+                        Reset
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <a id="mlr_csv_export" class="btn btn-default" href="{% url 'mlr:export_csv' %}"><i class="fa fa-file-excel-o"></i> Export CSV</a>
+        </div>
+    </div>
+    <hr/>
+    <table id="mlr_table" class="table table-striped table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans 'Series' %}</th>
+                <th>{% trans 'Carrier' %}</th>
+                <th>{% trans 'Building' %}</th>
+                <th>{% trans 'Module / Row/ Section / Shelf' %}</th>
+                <th>{% trans 'Action' %}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}

@@ -1,14 +1,13 @@
 /**
  *
  */
-var table = $('#donor_table').dataTable({
+var table = $('#donor_table').DataTable({
 	"serverSide": true,
 	"ajax": "datatable",
 	"columns": [
- 	       { "width": "60px" },
- 	       null,
- 	       null,
-		   { "width": "100px", "class": "action_column" }
+ 	       { "data": 'name' },
+ 	       { "data": 'address', "sortable": false },
+		   { "data": 'action', "sortable": false, "width": "100px", "class": "action_column" }
  	 ],
 });
 
@@ -24,3 +23,5 @@ $(function() {
         }
 	});
 });
+
+infobox_call_and_update('donor', 'list_page');

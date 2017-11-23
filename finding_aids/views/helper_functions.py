@@ -21,26 +21,29 @@ def new_number(new_obj):
         return {'folder_no': new_obj.folder_no, 'sequence_no': new_obj.sequence_no + 1}
 
 
-def renumber_entries(action, level, folder_no, sequence_no):
+def renumber_entries(action, fa_entity):
     if action == 'delete':
         step = -1
     else:
         step = 1
 
-    if level == 'F':
-        folders = FindingAidsEntity.objects.filter(folder_no__gt=folder_no)
+    if fa_entity.level == 'F':
+        folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                   folder_no__gt=fa_entity.folder_no)
         for folder in folders:
             folder.folder_no += step
             folder.save()
     else:
-        items = FindingAidsEntity.objects.filter(folder_no=folder_no,
-                                                 sequence_no__gt=sequence_no)
+        items = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                 folder_no=fa_entity.folder_no,
+                                                 sequence_no__gt=fa_entity.sequence_no)
         if len(items) > 0:
             for item in items:
                 item.sequence_no += step
                 item.save()
         else:
-            folders = FindingAidsEntity.objects.filter(folder_no__gt=folder_no)
+            folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                       folder_no__gt=fa_entity.folder_no)
             for folder in folders:
                 folder.folder_no += step
                 folder.save()

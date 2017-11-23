@@ -8,7 +8,7 @@ from archival_unit.models import ArchivalUnit
 
 
 class UserProfile(UserenaBaseProfile):
-    user = models.OneToOneField(User, unique=True, verbose_name='users', related_name='user_profile')
+    user = models.OneToOneField(User, unique=True, verbose_name='user', related_name='user_profile')
     allowed_archival_units = models.ManyToManyField(ArchivalUnit, blank=True)
 
     def assigned_archival_units(self):

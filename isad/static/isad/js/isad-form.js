@@ -23,3 +23,6 @@ changeflag();
 $( "#id_original_locale" ).change(function() {
     changeflag();
 });
+
+infobox_call_and_update('isad', 'edit_page');
+register_infobox('isad');

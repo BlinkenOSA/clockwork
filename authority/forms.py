@@ -8,7 +8,7 @@ from authority.models import Country, Corporation, Person, Language, Place, Subj
 class CountryForm(ModelForm):
     class Meta:
         model = Country
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL'
@@ -18,7 +18,7 @@ class CountryForm(ModelForm):
 class LanguageForm(ModelForm):
     class Meta:
         model = Language
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL'
@@ -28,7 +28,7 @@ class LanguageForm(ModelForm):
 class CorporationForm(ModelForm):
     class Meta:
         model = Corporation
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL',
@@ -47,7 +47,7 @@ class CorporationOtherNamesInLine(InlineFormSet):
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL',
@@ -66,7 +66,7 @@ class PersonOtherNamesInLine(InlineFormSet):
 class PlaceForm(ModelForm):
     class Meta:
         model = Place
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL'
@@ -76,7 +76,7 @@ class PlaceForm(ModelForm):
 class GenreForm(ModelForm):
     class Meta:
         model = Genre
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL',
@@ -87,7 +87,7 @@ class GenreForm(ModelForm):
 class SubjectForm(ModelForm):
     class Meta:
         model = Subject
-        fields = '__all__'
+        exclude = ['user_created', 'date_created', 'user_updated', 'date_updated']
         labels = {
             'authority_url': 'Authority URL',
             'wiki_url': 'Wikipedia URL',

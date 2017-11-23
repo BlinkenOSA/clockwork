@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.db.models.signals import post_delete
-from django.dispatch.dispatcher import receiver
 from archival_unit.models import ArchivalUnit
 
 
@@ -28,23 +26,11 @@ class Container(models.Model):
 
     class Meta:
         db_table = 'containers'
+        unique_together = ('archival_unit', 'container_no')
+
+    def get_reference_code(self):
+        return "%s/%s" % (self.archival_unit.reference_code, self.container_no)
 
     def __unicode__(self):
         return "Container #%s / %s" % (self.container_no, self.carrier_type)
 
-
-@receiver(post_delete)
-def update_container_numbers(sender, **kwargs):
-    container_no = 1
-    if isinstance(kwargs['instance'], Container):
-        containers = Container.objects.filter(archival_unit=kwargs['instance'].archival_unit).order_by('container_no')
-    elif isinstance(kwargs['instance'], ArchivalUnit):
-        containers = Container.objects.filter(archival_unit=kwargs['instance']).order_by('container_no')
-    else:
-        containers = None
-
-    if containers:
-        for container in containers:
-            container.container_no = container_no
-            container_no += 1
-            container.save()

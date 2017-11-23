@@ -1,143 +1,191 @@
 - model: controlled_list.CarrierType
   pk: 1
   fields:
-    type: Archival Box
+    type: Archival box
     width: 125
+    height: 265
+    depth: 320
 
 - model: controlled_list.CarrierType
   pk: 2
   fields:
-    type: Archival Card Box
+    type: Archival card box
     width: 315
+    height: 235
+    depth: 170
 
 - model: controlled_list.CarrierType
   pk: 3
   fields:
     type: Boxes of color prints
     width: 440
+    height: 100
+    depth: 310
 
 - model: controlled_list.CarrierType
   pk: 4
   fields:
     type: Audio cassette
     width: 15
+    height: 105
+    depth: 95
 
 - model: controlled_list.CarrierType
   pk: 5
   fields:
     type: Beta SP
     width: 30
+    height: 110
+    depth: 170
 
 - model: controlled_list.CarrierType
   pk: 6
   fields:
     type: VHS
     width: 25
+    height: 105
+    depth: 190
 
 - model: controlled_list.CarrierType
   pk: 7
   fields:
     type: CD-ROM
     width: 10
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 8
   fields:
     type: Rolls of 35 mm microfilm in microfilm cabinet
     width: 50
+    height: 105
+    depth: 105
 
 - model: controlled_list.CarrierType
   pk: 9
   fields:
     type: Rolls of 16 mm microfilm in microfilm cabinet
     width: 23
+    height: 100
+    depth: 100
 
 - model: controlled_list.CarrierType
   pk: 10
   fields:
     type: SVHS
     width: 25
+    height: 105
+    depth: 170
 
 - model: controlled_list.CarrierType
   pk: 11
   fields:
     type: Plastic card box
     width: 245
+    height: 55
+    depth: 235
 
 - model: controlled_list.CarrierType
   pk: 12
   fields:
     type: Floppy 3.5
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 13
   fields:
     type: Floppy 5.25
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 14
   fields:
     type: DVD-ROM
     width: 10
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 15
   fields:
     type: SDLT I
     width: 34
+    height: 110
+    depth: 110
 
 - model: controlled_list.CarrierType
   pk: 16
   fields:
     type: Oversized box (40 cm)
     width: 400
+    height: 200
+    depth: 150
 
 - model: controlled_list.CarrierType
   pk: 17
   fields:
     type: SVHS-C
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 18
   fields:
     type: mini CD-R
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 19
   fields:
     type: mini DV
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 20
   fields:
     type: Oversized folder
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 21
   fields:
     type: N/A
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 22
   fields:
-    type: Digital Container
+    type: Digital container
     width: 1
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 23
   fields:
     type: Blu-Ray
     width: 10
+    height:
+    depth:
 
 - model: controlled_list.CarrierType
   pk: 24
   fields:
     type: HDD
     width: 1
+    height:
+    depth:

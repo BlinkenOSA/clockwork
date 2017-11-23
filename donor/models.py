@@ -16,11 +16,11 @@ class Donor(models.Model):
     address = models.CharField(max_length=300)
 
     email = models.CharField(max_length=100, blank=True)
-    fax = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=200)
+    fax = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=200, blank=True, null=True)
     website = models.CharField(max_length=200, blank=True)
 
-    note = models.TextField(blank=True)
+    note = models.TextField(blank=True, null=True)
 
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)

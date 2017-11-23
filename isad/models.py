@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django_date_extensions.fields import ApproximateDateField
@@ -12,6 +11,7 @@ class Isad(models.Model):
     id = models.AutoField(primary_key=True)
     archival_unit = models.OneToOneField('archival_unit.ArchivalUnit')
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
+    legacy_id = models.IntegerField(blank=True, null=True)
 
     # Required fields
     title = models.CharField(max_length=255)
@@ -24,12 +24,21 @@ class Isad(models.Model):
     isaar = models.ManyToManyField('isaar.Isaar', blank=True)
     language = models.ManyToManyField('authority.Language')
     accruals = models.BooleanField(default=False)
-    access_rights = models.ForeignKey('controlled_list.AccessRight', on_delete=models.PROTECT)
-    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight', on_delete=models.PROTECT)
-    rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason', on_delete=models.PROTECT)
+
+    access_rights = models.ForeignKey('controlled_list.AccessRight', on_delete=models.PROTECT,
+                                      blank=True, null=True)
+    access_rights_legacy = models.TextField(blank=True, null=True)
+    reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight', on_delete=models.PROTECT,
+                                            blank=True, null=True)
+    reproduction_rights_legacy = models.TextField(blank=True, null=True)
+    rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason', on_delete=models.PROTECT,
+                                                  blank=True, null=True)
 
     # Identity
     date_predominant = models.CharField(max_length=200, blank=True, null=True)
+
+    carrier_estimated = models.TextField(blank=True, null=True)
+    carrier_estimated_original = models.TextField(blank=True, null=True)
 
     # Context
     administrative_history = models.TextField(blank=True, null=True)

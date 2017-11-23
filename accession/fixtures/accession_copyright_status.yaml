@@ -32,3 +32,8 @@
   pk: 7
   fields:
     status: Public Domain
+
+- model: accession.AccessionCopyrightStatus
+  pk: 8
+  fields:
+    status: Unknown

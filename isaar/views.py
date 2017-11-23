@@ -9,7 +9,7 @@ from extra_views import CreateWithInlinesView, NamedFormsetsMixin, UpdateWithInl
 from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.mixins import InlineSuccessMessageMixin, GeneralAllPermissionMixin, AuditTrailContextMixin
 from isaar.forms import IsaarForm, OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, \
-    PlacesInline, TYPE_CHOICES
+    PlacesInline, TYPE_CHOICES, ParallelNamesInline
 from isaar.models import Isaar
 
 
@@ -23,8 +23,8 @@ class IsaarList(IsaarPermissionMixin, TemplateView):
 
 class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
     model = Isaar
-    columns = ['id', 'name', 'type', 'status', 'action']
-    order_columns = ['id', 'name', '', '', '']
+    columns = ['id', 'name', 'type', 'isad', 'status', 'action']
+    order_columns = ['name']
     max_display_length = 500
 
     def filter_queryset(self, qs):
@@ -38,13 +38,19 @@ class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'action':
-            accession_exist = row.accession_set.filter(pk=row.id).exists()
-            isad_exist = row.isad_set.filter(pk=row.id).exists()
-            exist = accession_exist or isad_exist
+            isad_exist = row.isad_set.exists()
             return render_to_string('isaar/table_action_buttons.html',
-                                    context={'id': row.id, 'exist': exist})
+                                    context={'id': row.id, 'exist': isad_exist})
+        elif column == 'isad':
+            values = list(row.isad_set.values_list('reference_code', flat=True))
+            return ', '.join(values)
         elif column == 'type':
             return dict(TYPE_CHOICES)[row.type]
+        elif column == 'status':
+            if row.status == 'Draft':
+                return '<span class="label label-warning">draft</span>'
+            else:
+                return '<span class="label label-success">final</span>'
         else:
             return super(IsaarListJson, self).render_column(row, column)
 
@@ -77,8 +83,8 @@ class IsaarCreate(IsaarPermissionMixin, InlineSuccessMessageMixin, NamedFormsets
     template_name = 'isaar/form.html'
     success_url = reverse_lazy('isaar:list')
     success_message = ugettext("%(name)s was created successfully")
-    inlines = [OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
-    inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
+    inlines = [OtherNamesInline, ParallelNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
+    inlines_names = ['other_names', 'parallel_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
 class IsaarUpdate(IsaarPermissionMixin, AuditTrailContextMixin, InlineSuccessMessageMixin,
@@ -88,8 +94,8 @@ class IsaarUpdate(IsaarPermissionMixin, AuditTrailContextMixin, InlineSuccessMes
     template_name = 'isaar/form.html'
     success_url = reverse_lazy('isaar:list')
     success_message = ugettext("%(name)s was updated successfully")
-    inlines = [OtherNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
-    inlines_names = ['other_names', 'standardized_names', 'corporate_body_identifiers', 'places']
+    inlines = [OtherNamesInline, ParallelNamesInline, StandardizedNamesInline, CorporateBodyIdentifiersInLine, PlacesInline]
+    inlines_names = ['other_names', 'parallel_names', 'standardized_names', 'corporate_body_identifiers', 'places']
 
 
 class IsaarDelete(IsaarPermissionMixin, AjaxDeleteProtectedView):

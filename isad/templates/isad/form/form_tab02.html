@@ -9,7 +9,10 @@
     <div class="col-md-12">
         {% include 'isad/subform/subform_extents.html' %}
     </div>
-    <div class="col-md-12">
-        {% include 'isad/subform/subform_carriers.html' %}
+    <div class="col-md-6">
+        {% bootstrap_field form.carrier_estimated %}
+    </div>
+    <div class="col-md-6">
+        {% bootstrap_field form.carrier_estimated_original %}
     </div>
 </fieldset>
