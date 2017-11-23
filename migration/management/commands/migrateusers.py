@@ -30,8 +30,8 @@ class Command(BaseCommand):
                     user.save()
                     usu = UserenaSignup(user=user)
                 except IntegrityError:
-                    print ("User %s already exists!" % row['username'])
+                    print("User %s already exists!" % row['username'])
 
             cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")

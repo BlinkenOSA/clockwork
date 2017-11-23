@@ -26,7 +26,7 @@ class Command(BaseCommand):
                 country = Country.objects.filter(country=row['Country']).first()
 
                 if not country:
-                    print ("Check country - %s" % row['Country'])
+                    print("Check country - %s" % row['Country'])
                 else:
                     donor = Donor(
                         old_id=row['ID'],
@@ -45,10 +45,10 @@ class Command(BaseCommand):
 
                     try:
                         donor.save()
-                        print ("Inserting %s" % (row['DonorName']))
+                        print("Inserting %s" % (row['DonorName']))
                     except IntegrityError as e:
-                        print ('Error with %s: %s' % (row['DonorName'].encode('utf-8'), e.args[1]))
+                        print('Error with %s: %s' % (row['DonorName'].encode('utf-8'), e.args[1]))
 
             cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")

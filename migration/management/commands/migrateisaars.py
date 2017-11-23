@@ -52,7 +52,7 @@ class Command(BaseCommand):
 
                 try:
                     isaar.save()
-                    print ("Inserting %s" % isaar.name)
+                    print("Inserting %s" % isaar.name)
 
                     self.get_parallel_names(row['Parallel Entry/Entries'], isaar)
                     self.get_other_names(row['Non-preferred Term(s)'], isaar)
@@ -75,11 +75,11 @@ class Command(BaseCommand):
                         isad.save()
 
                 except IntegrityError as e:
-                    print ('Error with %s: %s' % (isaar.name.encode('utf-8'), e.args[1]))
+                    print('Error with %s: %s' % (isaar.name.encode('utf-8'), e.args[1]))
 
             cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")
 
     def get_other_names(self, data, isaar):
         if data:

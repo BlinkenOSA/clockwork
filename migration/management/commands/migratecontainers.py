@@ -34,7 +34,7 @@ class Command(BaseCommand):
                   "Main.SeriesID = ListsInSeries.SeriesId AND " \
                   "Main.ListNo = ListsInSeries.ListNo " \
                   "INNER JOIN Container ON Main.ContType = Container.ID " \
-                  "WHERE Main.ListNo = 1 AND Main.FondsID >= 378 " \
+                  "WHERE Main.ListNo = 1 AND Main.FondsID >= 0 " \
                   "ORDER BY FondsID, SubfondsID, SeriesID, ListNo, Container"
 
             cursor.execute(sql)
@@ -122,16 +122,16 @@ class Command(BaseCommand):
 
                 try:
                     container.save()
-                    print ("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
                 except IntegrityError as e:
-                    print ('Error with %s-%s: %s' % (container.archival_unit.reference_code,
+                    print('Error with %s-%s: %s' % (container.archival_unit.reference_code,
                                                      container.container_no,
                                                      e.args[1]))
                 except Exception as e:
-                    print ('Some error - Skipping')
+                    print('Some error - %s - Skipping' % e)
 
             cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")
 
 

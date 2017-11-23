@@ -48,7 +48,7 @@ class Command(BaseCommand):
                 copyright_status = self.get_copyright_status(row['Copyright'])
 
                 if not donor:
-                    print ("Check donor - %s" % row['DonorID'])
+                    print("Check donor - %s" % row['DonorID'])
                 else:
                     accession = Accession(
                         seq='%d/%03d' % (row['Year'], row['No']),
@@ -98,7 +98,7 @@ class Command(BaseCommand):
 
             cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")
 
     def get_accession_method(self, method):
         method_map = {

@@ -26,8 +26,11 @@ def get_approx_date(year, month, day):
         back = "%04d" % year
 
         if month:
-            month = list(calendar.month_name).index(month)
-            back += "-%02d" % month
+            try:
+                month = list(calendar.month_name).index(month)
+                back += "-%02d" % month
+            except ValueError:
+                back += "-%02d" % month
         else:
             back += "-00"
 
@@ -48,8 +51,8 @@ def get_user(old_user):
                                       host=settings.MIGRATION_DB['HOST'],
                                       database='clkwrk_import_users')
         cursor = cnx.cursor(buffered=True, dictionary=True)
-        SQL = 'SELECT * FROM users WHERE olduser = %s'
-        cursor.execute(SQL, (old_user,))
+        sql = 'SELECT * FROM users WHERE olduser = %s'
+        cursor.execute(sql, (old_user,))
 
         if cursor.rowcount:
             rec = cursor.fetchone()

@@ -1,4 +1,3 @@
-from django.contrib.auth.models import Group, Permission
 from django.core.management import BaseCommand
 
 from archival_unit.models import ArchivalUnit

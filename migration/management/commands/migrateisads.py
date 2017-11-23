@@ -31,7 +31,7 @@ class Command(BaseCommand):
             self.migrate_isad_series()
             self.cnx.close()
         else:
-            print ("Missing 'migration' database setting in 'settings.py'")
+            print("Missing 'migration' database setting in 'settings.py'")
 
     def migrate_isad_fonds(self):
             sql = "SELECT fonds.ID AS fondsID, fonds.Name AS ArchivalUnitName, isad.* " \
@@ -49,11 +49,11 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print ("Inserting %s" % archival_unit.title_full)
+                    print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
-                    print ('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def migrate_isad_subfonds(self):
             sql = "SELECT subfonds.ID AS subfondsID, subfonds.FondsID AS fondsID, subfonds.Name AS ArchivalUnitName, isad.* " \
@@ -73,11 +73,11 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print ("Inserting %s" % archival_unit.title_full)
+                    print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
-                    print ('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def migrate_isad_series(self):
             sql = "SELECT series.ID AS seriesID, series.subfondsID AS subfondsID, series.FondsID AS fondsID, " \
@@ -99,11 +99,11 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print ("Inserting %s" % archival_unit.title_full)
+                    print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
-                    print ('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def make_isad_record(self, archival_unit, row):
         sql_isad2 = "SELECT * FROM isad2 WHERE isad2.Id = %s"
