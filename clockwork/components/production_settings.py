@@ -16,3 +16,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'public]', 'media')
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
+SESSION_COOKIE_SECURE = True
