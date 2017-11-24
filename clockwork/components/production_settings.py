@@ -9,7 +9,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['ams.osaarchivum.org']
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'public]', 'media')
