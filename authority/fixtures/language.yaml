@@ -4,1305 +4,1492 @@
     language: Afar
     iso_639_1: aa
     iso_639_2: aar
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 2
   fields:
     language: Abkhazian
     iso_639_1: ab
     iso_639_2: abk
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 3
   fields:
     language: Afrikaans
     iso_639_1: af
     iso_639_2: afr
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 4
   fields:
     language: Akan
     iso_639_1: ak
     iso_639_2: aka
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 5
   fields:
     language: Albanian
     iso_639_1: sq
     iso_639_2: alb
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 6
   fields:
     language: Amharic
     iso_639_1: am
     iso_639_2: amh
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 7
   fields:
     language: Arabic
     iso_639_1: ar
     iso_639_2: ara
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 8
   fields:
     language: Aragonese
     iso_639_1: an
     iso_639_2: arg
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 9
   fields:
     language: Armenian
     iso_639_1: hy
     iso_639_2: arm
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 10
   fields:
     language: Assamese
     iso_639_1: as
     iso_639_2: asm
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 11
   fields:
     language: Avaric
     iso_639_1: av
     iso_639_2: ava
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 12
   fields:
     language: Avestan
     iso_639_1: ae
     iso_639_2: ave
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 13
   fields:
     language: Aymara
     iso_639_1: ay
     iso_639_2: aym
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 14
   fields:
     language: Azerbaijani
     iso_639_1: az
     iso_639_2: aze
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 15
   fields:
     language: Bashkir
     iso_639_1: ba
     iso_639_2: bak
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 16
   fields:
     language: Bambara
     iso_639_1: bm
     iso_639_2: bam
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 17
   fields:
     language: Basque
     iso_639_1: eu
     iso_639_2: baq
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 18
   fields:
     language: Belarusian
     iso_639_1: be
     iso_639_2: bel
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 19
   fields:
     language: Bengali
     iso_639_1: bn
     iso_639_2: ben
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 20
   fields:
     language: Bihari languages
     iso_639_1: bh
     iso_639_2: bih
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 21
   fields:
     language: Bislama
     iso_639_1: bi
     iso_639_2: bis
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 22
   fields:
     language: Bosnian
     iso_639_1: bs
     iso_639_2: bos
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 23
   fields:
     language: Breton
     iso_639_1: br
     iso_639_2: bre
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 24
   fields:
     language: Bulgarian
     iso_639_1: bg
     iso_639_2: bul
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 25
   fields:
     language: Burmese
     iso_639_1: my
     iso_639_2: bur
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 26
   fields:
     language: Catalan; Valencian
     iso_639_1: ca
     iso_639_2: cat
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 27
   fields:
     language: Chamorro
     iso_639_1: ch
     iso_639_2: cha
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 28
   fields:
     language: Chechen
     iso_639_1: ce
     iso_639_2: che
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 29
   fields:
     language: Chinese
     iso_639_1: zh
     iso_639_2: chi
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 30
   fields:
     language: Old Slavonic; Old Bulgarian
     iso_639_1: cu
     iso_639_2: chu
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 31
   fields:
     language: Chuvash
     iso_639_1: cv
     iso_639_2: chv
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 32
   fields:
     language: Cornish
     iso_639_1: kw
     iso_639_2: cor
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 33
   fields:
     language: Corsican
     iso_639_1: co
     iso_639_2: cos
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 34
   fields:
     language: Cree
     iso_639_1: cr
     iso_639_2: cre
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 35
   fields:
     language: Czech
     iso_639_1: cs
     iso_639_2: cze
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 36
   fields:
     language: Danish
     iso_639_1: da
     iso_639_2: dan
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 37
   fields:
     language: Divehi; Dhivehi; Maldivian
     iso_639_1: dv
     iso_639_2: div
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 38
   fields:
     language: Dutch; Flemish
     iso_639_1: nl
     iso_639_2: dut
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 39
   fields:
     language: Dzongkha
     iso_639_1: dz
     iso_639_2: dzo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 40
   fields:
     language: English
     iso_639_1: en
     iso_639_2: eng
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 41
   fields:
     language: Esperanto
     iso_639_1: eo
     iso_639_2: epo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 42
   fields:
     language: Estonian
     iso_639_1: et
     iso_639_2: est
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 43
   fields:
     language: Ewe
     iso_639_1: ee
     iso_639_2: ewe
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 44
   fields:
     language: Faroese
     iso_639_1: fo
     iso_639_2: fao
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 45
   fields:
     language: Fijian
     iso_639_1: fj
     iso_639_2: fij
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 46
   fields:
     language: Finnish
     iso_639_1: fi
     iso_639_2: fin
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 47
   fields:
     language: French
     iso_639_1: fr
     iso_639_2: fre
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 48
   fields:
     language: Western Frisian
     iso_639_1: fy
     iso_639_2: fry
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 49
   fields:
     language: Fulah
     iso_639_1: ff
     iso_639_2: ful
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 50
   fields:
     language: Georgian
     iso_639_1: ka
     iso_639_2: geo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 51
   fields:
     language: German
     iso_639_1: de
     iso_639_2: ger
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 52
   fields:
     language: Gaelic; Scottish Gaelic
     iso_639_1: gd
     iso_639_2: gla
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 53
   fields:
     language: Irish
     iso_639_1: ga
     iso_639_2: gle
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 54
   fields:
     language: Galician
     iso_639_1: gl
     iso_639_2: glg
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 55
   fields:
     language: Manx
     iso_639_1: gv
     iso_639_2: glv
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 56
   fields:
     language: Greek, Modern (1453-)
     iso_639_1: el
     iso_639_2: gre
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 57
   fields:
     language: Guarani
     iso_639_1: gn
     iso_639_2: grn
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 58
   fields:
     language: Gujarati
     iso_639_1: gu
     iso_639_2: guj
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 59
   fields:
     language: Haitian; Haitian Creole
     iso_639_1: ht
     iso_639_2: hat
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 60
   fields:
     language: Hausa
     iso_639_1: ha
     iso_639_2: hau
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 61
   fields:
     language: Hebrew
     iso_639_1: he
     iso_639_2: heb
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 62
   fields:
     language: Herero
     iso_639_1: hz
     iso_639_2: her
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 63
   fields:
     language: Hindi
     iso_639_1: hi
     iso_639_2: hin
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 64
   fields:
     language: Hiri Motu
     iso_639_1: ho
     iso_639_2: hmo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 65
   fields:
     language: Croatian
     iso_639_1: hr
     iso_639_2: hrv
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 66
   fields:
     language: Hungarian
     iso_639_1: hu
     iso_639_2: hun
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 67
   fields:
     language: Igbo
     iso_639_1: ig
     iso_639_2: ibo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 68
   fields:
     language: Icelandic
     iso_639_1: is
     iso_639_2: ice
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 69
   fields:
     language: Ido
     iso_639_1: io
     iso_639_2: ido
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 70
   fields:
     language: Sichuan Yi; Nuosu
     iso_639_1: ii
     iso_639_2: iii
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 71
   fields:
     language: Inuktitut
     iso_639_1: iu
     iso_639_2: iku
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 72
   fields:
     language: Interlingue; Occidental
     iso_639_1: ie
     iso_639_2: ile
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 73
   fields:
     language: Interlingua (International Auxiliary Language Association)
     iso_639_1: ia
     iso_639_2: ina
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 74
   fields:
     language: Indonesian
     iso_639_1: id
     iso_639_2: ind
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 75
   fields:
     language: Inupiaq
     iso_639_1: ik
     iso_639_2: ipk
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 76
   fields:
     language: Italian
     iso_639_1: it
     iso_639_2: ita
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 77
   fields:
     language: Javanese
     iso_639_1: jv
     iso_639_2: jav
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 78
   fields:
     language: Japanese
     iso_639_1: ja
     iso_639_2: jpn
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 79
   fields:
     language: Kalaallisut; Greenlandic
     iso_639_1: kl
     iso_639_2: kal
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 80
   fields:
     language: Kannada
     iso_639_1: kn
     iso_639_2: kan
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 81
   fields:
     language: Kashmiri
     iso_639_1: ks
     iso_639_2: kas
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 82
   fields:
     language: Kanuri
     iso_639_1: kr
     iso_639_2: kau
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 83
   fields:
     language: Kazakh
     iso_639_1: kk
     iso_639_2: kaz
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 84
   fields:
     language: Central Khmer
     iso_639_1: km
     iso_639_2: khm
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 85
   fields:
     language: Kikuyu; Gikuyu
     iso_639_1: ki
     iso_639_2: kik
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 86
   fields:
     language: Kinyarwanda
     iso_639_1: rw
     iso_639_2: kin
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 87
   fields:
     language: Kirghiz; Kyrgyz
     iso_639_1: ky
     iso_639_2: kir
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 88
   fields:
     language: Komi
     iso_639_1: kv
     iso_639_2: kom
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 89
   fields:
     language: Kongo
     iso_639_1: kg
     iso_639_2: kon
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 90
   fields:
     language: Korean
     iso_639_1: ko
     iso_639_2: kor
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 91
   fields:
     language: Kuanyama; Kwanyama
     iso_639_1: kj
     iso_639_2: kua
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 92
   fields:
     language: Kurdish
     iso_639_1: ku
     iso_639_2: kur
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 93
   fields:
     language: Lao
     iso_639_1: lo
     iso_639_2: lao
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 94
   fields:
     language: Latin
     iso_639_1: la
     iso_639_2: lat
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 95
   fields:
     language: Latvian
     iso_639_1: lv
     iso_639_2: lav
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 96
   fields:
     language: Limburgan; Limburger; Limburgish
     iso_639_1: li
     iso_639_2: lim
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 97
   fields:
     language: Lingala
     iso_639_1: ln
     iso_639_2: lin
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 98
   fields:
     language: Lithuanian
     iso_639_1: lt
     iso_639_2: lit
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 99
   fields:
     language: Luxembourgish; Letzeburgesch
     iso_639_1: lb
     iso_639_2: ltz
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 100
   fields:
     language: Luba-Katanga
     iso_639_1: lu
     iso_639_2: lub
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 101
   fields:
     language: Ganda
     iso_639_1: lg
     iso_639_2: lug
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 102
   fields:
     language: Macedonian
     iso_639_1: mk
     iso_639_2: mac
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 103
   fields:
     language: Marshallese
     iso_639_1: mh
     iso_639_2: mah
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 104
   fields:
     language: Malayalam
     iso_639_1: ml
     iso_639_2: mal
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 105
   fields:
     language: Maori
     iso_639_1: mi
     iso_639_2: mao
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 106
   fields:
     language: Marathi
     iso_639_1: mr
     iso_639_2: mar
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 107
   fields:
     language: Malay
     iso_639_1: ms
     iso_639_2: may
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 108
   fields:
     language: Malagasy
     iso_639_1: mg
     iso_639_2: mlg
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 109
   fields:
     language: Maltese
     iso_639_1: mt
     iso_639_2: mlt
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 110
   fields:
     language: Mongolian
     iso_639_1: mn
     iso_639_2: mon
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 111
   fields:
     language: Nauru
     iso_639_1: na
     iso_639_2: nau
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 112
   fields:
     language: Navajo; Navaho
     iso_639_1: nv
     iso_639_2: nav
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 113
   fields:
     language: Ndebele, South; South Ndebele
     iso_639_1: nr
     iso_639_2: nbl
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 114
   fields:
     language: Ndebele, North; North Ndebele
     iso_639_1: nd
     iso_639_2: nde
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 115
   fields:
     language: Ndonga
     iso_639_1: ng
     iso_639_2: ndo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 116
   fields:
     language: Nepali
     iso_639_1: ne
     iso_639_2: nep
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 117
   fields:
     language: Norwegian Nynorsk; Nynorsk, Norwegian
     iso_639_1: nn
     iso_639_2: nno
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 118
   fields:
     language: Bokm√•l, Norwegian; Norwegian Bokm√•l
     iso_639_1: nb
     iso_639_2: nob
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 119
   fields:
     language: Norwegian
     iso_639_1: no
     iso_639_2: nor
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 120
   fields:
     language: Chichewa; Chewa; Nyanja
     iso_639_1: ny
     iso_639_2: nya
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 121
   fields:
     language: Occitan (post 1500); Proven√ßal
     iso_639_1: oc
     iso_639_2: oci
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 122
   fields:
     language: Ojibwa
     iso_639_1: oj
     iso_639_2: oji
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 123
   fields:
     language: Oriya
     iso_639_1: or
     iso_639_2: ori
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 124
   fields:
     language: Oromo
     iso_639_1: om
     iso_639_2: orm
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 125
   fields:
     language: Ossetian; Ossetic
     iso_639_1: os
     iso_639_2: oss
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 126
   fields:
     language: Panjabi; Punjabi
     iso_639_1: pa
     iso_639_2: pan
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 127
   fields:
     language: Persian
     iso_639_1: fa
     iso_639_2: per
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 128
   fields:
     language: Pali
     iso_639_1: pi
     iso_639_2: pli
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 129
   fields:
     language: Polish
     iso_639_1: pl
     iso_639_2: pol
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 130
   fields:
     language: Portuguese
     iso_639_1: pt
     iso_639_2: por
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 131
   fields:
     language: Pushto; Pashto
     iso_639_1: ps
     iso_639_2: pus
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 132
   fields:
     language: Quechua
     iso_639_1: qu
     iso_639_2: que
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 133
   fields:
     language: Romansh
     iso_639_1: rm
     iso_639_2: roh
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 134
   fields:
     language: Romanian; Moldavian; Moldovan
     iso_639_1: ro
     iso_639_2: rum
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 135
   fields:
     language: Rundi
     iso_639_1: rn
     iso_639_2: run
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 136
   fields:
     language: Russian
     iso_639_1: ru
     iso_639_2: rus
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 137
   fields:
     language: Sango
     iso_639_1: sg
     iso_639_2: sag
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 138
   fields:
     language: Sanskrit
     iso_639_1: sa
     iso_639_2: san
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 139
   fields:
     language: Sinhala; Sinhalese
     iso_639_1: si
     iso_639_2: sin
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 140
   fields:
     language: Slovak
     iso_639_1: sk
     iso_639_2: slo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 141
   fields:
     language: Slovenian
     iso_639_1: sl
     iso_639_2: slv
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 142
   fields:
     language: Northern Sami
     iso_639_1: se
     iso_639_2: sme
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 143
   fields:
     language: Samoan
     iso_639_1: sm
     iso_639_2: smo
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 144
   fields:
     language: Shona
     iso_639_1: sn
     iso_639_2: sna
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 145
   fields:
     language: Sindhi
     iso_639_1: sd
     iso_639_2: snd
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 146
   fields:
     language: Somali
     iso_639_1: so
     iso_639_2: som
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 147
   fields:
     language: Sotho, Southern
     iso_639_1: st
     iso_639_2: sot
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 148
   fields:
     language: Spanish; Castilian
     iso_639_1: es
     iso_639_2: spa
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 149
   fields:
     language: Sardinian
     iso_639_1: sc
     iso_639_2: srd
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 150
   fields:
     language: Serbian
     iso_639_1: sr
     iso_639_2: srp
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 151
   fields:
     language: Swati
     iso_639_1: ss
     iso_639_2: ssw
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 152
   fields:
     language: Sundanese
     iso_639_1: su
     iso_639_2: sun
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 153
   fields:
     language: Swahili
     iso_639_1: sw
     iso_639_2: swa
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 154
   fields:
     language: Swedish
     iso_639_1: sv
     iso_639_2: swe
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 155
   fields:
     language: Tahitian
     iso_639_1: ty
     iso_639_2: tah
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 156
   fields:
     language: Tamil
     iso_639_1: ta
     iso_639_2: tam
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 157
   fields:
     language: Tatar
     iso_639_1: tt
     iso_639_2: tat
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 158
   fields:
     language: Telugu
     iso_639_1: te
     iso_639_2: tel
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 159
   fields:
     language: Tajik
     iso_639_1: tg
     iso_639_2: tgk
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 160
   fields:
     language: Tagalog
     iso_639_1: tl
     iso_639_2: tgl
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 161
   fields:
     language: Thai
     iso_639_1: th
     iso_639_2: tha
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 162
   fields:
     language: Tibetan
     iso_639_1: bo
     iso_639_2: bod
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 163
   fields:
     language: Tigrinya
     iso_639_1: ti
     iso_639_2: tir
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 164
   fields:
     language: Tonga (Tonga Islands)
     iso_639_1: to
     iso_639_2: ton
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 165
   fields:
     language: Tswana
     iso_639_1: tn
     iso_639_2: tsn
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 166
   fields:
     language: Tsonga
     iso_639_1: ts
     iso_639_2: tso
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 167
   fields:
     language: Turkmen
     iso_639_1: tk
     iso_639_2: tuk
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 168
   fields:
     language: Turkish
     iso_639_1: tr
     iso_639_2: tur
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 169
   fields:
     language: Twi
     iso_639_1: tw
     iso_639_2: twi
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 170
   fields:
     language: Uighur; Uyghur
     iso_639_1: ug
     iso_639_2: uig
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 171
   fields:
     language: Ukrainian
     iso_639_1: uk
     iso_639_2: ukr
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 172
   fields:
     language: Urdu
     iso_639_1: ur
     iso_639_2: urd
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 173
   fields:
     language: Uzbek
     iso_639_1: uz
     iso_639_2: uzb
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 174
   fields:
     language: Venda
     iso_639_1: ve
     iso_639_2: ven
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 175
   fields:
     language: Vietnamese
     iso_639_1: vi
     iso_639_2: vie
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 176
   fields:
     language: Volap√ºk
     iso_639_1: vo
     iso_639_2: vol
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 177
   fields:
     language: Welsh
     iso_639_1: cy
     iso_639_2: wel
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 178
   fields:
     language: Walloon
     iso_639_1: wa
     iso_639_2: wln
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 179
   fields:
     language: Wolof
     iso_639_1: wo
     iso_639_2: wol
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 180
   fields:
     language: Xhosa
     iso_639_1: xh
     iso_639_2: xho
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 181
   fields:
     language: Yiddish
     iso_639_1: yi
     iso_639_2: yid
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 182
   fields:
     language: Yoruba
     iso_639_1: yo
     iso_639_2: yor
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 183
   fields:
     language: Zhuang; Chuang
     iso_639_1: za
     iso_639_2: zha
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 184
   fields:
     language: Zulu
     iso_639_1: zu
     iso_639_2: zul
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 185
   fields:
     language: Acholi
     iso_639_1:
     iso_639_2: ach
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 186
   fields:
     language: Serbo-Croatian
     iso_639_1: sh
     iso_639_2: hbs
+    date_created: 2017-11-24
 
-- model: authority.language
+- model: authority.Language
   pk: 187
   fields:
     language: Romany
     iso_639_1:
     iso_639_2: rom
+    date_created: 2017-11-24
