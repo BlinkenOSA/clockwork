@@ -53,8 +53,8 @@ class Command(BaseCommand):
             }
 
             carrier_map = {
-                'Archival boxes': CarrierType.objects.get(type='Archival Box'),
-                'Archival card boxes': CarrierType.objects.get(type='Archival Card Box'),
+                'Archival boxes': CarrierType.objects.get(type='Archival box'),
+                'Archival card boxes': CarrierType.objects.get(type='Archival card box'),
                 'Boxes of color prints': CarrierType.objects.get(type='Boxes of color prints'),
                 'Audio cassette': CarrierType.objects.get(type='Audio cassette'),
                 'Beta SP': CarrierType.objects.get(type='Beta SP'),
