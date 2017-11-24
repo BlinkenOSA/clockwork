@@ -8,7 +8,7 @@ from clockwork import settings
 
 def get_approx_date_from_string(date):
     if date:
-        chunks = map(lambda x: int(x), date.split('-'))
+        chunks = list(map(lambda x: int(x), date.split('-')))
         if len(chunks) == 3:
             return "%04d-%02d-%02d" % (chunks[0], chunks[1], chunks[2])
         elif len(chunks) == 2:
