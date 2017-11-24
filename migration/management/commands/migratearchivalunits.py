@@ -15,7 +15,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_new_fonds')
+                                          database=settings.MIGRATION_DB['DB'])
             self.insert_fonds(cnx)
             self.insert_subfonds(cnx)
             self.insert_series(cnx)

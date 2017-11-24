@@ -19,7 +19,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_containers')
+                                          database=settings.MIGRATION_DB['DB'])
 
             cursor = cnx.cursor(dictionary=True, buffered=True)
             sql = "SELECT Main.ID, Main.FondsID, Main.SubfondsID, Main.SeriesID, Main.ListNo, ListsInSeries.Medium, " \
