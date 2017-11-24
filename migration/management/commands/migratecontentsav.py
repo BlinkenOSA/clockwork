@@ -116,7 +116,7 @@ class Command(BaseCommand):
                                 FindingAidsEntityDate.objects.create(
                                     fa_entity=finding_aids,
                                     date_from=get_approx_date(row['YearAir'], row['MonthAir'], row['DayAir']),
-                                    date_type=DateType.objects.get(type='Date of Air')
+                                    date_type=DateType.objects.get(type='Date of air')
                                 ).save()
 
                             if row['YearProduction']:
@@ -125,7 +125,7 @@ class Command(BaseCommand):
                                     date_from=get_approx_date(row['YearProduction'],
                                                               row['MonthProduction'],
                                                               row['DayProduction']),
-                                    date_type=DateType.objects.get(type='Date of Production')
+                                    date_type=DateType.objects.get(type='Date of production')
                                 ).save()
 
                             if row['ProgramTypeID']:
