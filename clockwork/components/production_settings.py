@@ -17,7 +17,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
-
-CSRF_COOKIE_SECURE = False
-X_FRAME_OPTIONS = 'DENY'
-SESSION_COOKIE_SECURE = False
