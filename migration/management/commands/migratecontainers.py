@@ -75,9 +75,9 @@ class Command(BaseCommand):
                 'mini CD-R': CarrierType.objects.get(type='mini CD-R'),
                 'mini DV': CarrierType.objects.get(type='mini DV'),
                 'Oversized folder': CarrierType.objects.get(type='Oversized folder'),
-                'Digital - Text': CarrierType.objects.get(type='Digital Container'),
-                'Digital - Audio': CarrierType.objects.get(type='Digital Container'),
-                'Digital - Video': CarrierType.objects.get(type='Digital Container'),
+                'Digital - Text': CarrierType.objects.get(type='Digital container'),
+                'Digital - Audio': CarrierType.objects.get(type='Digital container'),
+                'Digital - Video': CarrierType.objects.get(type='Digital container'),
                 'HDD': CarrierType.objects.get(type='HDD'),
                 '[other]': CarrierType.objects.get(type='N/A'),
                 'SDLT*': CarrierType.objects.get(type='SDLT I')
