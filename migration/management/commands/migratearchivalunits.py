@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     archival_unit.theme.add(ArchivalUnitTheme.objects.filter(theme='Civil Society').first())
 
                 archival_unit.save()
-                print("Inserting %s-%s" % (row['FondsID']))
+                print("Inserting %s" % (row['ID']))
             except IntegrityError:
                 print("Fonds %s already exists!" % row['ID'])
 
