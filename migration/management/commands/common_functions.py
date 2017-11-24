@@ -49,7 +49,7 @@ def get_user(old_user):
         cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                       password=settings.MIGRATION_DB['PASSWORD'],
                                       host=settings.MIGRATION_DB['HOST'],
-                                      database='clkwrk_import_users')
+                                      database=settings.MIGRATION_DB['DB'])
         cursor = cnx.cursor(buffered=True, dictionary=True)
         sql = 'SELECT * FROM users WHERE olduser = %s'
         cursor.execute(sql, (old_user,))
