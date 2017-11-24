@@ -4,6 +4,7 @@
     country: Afghanistan
     alpha2: AF
     alpha3: AFG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 2
@@ -11,6 +12,7 @@
     country: Albania
     alpha2: AL
     alpha3: ALB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 3
@@ -18,6 +20,7 @@
     country: Algeria
     alpha2: DZ
     alpha3: DZA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 4
@@ -25,6 +28,7 @@
     country: Andorra
     alpha2: AD
     alpha3: AND
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 5
@@ -32,6 +36,7 @@
     country: Angola
     alpha2: AO
     alpha3: AGO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 6
@@ -39,6 +44,7 @@
     country: Antigua and Barbuda
     alpha2: AG
     alpha3: ATG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 7
@@ -46,6 +52,7 @@
     country: Argentina
     alpha2: AR
     alpha3: ARG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 8
@@ -53,6 +60,7 @@
     country: Armenia
     alpha2: AM
     alpha3: ARM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 9
@@ -60,6 +68,7 @@
     country: Australia
     alpha2: AU
     alpha3: AUS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 10
@@ -67,6 +76,7 @@
     country: Austria
     alpha2: AT
     alpha3: AUT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 11
@@ -74,6 +84,7 @@
     country: Azerbaijan
     alpha2: AZ
     alpha3: AZE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 12
@@ -81,6 +92,7 @@
     country: Bahamas, The
     alpha2: BS
     alpha3: BHS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 13
@@ -88,6 +100,7 @@
     country: Bahrain
     alpha2: BH
     alpha3: BHR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 14
@@ -95,6 +108,7 @@
     country: Bangladesh
     alpha2: BD
     alpha3: BGD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 15
@@ -102,6 +116,7 @@
     country: Barbados
     alpha2: BB
     alpha3: BRB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 16
@@ -109,6 +124,7 @@
     country: Belarus
     alpha2: BY
     alpha3: BLR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 17
@@ -116,6 +132,7 @@
     country: Belgium
     alpha2: BE
     alpha3: BEL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 18
@@ -123,6 +140,7 @@
     country: Belize
     alpha2: BZ
     alpha3: BLZ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 19
@@ -130,6 +148,7 @@
     country: Benin
     alpha2: BJ
     alpha3: BEN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 20
@@ -137,6 +156,7 @@
     country: Bhutan
     alpha2: BT
     alpha3: BTN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 21
@@ -144,6 +164,7 @@
     country: Bolivia
     alpha2: BO
     alpha3: BOL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 22
@@ -151,6 +172,7 @@
     country: Bosnia and Herzegovina
     alpha2: BA
     alpha3: BIH
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 23
@@ -158,6 +180,7 @@
     country: Botswana
     alpha2: BW
     alpha3: BWA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 24
@@ -165,6 +188,7 @@
     country: Brazil
     alpha2: BR
     alpha3: BRA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 25
@@ -172,6 +196,7 @@
     country: Brunei
     alpha2: BN
     alpha3: BRN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 26
@@ -179,6 +204,7 @@
     country: Bulgaria
     alpha2: BG
     alpha3: BGR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 27
@@ -186,6 +212,7 @@
     country: Burkina Faso
     alpha2: BF
     alpha3: BFA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 28
@@ -193,6 +220,7 @@
     country: Burundi
     alpha2: BI
     alpha3: BDI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 29
@@ -200,6 +228,7 @@
     country: Cambodia
     alpha2: KH
     alpha3: KHM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 30
@@ -207,6 +236,7 @@
     country: Cameroon
     alpha2: CM
     alpha3: CMR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 31
@@ -214,6 +244,7 @@
     country: Canada
     alpha2: CA
     alpha3: CAN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 32
@@ -221,6 +252,7 @@
     country: Cape Verde
     alpha2: CV
     alpha3: CPV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 33
@@ -228,6 +260,7 @@
     country: Central African Republic
     alpha2: CF
     alpha3: CAF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 34
@@ -235,6 +268,7 @@
     country: Chad
     alpha2: TD
     alpha3: TCD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 35
@@ -242,6 +276,7 @@
     country: Chile
     alpha2: CL
     alpha3: CHL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 36
@@ -249,6 +284,7 @@
     country: China, People's Republic of
     alpha2: CN
     alpha3: CHN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 37
@@ -256,6 +292,7 @@
     country: Colombia
     alpha2: CO
     alpha3: COL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 38
@@ -263,6 +300,7 @@
     country: Comoros
     alpha2: KM
     alpha3: COM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 39
@@ -270,6 +308,7 @@
     country: Congo, (Congo ¬ñ Kinshasa)
     alpha2: CD
     alpha3: COD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 40
@@ -277,6 +316,7 @@
     country: Congo, (Congo ¬ñ Brazzaville)
     alpha2: CG
     alpha3: COG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 41
@@ -284,6 +324,7 @@
     country: Costa Rica
     alpha2: CR
     alpha3: CRI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 42
@@ -291,6 +332,7 @@
     country: Cote d'Ivoire (Ivory Coast)
     alpha2: CI
     alpha3: CIV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 43
@@ -298,6 +340,7 @@
     country: Croatia
     alpha2: HR
     alpha3: HRV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 44
@@ -305,6 +348,7 @@
     country: Cuba
     alpha2: CU
     alpha3: CUB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 45
@@ -312,6 +356,7 @@
     country: Cyprus
     alpha2: CY
     alpha3: CYP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 46
@@ -319,6 +364,7 @@
     country: Czech Republic
     alpha2: CZ
     alpha3: CZE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 47
@@ -326,6 +372,7 @@
     country: Denmark
     alpha2: DK
     alpha3: DNK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 48
@@ -333,6 +380,7 @@
     country: Djibouti
     alpha2: DJ
     alpha3: DJI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 49
@@ -340,6 +388,7 @@
     country: Dominica
     alpha2: DM
     alpha3: DMA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 50
@@ -347,6 +396,7 @@
     country: Dominican Republic
     alpha2: DO
     alpha3: DOM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 51
@@ -354,6 +404,7 @@
     country: Ecuador
     alpha2: EC
     alpha3: ECU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 52
@@ -361,6 +412,7 @@
     country: Egypt
     alpha2: EG
     alpha3: EGY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 53
@@ -368,6 +420,7 @@
     country: El Salvador
     alpha2: SV
     alpha3: SLV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 54
@@ -375,6 +428,7 @@
     country: Equatorial Guinea
     alpha2: GQ
     alpha3: GNQ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 55
@@ -382,6 +436,7 @@
     country: Eritrea
     alpha2: ER
     alpha3: ERI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 56
@@ -389,6 +444,7 @@
     country: Estonia
     alpha2: EE
     alpha3: EST
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 57
@@ -396,6 +452,7 @@
     country: Ethiopia
     alpha2: ET
     alpha3: ETH
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 58
@@ -403,6 +460,7 @@
     country: Fiji
     alpha2: FJ
     alpha3: FJI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 59
@@ -410,6 +468,7 @@
     country: Finland
     alpha2: FI
     alpha3: FIN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 60
@@ -417,6 +476,7 @@
     country: France
     alpha2: FR
     alpha3: FRA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 61
@@ -424,6 +484,7 @@
     country: Gabon
     alpha2: GA
     alpha3: GAB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 62
@@ -431,6 +492,7 @@
     country: Gambia, The
     alpha2: GM
     alpha3: GMB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 63
@@ -438,6 +500,7 @@
     country: Georgia
     alpha2: GE
     alpha3: GEO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 64
@@ -445,6 +508,7 @@
     country: Germany
     alpha2: DE
     alpha3: DEU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 65
@@ -452,6 +516,7 @@
     country: Ghana
     alpha2: GH
     alpha3: GHA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 66
@@ -459,6 +524,7 @@
     country: Greece
     alpha2: GR
     alpha3: GRC
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 67
@@ -466,6 +532,7 @@
     country: Grenada
     alpha2: GD
     alpha3: GRD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 68
@@ -473,6 +540,7 @@
     country: Guatemala
     alpha2: GT
     alpha3: GTM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 69
@@ -480,6 +548,7 @@
     country: Guinea
     alpha2: GN
     alpha3: GIN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 70
@@ -487,6 +556,7 @@
     country: Guinea-Bissau
     alpha2: GW
     alpha3: GNB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 71
@@ -494,6 +564,7 @@
     country: Guyana
     alpha2: GY
     alpha3: GUY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 72
@@ -501,6 +572,7 @@
     country: Haiti
     alpha2: HT
     alpha3: HTI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 73
@@ -508,6 +580,7 @@
     country: Honduras
     alpha2: HN
     alpha3: HND
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 74
@@ -515,6 +588,7 @@
     country: Hungary
     alpha2: HU
     alpha3: HUN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 75
@@ -522,6 +596,7 @@
     country: Iceland
     alpha2: IS
     alpha3: ISL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 76
@@ -529,6 +604,7 @@
     country: India
     alpha2: IN
     alpha3: IND
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 77
@@ -536,6 +612,7 @@
     country: Indonesia
     alpha2: ID
     alpha3: IDN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 78
@@ -543,6 +620,7 @@
     country: Iran
     alpha2: IR
     alpha3: IRN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 79
@@ -550,6 +628,7 @@
     country: Iraq
     alpha2: IQ
     alpha3: IRQ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 80
@@ -557,6 +636,7 @@
     country: Ireland
     alpha2: IE
     alpha3: IRL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 81
@@ -564,6 +644,7 @@
     country: Israel
     alpha2: IL
     alpha3: ISR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 82
@@ -571,6 +652,7 @@
     country: Italy
     alpha2: IT
     alpha3: ITA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 83
@@ -578,6 +660,7 @@
     country: Jamaica
     alpha2: JM
     alpha3: JAM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 84
@@ -585,6 +668,7 @@
     country: Japan
     alpha2: JP
     alpha3: JPN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 85
@@ -592,6 +676,7 @@
     country: Jordan
     alpha2: JO
     alpha3: JOR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 86
@@ -599,6 +684,7 @@
     country: Kazakhstan
     alpha2: KZ
     alpha3: KAZ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 87
@@ -606,6 +692,7 @@
     country: Kenya
     alpha2: KE
     alpha3: KEN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 88
@@ -613,6 +700,7 @@
     country: Kiribati
     alpha2: KI
     alpha3: KIR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 89
@@ -620,6 +708,7 @@
     country: Korea, North
     alpha2: KP
     alpha3: PRK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 90
@@ -627,6 +716,7 @@
     country: Korea, South
     alpha2: KR
     alpha3: KOR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 91
@@ -634,6 +724,7 @@
     country: Kuwait
     alpha2: KW
     alpha3: KWT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 92
@@ -641,6 +732,7 @@
     country: Kyrgyzstan
     alpha2: KG
     alpha3: KGZ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 93
@@ -648,6 +740,7 @@
     country: Laos
     alpha2: LA
     alpha3: LAO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 94
@@ -655,6 +748,7 @@
     country: Latvia
     alpha2: LV
     alpha3: LVA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 95
@@ -662,6 +756,7 @@
     country: Lebanon
     alpha2: LB
     alpha3: LBN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 96
@@ -669,6 +764,7 @@
     country: Lesotho
     alpha2: LS
     alpha3: LSO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 97
@@ -676,6 +772,7 @@
     country: Liberia
     alpha2: LR
     alpha3: LBR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 98
@@ -683,6 +780,7 @@
     country: Libya
     alpha2: LY
     alpha3: LBY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 99
@@ -690,6 +788,7 @@
     country: Liechtenstein
     alpha2: LI
     alpha3: LIE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 100
@@ -697,6 +796,7 @@
     country: Lithuania
     alpha2: LT
     alpha3: LTU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 101
@@ -704,6 +804,7 @@
     country: Luxembourg
     alpha2: LU
     alpha3: LUX
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 102
@@ -711,6 +812,7 @@
     country: Macedonia
     alpha2: MK
     alpha3: MKD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 103
@@ -718,6 +820,7 @@
     country: Madagascar
     alpha2: MG
     alpha3: MDG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 104
@@ -725,6 +828,7 @@
     country: Malawi
     alpha2: MW
     alpha3: MWI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 105
@@ -732,6 +836,7 @@
     country: Malaysia
     alpha2: MY
     alpha3: MYS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 106
@@ -739,6 +844,7 @@
     country: Maldives
     alpha2: MV
     alpha3: MDV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 107
@@ -746,6 +852,7 @@
     country: Mali
     alpha2: ML
     alpha3: MLI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 108
@@ -753,6 +860,7 @@
     country: Malta
     alpha2: MT
     alpha3: MLT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 109
@@ -760,6 +868,7 @@
     country: Marshall Islands
     alpha2: MH
     alpha3: MHL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 110
@@ -767,6 +876,7 @@
     country: Mauritania
     alpha2: MR
     alpha3: MRT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 111
@@ -774,6 +884,7 @@
     country: Mauritius
     alpha2: MU
     alpha3: MUS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 112
@@ -781,6 +892,7 @@
     country: Mexico
     alpha2: MX
     alpha3: MEX
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 113
@@ -788,6 +900,7 @@
     country: Micronesia
     alpha2: FM
     alpha3: FSM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 114
@@ -795,6 +908,7 @@
     country: Moldova
     alpha2: MD
     alpha3: MDA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 115
@@ -802,6 +916,7 @@
     country: Monaco
     alpha2: MC
     alpha3: MCO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 116
@@ -809,6 +924,7 @@
     country: Mongolia
     alpha2: MN
     alpha3: MNG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 117
@@ -816,6 +932,7 @@
     country: Montenegro
     alpha2: ME
     alpha3: MNE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 118
@@ -823,6 +940,7 @@
     country: Morocco
     alpha2: MA
     alpha3: MAR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 119
@@ -830,6 +948,7 @@
     country: Mozambique
     alpha2: MZ
     alpha3: MOZ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 120
@@ -837,6 +956,7 @@
     country: Myanmar (Burma)
     alpha2: MM
     alpha3: MMR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 121
@@ -844,6 +964,7 @@
     country: Namibia
     alpha2: NA
     alpha3: NAM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 122
@@ -851,6 +972,7 @@
     country: Nauru
     alpha2: NR
     alpha3: NRU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 123
@@ -858,6 +980,7 @@
     country: Nepal
     alpha2: NP
     alpha3: NPL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 124
@@ -865,6 +988,7 @@
     country: Netherlands
     alpha2: NL
     alpha3: NLD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 125
@@ -872,6 +996,7 @@
     country: New Zealand
     alpha2: NZ
     alpha3: NZL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 126
@@ -879,6 +1004,7 @@
     country: Nicaragua
     alpha2: NI
     alpha3: NIC
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 127
@@ -886,6 +1012,7 @@
     country: Niger
     alpha2: NE
     alpha3: NER
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 128
@@ -893,6 +1020,7 @@
     country: Nigeria
     alpha2: NG
     alpha3: NGA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 129
@@ -900,6 +1028,7 @@
     country: Norway
     alpha2: "NO"
     alpha3: NOR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 130
@@ -907,6 +1036,7 @@
     country: Oman
     alpha2: OM
     alpha3: OMN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 131
@@ -914,6 +1044,7 @@
     country: Pakistan
     alpha2: PK
     alpha3: PAK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 132
@@ -921,6 +1052,7 @@
     country: Palau
     alpha2: PW
     alpha3: PLW
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 133
@@ -928,6 +1060,7 @@
     country: Panama
     alpha2: PA
     alpha3: PAN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 134
@@ -935,6 +1068,7 @@
     country: Papua New Guinea
     alpha2: PG
     alpha3: PNG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 135
@@ -942,6 +1076,7 @@
     country: Paraguay
     alpha2: PY
     alpha3: PRY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 136
@@ -949,6 +1084,7 @@
     country: Peru
     alpha2: PE
     alpha3: PER
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 137
@@ -956,6 +1092,7 @@
     country: Philippines
     alpha2: PH
     alpha3: PHL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 138
@@ -963,6 +1100,7 @@
     country: Poland
     alpha2: PL
     alpha3: POL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 139
@@ -970,6 +1108,7 @@
     country: Portugal
     alpha2: PT
     alpha3: PRT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 140
@@ -977,6 +1116,7 @@
     country: Qatar
     alpha2: QA
     alpha3: QAT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 141
@@ -984,6 +1124,7 @@
     country: Romania
     alpha2: RO
     alpha3: ROU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 142
@@ -991,6 +1132,7 @@
     country: Russia
     alpha2: RU
     alpha3: RUS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 143
@@ -998,6 +1140,7 @@
     country: Rwanda
     alpha2: RW
     alpha3: RWA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 144
@@ -1005,6 +1148,7 @@
     country: Saint Kitts and Nevis
     alpha2: KN
     alpha3: KNA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 145
@@ -1012,6 +1156,7 @@
     country: Saint Lucia
     alpha2: LC
     alpha3: LCA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 146
@@ -1019,6 +1164,7 @@
     country: Saint Vincent and the Grenadines
     alpha2: VC
     alpha3: VCT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 147
@@ -1026,6 +1172,7 @@
     country: Samoa
     alpha2: WS
     alpha3: WSM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 148
@@ -1033,6 +1180,7 @@
     country: San Marino
     alpha2: SM
     alpha3: SMR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 149
@@ -1040,6 +1188,7 @@
     country: Sao Tome and Principe
     alpha2: ST
     alpha3: STP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 150
@@ -1047,6 +1196,7 @@
     country: Saudi Arabia
     alpha2: SA
     alpha3: SAU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 151
@@ -1054,6 +1204,7 @@
     country: Senegal
     alpha2: SN
     alpha3: SEN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 152
@@ -1061,6 +1212,7 @@
     country: Serbia
     alpha2: RS
     alpha3: SRB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 153
@@ -1068,6 +1220,7 @@
     country: Seychelles
     alpha2: SC
     alpha3: SYC
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 154
@@ -1075,6 +1228,7 @@
     country: Sierra Leone
     alpha2: SL
     alpha3: SLE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 155
@@ -1082,6 +1236,7 @@
     country: Singapore
     alpha2: SG
     alpha3: SGP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 156
@@ -1089,6 +1244,7 @@
     country: Slovakia
     alpha2: SK
     alpha3: SVK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 157
@@ -1096,6 +1252,7 @@
     country: Slovenia
     alpha2: SI
     alpha3: SVN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 158
@@ -1103,6 +1260,7 @@
     country: Solomon Islands
     alpha2: SB
     alpha3: SLB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 159
@@ -1110,6 +1268,7 @@
     country: Somalia
     alpha2: SO
     alpha3: SOM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 160
@@ -1117,6 +1276,7 @@
     country: South Africa
     alpha2: ZA
     alpha3: ZAF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 161
@@ -1124,6 +1284,7 @@
     country: Spain
     alpha2: ES
     alpha3: ESP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 162
@@ -1131,6 +1292,7 @@
     country: Sri Lanka
     alpha2: LK
     alpha3: LKA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 163
@@ -1138,6 +1300,7 @@
     country: Sudan
     alpha2: SD
     alpha3: SDN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 164
@@ -1145,6 +1308,7 @@
     country: Suriname
     alpha2: SR
     alpha3: SUR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 165
@@ -1152,6 +1316,7 @@
     country: Swaziland
     alpha2: SZ
     alpha3: SWZ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 166
@@ -1159,6 +1324,7 @@
     country: Sweden
     alpha2: SE
     alpha3: SWE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 167
@@ -1166,6 +1332,7 @@
     country: Switzerland
     alpha2: CH
     alpha3: CHE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 168
@@ -1173,6 +1340,7 @@
     country: Syria
     alpha2: SY
     alpha3: SYR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 169
@@ -1180,6 +1348,7 @@
     country: Tajikistan
     alpha2: TJ
     alpha3: TJK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 170
@@ -1187,6 +1356,7 @@
     country: Tanzania
     alpha2: TZ
     alpha3: TZA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 171
@@ -1194,6 +1364,7 @@
     country: Thailand
     alpha2: TH
     alpha3: THA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 172
@@ -1201,6 +1372,7 @@
     country: Timor-Leste (East Timor)
     alpha2: TL
     alpha3: TLS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 173
@@ -1208,6 +1380,7 @@
     country: Togo
     alpha2: TG
     alpha3: TGO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 174
@@ -1215,6 +1388,7 @@
     country: Tonga
     alpha2: TO
     alpha3: TON
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 175
@@ -1222,6 +1396,7 @@
     country: Trinidad and Tobago
     alpha2: TT
     alpha3: TTO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 176
@@ -1229,6 +1404,7 @@
     country: Tunisia
     alpha2: TN
     alpha3: TUN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 177
@@ -1236,6 +1412,7 @@
     country: Turkey
     alpha2: TR
     alpha3: TUR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 178
@@ -1243,6 +1420,7 @@
     country: Turkmenistan
     alpha2: TM
     alpha3: TKM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 179
@@ -1250,6 +1428,7 @@
     country: Tuvalu
     alpha2: TV
     alpha3: TUV
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 180
@@ -1257,6 +1436,7 @@
     country: Uganda
     alpha2: UG
     alpha3: UGA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 181
@@ -1264,6 +1444,7 @@
     country: Ukraine
     alpha2: UA
     alpha3: UKR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 182
@@ -1271,6 +1452,7 @@
     country: United Arab Emirates
     alpha2: AE
     alpha3: ARE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 183
@@ -1278,6 +1460,7 @@
     country: United Kingdom
     alpha2: GB
     alpha3: GBR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 184
@@ -1285,6 +1468,7 @@
     country: United States
     alpha2: US
     alpha3: USA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 185
@@ -1292,6 +1476,7 @@
     country: Uruguay
     alpha2: UY
     alpha3: URY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 186
@@ -1299,6 +1484,7 @@
     country: Uzbekistan
     alpha2: UZ
     alpha3: UZB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 187
@@ -1306,6 +1492,7 @@
     country: Vanuatu
     alpha2: VU
     alpha3: VUT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 188
@@ -1313,6 +1500,7 @@
     country: Vatican City
     alpha2: VA
     alpha3: VAT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 189
@@ -1320,6 +1508,7 @@
     country: Venezuela
     alpha2: VE
     alpha3: VEN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 190
@@ -1327,6 +1516,7 @@
     country: Vietnam
     alpha2: VN
     alpha3: VNM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 191
@@ -1334,6 +1524,7 @@
     country: Yemen
     alpha2: YE
     alpha3: YEM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 192
@@ -1341,6 +1532,7 @@
     country: Zambia
     alpha2: ZM
     alpha3: ZMB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 193
@@ -1348,6 +1540,7 @@
     country: Zimbabwe
     alpha2: ZW
     alpha3: ZWE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 194
@@ -1355,6 +1548,7 @@
     country: Abkhazia
     alpha2: GE
     alpha3: GEO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 195
@@ -1362,6 +1556,7 @@
     country: China, Republic of (Taiwan)
     alpha2: TW
     alpha3: TWN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 196
@@ -1369,6 +1564,7 @@
     country: Nagorno-Karabakh
     alpha2: AZ
     alpha3: AZE
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 197
@@ -1376,6 +1572,7 @@
     country: Northern Cyprus
     alpha2: CY
     alpha3: CYP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 198
@@ -1383,6 +1580,7 @@
     country: Pridnestrovie (Transnistria)
     alpha2: MD
     alpha3: MDA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 199
@@ -1390,6 +1588,7 @@
     country: Somaliland
     alpha2: SO
     alpha3: SOM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 200
@@ -1397,6 +1596,7 @@
     country: South Ossetia
     alpha2: GE
     alpha3: GEO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 201
@@ -1404,6 +1604,7 @@
     country: Ashmore and Cartier Islands
     alpha2: AU
     alpha3: AUS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 202
@@ -1411,6 +1612,7 @@
     country: Christmas Island
     alpha2: CX
     alpha3: CXR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 203
@@ -1418,6 +1620,7 @@
     country: Cocos (Keeling) Islands
     alpha2: CC
     alpha3: CCK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 204
@@ -1425,6 +1628,7 @@
     country: Coral Sea Islands
     alpha2: AU
     alpha3: AUS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 205
@@ -1432,6 +1636,7 @@
     country: Heard Island and McDonald Islands
     alpha2: HM
     alpha3: HMD
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 206
@@ -1439,6 +1644,7 @@
     country: Norfolk Island
     alpha2: NF
     alpha3: NFK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 207
@@ -1446,6 +1652,7 @@
     country: New Caledonia
     alpha2: NC
     alpha3: NCL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 208
@@ -1453,6 +1660,7 @@
     country: French Polynesia
     alpha2: PF
     alpha3: PYF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 209
@@ -1460,6 +1668,7 @@
     country: Mayotte
     alpha2: YT
     alpha3: MYT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 210
@@ -1467,6 +1676,7 @@
     country: Saint Barthelemy
     alpha2: GP
     alpha3: GLP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 211
@@ -1474,6 +1684,7 @@
     country: Saint Martin
     alpha2: GP
     alpha3: GLP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 212
@@ -1481,6 +1692,7 @@
     country: Saint Pierre and Miquelon
     alpha2: PM
     alpha3: SPM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 213
@@ -1488,6 +1700,7 @@
     country: Wallis and Futuna
     alpha2: WF
     alpha3: WLF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 214
@@ -1495,6 +1708,7 @@
     country: French Southern and Antarctic Lands
     alpha2: TF
     alpha3: ATF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 215
@@ -1502,6 +1716,7 @@
     country: Clipperton Island
     alpha2: PF
     alpha3: PYF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 216
@@ -1509,6 +1724,7 @@
     country: Bouvet Island
     alpha2: BV
     alpha3: BVT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 217
@@ -1516,6 +1732,7 @@
     country: Cook Islands
     alpha2: CK
     alpha3: COK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 218
@@ -1523,6 +1740,7 @@
     country: Niue
     alpha2: NU
     alpha3: NIU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 219
@@ -1530,6 +1748,7 @@
     country: Tokelau
     alpha2: TK
     alpha3: TKL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 220
@@ -1537,6 +1756,7 @@
     country: Guernsey
     alpha2: GG
     alpha3: GGY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 221
@@ -1544,6 +1764,7 @@
     country: Isle of Man
     alpha2: IM
     alpha3: IMN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 222
@@ -1551,6 +1772,7 @@
     country: Jersey
     alpha2: JE
     alpha3: JEY
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 223
@@ -1558,6 +1780,7 @@
     country: Anguilla
     alpha2: AI
     alpha3: AIA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 224
@@ -1565,6 +1788,7 @@
     country: Bermuda
     alpha2: BM
     alpha3: BMU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 225
@@ -1572,6 +1796,7 @@
     country: British Indian Ocean Territory
     alpha2: IO
     alpha3: IOT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 227
@@ -1579,6 +1804,7 @@
     country: British Virgin Islands
     alpha2: VG
     alpha3: VGB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 228
@@ -1586,6 +1812,7 @@
     country: Cayman Islands
     alpha2: KY
     alpha3: CYM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 229
@@ -1593,6 +1820,7 @@
     country: Falkland Islands (Islas Malvinas)
     alpha2: FK
     alpha3: FLK
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 230
@@ -1600,6 +1828,7 @@
     country: Gibraltar
     alpha2: GI
     alpha3: GIB
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 231
@@ -1607,6 +1836,7 @@
     country: Montserrat
     alpha2: MS
     alpha3: MSR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 232
@@ -1614,6 +1844,7 @@
     country: Pitcairn Islands
     alpha2: PN
     alpha3: PCN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 233
@@ -1621,6 +1852,7 @@
     country: Saint Helena
     alpha2: SH
     alpha3: SHN
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 234
@@ -1628,6 +1860,7 @@
     country: South Georgia & South Sandwich Islands
     alpha2: GS
     alpha3: SGS
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 235
@@ -1635,6 +1868,7 @@
     country: Turks and Caicos Islands
     alpha2: TC
     alpha3: TCA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 236
@@ -1642,6 +1876,7 @@
     country: Northern Mariana Islands
     alpha2: MP
     alpha3: MNP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 237
@@ -1649,6 +1884,7 @@
     country: Puerto Rico
     alpha2: PR
     alpha3: PRI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 238
@@ -1656,6 +1892,7 @@
     country: American Samoa
     alpha2: AS
     alpha3: ASM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 239
@@ -1663,6 +1900,7 @@
     country: Baker Island
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 240
@@ -1670,6 +1908,7 @@
     country: Guam
     alpha2: GU
     alpha3: GUM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 241
@@ -1677,6 +1916,7 @@
     country: Howland Island
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 242
@@ -1684,6 +1924,7 @@
     country: Jarvis Island
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 243
@@ -1691,6 +1932,7 @@
     country: Johnston Atoll
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 244
@@ -1698,6 +1940,7 @@
     country: Kingman Reef
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 245
@@ -1705,6 +1948,7 @@
     country: Midway Islands
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 246
@@ -1712,6 +1956,7 @@
     country: Navassa Island
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 247
@@ -1719,6 +1964,7 @@
     country: Palmyra Atoll
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 248
@@ -1726,6 +1972,7 @@
     country: U.S. Virgin Islands
     alpha2: VI
     alpha3: VIR
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 249
@@ -1733,6 +1980,7 @@
     country: Wake Island
     alpha2: UM
     alpha3: UMI
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 250
@@ -1740,6 +1988,7 @@
     country: Hong Kong
     alpha2: HK
     alpha3: HKG
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 251
@@ -1747,6 +1996,7 @@
     country: Macau
     alpha2: MO
     alpha3: MAC
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 252
@@ -1754,6 +2004,7 @@
     country: Faroe Islands
     alpha2: FO
     alpha3: FRO
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 253
@@ -1761,6 +2012,7 @@
     country: Greenland
     alpha2: GL
     alpha3: GRL
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 254
@@ -1768,6 +2020,7 @@
     country: French Guiana
     alpha2: GF
     alpha3: GUF
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 255
@@ -1775,6 +2028,7 @@
     country: Guadeloupe
     alpha2: GP
     alpha3: GLP
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 256
@@ -1782,6 +2036,7 @@
     country: Martinique
     alpha2: MQ
     alpha3: MTQ
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 257
@@ -1789,6 +2044,7 @@
     country: Reunion
     alpha2: RE
     alpha3: REU
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 258
@@ -1796,6 +2052,7 @@
     country: Aland
     alpha2: AX
     alpha3: ALA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 259
@@ -1803,6 +2060,7 @@
     country: Aruba
     alpha2: AW
     alpha3: ABW
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 260
@@ -1810,6 +2068,7 @@
     country: Netherlands Antilles
     alpha2: AN
     alpha3: ANT
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 261
@@ -1817,6 +2076,7 @@
     country: Svalbard
     alpha2: SJ
     alpha3: SJM
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 262
@@ -1824,6 +2084,7 @@
     country: Ascension
     alpha2: AC
     alpha3: ASC
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 263
@@ -1831,6 +2092,7 @@
     country: Tristan da Cunha
     alpha2: TA
     alpha3: TAA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 268
@@ -1838,6 +2100,7 @@
     country: Australian Antarctic Territory
     alpha2: AQ
     alpha3: ATA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 269
@@ -1845,6 +2108,7 @@
     country: Ross Dependency
     alpha2: AQ
     alpha3: ATA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 270
@@ -1852,6 +2116,7 @@
     country: Peter I Island
     alpha2: AQ
     alpha3: ATA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 271
@@ -1859,6 +2124,7 @@
     country: Queen Maud Land
     alpha2: AQ
     alpha3: ATA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 272
@@ -1866,6 +2132,7 @@
     country: British Antarctic Territory
     alpha2: AQ
     alpha3: ATA
+    date_created: 2017-11-24
 
 - model: authority.country
   pk: 273
