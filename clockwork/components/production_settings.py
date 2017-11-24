@@ -12,12 +12,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static', 'components'),
-    os.path.join(BASE_DIR, 'static', 'django_select2')
+    os.path.join(BASE_DIR, "static"),
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'public]', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
