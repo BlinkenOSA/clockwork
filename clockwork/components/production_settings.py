@@ -13,3 +13,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public]', 'media')
+
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
