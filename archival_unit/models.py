@@ -2,11 +2,9 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext
 
-from validators import validate_level, validate_status
+from archival_unit.validators import validate_level, validate_status
 
 
 class ArchivalUnit(models.Model):
