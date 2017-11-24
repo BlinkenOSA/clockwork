@@ -19,7 +19,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_isad')
+                                          database=settings.MIGRATION_DB['DB'])
 
             sql = "SELECT * FROM isaar ORDER BY FondsID, SubfondsID, SeriesID"
 

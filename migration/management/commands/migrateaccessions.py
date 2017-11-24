@@ -22,7 +22,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_accession')
+                                          database=settings.MIGRATION_DB['DB'])
 
             sql_accession = "SELECT accession.* FROM accession ORDER BY Year, No, FondsID"
 

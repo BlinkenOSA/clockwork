@@ -15,7 +15,7 @@ class Command(BaseCommand):
             cnx = mysql.connector.connect(user=settings.MIGRATION_DB['USER'],
                                           password=settings.MIGRATION_DB['PASSWORD'],
                                           host=settings.MIGRATION_DB['HOST'],
-                                          database='clkwrk_import_accession')
+                                          database=settings.MIGRATION_DB['DB'])
 
             sql = "SELECT donor.*, countries.Country FROM donor LEFT JOIN countries ON donor.CountryId = countries.ID"
 
