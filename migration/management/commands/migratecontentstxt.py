@@ -86,8 +86,8 @@ class Command(BaseCommand):
                         note=row['Notes'],
                         published=True if row['DatePublic'] else False,
                         date_published=row['DatePublic'] if row['DatePublic'] else None,
-                        user_created=user,
-                        user_updated=user
+                        user_created=user.username,
+                        user_updated=user.username
                     )
 
                     if FindingAidsEntity.objects.filter(container=container, folder_no=folder_no).count() == 0:
