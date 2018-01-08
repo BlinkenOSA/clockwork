@@ -40,7 +40,7 @@ class FondsCreateForm(BaseModelForm):
             return fonds
 
     def clean(self):
-        super().clean()
+        super(FondsCreateForm, self).clean()
         f = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
                                         subfonds=self.cleaned_data['subfonds'],
                                         series=self.cleaned_data['series'],
@@ -96,7 +96,7 @@ class SubFondsCreateForm(BaseModelForm):
             return subfonds
 
     def clean(self):
-        super().clean()
+        super(SubFondsCreateForm, self).clean()
         sf = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
                                          subfonds=self.cleaned_data['subfonds'],
                                          series=self.cleaned_data['series'],
@@ -150,7 +150,7 @@ class SeriesCreateForm(BaseModelForm):
             return series
 
     def clean(self):
-        super().clean()
+        super(SeriesCreateForm, self).clean()
         s = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
                                          subfonds=self.cleaned_data['subfonds'],
                                          series=self.cleaned_data['series'],
