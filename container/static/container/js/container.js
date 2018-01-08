@@ -8,7 +8,6 @@ var table = $('#container_table').DataTable({
 	   { "data": 'container_no', "width": "20%" } ,
 	   { "data": 'identifier', "width": "20%" },
 	   { "data": 'carrier_type', "width": "15%" },
-	   { "data": 'primary_type', "width": "15%" },
 	   { "data": 'action', "width": "10%", "class": "action_column" },
 	   { "data": 'navigate', "width": "10%", "class": "action_column" },
 	   { "data": 'publish', "width": "10%", "class": "action_column" }
@@ -27,14 +26,12 @@ var table = $('#container_table').DataTable({
 $('#container-create').on('click', function(e) {
 	e.preventDefault();
 
-	var primary_type = $('#id_primary_type').val();
 	var carrier_type = $('#id_carrier_type').val();
 	var container_label = $('#id_container_label').val();
 
-	if (primary_type != "" && carrier_type != "") {
+	if (carrier_type != "") {
 		var data = {
 			'archival_unit': archival_unit_id,
-			'primary_type': primary_type,
 			'carrier_type': carrier_type,
 			'container_label': container_label
 		};

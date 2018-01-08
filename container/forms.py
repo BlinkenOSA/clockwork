@@ -6,10 +6,6 @@ from controlled_list.models import CarrierType, PrimaryType
 
 
 class ContainerForm(Form):
-    primary_type = ModelChoiceField(
-        queryset=PrimaryType.objects.all(),
-        empty_label=ugettext('- Choose Primary Type -')
-    )
     carrier_type = ModelChoiceField(
         queryset=CarrierType.objects.all(),
         empty_label=ugettext('- Choose Carrier Type -')
@@ -19,10 +15,6 @@ class ContainerForm(Form):
 
 
 class ContainerUpdateForm(ModelForm):
-    primary_type = ModelChoiceField(
-        queryset=PrimaryType.objects.all(),
-        empty_label=ugettext('- Choose Primary Type -')
-    )
     carrier_type = ModelChoiceField(
         queryset=CarrierType.objects.all(),
         empty_label=ugettext('- Choose Carrier Type -')
@@ -33,4 +25,4 @@ class ContainerUpdateForm(ModelForm):
 
     class Meta:
         model = Container
-        fields = ('container_no', 'primary_type', 'carrier_type', 'container_label')
+        fields = ('container_no', 'carrier_type', 'container_label')

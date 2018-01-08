@@ -87,7 +87,7 @@ class Command(BaseCommand):
                         catalog_id=hashids.encode(row["ContainerID"] * 1000 + int(row["No"])),
                         archival_unit=container.archival_unit,
                         container=container,
-                        primary_type=container.primary_type,
+                        primary_type=PrimaryType.objects.get(type='Video'),
                         level='F',
                         is_template=False,
                         folder_no=folder_no,

@@ -39,19 +39,6 @@ class Command(BaseCommand):
 
             cursor.execute(sql)
 
-            pt1 = {
-                1: PrimaryType.objects.get(type='Text'),
-                3: PrimaryType.objects.get(type='Electronic Record'),
-                4: PrimaryType.objects.get(type='Still Image')
-            }
-
-            pt2 = {
-                'V': PrimaryType.objects.get(type='Video'),
-                'SI': PrimaryType.objects.get(type='Still Image'),
-                'A': PrimaryType.objects.get(type='Audio'),
-                'TXT': PrimaryType.objects.get(type='Text')
-            }
-
             carrier_map = {
                 'Archival boxes': CarrierType.objects.get(type='Archival box'),
                 'Archival card boxes': CarrierType.objects.get(type='Archival card box'),
@@ -89,14 +76,6 @@ class Command(BaseCommand):
                                                             subfonds=row['SubfondsID'],
                                                             series=row['SeriesID'],
                                                             level='S').first()
-
-                if row['Medium'] != 2:
-                    pt = pt1[row['Medium']]
-                else:
-                    if row['Type']:
-                        pt = pt2[row['Type']]
-                    else:
-                        pt = PrimaryType.objects.get(type='Video')
 
                 created_by = get_user(row['UserCreated']).username
                 created = tz_budapest.localize(row['DateCreated']) if row['DateCreated'] \

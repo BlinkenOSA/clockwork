@@ -48,7 +48,6 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
         container = Container.objects.get(pk=self.kwargs['container_id'])
         self.object.archival_unit = container.archival_unit
         self.object.container = container
-        self.object.primary_type = container.primary_type
         if self.object.description_level == 'L2':
             item_no = get_number_of_items(self.object.container.id, self.object.folder_no)
             self.object.sequence_no = item_no + 1
@@ -88,7 +87,6 @@ class FindingAidsUpdate(FindingAidsPermissionMixin, AuditTrailContextMixin, Find
         container = Container.objects.get(pk=self.kwargs['container_id'])
         self.object.archival_unit = container.archival_unit
         self.object.container = container
-        self.object.primary_type = container.primary_type
         return super(FindingAidsUpdate, self).forms_valid(form, formset)
 
 

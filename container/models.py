@@ -8,7 +8,6 @@ class Container(models.Model):
     id = models.AutoField(primary_key=True)
 
     archival_unit = models.ForeignKey('archival_unit.ArchivalUnit')
-    primary_type = models.ForeignKey('controlled_list.PrimaryType')
     carrier_type = models.ForeignKey('controlled_list.CarrierType')
 
     container_no = models.IntegerField(default=1)
