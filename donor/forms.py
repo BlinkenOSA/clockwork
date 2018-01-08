@@ -10,6 +10,9 @@ class DonorForm(ModelForm):
     class Meta:
         model = Donor
         fields = '__all__'
+        labels = {
+            'extra_info': ugettext('Additional Information')
+        }
         widgets = {
             'country': CountrySelect2Widget
         }

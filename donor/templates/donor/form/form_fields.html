@@ -3,8 +3,25 @@
 {% load widget_tweaks %}
 
 <fieldset>
+    <div class="col-md-12">
+        {% bootstrap_field form.name|attr:"readonly" %}
+    </div>
+    <div class="col-md-4">
+        {% bootstrap_field form.first_name %}
+    </div>
+    <div class="col-md-4">
+        {% bootstrap_field form.middle_name %}
+    </div>
+    <div class="col-md-4">
+        {% bootstrap_field form.last_name %}
+    </div>
+    <div class="col-md-12">
+        {% bootstrap_field form.corporation_name %}
+    </div>
+    <div class="col-md-12">
+        {% bootstrap_field form.extra_info %}
+    </div>
 	<div class="col-md-6">
-        {% bootstrap_field form.name %}
         {% bootstrap_field form.postal_code %}
         {% bootstrap_field form.country %}
         {% bootstrap_field form.city %}
@@ -15,6 +32,8 @@
         {% bootstrap_field form.fax %}
         {% bootstrap_field form.email %}
         {% bootstrap_field form.website %}
+    </div>
+    <div class="col-md-12">
         {% bootstrap_field form.note|attr:"rows:4" %}
     </div>
 </fieldset>
