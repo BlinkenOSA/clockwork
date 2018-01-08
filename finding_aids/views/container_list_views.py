@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
@@ -56,6 +57,17 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
             })
         else:
             return super(FindingAidsInContainerListJson, self).render_column(row, column)
+
+    def filter_queryset(self, qs):
+        search = self.request.GET.get(u'search[value]', None)
+        if search:
+            qs = qs.filter(
+                Q(title__icontains=search) |
+                Q(title_original__icontains=search) |
+                Q(contents_summary__icontains=search) |
+                Q(contents_summary_original__icontains=search)
+            )
+        return qs
 
     def prepare_results(self, qs):
         json_array = []
