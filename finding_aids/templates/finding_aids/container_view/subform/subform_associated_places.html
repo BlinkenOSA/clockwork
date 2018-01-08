@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <div class="form-group">
-    <label class="control-label">{% trans 'Associated Places' %}</label>
+    <label class="control-label">{% trans 'Additional Places' %}</label>
     {% for form in associated_places %}
         <div id="{{ form.prefix }}-row" class="associated_places-subform subform row">
             {% for hidden in form.hidden_fields %}
