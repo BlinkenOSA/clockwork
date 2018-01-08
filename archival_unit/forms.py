@@ -39,6 +39,15 @@ class FondsCreateForm(BaseModelForm):
         else:
             return fonds
 
+    def clean(self):
+        super(FondsCreateForm, self).clean()
+        f = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                        subfonds=self.cleaned_data['subfonds'],
+                                        series=self.cleaned_data['series'],
+                                        level="F")
+        if len(f) > 0:
+            raise ValidationError({'series': ugettext("Fonds with this number already exists!")})
+
 
 class FondsUpdateForm(FondsCreateForm):
     def save(self, commit=True, *args, **kwargs):
@@ -86,6 +95,15 @@ class SubFondsCreateForm(BaseModelForm):
         else:
             return subfonds
 
+    def clean(self):
+        super(SubFondsCreateForm, self).clean()
+        sf = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                         subfonds=self.cleaned_data['subfonds'],
+                                         series=self.cleaned_data['series'],
+                                         level="SF")
+        if len(sf) > 0:
+            raise ValidationError({'subfonds': ugettext("Subfonds with this number already exists!")})
+
 
 class SubFondsUpdateForm(SubFondsCreateForm):
     def save(self, commit=True, *args, **kwargs):
@@ -130,6 +148,15 @@ class SeriesCreateForm(BaseModelForm):
             raise ValidationError(ugettext("Should be bigger than 0."))
         else:
             return series
+
+    def clean(self):
+        super(SeriesCreateForm, self).clean()
+        s = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                         subfonds=self.cleaned_data['subfonds'],
+                                         series=self.cleaned_data['series'],
+                                         level="S")
+        if len(s) > 0:
+            raise ValidationError({'series': ugettext("Series with this number already exists!")})
 
 
 class SeriesUpdateForm(SeriesCreateForm):

@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext

@@ -13,7 +13,7 @@ from pytz import timezone
 from archival_unit.models import ArchivalUnit
 from authority.models import Language
 from container.models import Container
-from controlled_list.models import Locale, AccessRight, ReproductionRight
+from controlled_list.models import Locale, AccessRight, ReproductionRight, PrimaryType
 from finding_aids.models import FindingAidsEntity, FindingAidsEntityAlternativeTitle
 from isaar.models import Isaar, IsaarStandardizedName, IsaarOtherName, IsaarParallelName
 from isad.models import Isad
@@ -75,7 +75,7 @@ class Command(BaseCommand):
                         catalog_id=hashids.encode(row["ContainerID"] * 1000 + int(row["No"])),
                         archival_unit=container.archival_unit,
                         container=container,
-                        primary_type=container.primary_type,
+                        primary_type=PrimaryType.objects.get(type='Text'),
                         level='F',
                         is_template=False,
                         folder_no=folder_no,

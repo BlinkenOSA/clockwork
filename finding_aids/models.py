@@ -8,9 +8,6 @@ from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
 from hashids import Hashids
 
-from controlled_list.models import PrimaryType, PersonRole, CorporationRole, GeoRole, LanguageUsage
-from authority.models import Person, Place, Corporation, Country, Language
-
 
 class FindingAidsEntity(CloneableMixin, models.Model):
     id = models.AutoField(primary_key=True)
