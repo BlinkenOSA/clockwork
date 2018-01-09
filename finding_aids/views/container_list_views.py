@@ -23,7 +23,7 @@ class FindingAidsInContainerList(FindingAidsPermissionMixin, FindingAidsAllowedA
 
 class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableView):
     model = FindingAidsEntity
-    columns = ['level', 'title', 'title_original', 'date', 'action', 'publish']
+    columns = ['level', 'title', 'title_original', 'contents_summary', 'more_button', 'date', 'action', 'publish']
     order_columns = ['folder_no', 'sequence_no', 'title']
     max_display_length = 500
 
@@ -51,6 +51,11 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
                 'id': row.id,
                 'catalog_id': row.catalog_id,
                 'published': row.published})
+        elif column == 'more_button':
+            if row.contents_summary:
+                return '<i class="fa fa-plus-square-o"></i>'
+            else:
+                return ""
         elif column == 'publish':
             return render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
                 'finding_aids_entity': row
