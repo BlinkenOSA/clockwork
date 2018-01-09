@@ -1,6 +1,10 @@
 from __future__ import unicode_literals
+
+from django.core.exceptions import ValidationError
 from django.db import models
 import uuid
+
+from django.utils.translation import ugettext
 
 
 class Donor(models.Model):
@@ -9,6 +13,13 @@ class Donor(models.Model):
     old_id = models.IntegerField(blank=True, null=True)
 
     name = models.CharField(unique=True, max_length=200)
+
+    first_name = models.CharField(max_length=200, blank=True)
+    middle_name = models.CharField(max_length=200, blank=True)
+    last_name = models.CharField(max_length=200, blank=True)
+    corporation_name = models.CharField(max_length=200, blank=True)
+
+    extra_info = models.CharField(max_length=200, blank=True)
 
     postal_code = models.CharField(max_length=20)
     country = models.ForeignKey('authority.Country', models.PROTECT)
@@ -30,6 +41,14 @@ class Donor(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if self.first_name:
+            self.name = "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
+        elif self.corporation_name:
+            self.name = self.corporation_name
+        else:
+            raise ValidationError({'first_name': ugettext("Name or Corporation Name is mandatory!")})
 
     def get_address(self):
         return "%s %s, %s, %s" % (self.postal_code, self.country, self.city, self.address)

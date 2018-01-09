@@ -1,6 +1,5 @@
 // DataTable Init
 var table = $('#fa_table').DataTable({
-    "dom": "lrtip",
 	"serverSide": true,
 	"ajax": "/finding_aids/datatable/" + containerID ,
 	"columns": [
@@ -20,7 +19,7 @@ var table = $('#fa_table').DataTable({
 	"paging":   true,
     "ordering": false,
     "info":     false,
-	"searching": false,
+	"searching": true,
 	"autoWidth": true,
 	"stateSave": true
 });
