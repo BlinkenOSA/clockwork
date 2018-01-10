@@ -145,7 +145,16 @@ $(function() {
 
 function getDetails ( d ) {
 	if (d.contents_summary) {
-		return $('<tr><td></td><td></td><td colspan="3"><i>Contents Summary</i><p>'+d.contents_summary+'</p></td></tr>');
+		return $('<tr>' +
+					'<td></td>' +
+					'<td></td>' +
+					'<td colspan="3">' +
+						'<div class="slider" style="display:none;">' +
+							'<i>Contents Summary</i>' +
+							'<p>'+d.contents_summary+'</p>' +
+						'</div>' +
+					'</td>' +
+				'</tr>');
 	} else {
 		return undefined;
 	}
@@ -159,8 +168,10 @@ $('#fa_table tbody').on('click', 'td.details-control', function () {
 	if ( row.child.isShown() ) {
 		// Close this row
 		if (row.child()) {
-			row.child.hide();
-			tr.removeClass('shown');
+			$('div.slider', row.child()).slideUp( function () {
+				row.child.hide();
+				tr.removeClass('shown');
+			});
 		}
 		$(this).html('<i class="fa fa-plus-square-o"></i>')
 	}
@@ -170,6 +181,7 @@ $('#fa_table tbody').on('click', 'td.details-control', function () {
 		if (content) {
 			row.child(content).show();
 			tr.addClass('shown');
+			$('div.slider', row.child()).slideDown();
 		}
 		$(this).html('<i class="fa fa-minus-square-o"></i>')
 	}
@@ -181,6 +193,7 @@ $("a.details-show").on('click', function(e){
 		let content = getDetails(this.data());
 		if(content) {
 			this.child(content).show();
+			$('div.slider', this.child()).slideDown();
 			table.cell(this, 1).data('<i class="fa fa-minus-square-o"></i>');
 		}
 	});
@@ -189,9 +202,13 @@ $("a.details-show").on('click', function(e){
 $("a.details-hide").on('click', function(e){
 	e.preventDefault();
 	table.rows().every( function () {
-		if (this.child()) {
-			this.child().hide();
-			table.cell(this, 1).data('<i class="fa fa-plus-square-o"></i>');
+		let row = this;
+		let child = this.child();
+		if (child) {
+			$('div.slider', child).slideUp( function () {
+				child.hide();
+				table.cell(row, 1).data('<i class="fa fa-plus-square-o"></i>');
+			});
 		}
 	});
 });
