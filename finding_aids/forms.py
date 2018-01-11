@@ -134,13 +134,14 @@ class FindingAidsBaseForm(ModelForm):
                 attrs={'data-placeholder': '-- Select Corporations --'}),
             'subject_keyword': KeywordSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Keywords --'}),
             'genre': GenreSelect2MultipleWidget(attrs={'data-placeholder': '-- Select Genres --'}),
-            'internal_note': Textarea(attrs={'rows': 3})
+            'internal_note': Textarea(attrs={'rows': 3}),
+            'duration': TextInput(attrs={'readonly': True}),
         }
         help_texts = {
             'date_from': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD',
             'date_to': 'Date format: YYYY, or YYYY-MM, or YYYY-MM-DD',
-            'time_start': 'Time format: hh:mm:ss',
-            'time_end': 'Time format: hh:mm:ss'
+            'time_start': 'Format: hh:mm:ss',
+            'time_end': 'Format: hh:mm:ss'
         }
 
 

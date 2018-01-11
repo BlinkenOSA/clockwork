@@ -2,19 +2,23 @@
 var table = $('#fa_table').DataTable({
 	"serverSide": true,
 	"ajax": "/finding_aids/datatable/" + containerID ,
+	"dom": "<'row'<'col-sm-3'l><'col-sm-3'<'opendisplay'>><'col-sm-6'f>>" +
+		   "<'row'<'col-sm-12'tr>>" +
+		   "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 	"columns": [
        	{ "data": 'level', "width": "20%", "class": "call_no_column"},
+		{ "data": 'more_button', "className": 'details-control', "orderable": false, "defaultContent": '' },
 	   	{ "data": 'title', "width": "40%" },
 	   	{ "data": 'date', "width": "15%" },
        	{ "data": 'action', "width": "15%", "class": "action_column" },
 		{ "data": 'publish', "width": "10%", "class": "action_column" },
 	],
     "rowCallback": function( row, data, index ) {
-      if ( data.item_no != 0 ) {
-	    $(row).addClass('item');
-		return row;
-	  }
-    },
+      	if ( data.item_no != 0 ) {
+	    	$(row).addClass('item');
+			return row;
+	  	}
+	},
 	"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
 	"paging":   true,
     "ordering": false,
@@ -23,6 +27,13 @@ var table = $('#fa_table').DataTable({
 	"autoWidth": true,
 	"stateSave": true
 });
+
+$('div.opendisplay').html(
+	'<div class="btn-group">' +
+		'<a class="btn btn-default btn-sm details-show" href="#">Show Details</a>' +
+		'<a class="btn btn-default btn-sm details-hide" href="#">Hide Details</a>' +
+	'</div>'
+);
 
 $(document).on('change', '#id_folder_no_select', function() {
 	$('#id_folder_no').val($('#id_folder_no_select').val());
@@ -129,5 +140,75 @@ $(function() {
 				displayMessage(data["message"]);
             }
         }
+	});
+});
+
+function getDetails ( d ) {
+	if (d.contents_summary) {
+		return $('<tr>' +
+					'<td></td>' +
+					'<td></td>' +
+					'<td colspan="3">' +
+						'<div class="slider" style="display:none;">' +
+							'<i>Contents Summary</i>' +
+							'<p>'+d.contents_summary+'</p>' +
+						'</div>' +
+					'</td>' +
+				'</tr>');
+	} else {
+		return undefined;
+	}
+
+}
+
+$('#fa_table tbody').on('click', 'td.details-control', function () {
+	var tr = $(this).closest('tr');
+	var row = table.row( tr );
+
+	if ( row.child.isShown() ) {
+		// Close this row
+		if (row.child()) {
+			$('div.slider', row.child()).slideUp( function () {
+				row.child.hide();
+				tr.removeClass('shown');
+			});
+		}
+		$(this).html('<i class="fa fa-plus-square-o"></i>')
+	}
+	else {
+		// Open this row
+		let content = getDetails(row.data());
+		if (content) {
+			row.child(content).show();
+			tr.addClass('shown');
+			$('div.slider', row.child()).slideDown();
+		}
+		$(this).html('<i class="fa fa-minus-square-o"></i>')
+	}
+});
+
+$("a.details-show").on('click', function(e){
+	e.preventDefault();
+	table.rows().every( function () {
+		let content = getDetails(this.data());
+		if(content) {
+			this.child(content).show();
+			$('div.slider', this.child()).slideDown();
+			table.cell(this, 1).data('<i class="fa fa-minus-square-o"></i>');
+		}
+	});
+});
+
+$("a.details-hide").on('click', function(e){
+	e.preventDefault();
+	table.rows().every( function () {
+		let row = this;
+		let child = this.child();
+		if (child) {
+			$('div.slider', child).slideUp( function () {
+				child.hide();
+				table.cell(row, 1).data('<i class="fa fa-plus-square-o"></i>');
+			});
+		}
 	});
 });

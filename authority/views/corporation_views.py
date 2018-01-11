@@ -75,7 +75,8 @@ class CorporationCreate(CorporationPermissionMixin, NamedFormsetsMixin, CreateWi
         return results
 
 
-class CorporationUpdate(CorporationPermissionMixin, AuditTrailContextMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
+class CorporationUpdate(CorporationPermissionMixin, AuditTrailContextMixin, NamedFormsetsMixin,
+                        UpdateWithInlinesAjaxView):
     form_class = CorporationForm
     model = Corporation
     template_name = 'authority/corporation/form.html'

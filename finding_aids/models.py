@@ -2,8 +2,10 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext
 from django_cloneable import CloneableMixin
 from django_date_extensions.fields import ApproximateDateField
 from hashids import Hashids
@@ -111,6 +113,12 @@ class FindingAidsEntity(CloneableMixin, models.Model):
         self.user_published = ""
         self.date_published = None
         self.save()
+
+    def clean(self):
+        if self.time_end < self.time_start:
+            raise ValidationError({'time_start': ugettext("Start time should be smaller then End time.")})
+        else:
+            self.duration = self.time_end - self.time_start
 
     def save(self, **kwargs):
         if self.is_template:

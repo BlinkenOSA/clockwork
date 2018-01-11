@@ -13,7 +13,6 @@ var table = $('#mlr_table').DataTable({
 	"columns": [
  	        { "data": "series", "width": "150px" },
 			{ "data": "carrier_type", "width": "200px" },
-            { "data": "building", "sortable": false },
             { "data": "mrss", "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
     ]

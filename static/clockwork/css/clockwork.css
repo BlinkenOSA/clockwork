@@ -262,3 +262,7 @@ div.required label:after {
 .label-container {
     margin-left: 10px;
 }
+
+td.details-control {
+    cursor: pointer;
+}
