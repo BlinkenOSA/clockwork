@@ -9,11 +9,13 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext
 from django.views.generic import FormView, View
 from django_datatables_view.base_datatable_view import BaseDatatableView
+from extra_views import NamedFormsetsMixin
 from fm.views import AjaxUpdateView
 
 from archival_unit.models import ArchivalUnit
+from clockwork.inlineform import UpdateWithInlinesAjaxView
 from clockwork.mixins import GeneralAllPermissionMixin
-from mlr.forms import MLRForm, MLRListForm
+from mlr.forms import MLRForm, MLRListForm, MLRLocationInline
 from mlr.models import MLREntity
 
 
@@ -28,7 +30,7 @@ class MLRList(MLRPermissionMixin, FormView):
 
 class MLRListJson(MLRPermissionMixin, BaseDatatableView):
     model = MLREntity
-    columns = ['id', 'series', 'carrier_type', 'building', 'mrss', 'action']
+    columns = ['id', 'series', 'carrier_type', 'mrss', 'action']
     order_columns = ['series__sort', ['carrier_type', 'series__sort']]
     max_display_length = 500
 
@@ -54,16 +56,10 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
     def render_column(self, row, column):
         if column == 'series':
             return row.series.reference_code
-        if column == 'building':
-            return row.building.building if row.building else ""
         elif column == 'carrier_type':
             return row.carrier_type.type if row.carrier_type else ""
         elif column == 'mrss':
-            module = str(row.module) if row.module else "-"
-            r = str(row.row) if row.row else "-"
-            section = str(row.section) if row.section else "-"
-            shelf = str(row.shelf) if row.shelf else "-"
-            return "%s / %s / %s / %s" % (module, r, section, shelf)
+            return row.get_locations()
         elif column == 'action':
             return render_to_string('mlr/table_action_buttons.html',
                                     context={'id': row.id})
@@ -82,10 +78,18 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
         return json_array
 
 
-class MLRUpdate(MLRPermissionMixin, AjaxUpdateView):
+class MLRUpdate(MLRPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxView):
     model = MLREntity
     form_class = MLRForm
     template_name = 'mlr/form.html'
+    inlines = [MLRLocationInline]
+    inlines_names = ['mlr_locations']
+
+    def get_initial(self):
+        initial = super(MLRUpdate, self).get_initial()
+        initial['series_name'] = self.object.series
+        initial['carrier_type_name'] = self.object.carrier_type
+        return initial
 
     def get_response_message(self):
         return ugettext("MLR was updated successfully!")
@@ -106,7 +110,7 @@ class MLRExportCSV(View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=%s' % file_name
 
-        field_names = ['series', 'carrier', 'building', 'module', 'section', 'row', 'shelf']
+        field_names = ['series', 'carrier', 'locations']
 
         writer = csv.DictWriter(response, delimiter=str(u";"), fieldnames=field_names)
         writer.writeheader()
@@ -115,11 +119,7 @@ class MLRExportCSV(View):
             writer.writerow({
                 'series': mlr.series.reference_code,
                 'carrier': mlr.carrier_type.type,
-                'building': mlr.building,
-                'module': mlr.module,
-                'section': mlr.section,
-                'row': mlr.row,
-                'shelf': mlr.shelf
+                'locations': mlr.get_locations()
             })
 
         return response

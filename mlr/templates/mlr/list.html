@@ -17,6 +17,8 @@
             escapeMarkup: function (m) { return m; }
         });
     </script>
+    <script src="{% static 'clockwork/js/django-dynamic-formset/jquery.formset.js'%}"></script>
+    <script src="{% static 'clockwork/js/subform.js' %}"></script>
     <script src="{% static 'mlr/js/mlr.js' %}"></script>
 {% endblock %}
 
@@ -63,7 +65,6 @@
             <tr>
                 <th>{% trans 'Series' %}</th>
                 <th>{% trans 'Carrier' %}</th>
-                <th>{% trans 'Building' %}</th>
                 <th>{% trans 'Module / Row/ Section / Shelf' %}</th>
                 <th>{% trans 'Action' %}</th>
             </tr>
