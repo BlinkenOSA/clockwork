@@ -8,4 +8,14 @@
             <i class="fa fa-cloud-upload"></i>
         </a>
     {% endif %}
+
+    {% if finding_aids_entity.confidential %}
+        <a href="/finding_aids/action/unset_confidential/{{ finding_aids_entity.container.id }}/{{ finding_aids_entity.id }}/" class="btn btn-warning btn-xs btn-confidential">
+            <i class="fa fa-exclamation-triangle"></i>
+        </a>
+    {% else %}
+        <a href="/finding_aids/action/set_confidential/{{ finding_aids_entity.container.id }}/{{ finding_aids_entity.id }}/" class="btn btn-default btn-xs btn-confidential">
+            <i class="fa fa-exclamation-triangle"></i>
+        </a>
+    {% endif %}
 </div>
