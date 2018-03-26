@@ -11,7 +11,7 @@ install:
   - pip install coveralls
 
 before_install:
-  - mysql -e 'create database test_clockwork;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test_clockwork;'
 
 script:
   - coverage run --source='.' manage.py test
