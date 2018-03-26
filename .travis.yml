@@ -12,7 +12,6 @@ install:
 
 before_install:
   - mysql -e 'create database test_clockwork;'
-  - python manage.py migrate
 
 script:
   - coverage run --source='.' manage.py test
