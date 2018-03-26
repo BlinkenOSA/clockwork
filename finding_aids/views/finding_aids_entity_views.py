@@ -205,59 +205,66 @@ class FindingAidsAction(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
     model = FindingAidsEntity
 
     def post(self, request, *args, **kwargs):
+        actions = ['publish', 'unpublish', 'set_confidential', 'unset_confidential']
         action = self.kwargs['action']
         container = self.kwargs['container_id']
         pk = self.kwargs['pk']
 
-        if pk == 'all':
-            finding_aids_entities = FindingAidsEntity.objects.filter(container=container)
-        else:
-            finding_aids_entities = [self.get_object(), ]
-
-        for finding_aids in finding_aids_entities:
-            if action == 'publish':
-                finding_aids.publish(request.user)
-
-            if action == 'unpublish':
-                finding_aids.unpublish()
-
-        if pk == 'all':
-            context = {
-                'status': 'ok'
-            }
-        else:
-            finding_aids = finding_aids_entities[0]
-            dates = [str(finding_aids.date_from) if finding_aids.date_from else "",
-                     str(finding_aids.date_to) if finding_aids.date_to else ""]
-
-            folder_no = finding_aids.container.archival_unit.reference_code + '/' + \
-                str(finding_aids.container.container_no) + ':' + str(finding_aids.folder_no)
-
-            if finding_aids.level == 'F':
-                icon = '<i class="fa fa-folder-open-o"></i>'
+        if action in actions:
+            if pk == 'all':
+                finding_aids_entities = FindingAidsEntity.objects.filter(container=container)
             else:
-                icon = '<i class="fa fa-file-o"></i>'
+                finding_aids_entities = [self.get_object(), ]
 
-            if finding_aids.description_level == 'L1':
-                level = '<span class="call_no_level_1">' + icon + folder_no + '</span>'
+            for finding_aids in finding_aids_entities:
+                if action == 'publish':
+                    finding_aids.publish(request.user)
+                if action == 'unpublish':
+                    finding_aids.unpublish()
+                if action == 'set_confidential':
+                    finding_aids.set_confidential()
+                if action == 'unset_confidential':
+                    finding_aids.unset_confidential()
+
+            if pk == 'all':
+                context = {
+                    'status': 'ok'
+                }
             else:
-                level = '<span class="call_no_level_2">' + icon + folder_no + '-' \
-                        + str(finding_aids.sequence_no) + '</span>'
+                finding_aids = finding_aids_entities[0]
+                dates = [str(finding_aids.date_from) if finding_aids.date_from else "",
+                         str(finding_aids.date_to) if finding_aids.date_to else ""]
 
-            context = {
-                'DT_rowId': finding_aids.id,
-                'level': level,
-                'title': finding_aids.title,
-                'title_original': finding_aids.title_original,
-                'date':  ' - '.join(filter(None, dates)),
-                'action': render_to_string('finding_aids/container_view/table_action_buttons.html',
-                                           context={'container_id': finding_aids.container.id,
-                                                    'id': finding_aids.id,
-                                                    'published': finding_aids.published,
-                                                    'catalog_id': finding_aids.catalog_id}),
-                'publish': render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
-                    'finding_aids_entity': finding_aids
-                })
-            }
+                folder_no = finding_aids.container.archival_unit.reference_code + '/' + \
+                    str(finding_aids.container.container_no) + ':' + str(finding_aids.folder_no)
 
-        return self.render_json_response(context)
+                if finding_aids.level == 'F':
+                    icon = '<i class="fa fa-folder-open-o"></i>'
+                else:
+                    icon = '<i class="fa fa-file-o"></i>'
+
+                if finding_aids.description_level == 'L1':
+                    level = '<span class="call_no_level_1">' + icon + folder_no + '</span>'
+                else:
+                    level = '<span class="call_no_level_2">' + icon + folder_no + '-' \
+                            + str(finding_aids.sequence_no) + '</span>'
+
+                context = {
+                    'DT_rowId': finding_aids.id,
+                    'level': level,
+                    'title': finding_aids.title,
+                    'title_original': finding_aids.title_original,
+                    'date':  ' - '.join(filter(None, dates)),
+                    'action': render_to_string('finding_aids/container_view/table_action_buttons.html',
+                                               context={'container_id': finding_aids.container.id,
+                                                        'id': finding_aids.id,
+                                                        'published': finding_aids.published,
+                                                        'catalog_id': finding_aids.catalog_id}),
+                    'publish': render_to_string('finding_aids/container_view/table_publish_buttons.html', context={
+                        'finding_aids_entity': finding_aids
+                    })
+                }
+
+            return self.render_json_response(context)
+        else:
+            return self.render_json_response(None)

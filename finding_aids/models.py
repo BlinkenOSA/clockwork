@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import uuid as uuid
 
+import datetime
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
@@ -90,6 +91,10 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     # Published
     published = models.BooleanField(default=False)
+
+    confidential_display_text = models.CharField(max_length=300, blank=True, null=True)
+    confidential = models.BooleanField(default=False)
+
     user_published = models.CharField(max_length=100, blank=True)
     date_published = models.DateTimeField(blank=True, null=True)
 
@@ -114,11 +119,28 @@ class FindingAidsEntity(CloneableMixin, models.Model):
         self.date_published = None
         self.save()
 
+    def set_confidential(self):
+        self.confidential = True
+        self.save()
+
+    def unset_confidential(self):
+        self.confidential = False
+        self.save()
+
     def clean(self):
-        if self.time_end < self.time_start:
-            raise ValidationError({'time_start': ugettext("Start time should be smaller then End time.")})
+        if self.time_start or self.time_end:
+            if not self.time_start:
+                self.time_start = datetime.timedelta(days=0, seconds=0)
+
+            if not self.time_end:
+                self.time_end = datetime.timedelta(days=0, seconds=0)
+
+            if self.time_end < self.time_start:
+                raise ValidationError({'time_start': ugettext("Start time should be smaller then End time.")})
+            else:
+                self.duration = self.time_end - self.time_start
         else:
-            self.duration = self.time_end - self.time_start
+            self.duration = None
 
     def save(self, **kwargs):
         if self.is_template:

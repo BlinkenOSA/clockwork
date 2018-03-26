@@ -94,6 +94,25 @@ $('tbody').on('click','.btn-clone',function(e) {
 });
 
 
+$('tbody').on('click','.btn-confidential',function(e) {
+	e.preventDefault();
+	var url = $(this).attr("href");
+	var msg = "Are you sure you want to 'Set/Unset Confidential' the Finding Aids record?";
+	alertify.confirm(msg, function (e) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.row('#' + data['DT_rowId']).data(data);
+			},
+			error: function () {
+			},
+			url: url,
+			cache: false
+		});
+	});
+});
+
+
 $('tbody').on('click','.btn-action',function(e) {
 	e.preventDefault();
 	var url = $(this).attr("href");
