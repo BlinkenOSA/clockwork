@@ -13,8 +13,6 @@ static/img
 static/components/
 static/media/
 
-*/migrations/0*
-
 clockwork/components/local_settings.py
 clockwork/components/database_migration.py
 
