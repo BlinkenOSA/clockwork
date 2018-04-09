@@ -10,9 +10,6 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 
-before_install:
-  - mysql -e 'CREATE DATABASE test_db;'
-
 script:
   - coverage run --source='.' manage.py test
 
