@@ -20,11 +20,11 @@ class AccessionForm(ModelForm):
                                 empty_label=ugettext('- Select Building -'),
                                 required=True)
     copyright_status = ModelChoiceField(queryset=AccessionCopyrightStatus.objects.all(),
-                                empty_label=ugettext('- Select Copyright -'),
-                                required=True)
+                                        empty_label=ugettext('- Select Copyright -'),
+                                        required=True)
     method = ModelChoiceField(queryset=AccessionMethod.objects.all(),
-                                empty_label=ugettext('- Select Accession Method -'),
-                                required=True)
+                              empty_label=ugettext('- Select Accession Method -'),
+                              required=True)
 
     class Meta:
         model = Accession
