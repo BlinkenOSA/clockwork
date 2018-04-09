@@ -1,4 +1,3 @@
-import datetime
 from django.test import TestCase
 
 from accession.form import AccessionForm
@@ -7,7 +6,13 @@ from donor.models import Donor
 
 
 class AccessionFormTest(TestCase):
-    fixtures = ['accession_copyright_status', 'accession_method', 'country', 'building', 'accession_copyright_status']
+    fixtures = [
+        'accession_copyright_status',
+        'accession_method',
+        'country',
+        'building',
+        'accession_copyright_status'
+    ]
 
     def setUp(self):
         self.donor = Donor.objects.create(
@@ -41,7 +46,7 @@ class AccessionFormTest(TestCase):
                 'method': 1,
                 'donor': 1,
                 'building': 1,
-                'copyright_status': 1
+                'copyright_status': 1,
             }
         )
         self.assertFalse(form.is_valid(), form.errors)
