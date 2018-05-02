@@ -93,9 +93,9 @@ class Command(BaseCommand):
                     if FindingAidsEntity.objects.filter(container=container, folder_no=folder_no).count() == 0:
                         try:
                             finding_aids.save()
-                            print("Inserting %s/%s:%s" % (finding_aids.archival_unit.reference_code,
-                                                          container.container_no,
-                                                          finding_aids.folder_no))
+                            # print("Inserting %s/%s:%s" % (finding_aids.archival_unit.reference_code,
+                            #                               container.container_no,
+                            #                               finding_aids.folder_no))
                             if row['TranslatedTitle']:
                                 fa_at = FindingAidsEntityAlternativeTitle(
                                     fa_entity=finding_aids,

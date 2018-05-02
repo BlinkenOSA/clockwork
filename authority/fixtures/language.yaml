@@ -1493,3 +1493,53 @@
     iso_639_1:
     iso_639_2: rom
     date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 188
+  fields:
+    language: Dholuo
+    iso_639_2: luo
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 189
+  fields:
+    language: Krio
+    iso_639_3: kri
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 190
+  fields:
+    language: Manipuri
+    iso_639_2: mni
+    iso_639_3: mni
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 191
+  fields:
+    language: Numana-Nunku-Gbantu-Numbu
+    iso_639_3: nbr
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 192
+  fields:
+    language: S'gaw Karen
+    iso_639_3: ksw
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 193
+  fields:
+    language: Afghan Persian, Dari
+    iso_639_3: prs
+    date_created: 2017-11-24
+
+- model: authority.Language
+  pk: 194
+  fields:
+    language: Western Persian
+    iso_639_3: pes
+    date_created: 2017-11-24
