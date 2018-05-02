@@ -12,7 +12,7 @@ from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
 class BaseModelForm(ModelForm):
     class Meta:
         model = ArchivalUnit
-        fields = ("fonds", "subfonds", "series", "title", "title_original", "original_locale", "acronym", "accession", "theme")
+        fields = ("fonds", "subfonds", "series", "title", "title_original", "original_locale", "acronym", "theme")
 
     def clean(self):
         if self.cleaned_data["title_original"] and not self.cleaned_data["original_locale"]:
@@ -28,7 +28,6 @@ class FondsCreateForm(BaseModelForm):
         widgets = {
             'subfonds': HiddenInput(),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget(),
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
@@ -73,7 +72,6 @@ class SubFondsCreateForm(BaseModelForm):
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'series': HiddenInput(),
-            'accession': AccessionsSelect2Widget(),
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 
@@ -131,7 +129,6 @@ class SeriesCreateForm(BaseModelForm):
         widgets = {
             'fonds': TextInput(attrs={'readonly': True}),
             'subfonds': TextInput(attrs={'readonly': True}),
-            'accession': AccessionsSelect2Widget(),
             'theme': ArchivalUnitThemeSelect2MultipleWidget()
         }
 

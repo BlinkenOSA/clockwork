@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from archival_unit.models import ArchivalUnit
 
 
 class Container(models.Model):

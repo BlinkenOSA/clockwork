@@ -23,23 +23,31 @@ class AccessionList(AccessionPermissionMixin, TemplateView):
 
 class AccessionListJson(AccessionPermissionMixin, BaseDatatableView):
     model = Accession
-    columns = ['seq', 'transfer_date', 'title', 'action']
-    order_columns = ['seq', 'transfer_date', 'title', '']
+    columns = ['seq', 'transfer_date', 'reference_code', 'archival_unit', 'action']
+    order_columns = ['seq', 'transfer_date', '', '']
     max_display_length = 500
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
         if search:
             qs = qs.filter(
-                Q(title__icontains=search)
+                Q(archival_unit__title_full__icontains=search)
             )
         return qs
 
     def render_column(self, row, column):
         if column == 'action':
-            number_of_archival_units = row.archivalunit_set.all().count()
-            return render_to_string('accession/table_action_buttons.html',
-                                    context={'id': row.id, 'number_of_archival_units': number_of_archival_units})
+            number_of_archival_units = row.archival_unit
+            if number_of_archival_units:
+                return render_to_string('accession/table_action_buttons.html',
+                                        context={'id': row.id, 'number_of_archival_units': 1})
+            else:
+                return render_to_string('accession/table_action_buttons.html',
+                        context={'id': row.id, 'number_of_archival_units': 1})
+        elif column == 'reference_code':
+            return row.archival_unit.reference_code
+        elif column == 'archival_unit':
+            return row.archival_unit.title
         elif column == 'transfer_date':
             return str(row.transfer_date)
         else:

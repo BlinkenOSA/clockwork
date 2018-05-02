@@ -6,6 +6,9 @@
 
 {% block js_page %}
     <script>
+        $('#id_archival_unit').djangoSelect2({
+            placeholder: '- Select Archival Unit -'
+        });
         $('#id_creator').djangoSelect2({
             placeholder: '- Select Creator -'
         });

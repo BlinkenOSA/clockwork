@@ -7,6 +7,7 @@ var table = $('#accession_table').DataTable({
 	"columns": [
  	       { "width": "100px" },
  	       { "sortable": false },
+		   { "sortable": false },
 		   {  },
 		   { "width": "100px", "sortable": false, "class": "action_column" }
  	 ]
