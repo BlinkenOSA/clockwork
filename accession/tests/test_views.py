@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from accession.models import AccessionMethod, Accession
 from accession.views import AccessionListJson, AccessionCreate
+from archival_unit.models import ArchivalUnit
 from authority.models import Country
 from donor.models import Donor
 
@@ -31,9 +32,22 @@ class AccessionModelTest(TestCase):
             city='Budapest',
             address='Arany Janos u. 32.',
         )
+        archival_unit_1 = ArchivalUnit.objects.create(
+            id=1,
+            fonds=1,
+            level='F',
+            title='Test Fonds #1'
+        )
+        archival_unit_2 = ArchivalUnit.objects.create(
+            id=2,
+            fonds=2,
+            level='F',
+            title='Test Fonds #2'
+        )
         accession1 = Accession.objects.create(
             seq=1,
             title='Accession #1',
+            archival_unit=archival_unit_1,
             transfer_date=datetime.datetime.now(),
             method=AccessionMethod.objects.get(pk=1),
             donor=donor
@@ -41,6 +55,7 @@ class AccessionModelTest(TestCase):
         accession2 = Accession.objects.create(
             seq=2,
             title='Test',
+            archival_unit=archival_unit_2,
             transfer_date=datetime.datetime.now(),
             method=AccessionMethod.objects.get(pk=1),
             donor=donor
@@ -49,7 +64,7 @@ class AccessionModelTest(TestCase):
         self.factory = RequestFactory()
 
     def test_accession_list_filter_queryset_with_search(self):
-        request = self.factory.get(reverse('accession:list_json'), {'search[value]': 'Accession #1'})
+        request = self.factory.get(reverse('accession:list_json'), {'search[value]': 'Test Fonds #1'})
         request.user = self.user
         response = AccessionListJson.as_view()(request)
         response_json = json.loads(response.content)
@@ -79,7 +94,7 @@ class AccessionModelTest(TestCase):
         response = AccessionListJson.as_view()(request)
         response_json = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response_json['data'][0][3][1:4], 'div')
+        self.assertEqual(response_json['data'][0][4][1:4], 'div')
 
     def test_accession_create_get_initial(self):
         request = self.factory.get(reverse('accession:create'))
