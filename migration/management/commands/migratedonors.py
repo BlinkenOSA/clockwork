@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
                     try:
                         donor.save()
-                        print("Inserting %s" % (row['DonorName']))
+                        # print("Inserting %s" % (row['DonorName']))
                     except IntegrityError as e:
                         print('Error with %s: %s' % (row['DonorName'].encode('utf-8'), e.args[1]))
 

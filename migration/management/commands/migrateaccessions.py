@@ -9,6 +9,7 @@ from pytz import timezone
 
 from accession.models import Accession, AccessionMethod, AccessionCopyrightStatus, AccessionItem
 from archival_unit.models import ArchivalUnit
+from authority.models import Country
 from controlled_list.models import Building
 from donor.models import Donor
 from migration.management.commands.common_functions import get_user, get_approx_date
@@ -35,6 +36,9 @@ class Command(BaseCommand):
                 transfer_date = row['PreparedDate'] if row['PreparedDate'] else row['CreatedDate']
                 created_date = row['CreatedDate'] if row['CreatedDate'] else row['PreparedDate']
 
+                archival_unit_legacy_number = row['FondsID']
+                archival_unit_legacy_name = row['FondsName']
+
                 created_by = get_user(row['CreatedBy'])
                 updated_by = get_user(row['ChangedBy'])
                 method = self.get_accession_method(row['Method'])
@@ -48,53 +52,59 @@ class Command(BaseCommand):
                 copyright_status = self.get_copyright_status(row['Copyright'])
 
                 if not donor:
-                    print("Check donor - %s" % row['DonorID'])
-                else:
-                    accession = Accession(
-                        seq='%d/%03d' % (row['Year'], row['No']),
-                        title=row['FondsName'] if row['FondsName'] else 'Accession to Fonds %s' % row['FondsID'],
-                        transfer_date=transfer_date,
-                        description=row['Description'],
-                        method=method,
-                        building=building,
-                        module=row['Module'],
-                        row=row['Row'],
-                        section=row['Section'],
-                        shelf=row['Shelf'],
-                        donor=donor,
-                        creation_date_from=creation_date_from,
-                        creation_date_to=creation_date_to,
-                        copyright_status=copyright_status,
-                        copyright_note=row['Copyright'],
-                        note=row['Notes'],
-                        user_created=created_by.username,
-                        user_updated=updated_by.username
+                    donor, donor_created = Donor.objects.get_or_create(
+                        name='N/A',
+                        postal_code='N/A',
+                        country=Country.objects.get(country='n/a'),
+                        city='N/A',
+                        address='N/A'
                     )
 
-                    try:
-                        accession.save()
-                        print ("Inserting %s" % accession.seq)
+                archival_unit = ArchivalUnit.objects.filter(level='F', fonds=row['FondsID']).first()
 
-                        archival_unit = ArchivalUnit.objects.filter(level='F', fonds=row['FondsID']).first()
-                        if archival_unit:
-                            archival_unit.accession.add(accession)
-                            archival_unit.save()
+                accession = Accession(
+                    seq='%d/%03d' % (row['Year'], row['No']),
+                    title=row['FondsName'] if row['FondsName'] else 'Accession to Fonds %s' % row['FondsID'],
+                    transfer_date=transfer_date,
+                    description=row['Description'],
+                    method=method,
+                    building=building,
+                    module=row['Module'],
+                    row=row['Row'],
+                    section=row['Section'],
+                    shelf=row['Shelf'],
+                    donor=donor,
+                    archival_unit=archival_unit,
+                    archival_unit_legacy_name=archival_unit_legacy_name,
+                    archival_unit_legacy_number=archival_unit_legacy_number,
+                    creation_date_from=creation_date_from,
+                    creation_date_to=creation_date_to,
+                    copyright_status=copyright_status,
+                    copyright_note=row['Copyright'],
+                    note=row['Notes'],
+                    user_created=created_by.username,
+                    user_updated=updated_by.username
+                )
 
-                        accession_items = self.collect_accession_items(cnx, row)
-                        for accession_item in accession_items:
-                            item = AccessionItem(
-                                accession=accession,
-                                quantity=accession_item[0],
-                                container=accession_item[1],
-                                content=accession_item[2]
-                            )
-                            item.save()
+                try:
+                    accession.save()
+                    # print ("Inserting %s" % accession.seq)
 
-                        accession.date_created = tz_budapest.localize(created_date)
-                        accession.save()
+                    accession_items = self.collect_accession_items(cnx, row)
+                    for accession_item in accession_items:
+                        item = AccessionItem(
+                            accession=accession,
+                            quantity=accession_item[0],
+                            container=accession_item[1],
+                            content=accession_item[2]
+                        )
+                        item.save()
 
-                    except IntegrityError as e:
-                        print ('Error with %s: %s' % (accession.seq, e.args[1]))
+                    accession.date_created = tz_budapest.localize(created_date)
+                    accession.save()
+
+                except IntegrityError as e:
+                    print ('Error with %s: %s' % (accession.seq, e.args[1]))
 
             cnx.close()
         else:

@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     archival_unit.theme.add(ArchivalUnitTheme.objects.filter(theme='Civil Society').first())
 
                 archival_unit.save()
-                print("Inserting %s" % (row['ID']))
+                # print("Inserting %s" % (row['ID']))
             except IntegrityError:
                 print("Fonds %s already exists!" % row['ID'])
 
@@ -93,7 +93,7 @@ class Command(BaseCommand):
                     archival_unit.theme.add(theme)
 
                 archival_unit.save()
-                print("Inserting %s-%s" % (row['FondsID'], row['ID']))
+                # print("Inserting %s-%s" % (row['FondsID'], row['ID']))
             except IntegrityError:
                 print("Subfonds %s-%s already exists!" % (row['FondsID'], row['ID']))
 
@@ -129,6 +129,6 @@ class Command(BaseCommand):
                     archival_unit.theme.add(theme)
 
                 archival_unit.save()
-                print("Inserting %s-%s-%s" % (row['FondsID'], row['SubfondsID'], row['ID']))
+                # print("Inserting %s-%s-%s" % (row['FondsID'], row['SubfondsID'], row['ID']))
             except IntegrityError:
                 print("Series %s-%s-%s already exists!" % (row['FondsID'], row['SubfondsID'], row['ID']))

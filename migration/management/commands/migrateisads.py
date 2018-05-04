@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.management import BaseCommand
 from django.conf import settings
 from django.db import IntegrityError
+from django.db.models import Q
 from pytz import timezone
 
 from archival_unit.models import ArchivalUnit
@@ -49,7 +50,7 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print("Inserting %s" % archival_unit.title_full)
+                    # print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
@@ -73,7 +74,7 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print("Inserting %s" % archival_unit.title_full)
+                    # print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
@@ -99,7 +100,7 @@ class Command(BaseCommand):
 
                 try:
                     isad.save()
-                    print("Inserting %s" % archival_unit.title_full)
+                    # print("Inserting %s" % archival_unit.title_full)
                     self.add_isad_languages(isad)
 
                 except IntegrityError as e:
@@ -176,7 +177,7 @@ class Command(BaseCommand):
         cursor.execute(sql_language, (isad.legacy_id,))
 
         for row in cursor:
-            language = Language.objects.filter(iso_639_2=row['iso_code']).first()
+            language = Language.objects.filter(Q(iso_639_2=row['iso_code']) | Q(iso_639_3=row['iso_code'])).first()
             if language:
                 isad.language.add(language)
             else:

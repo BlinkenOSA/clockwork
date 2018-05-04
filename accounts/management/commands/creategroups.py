@@ -1,9 +1,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import BaseCommand
-
-from accession.models import Accession
-from archival_unit.models import ArchivalUnit
+from django.core.management import call_command
 
 
 class Command(BaseCommand):
@@ -29,6 +27,8 @@ class Command(BaseCommand):
         ct_isaar = ContentType.objects.filter(app_label='isaar')
         ct_isad = ContentType.objects.filter(app_label='isad')
         ct_mlr = ContentType.objects.filter(app_label='mlr')
+
+        call_command('check_permissions')
 
         # Set Accesson
         for ct in ct_accession:

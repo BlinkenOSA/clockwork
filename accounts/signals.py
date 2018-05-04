@@ -8,7 +8,7 @@ from accounts.models import UserProfile
 @receiver(post_save, sender=User, dispatch_uid='user.created')
 def set_user_permissions_upon_create(sender, instance, created, raw, using, **kwargs):
     """ Adds 'change_profile' permission to created user objects """
-    if instance.username != 'AnonymousUser':
+    if instance.username not in ['AnonymousUser', 'TestUser']:
         if created:
             from guardian.shortcuts import assign_perm
             new_user_profile = UserProfile.objects.create(user=instance)

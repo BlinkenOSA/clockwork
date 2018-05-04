@@ -52,7 +52,7 @@ class Command(BaseCommand):
 
                 try:
                     isaar.save()
-                    print("Inserting %s" % isaar.name)
+                    # print("Inserting %s" % isaar.name)
 
                     self.get_parallel_names(row['Parallel Entry/Entries'], isaar)
                     self.get_other_names(row['Non-preferred Term(s)'], isaar)

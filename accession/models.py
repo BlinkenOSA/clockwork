@@ -22,6 +22,10 @@ class Accession(models.Model):
     section = models.IntegerField(blank=True, null=True)
     shelf = models.IntegerField(blank=True, null=True)
 
+    archival_unit = models.ForeignKey('archival_unit.ArchivalUnit', on_delete=models.PROTECT, blank=True, null=True)
+    archival_unit_legacy_number = models.IntegerField(blank=True, null=True)
+    archival_unit_legacy_name = models.CharField(max_length=300, blank=True, null=True)
+
     donor = models.ForeignKey('donor.Donor', on_delete=models.PROTECT)
     creation_date_from = ApproximateDateField(blank=True)
     creation_date_to = ApproximateDateField(blank=True)

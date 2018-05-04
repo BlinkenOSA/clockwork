@@ -87,7 +87,6 @@ class Command(BaseCommand):
 
                 container = Container(
                     archival_unit=archival_unit,
-                    primary_type=pt,
                     carrier_type=carrier_map[row['Description']],
                     container_no=int(row['Container']),
                     container_label=row['Notes'],
@@ -101,7 +100,7 @@ class Command(BaseCommand):
 
                 try:
                     container.save()
-                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                    # print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
                 except IntegrityError as e:
                     print('Error with %s-%s: %s' % (container.archival_unit.reference_code,
                                                      container.container_no,

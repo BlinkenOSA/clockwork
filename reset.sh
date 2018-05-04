@@ -25,9 +25,9 @@ python ./manage.py loaddata --app controlled_list rights_restriction_reason.yaml
 python ./manage.py creategroups
 
 python ./manage.py migrateusers
-python ./manage.py migrateaccessions
 python ./manage.py migratedonors
 python ./manage.py migratearchivalunits
+python ./manage.py migrateaccessions
 python ./manage.py migrateisaars
 python ./manage.py migrateisads
 python ./manage.py migratecontainers
