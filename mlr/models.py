@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
+from container.models import Container
 
 
 class MLREntity(models.Model):
     id = models.AutoField(primary_key=True)
     series = models.ForeignKey('archival_unit.ArchivalUnit')
     carrier_type = models.ForeignKey('controlled_list.CarrierType', on_delete=models.PROTECT)
+    notes = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'mlr_records'
+
+    def get_count(self):
+        return Container.objects.filter(archival_unit=self.series, carrier_type=self.carrier_type).count()
+
+    def get_size(self):
+        return self.get_count() * self.carrier_type.width / 1000.0
 
     def get_locations(self):
         loc = []

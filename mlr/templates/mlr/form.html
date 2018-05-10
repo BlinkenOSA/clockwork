@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 <form role="form" class="form" method="POST" enctype="multipart/form-data" action>
     {% include 'nonfield-errors.html' %}
@@ -15,6 +16,9 @@
         </div>
         <div class="col-md-12">
             {% include 'mlr/subform_locations.html' %}
+        </div>
+        <div class="col-md-12">
+            {% bootstrap_field form.notes|attr:"rows:4" %}
         </div>
     </fieldset>
 </form>
