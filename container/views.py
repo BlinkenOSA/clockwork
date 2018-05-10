@@ -56,7 +56,7 @@ class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin,
 
 class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
     model = Container
-    columns = ['container_no', 'identifier', 'carrier_type', 'container_label',
+    columns = ['container_no', 'barcode', 'carrier_type', 'container_label',
                'number_of_fa_entities', 'navigate', 'action', 'publish']
     order_columns = ['container_no']
     max_display_length = 500
@@ -73,11 +73,6 @@ class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
     def render_column(self, row, column):
         if column == 'container_no':
             return '%s/%s' % (row.archival_unit.reference_code, row.container_no)
-        elif column == 'identifier':
-            if row.legacy_id:
-                return "%s (%s)" % (row.permanent_id, row.legacy_id)
-            else:
-                return row.permanent_id
         elif column == 'carrier_type':
             return row.carrier_type.type
         elif column == 'navigate':
@@ -109,7 +104,7 @@ class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
 
 class ContainerCreate(ContainerPermissionMixin, CreateView):
     model = Container
-    fields = ['archival_unit', 'carrier_type', 'container_label']
+    fields = ['archival_unit', 'carrier_type', 'container_label', 'barcode']
 
     def form_valid(self, form):
         container = form.instance
@@ -129,6 +124,12 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
             return JsonResponse(data)
         else:
             return super(ContainerCreate, self).form_valid(form)
+
+    def form_invalid(self, form):
+        if "barcode" in form.errors:
+            return JsonResponse({"status": "errors", "errors": form.errors["barcode"]})
+        else:
+            return JsonResponse({"status": "errors", "errors": form.errors})
 
 
 class ContainerUpdate(ContainerPermissionMixin, AuditTrailContextMixin, ContainerAllowedArchivalUnitMixin,

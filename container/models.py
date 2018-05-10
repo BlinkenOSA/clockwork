@@ -14,6 +14,8 @@ class Container(models.Model):
 
     permanent_id = models.CharField(max_length=50, blank=True, null=True)
     legacy_id = models.CharField(max_length=50, blank=True, null=True)
+    barcode = models.CharField(max_length=30, blank=True, null=True, unique=True)
+    digital_version_exists = models.BooleanField(default=False)
     old_id = models.IntegerField(blank=True, null=True)
 
     user_created = models.CharField(max_length=100, blank=True)

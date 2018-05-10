@@ -2,13 +2,16 @@
 {% load i18n %}
 
 <fieldset>
-    <div class="col-md-4">
+    <div class="col-md-3">
         {% bootstrap_field form.carrier_type %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        {% bootstrap_field form.barcode %}
+    </div>
+    <div class="col-md-3">
         {% bootstrap_field form.legacy_id %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         {% bootstrap_field form.container_label %}
     </div>
 </fieldset>

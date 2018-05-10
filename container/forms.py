@@ -12,6 +12,7 @@ class ContainerForm(Form):
     )
     legacy_id = CharField(max_length=100, required=False, label='Legacy ID')
     container_label = CharField(max_length=100, required=False)
+    barcode = CharField(max_length=50, required=False)
 
 
 class ContainerUpdateForm(ModelForm):
@@ -25,4 +26,4 @@ class ContainerUpdateForm(ModelForm):
 
     class Meta:
         model = Container
-        fields = ('container_no', 'carrier_type', 'container_label')
+        fields = ('container_no', 'carrier_type', 'container_label', 'barcode', 'digital_version_exists')
