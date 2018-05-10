@@ -55,6 +55,26 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-1">
+            <div class="input-group">
+                <input id="id_module" class="form-control" placeholder="Module">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="input-group">
+                <input id="id_row" class="form-control" placeholder="Row">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="input-group">
+                <input id="id_section" class="form-control" placeholder="Section">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="input-group">
+                <input id="id_shelf" class="form-control" placeholder="Shelf">
+            </div>
+        </div>
         <div class="col-md-2">
             <a id="mlr_csv_export" class="btn btn-default" href="{% url 'mlr:export_csv' %}"><i class="fa fa-file-excel-o"></i> Export CSV</a>
         </div>
@@ -65,7 +85,9 @@
             <tr>
                 <th>{% trans 'Series' %}</th>
                 <th>{% trans 'Carrier' %}</th>
+                <th>{% trans 'Quantity' %}</th>
                 <th>{% trans 'Module / Row/ Section / Shelf' %}</th>
+                <th>{% trans 'Size' %}</th>
                 <th>{% trans 'Action' %}</th>
             </tr>
         </thead>

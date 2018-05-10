@@ -30,19 +30,38 @@ class MLRList(MLRPermissionMixin, FormView):
 
 class MLRListJson(MLRPermissionMixin, BaseDatatableView):
     model = MLREntity
-    columns = ['id', 'series', 'carrier_type', 'mrss', 'action']
+    columns = ['id', 'series', 'quantity', 'carrier_type', 'size', 'mrss', 'action']
     order_columns = ['series__sort', ['carrier_type', 'series__sort']]
     max_display_length = 500
 
     def get_initial_queryset(self):
+        qs = MLREntity.objects.all().order_by('series__sort')
+
         fonds = self.request.GET['fonds'] if 'fonds' in self.request.GET.keys() else ""
+
+        row = self.request.GET['row'] if 'row' in self.request.GET.keys() else ""
+        module = self.request.GET['module'] if 'module' in self.request.GET.keys() else ""
+        section = self.request.GET['section'] if 'section' in self.request.GET.keys() else ""
+        shelf = self.request.GET['shelf'] if 'shelf' in self.request.GET.keys() else ""
 
         if fonds:
             fonds = ArchivalUnit.objects.get(pk=fonds)
             archival_units = ArchivalUnit.objects.filter(level='S', fonds=fonds.fonds)
-            return MLREntity.objects.filter(series__in=archival_units).order_by('series__sort')
-        else:
-            return MLREntity.objects.all().order_by('series__sort')
+            qs = qs.filter(series__in=archival_units).order_by('series__sort')
+
+        if module:
+            qs = qs.filter(locations__module=module)
+
+        if row:
+            qs = qs.filter(locations__row=row)
+
+        if section:
+            qs = qs.filter(locations__section=section)
+
+        if shelf:
+            qs = qs.filter(locations__shelf=shelf)
+
+        return qs
 
     def filter_queryset(self, qs):
         search = self.request.GET.get(u'search[value]', None)
@@ -60,6 +79,10 @@ class MLRListJson(MLRPermissionMixin, BaseDatatableView):
             return row.carrier_type.type if row.carrier_type else ""
         elif column == 'mrss':
             return row.get_locations()
+        elif column == 'quantity':
+            return row.get_count()
+        elif column == 'size':
+            return row.get_size()
         elif column == 'action':
             return render_to_string('mlr/table_action_buttons.html',
                                     context={'id': row.id})
@@ -97,15 +120,33 @@ class MLRUpdate(MLRPermissionMixin, NamedFormsetsMixin, UpdateWithInlinesAjaxVie
 
 class MLRExportCSV(View):
     def get(self, request, *args, **kwargs):
+        qs = MLREntity.objects.all().order_by('series__sort', 'carrier_type__type')
+        file_name = 'mlr'
+
         if 'fonds_id' in request.GET:
             archival_unit = ArchivalUnit.objects.get(id=request.GET['fonds_id'])
-            mlr_records = MLREntity.objects.filter(series__level='S',
-                                                   series__fonds=archival_unit.fonds).order_by('series__sort',
-                                                                                               'carrier_type__type')
-            file_name = "mlr_hu_osa_%s.csv" % archival_unit.fonds
-        else:
-            mlr_records = MLREntity.objects.all().order_by('series__sort', 'carrier_type__type')
-            file_name = 'mlr_all_archival_units.csv'
+            qs = qs.filter(series__level='S',
+                                            series__fonds=archival_unit.fonds).order_by('series__sort',
+                                                                                        'carrier_type__type')
+            file_name += "-hu_osa_%s" % archival_unit.fonds
+
+        if 'module' in request.GET:
+            qs = qs.filter(locations__module=request.GET['module'])
+            file_name += "-module_%s" % request.GET['module']
+
+        if 'row' in request.GET:
+            qs = qs.filter(locations__module=request.GET['row'])
+            file_name += "-row_%s" % request.GET['row']
+
+        if 'section' in request.GET:
+            qs = qs.filter(locations__module=request.GET['section'])
+            file_name += "-section_%s" % request.GET['section']
+
+        if 'shelf' in request.GET:
+            qs = qs.filter(locations__module=request.GET['shelf'])
+            file_name += "-shelf_%s" % request.GET['shelf']
+
+        file_name += ".csv"
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=%s' % file_name
@@ -115,7 +156,7 @@ class MLRExportCSV(View):
         writer = csv.DictWriter(response, delimiter=str(u";"), fieldnames=field_names)
         writer.writeheader()
 
-        for mlr in mlr_records:
+        for mlr in qs:
             writer.writerow({
                 'series': mlr.series.reference_code,
                 'carrier': mlr.carrier_type.type,

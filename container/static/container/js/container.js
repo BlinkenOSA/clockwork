@@ -6,7 +6,7 @@ var table = $('#container_table').DataTable({
 	"select": true,
 	"columns": [
 	   { "data": 'container_no', "width": "20%" } ,
-	   { "data": 'identifier', "width": "20%" },
+	   { "data": 'barcode', "width": "20%" },
 	   { "data": 'carrier_type', "width": "15%" },
 	   { "data": 'action', "width": "10%", "class": "action_column" },
 	   { "data": 'navigate', "width": "10%", "class": "action_column" },
@@ -28,20 +28,27 @@ $('#container-create').on('click', function(e) {
 
 	var carrier_type = $('#id_carrier_type').val();
 	var container_label = $('#id_container_label').val();
+	var barcode = $('#id_barcode').val();
 
 	if (carrier_type != "") {
 		var data = {
 			'archival_unit': archival_unit_id,
 			'carrier_type': carrier_type,
-			'container_label': container_label
+			'container_label': container_label,
+			'barcode': barcode
 		};
 
 		$.ajax({
 			type: 'POST',
 			success: function(data) {
-				table.page('last').draw(false);
+				if (data["status"] !== "errors") {
+					table.page('last').draw(false);
+				} else {
+					alertify.logPosition("bottom left");
+					alertify.delay(5000).error(data["errors"]);
+				}
 			},
-			error: function(){ },
+			error: function(data){},
 			url: '/container/create/',
 			data: data,
 			cache: false

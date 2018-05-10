@@ -14,6 +14,12 @@
         <div class="col-md-12">
             {% bootstrap_field form.container_label %}
         </div>
+        <div class="col-md-12">
+            {% bootstrap_field form.barcode %}
+        </div>
+        <div class="col-md-12">
+            {% bootstrap_field form.digital_version_exists %}
+        </div>
     </fieldset>
     <fieldset>
         {% include 'audit_trail_modal.html' %}
