@@ -85,28 +85,25 @@ class Command(BaseCommand):
                 last_edited = tz_budapest.localize(row['DateChanged']) if row['DateChanged'] \
                     else datetime.now(tz_budapest)
 
-                container = Container(
+                container, was_created = Container.objects.get_or_create(
                     archival_unit=archival_unit,
-                    carrier_type=carrier_map[row['Description']],
-                    container_no=int(row['Container']),
-                    container_label=row['Notes'],
-                    legacy_id=row['InternalNotes'],
-                    old_id=row['ID'],
-                    user_created=created_by,
-                    date_created=created,
-                    user_updated=last_edited_by,
-                    date_updated=last_edited
+                    container_no=int(row['Container'])
                 )
+                container.carrier_type=carrier_map[row['Description']]
+                container.container_label = row['Notes']
+                container.legacy_id = row['InternalNotes']
+                container.old_id = row['ID']
+                container.user_created = created_by
+                container.user_updated = last_edited_by
+                container.date_created = created
+                container.date_updated = last_edited
 
-                try:
-                    container.save()
-                    # print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
-                except IntegrityError as e:
-                    print('Error with %s-%s: %s' % (container.archival_unit.reference_code,
-                                                     container.container_no,
-                                                     e.args[1]))
-                except Exception as e:
-                    print('Some error - %s - Skipping' % e)
+                container.save()
+
+                if was_created:
+                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                else:
+                    print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
 
             cnx.close()
         else:
