@@ -94,7 +94,7 @@ class Command(BaseCommand):
                     print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
                     container.carrier_type = carrier_map[row['Description']]
                 else:
-                    Container.objects.create(
+                    container = Container.objects.create(
                         archival_unit=archival_unit,
                         container_no=int(row['Container']),
                         carrier_type=carrier_map[row['Description']]
