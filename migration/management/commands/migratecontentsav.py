@@ -23,8 +23,8 @@ class Command(BaseCommand):
                                   database=settings.MIGRATION_DB['DB'])
 
     def handle(self, *args, **options):
-        FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Video')).delete()
-        FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Audio')).delete()
+        # FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Video')).delete()
+        # FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Audio')).delete()
 
         if settings.MIGRATION_DB:
             sql = "SELECT ContentsAV.*, Main.FondsID, Main.SubfondsID, Main.SeriesID, Main.ListNo, Main.Container, " \
@@ -82,6 +82,12 @@ class Command(BaseCommand):
                     user = User.objects.get(username='finding.aids')
                     hashids = Hashids(salt="osacontent", min_length=8)
 
+                    obj_count = FindingAidsEntity.objects.filter(
+                        archival_unit=container.archival_unit_id,
+                        container=container,
+                        folder_no=folder_no
+                    ).count()
+
                     finding_aids = FindingAidsEntity(
                         old_id="%s-%d" % (row['ContainerID'], int(row['No'])),
                         catalog_id=hashids.encode(row["ContainerID"] * 1000 + int(row["No"])),
@@ -105,13 +111,13 @@ class Command(BaseCommand):
                         user_updated=user.username
                     )
 
-                    if FindingAidsEntity.objects.filter(container=container, folder_no=folder_no).count() == 0:
+                    if obj_count == 0:
+
                         try:
                             finding_aids.save()
-                            # print("Inserting %s/%s:%s" % (finding_aids.archival_unit.reference_code,
-                                                          # container.container_no,
-                                                          # finding_aids.folder_no))
-
+                            print("Inserting %s/%s:%s" % (finding_aids.archival_unit.reference_code,
+                                                          container.container_no,
+                                                          finding_aids.folder_no))
                             if row['YearAir']:
                                 FindingAidsEntityDate.objects.create(
                                     fa_entity=finding_aids,

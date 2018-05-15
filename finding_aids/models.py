@@ -191,6 +191,9 @@ class FindingAidsEntityDate(models.Model):
     date_to = ApproximateDateField(blank=True)
     date_type = models.ForeignKey('controlled_list.DateType')
 
+    class Meta:
+        db_table = 'finding_aids_dates'
+
 
 class FindingAidsEntityCreator(models.Model):
     id = models.AutoField(primary_key=True)
