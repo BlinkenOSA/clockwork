@@ -85,11 +85,22 @@ class Command(BaseCommand):
                 last_edited = tz_budapest.localize(row['DateChanged']) if row['DateChanged'] \
                     else datetime.now(tz_budapest)
 
-                container, was_created = Container.objects.get_or_create(
+                container = Container.objects.filter(
                     archival_unit=archival_unit,
                     container_no=int(row['Container'])
-                )
-                container.carrier_type=carrier_map[row['Description']]
+                ).first()
+
+                if container:
+                    print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                    container.carrier_type = carrier_map[row['Description']]
+                else:
+                    Container.objects.create(
+                        archival_unit=archival_unit,
+                        container_no=int(row['Container']),
+                        carrier_type=carrier_map[row['Description']]
+                    )
+                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
+
                 container.container_label = row['Notes']
                 container.legacy_id = row['InternalNotes']
                 container.old_id = row['ID']
@@ -99,11 +110,6 @@ class Command(BaseCommand):
                 container.date_updated = last_edited
 
                 container.save()
-
-                if was_created:
-                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
-                else:
-                    print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
 
             cnx.close()
         else:
