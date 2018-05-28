@@ -45,9 +45,15 @@ class AccessionListJson(AccessionPermissionMixin, BaseDatatableView):
                 return render_to_string('accession/table_action_buttons.html',
                         context={'id': row.id, 'number_of_archival_units': 1})
         elif column == 'reference_code':
-            return row.archival_unit.reference_code
+            if row.archival_unit:
+                return row.archival_unit.reference_code
+            else:
+                return "HU OSA %s (Legacy)" % row.archival_unit_legacy_number
         elif column == 'archival_unit':
-            return row.archival_unit.title
+            if row.archival_unit:
+                return row.archival_unit.title
+            else:
+                return "%s (Legacy)" % row.archival_unit_legacy_name
         elif column == 'transfer_date':
             return str(row.transfer_date)
         else:
