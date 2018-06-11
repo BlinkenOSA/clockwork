@@ -2,6 +2,7 @@
   pk: 1
   fields:
     type: Archival box
+    type_original_language: levéltári doboz
     width: 125
     height: 265
     depth: 320
@@ -10,6 +11,7 @@
   pk: 2
   fields:
     type: Archival card box
+    type_original_language: levéltári kártyadoboz
     width: 315
     height: 235
     depth: 170
@@ -18,6 +20,7 @@
   pk: 3
   fields:
     type: Boxes of color prints
+    type_original_language: levéltári fényképdoboz
     width: 440
     height: 100
     depth: 310
@@ -26,6 +29,7 @@
   pk: 4
   fields:
     type: Audio cassette
+    type_original_language: hangkazetta
     width: 15
     height: 105
     depth: 95
@@ -34,6 +38,7 @@
   pk: 5
   fields:
     type: Beta SP
+    type_original_language: videókazetta Betacam SP
     width: 30
     height: 110
     depth: 170
@@ -42,6 +47,7 @@
   pk: 6
   fields:
     type: VHS
+    type_original_language: videókazetta VHS
     width: 25
     height: 105
     depth: 190
@@ -50,6 +56,7 @@
   pk: 7
   fields:
     type: CD-ROM
+    type_original_language: CD
     width: 10
     height:
     depth:
@@ -58,6 +65,7 @@
   pk: 8
   fields:
     type: Rolls of 35 mm microfilm in microfilm cabinet
+    type_original_language: mikrofilm tekercs 35mm
     width: 50
     height: 105
     depth: 105
@@ -66,6 +74,7 @@
   pk: 9
   fields:
     type: Rolls of 16 mm microfilm in microfilm cabinet
+    type_original_language: mikrofilm tekercs 16mm
     width: 23
     height: 100
     depth: 100
@@ -74,6 +83,7 @@
   pk: 10
   fields:
     type: SVHS
+    type_original_language: videókazetta S-VHS
     width: 25
     height: 105
     depth: 170
@@ -82,6 +92,7 @@
   pk: 11
   fields:
     type: Plastic card box
+    type_original_language: műanyag kártyadoboz
     width: 245
     height: 55
     depth: 235
@@ -90,6 +101,7 @@
   pk: 12
   fields:
     type: Floppy 3.5
+    type_original_language: floppy 3"
     width: 1
     height:
     depth:
@@ -98,6 +110,7 @@
   pk: 13
   fields:
     type: Floppy 5.25
+    type_original_language: floppy 5"
     width: 1
     height:
     depth:
@@ -106,6 +119,7 @@
   pk: 14
   fields:
     type: DVD-ROM
+    type_original_language: DVD-ROM
     width: 10
     height:
     depth:
@@ -114,6 +128,7 @@
   pk: 15
   fields:
     type: SDLT I
+    type_original_language: mágnesszalag SDLT
     width: 34
     height: 110
     depth: 110
@@ -122,6 +137,7 @@
   pk: 16
   fields:
     type: Oversized box (40 cm)
+    type_original_language: levéltári doboz túlméretes
     width: 400
     height: 200
     depth: 150
@@ -130,6 +146,7 @@
   pk: 17
   fields:
     type: SVHS-C
+    type_original_language: videókazetta S-VHS-C
     width: 1
     height:
     depth:
@@ -138,6 +155,7 @@
   pk: 18
   fields:
     type: mini CD-R
+    type_original_language: mini CD-R
     width: 1
     height:
     depth:
@@ -146,6 +164,7 @@
   pk: 19
   fields:
     type: mini DV
+    type_original_language: videókazetta mini DV
     width: 1
     height:
     depth:
@@ -154,6 +173,7 @@
   pk: 20
   fields:
     type: Oversized folder
+    type_original_language: levéltári mappa túlméretes
     width: 1
     height:
     depth:
@@ -162,6 +182,7 @@
   pk: 21
   fields:
     type: N/A
+    type_original_language: nem elérhető
     width: 1
     height:
     depth:
@@ -170,6 +191,7 @@
   pk: 22
   fields:
     type: Digital container
+    type_original_language: Digitális gyűjtő
     width: 1
     height:
     depth:
@@ -178,6 +200,7 @@
   pk: 23
   fields:
     type: Blu-Ray
+    type_original_language: Blu-Ray lemez
     width: 10
     height:
     depth:
@@ -186,6 +209,7 @@
   pk: 24
   fields:
     type: HDD
+    type_original_language: merevlemez
     width: 1
     height:
     depth:

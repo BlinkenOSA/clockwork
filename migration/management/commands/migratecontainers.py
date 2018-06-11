@@ -90,16 +90,16 @@ class Command(BaseCommand):
                     container_no=int(row['Container'])
                 ).first()
 
-                if container:
-                    print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
-                    container.carrier_type = carrier_map[row['Description']]
-                else:
+                if not container:
+                    print("Inserting %s-%s" % (archival_unit.reference_code, int(row['Container'])))
                     container = Container.objects.create(
                         archival_unit=archival_unit,
                         container_no=int(row['Container']),
                         carrier_type=carrier_map[row['Description']]
                     )
-                    print("Inserting %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                else:
+                    print("Updating %s-%s" % (container.archival_unit.reference_code, container.container_no))
+                    container.carrier_type = carrier_map[row['Description']]
 
                 container.container_label = row['Notes']
                 container.legacy_id = row['InternalNotes']
