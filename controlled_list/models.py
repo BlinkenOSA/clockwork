@@ -41,6 +41,7 @@ class Building(models.Model):
 class CarrierType(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(unique=True, max_length=100)
+    type_original_language = models.CharField(max_length=100, blank=True, null=True)
     width = models.IntegerField()
     height = models.IntegerField(blank=True, null=True)
     depth = models.IntegerField(blank=True, null=True)

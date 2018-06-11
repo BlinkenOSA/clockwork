@@ -34,28 +34,30 @@ class Command(BaseCommand):
 
                 last_edited = self.get_last_edited(row['Last edited'])
 
-                isaar = Isaar(
-                    legacy_id=row['ID'],
-                    name=row['Authority Entry'],
-                    type=row['Type of Archival Authority Record'][0],
-                    date_existence_from=get_approx_date_from_string(row['DateFrom']),
-                    date_existence_to=get_approx_date_from_string(row['DateTo']),
-                    function=row['Mandate, functions and sphere of activity'],
-                    legal_status=row['Legal status'],
-                    internal_structure=row['Administrative structure'],
-                    internal_note=row["Archivist's Note"],
-                    history=row['Other significant information'],
-                    user_created=created_by,
-                    user_updated=updated_by,
-                    status='Final' if row['CanGoPublic'] == 1 else 'Draft'
+                isaar, rec_created = Isaar.objects.get_or_create(
+                    name=row['Authority Entry']
                 )
+
+                isaar.legacy_id = row['ID']
+                isaar.type = row['Type of Archival Authority Record'][0]
+                isaar.date_existence_from = get_approx_date_from_string(row['DateFrom'])
+                isaar.date_existence_to = get_approx_date_from_string(row['DateTo'])
+                isaar.function = row['Mandate, functions and sphere of activity']
+                isaar.legal_status = row['Legal status']
+                isaar.internal_structure = row['Administrative structure']
+                isaar.internal_note = row["Archivist's Note"]
+                isaar.history = row['Other significant information']
+                isaar.user_created = created_by
+                isaar.user_updated = updated_by
+                isaar.status = 'Final' if row['CanGoPublic'] == 1 else 'Draft'
 
                 try:
                     isaar.save()
                     # print("Inserting %s" % isaar.name)
 
-                    self.get_parallel_names(row['Parallel Entry/Entries'], isaar)
-                    self.get_other_names(row['Non-preferred Term(s)'], isaar)
+                    if rec_created:
+                        self.get_parallel_names(row['Parallel Entry/Entries'], isaar)
+                        self.get_other_names(row['Non-preferred Term(s)'], isaar)
 
                     isaar.date_created = tz_budapest.localize(last_edited)
                     isaar.date_updated = tz_budapest.localize(last_edited)

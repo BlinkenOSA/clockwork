@@ -45,16 +45,16 @@ class Command(BaseCommand):
 
             for row in cursor:
                 archival_unit = ArchivalUnit.objects.filter(level='F', fonds=row['fondsID']).first()
+                if archival_unit:
+                    isad = self.make_isad_record(archival_unit, row)
 
-                isad = self.make_isad_record(archival_unit, row)
+                    try:
+                        isad.save()
+                        # print("Inserting %s" % archival_unit.title_full)
+                        self.add_isad_languages(isad)
 
-                try:
-                    isad.save()
-                    # print("Inserting %s" % archival_unit.title_full)
-                    self.add_isad_languages(isad)
-
-                except IntegrityError as e:
-                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    except IntegrityError as e:
+                        print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def migrate_isad_subfonds(self):
             sql = "SELECT subfonds.ID AS subfondsID, subfonds.FondsID AS fondsID, subfonds.Name AS ArchivalUnitName, isad.* " \
@@ -70,15 +70,16 @@ class Command(BaseCommand):
                                                             fonds=row['fondsID'],
                                                             subfonds=row['subfondsID']).first()
 
-                isad = self.make_isad_record(archival_unit, row)
+                if archival_unit:
+                    isad = self.make_isad_record(archival_unit, row)
 
-                try:
-                    isad.save()
-                    # print("Inserting %s" % archival_unit.title_full)
-                    self.add_isad_languages(isad)
+                    try:
+                        isad.save()
+                        # print("Inserting %s" % archival_unit.title_full)
+                        self.add_isad_languages(isad)
 
-                except IntegrityError as e:
-                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    except IntegrityError as e:
+                        print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def migrate_isad_series(self):
             sql = "SELECT series.ID AS seriesID, series.subfondsID AS subfondsID, series.FondsID AS fondsID, " \
@@ -96,18 +97,20 @@ class Command(BaseCommand):
                                                             subfonds=row['subfondsID'],
                                                             series=row['seriesID']).first()
 
-                isad = self.make_isad_record(archival_unit, row)
+                if archival_unit:
+                    isad = self.make_isad_record(archival_unit, row)
 
-                try:
-                    isad.save()
-                    # print("Inserting %s" % archival_unit.title_full)
-                    self.add_isad_languages(isad)
+                    try:
+                        isad.save()
+                        # print("Inserting %s" % archival_unit.title_full)
+                        self.add_isad_languages(isad)
 
-                except IntegrityError as e:
-                    print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
+                    except IntegrityError as e:
+                        print('Error with %s: %s' % (archival_unit.title_full.encode('utf-8'), e.args[1]))
 
     def make_isad_record(self, archival_unit, row):
         sql_isad2 = "SELECT * FROM isad2 WHERE isad2.Id = %s"
+        language2nd = False
 
         cursor = self.cnx.cursor(dictionary=True, buffered=True)
         cursor.execute(sql_isad2, (row['Id'],))
@@ -115,57 +118,68 @@ class Command(BaseCommand):
         isad2 = cursor.fetchone()
 
         tz_budapest = timezone('Europe/Budapest')
-        original_locale = Locale.objects.get(pk='HU')
 
         updated_by = get_user(row['Last edited by']).username
         last_edited = tz_budapest.localize(row['Last edited']) if row['Last edited'] else datetime.now(tz_budapest)
 
+        isad = Isad.objects.get_or_create(
+            archival_unit=archival_unit
+        )[0]
+
+        if isad2 and isad2["Scope and content"]:
+            language2nd = True
+
         access_rights = row['Conditions governing access']
         reproduction_rights = row['Conditions governing reproduction']
 
-        isad = Isad(
-            legacy_id=row['Id'],
-            archival_unit=archival_unit,
-            original_locale=original_locale,
-            title=row['ArchivalUnitName'],
-            reference_code=archival_unit.reference_code,
-            description_level=archival_unit.level,
-            year_from=row['YearFrom'],
-            year_to=row['YearTo'],
-            accruals=True if row['Accruals'] == 'Expected' else False,
-            access_rights=AccessRight.objects.filter(statement='Unknown').first() if not access_rights else None,
-            access_rights_legacy=access_rights,
-            reproduction_rights=ReproductionRight.objects.filter(
-                statement='Third party rights are to be cleared.').first() if not reproduction_rights else None,
-            reproduction_rights_legacy=reproduction_rights,
-            date_predominant=row['Date(s)'],
-            carrier_estimated=row['Extent and medium'],
-            archival_history=row['Archival history'],
-            archival_history_original=isad2['Archival history'] if isad2 else "",
-            scope_and_content_abstract=row['Scope and content'],
-            scope_and_content_abstract_original=isad2['Scope and content'] if isad2 else "",
-            appraisal=row['Appraisal, destruction and scheduling information'],
-            appraisal_original=isad2['Appraisal, destruction and scheduling information'] if isad2 else "",
-            system_of_arrangement_information=row['System of arrangement'],
-            system_of_arrangement_information_original=isad2['System of arrangement'] if isad2 else "",
-            physical_characteristics=row['Physical characteristics and technical requirements'],
-            physical_characteristics_original=isad2['Physical characteristics and technical requirements'] if isad2 else "",
-            publication_note=row['Publication note'],
-            publication_note_original=isad2['Publication note'] if isad2 else "",
-            note=row['Note'],
-            note_original=isad2['Note'] if isad2 else "",
-            internal_note=row['Internal notes'],
-            internal_note_original=isad2['Internal notes'] if isad2 else "",
-            archivists_note=row["Archivist's Note"],
-            archivists_note_original=isad2["Archivist's Note"] if isad2 else "",
-            published=True if row['DatePublic'] else False,
-            user_published=updated_by,
-            date_published=last_edited,
-            user_created=User.objects.get(username='finding.aids').username,
-            date_created=last_edited,
-            user_updated=updated_by,
-            date_updated=last_edited,
-        )
+        isad.legacy_id = row['Id']
+        isad.original_locale = None
+        isad.title = row['ArchivalUnitName']
+        isad.reference_code = archival_unit.reference_code
+        isad.description_level = archival_unit.level
+        isad.year_from = row['YearFrom']
+        isad.year_to = row['YearTo']
+        isad.accruals = True if row['Accruals'] == 'Expected' else False
+        isad.access_rights = AccessRight.objects.filter(statement='Unknown').first() if not access_rights else None
+        isad.access_rights_legacy = access_rights
+        isad.reproduction_rights = \
+            ReproductionRight.objects.filter(statement='Third party rights are to be cleared.').first() \
+            if not reproduction_rights else None
+        isad.reproduction_rights_legacy = reproduction_rights
+        isad.date_predominant = row['Date(s)']
+        isad.carrier_estimated = row['Extent and medium']
+        isad.archival_history = row['Archival history']
+        isad.scope_and_content_abstract = row['Scope and content']
+        isad.appraisal = row['Appraisal, destruction and scheduling information']
+        isad.system_of_arrangement_information = row['System of arrangement']
+        isad.physical_characteristics = row['Physical characteristics and technical requirements']
+        isad.publication_note = row['Publication note']
+        isad.note = row['Note']
+        isad.internal_note = row['Internal notes']
+        isad.archivists_note = row["Archivist's Note"]
+        isad.published = True if row['DatePublic'] else False
+        isad.user_published = updated_by
+        isad.date_published = last_edited
+        isad.user_created = User.objects.get(username='finding.aids').username
+        isad.date_created = last_edited
+        isad.user_updated = updated_by
+        isad.date_updated = last_edited
+
+        if language2nd:
+            isad.original_locale = Locale.objects.get(pk='HU')
+            isad.carrier_estimated_original = isad2['Extent and medium']
+            isad.archival_history_original = isad2['Archival history']
+            isad.scope_and_content_abstract_original = isad2['Scope and content']
+            isad.access_rights_legacy_original = isad2['Conditions governing access']
+            isad.reproduction_rights_legacy = isad2['Conditions governing reproduction']
+            isad.appraisal_original = isad2['Appraisal, destruction and scheduling information']
+            isad.system_of_arrangement_information_original = isad2['System of arrangement']
+            isad.physical_characteristics_original = isad2['Physical characteristics and technical requirements']
+            isad.publication_note_original = isad2['Publication note']
+            isad.note_original = isad2['Note']
+            isad.internal_note_original = isad2['Internal notes']
+            isad.archivists_note_original = isad2["Archivist's Note"]
+
         return isad
 
     def add_isad_languages(self, isad):
