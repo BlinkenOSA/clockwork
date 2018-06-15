@@ -115,6 +115,7 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
             data = {
                 'DT_RowId': container.id,
                 'container_no': container.container_no,
+                'barcode': container.barcode,
                 'carrier_type': container.carrier_type.type,
                 'container_label': container.container_label,
                 'number_of_fa_entities': 0,
@@ -184,6 +185,7 @@ class ContainerAction(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixi
             context = {
                 'DT_rowId': container.id,
                 'container_no': '%s/%s' % (container.archival_unit.reference_code, container.container_no),
+                'barcode': container.barcode,
                 'carrier_type': container.carrier_type.type,
                 'identifier': "%s (%s)" % (container.permanent_id, container.legacy_id) if container.legacy_id else container.permanent_id,
                 'navigate': render_to_string('container/table_navigate_buttons.html', context={'container': container}),

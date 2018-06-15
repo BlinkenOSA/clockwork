@@ -79,6 +79,9 @@
         <a id="publish_all" href="{% url 'container:publish' 'publish' archival_unit.id 'all' %}" class="btn btn-default">
             <i class="fa fa-cloud-upload"></i> Publish All
         </a>
+        <a id="unpublish_all" href="{% url 'container:publish' 'unpublish' archival_unit.id 'all' %}" class="btn btn-default">
+            <i class="fa fa-cloud-download"></i> Unpublish All
+        </a>
         <a class="btn btn-default" href="{% url 'finding_aids:choose_archival_unit' %}">
             <i class="fa fa-times"></i>
             {% trans 'Cancel' %}

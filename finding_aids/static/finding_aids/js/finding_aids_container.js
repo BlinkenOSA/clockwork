@@ -134,7 +134,7 @@ $('tbody').on('click','.btn-action',function(e) {
 $('#publish_all').on('click', function(e) {
 	e.preventDefault();
 	var url = $(this).attr("href");
-	var msg = "Are you sure you want to set all the Finding Aids entries 'Ready for publish'?";
+	var msg = "Are you sure you want to set all the Finding Aids entries 'Published'?";
 	alertify.confirm(msg, function (e) {
 		$.ajax({
 			type: 'POST',

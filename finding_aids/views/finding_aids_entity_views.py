@@ -167,6 +167,9 @@ class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView
         new_obj.user_published = ""
         new_obj.date_published = None
 
+        new_obj.catalog_id = None
+        new_obj.old_id = None
+
         new_obj.save()
         context = {'success': 'ok'}
         return self.render_json_response(context)
