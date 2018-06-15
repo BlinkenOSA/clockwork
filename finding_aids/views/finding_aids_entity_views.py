@@ -51,12 +51,12 @@ class FindingAidsCreate(FindingAidsPermissionMixin, FindingAidsAllowedArchivalUn
         if self.object.description_level == 'L2':
             item_no = get_number_of_items(self.object.container.id, self.object.folder_no)
             self.object.sequence_no = item_no + 1
-            self.object.archival_reference_code = "%s/%s:%s-%s" % (self.object.container.archival_unit.reference_code,
+            self.object.archival_reference_code = "%s:%s/%s-%s" % (self.object.container.archival_unit.reference_code,
                                                                    self.object.container.container_no,
                                                                    self.object.folder_no,
                                                                    self.object.sequence_no)
         else:
-            self.object.archival_reference_code = "%s/%s:%s" % (self.object.container.archival_unit.reference_code,
+            self.object.archival_reference_code = "%s:%s/%s" % (self.object.container.archival_unit.reference_code,
                                                                 self.object.container.container_no,
                                                                 self.object.folder_no)
         return super(FindingAidsCreate, self).forms_valid(form, formset)
