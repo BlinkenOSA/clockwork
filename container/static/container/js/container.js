@@ -104,3 +104,21 @@ $('#publish_all').on('click', function(e) {
 		});
 	});
 });
+
+$('#unpublish_all').on('click', function(e) {
+	e.preventDefault();
+	var url = $(this).attr("href");
+	var msg = "Are you sure you want to set all the Containers and the Finding Aids entries under them as 'Draft'?";
+	alertify.confirm(msg, function (e) {
+		$.ajax({
+			type: 'POST',
+			success: function (data) {
+				table.ajax.reload();
+			},
+			error: function () {
+			},
+			url: url,
+			cache: false
+		});
+	});
+});
