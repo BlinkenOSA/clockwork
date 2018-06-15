@@ -4,8 +4,6 @@ from django.db import models
 from django.utils import timezone
 from django_date_extensions.fields import ApproximateDateField
 
-from archival_unit.models import ArchivalUnit
-
 
 class Isad(models.Model):
     id = models.AutoField(primary_key=True)
@@ -28,9 +26,11 @@ class Isad(models.Model):
     access_rights = models.ForeignKey('controlled_list.AccessRight', on_delete=models.PROTECT,
                                       blank=True, null=True)
     access_rights_legacy = models.TextField(blank=True, null=True)
+    access_rights_legacy_original = models.TextField(blank=True, null=True)
     reproduction_rights = models.ForeignKey('controlled_list.ReproductionRight', on_delete=models.PROTECT,
                                             blank=True, null=True)
     reproduction_rights_legacy = models.TextField(blank=True, null=True)
+    reproduction_rights_legacy_original = models.TextField(blank=True, null=True)
     rights_restriction_reason = models.ForeignKey('controlled_list.RightsRestrictionReason', on_delete=models.PROTECT,
                                                   blank=True, null=True)
 
