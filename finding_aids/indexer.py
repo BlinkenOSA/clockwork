@@ -271,9 +271,16 @@ class FindingAidsEntityIndexer:
         return "%s - %s" % (date_from, date_to)
 
     def _make_date_created_display(self):
-        year_from = self.finding_aids.date_from.year
+        if len(self.finding_aids.date_from) == 4:
+            year_from = self.finding_aids.date_from
+        else:
+            year_from = self.finding_aids.date_from.year
+
         if self.finding_aids.date_to:
-            year_to = self.finding_aids.date_to.year
+            if len(self.finding_aids.date_to) == 4:
+                year_from = self.finding_aids.date_to
+            else:
+                year_to = self.finding_aids.date_to.year
         else:
             year_to = None
 
