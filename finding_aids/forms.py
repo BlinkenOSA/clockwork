@@ -150,7 +150,7 @@ class FindingAidsForm(FindingAidsBaseForm):
 
     class Meta(FindingAidsBaseForm.Meta):
         exclude = ['archival_unit', 'container', 'published', 'user_published', 'date_published',
-                   'user_created', 'date_created', 'user_updated', 'date_updated']
+                   'user_created', 'date_created', 'user_updated', 'date_updated', 'old_id', 'catalog_id']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
@@ -183,7 +183,7 @@ class FindingAidsUpdateForm(FindingAidsBaseForm):
 
     class Meta(FindingAidsBaseForm.Meta):
         exclude = ['archival_unit', 'container', 'published', 'user_published', 'date_published',
-                   'user_created', 'date_created', 'user_updated', 'date_updated']
+                   'user_created', 'date_created', 'user_updated', 'date_updated', 'old_id', 'catalog_id']
 
     def clean_title(self):
         if not self.cleaned_data['title']:
