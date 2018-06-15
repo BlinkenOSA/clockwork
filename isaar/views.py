@@ -32,7 +32,7 @@ class IsaarListJson(IsaarPermissionMixin, BaseDatatableView):
         if search:
             qs = qs.filter(
                 Q(name__icontains=search) |
-                Q(type__country__icontains=search)
+                Q(type__icontains=search)
             )
         return qs
 
