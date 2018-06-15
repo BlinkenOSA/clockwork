@@ -123,7 +123,8 @@ class Command(BaseCommand):
         last_edited = tz_budapest.localize(row['Last edited']) if row['Last edited'] else datetime.now(tz_budapest)
 
         isad = Isad.objects.get_or_create(
-            archival_unit=archival_unit
+            archival_unit=archival_unit,
+            year_from=row['YearFrom']
         )[0]
 
         if isad2 and isad2["Scope and content"]:
@@ -137,7 +138,6 @@ class Command(BaseCommand):
         isad.title = row['ArchivalUnitName']
         isad.reference_code = archival_unit.reference_code
         isad.description_level = archival_unit.level
-        isad.year_from = row['YearFrom']
         isad.year_to = row['YearTo']
         isad.accruals = True if row['Accruals'] == 'Expected' else False
         isad.access_rights = AccessRight.objects.filter(statement='Unknown').first() if not access_rights else None
