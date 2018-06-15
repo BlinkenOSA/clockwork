@@ -17,3 +17,5 @@ clockwork/components/local_settings.py
 clockwork/components/database_migration.py
 
 .coverage
+accounts/fixtures/
+dump.rdb
