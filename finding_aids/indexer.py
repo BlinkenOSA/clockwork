@@ -147,11 +147,19 @@ class FindingAidsEntityIndexer:
 
             time_start = self.finding_aids.time_start
             if time_start:
-                j["timeStart"] = "%02d:%02d:%02d" % (time_start.hour, time_start.minute, time_start.second)
+                ts_sec = time_start.total_seconds()
+                ts_hours = ts_sec // 3600
+                ts_minutes = (ts_sec % 3600) // 60
+                ts_seconds = ts_sec % 60
+                j["timeStart"] = "%02d:%02d:%02d" % (ts_hours, ts_minutes, ts_seconds)
 
             time_end = self.finding_aids.time_end
             if time_end:
-                j["timeEnd"] = "%02d:%02d:%02d" % (time_end.hour, time_end.minute, time_end.second)
+                te_sec = time_end.total_seconds()
+                te_hours = te_sec // 3600
+                te_minutes = (te_sec % 3600) // 60
+                te_seconds = te_sec % 60
+                j["timeEnd"] = "%02d:%02d:%02d" % (te_hours, te_minutes, te_seconds)
 
             duration = self._calculate_duration(self.finding_aids.duration)
             j["duration"] = duration
