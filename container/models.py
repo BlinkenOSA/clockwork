@@ -33,4 +33,3 @@ class Container(models.Model):
 
     def __unicode__(self):
         return "Container #%s / %s" % (self.container_no, self.carrier_type)
-
