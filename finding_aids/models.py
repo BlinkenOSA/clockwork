@@ -147,11 +147,11 @@ class FindingAidsEntity(CloneableMixin, models.Model):
             self.archival_reference_code = "%s-TEMPLATE" % self.archival_unit.reference_code
         else:
             if self.description_level == 'L1':
-                self.archival_reference_code = "%s/%s:%s" % (self.container.archival_unit.reference_code,
+                self.archival_reference_code = "%s:%s/%s" % (self.container.archival_unit.reference_code,
                                                              self.container.container_no,
                                                              self.folder_no)
             else:
-                self.archival_reference_code = "%s/%s:%s-%s" % (self.container.archival_unit.reference_code,
+                self.archival_reference_code = "%s:%s/%s-%s" % (self.container.archival_unit.reference_code,
                                                                 self.container.container_no,
                                                                 self.folder_no,
                                                                 self.sequence_no)

@@ -34,8 +34,8 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
 
     def render_column(self, row, column):
         if column == 'level':
-            folder_no = row.container.archival_unit.reference_code + '/' + str(row.container.container_no) + \
-                        ':' + str(row.folder_no)
+            folder_no = row.container.archival_unit.reference_code + ':' + str(row.container.container_no) + \
+                        '/' + str(row.folder_no)
             if row.level == 'F':
                 icon = '<i class="fa fa-folder-open-o"></i>'
                 return '<span class="call_no_folder">' + icon + folder_no + '</span>'
