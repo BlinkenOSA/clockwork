@@ -176,6 +176,7 @@ class FindingAidsEntityIndexer:
 
             j["dateCreated"] = self._make_date_created_display()
 
+            j["dates"] = []
             for date in self.finding_aids.findingaidsentitydate_set.all():
                 j["dates"].append(
                     {"dateType": date.date_type.type, "date": self._make_date_display(date)}
