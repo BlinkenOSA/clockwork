@@ -3,8 +3,6 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import ModelForm, TextInput, HiddenInput
 from django.utils.translation import ugettext
-
-from accession.widgets import AccessionsSelect2Widget
 from archival_unit.models import ArchivalUnit
 from controlled_list.widgets import ArchivalUnitThemeSelect2MultipleWidget
 
@@ -40,12 +38,14 @@ class FondsCreateForm(BaseModelForm):
 
     def clean(self):
         super(FondsCreateForm, self).clean()
-        f = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
-                                        subfonds=self.cleaned_data['subfonds'],
-                                        series=self.cleaned_data['series'],
-                                        level="F")
-        if len(f) > 0:
-            raise ValidationError({'series': ugettext("Fonds with this number already exists!")})
+        changed_data_keys = ['fonds', 'subfonds', 'series']
+        if any(k in changed_data_keys for k in self.changed_data):
+            f = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                            subfonds=self.cleaned_data['subfonds'],
+                                            series=self.cleaned_data['series'],
+                                            level="F")
+            if len(f) > 0:
+                raise ValidationError({'series': ugettext("Fonds with this number already exists!")})
 
 
 class FondsUpdateForm(FondsCreateForm):
@@ -58,6 +58,9 @@ class FondsUpdateForm(FondsCreateForm):
                 archival_unit.fonds = fonds_new
                 archival_unit.save()
         return super(FondsUpdateForm, self).save(commit=True)
+
+    def clean(self):
+        super(FondsUpdateForm, self).clean()
 
 
 class SubFondsCreateForm(BaseModelForm):
@@ -95,12 +98,14 @@ class SubFondsCreateForm(BaseModelForm):
 
     def clean(self):
         super(SubFondsCreateForm, self).clean()
-        sf = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
-                                         subfonds=self.cleaned_data['subfonds'],
-                                         series=self.cleaned_data['series'],
-                                         level="SF")
-        if len(sf) > 0:
-            raise ValidationError({'subfonds': ugettext("Subfonds with this number already exists!")})
+        changed_data_keys = ['fonds', 'subfonds', 'series']
+        if any(k in changed_data_keys for k in self.changed_data):
+            sf = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                             subfonds=self.cleaned_data['subfonds'],
+                                             series=self.cleaned_data['series'],
+                                             level="SF")
+            if len(sf) > 0:
+                raise ValidationError({'subfonds': ugettext("Subfonds with this number already exists!")})
 
 
 class SubFondsUpdateForm(SubFondsCreateForm):
@@ -148,12 +153,14 @@ class SeriesCreateForm(BaseModelForm):
 
     def clean(self):
         super(SeriesCreateForm, self).clean()
-        s = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
-                                         subfonds=self.cleaned_data['subfonds'],
-                                         series=self.cleaned_data['series'],
-                                         level="S")
-        if len(s) > 0:
-            raise ValidationError({'series': ugettext("Series with this number already exists!")})
+        changed_data_keys = ['fonds', 'subfonds', 'series']
+        if any(k in changed_data_keys for k in self.changed_data):
+            s = ArchivalUnit.objects.filter(fonds=self.cleaned_data['fonds'],
+                                             subfonds=self.cleaned_data['subfonds'],
+                                             series=self.cleaned_data['series'],
+                                             level="S")
+            if len(s) > 0:
+                raise ValidationError({'series': ugettext("Series with this number already exists!")})
 
 
 class SeriesUpdateForm(SeriesCreateForm):
