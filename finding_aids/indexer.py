@@ -166,9 +166,9 @@ class FindingAidsEntityIndexer:
 
             contributors = []
             for contributor in self.finding_aids.findingaidsentityassociatedperson_set.all():
-                contributors.append({'name': str(contributor.associated_person), 'role': contributor.role})
+                contributors.append({'name': str(contributor.associated_person), 'role': str(contributor.role)})
             for contributor in self.finding_aids.findingaidsentityassociatedcorporation_set.all():
-                contributors.append({'name': str(contributor.associated_corporation), 'role': contributor.role})
+                contributors.append({'name': str(contributor.associated_corporation), 'role': str(contributor.role)})
             j["contributors"] = contributors
 
             j["associatedCountry"] = [str(country.country) for
