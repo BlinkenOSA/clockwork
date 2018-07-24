@@ -103,7 +103,7 @@ class FindingAidsEntityIndexer:
         genres = [genre.genre for genre in self.finding_aids.genre.all()]
         doc["genre_facet"] = genres
 
-        languages = [language.language for language in self.finding_aids.findingaidsentitylanguage_set.all()]
+        languages = [str(language.language) for language in self.finding_aids.findingaidsentitylanguage_set.all()]
         doc["language_facet"] = languages
 
         associated_countries = [ac.associated_country for ac in
@@ -111,11 +111,11 @@ class FindingAidsEntityIndexer:
         doc["associated_country_search"] = associated_countries
         doc["added_geo_facet"] = associated_countries
 
-        # Creators
-        locale = self.original_locale
+        if self.original_locale:
+            locale = self.original_locale
 
-        doc["title_original"] = self.finding_aids.title_original
-        doc["title_search_%s" % locale] = self.finding_aids.title_original
+            doc["title_original"] = self.finding_aids.title_original
+            doc["title_search_%s" % locale] = self.finding_aids.title_original
 
         self.solr_document = doc
 
@@ -142,7 +142,7 @@ class FindingAidsEntityIndexer:
 
             j["contentsSummary"] = self.finding_aids.contents_summary
 
-            j["language"] = [language.language for language in self.finding_aids.findingaidsentitylanguage_set.all()]
+            j["language"] = [str(language.language) for language in self.finding_aids.findingaidsentitylanguage_set.all()]
             j["languageStatement"] = self.finding_aids.language_statement
 
             time_start = self.finding_aids.time_start
@@ -166,12 +166,12 @@ class FindingAidsEntityIndexer:
 
             contributors = []
             for contributor in self.finding_aids.findingaidsentityassociatedperson_set.all():
-                contributors.append({'name': contributor.associated_person, 'role': contributor.role})
+                contributors.append({'name': str(contributor.associated_person), 'role': contributor.role})
             for contributor in self.finding_aids.findingaidsentityassociatedcorporation_set.all():
-                contributors.append({'name': contributor.associated_corporation, 'role': contributor.role})
+                contributors.append({'name': str(contributor.associated_corporation), 'role': contributor.role})
             j["contributors"] = contributors
 
-            j["associatedCountry"] = [country.country for
+            j["associatedCountry"] = [str(country.country) for
                                       country in self.finding_aids.findingaidsentityassociatedcountry_set.all()]
 
             j["dateCreated"] = self._make_date_created_display()
