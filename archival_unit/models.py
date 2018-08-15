@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import uuid as uuid
 
 from django.db import models
-
 from archival_unit.validators import validate_level, validate_status
 
 

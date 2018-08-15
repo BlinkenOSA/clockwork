@@ -49,7 +49,11 @@ class FindingAidsEntityIndexer:
             return hashids.encode(self.finding_aids.id)
 
     def _get_original_locale(self):
-        if self.finding_aids.original_locale:
+        if self.finding_aids.original_locale and \
+            (self.finding_aids.contents_summary_original or
+             self.finding_aids.physical_description_original or
+             self.finding_aids.language_statement_original or
+             self.finding_aids.note_original):
             self.original_locale = self.finding_aids.original_locale.id.lower()
 
     def _make_solr_document(self):
@@ -113,10 +117,29 @@ class FindingAidsEntityIndexer:
         languages = [str(language.language) for language in self.finding_aids.findingaidsentitylanguage_set.all()]
         doc["language_facet"] = languages
 
-        associated_countries = [ac.associated_country for ac in
+        # Associated entries
+
+        associated_countries = [unicode(ac.associated_country) for ac in
                                 self.finding_aids.findingaidsentityassociatedcountry_set.all()]
         doc["associated_country_search"] = associated_countries
         doc["added_geo_facet"] = associated_countries
+
+        associated_places = [unicode(apl.associated_place) for apl in
+                                self.finding_aids.findingaidsentityassociatedplace_set.all()]
+        doc["associated_place_search"] = associated_places
+        doc["added_geo_facet"] = associated_places
+
+        associated_people = [unicode(ap.associated_person) for ap in
+                             self.finding_aids.findingaidsentityassociatedperson_set.all()]
+        doc["associated_person_search"] = associated_people
+        doc["added_person_facet"] = associated_people
+
+        associated_corporations = [unicode(ac.associated_corporation) for ac in
+                             self.finding_aids.findingaidsentityassociatedcorporation_set.all()]
+        doc["associated_corporation_search"] = associated_corporations
+        doc["added_corporation_facet"] = associated_corporations
+
+        # Subject entries
 
         if self.original_locale:
             locale = self.original_locale
@@ -171,15 +194,27 @@ class FindingAidsEntityIndexer:
             duration = self._calculate_duration(self.finding_aids.duration)
             j["duration"] = duration
 
-            contributors = []
-            for contributor in self.finding_aids.findingaidsentityassociatedperson_set.all():
-                contributors.append({'name': str(contributor.associated_person), 'role': str(contributor.role)})
-            for contributor in self.finding_aids.findingaidsentityassociatedcorporation_set.all():
-                contributors.append({'name': str(contributor.associated_corporation), 'role': str(contributor.role)})
-            j["contributors"] = contributors
+            # Associated entries
 
-            j["associatedCountry"] = [str(country.country) for
+            associated_people = []
+            for person in self.finding_aids.findingaidsentityassociatedperson_set.all():
+                associated_people.append({'name': unicode(person.associated_person), 'role': unicode(person.role)})
+            j["associatedPersonal"] = associated_people
+
+            associated_corporations = []
+            for corporation in self.finding_aids.findingaidsentityassociatedcorporation_set.all():
+                associated_corporations.append({'name': unicode(corporation.associated_corporation), 'role': unicode(corporation.role)})
+            j["associatedCorporation"] = associated_corporations
+
+            j["associatedCountry"] = [unicode(country.country) for
                                       country in self.finding_aids.findingaidsentityassociatedcountry_set.all()]
+
+            j["associatedPlace"] = [unicode(place.place) for
+                                      place in self.finding_aids.findingaidsentityassociatedplace_set.all()]
+
+            # Subject entries
+
+
 
             j["dateCreated"] = self._make_date_created_display()
 
