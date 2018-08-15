@@ -19,6 +19,7 @@ django-fm==0.2.5
 django-generic-json-views==0.8
 django-guardian==1.4.6
 Django-Select2==5.11.1
+django-session-security==2.6.0
 django-split-settings==0.2.5
 django-summernote==0.8.8.3
 django-userena==2.0.1

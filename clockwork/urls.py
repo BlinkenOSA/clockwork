@@ -34,4 +34,6 @@ urlpatterns = [
 
     url(r'^select2/', include('django_select2.urls')),
     url(r'^summernote/', include('django_summernote.urls')),
+
+    url(r'session_security/', include('session_security.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

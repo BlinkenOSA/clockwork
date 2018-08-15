@@ -14,7 +14,8 @@ PREREQ_APP = [
     'fm',
     'userena',
     'guardian',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'session_security'
 ]
 
 PROJECT_APPS = [
