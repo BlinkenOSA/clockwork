@@ -5,7 +5,7 @@ from archival_unit.models import ArchivalUnit
 
 @receiver(post_save, sender=ArchivalUnit)
 def update_isad_title(sender, instance, **kwargs):
-    isad = instance.isad
-    if isad:
+    if hasattr(instance, 'isad'):
+        isad = instance.isad
         isad.title = instance.title
         isad.save()

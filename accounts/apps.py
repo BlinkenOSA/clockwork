@@ -10,3 +10,4 @@ class AccountsConfig(AppConfig):
     def ready(self):
         super(AccountsConfig, self).ready()
         from accounts.signals import set_user_permissions_upon_create
+        from accounts.signals import create_auth_token
