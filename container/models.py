@@ -18,6 +18,8 @@ class Container(models.Model):
     digital_version_exists = models.BooleanField(default=False)
     old_id = models.IntegerField(blank=True, null=True)
 
+    technical_metadata = models.TextField(blank=True, null=True)
+
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)
 

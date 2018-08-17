@@ -10,6 +10,7 @@ include(
     'components/extra.py',
     'components/celery.py',
     'components/userena.py',
+    'components/rest.py',
     'components/production_settings.py',
     optional('components/database_migration.py'),
     optional('components/local_settings.py')
