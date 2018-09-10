@@ -30,8 +30,9 @@ class LastModifiedMiddleware(object):
 
     @staticmethod
     def mark_whodid(user, sender, instance, **kwargs):
-        if getattr(instance, 'user_created', None) == '':
-            instance.user_created = user.username
-        if hasattr(instance, 'user_updated'):
-            instance.user_updated = user.username
-            instance.date_updated = timezone.now()
+        if user:
+            if getattr(instance, 'user_created', None) == '':
+                instance.user_created = user.username
+            if hasattr(instance, 'user_updated'):
+                instance.user_updated = user.username
+                instance.date_updated = timezone.now()
