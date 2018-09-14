@@ -267,7 +267,7 @@ class FindingAidsAssociatedCorporationInline(InlineFormSet):
 
 
 class FindingAidsAssociatedCountryForm(ModelForm):
-    country = ModelChoiceField(
+    associated_country = ModelChoiceField(
         queryset=Country.objects.all(),
         widget=CountrySelect2Widget(attrs={'data-placeholder': '-- Select Country --'})
     )
