@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 
 from api.permission import APIGroupPermission
 from api.serializers.container_serializers import ContainerDigitizedSerializer
