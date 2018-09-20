@@ -2,6 +2,8 @@ $(".toggle-expand-btn").click(function (e) {
     $(this).closest('.box').toggleClass('panel-fullscreen');
 });
 
+$('[data-toggle="tooltip"]').tooltip();
+
 function register_infobox(module) {
     $("input").on("click", function() {
         var form_field = ($(this).attr("name"));

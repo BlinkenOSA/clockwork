@@ -358,6 +358,13 @@
                         </li>
                     {% endif %}
 
+                    <li class="{% if 'digitization' in request.path %}active{% endif %}">
+                        <a href="{% url 'digitization:list' %}">
+                            <i class="fa fa-desktop"></i>
+                            <span>{% trans 'Digitization Log' %}</span>
+                        </a>
+                    </li>
+
                     <li class="header">INFOBOX</li>
 
                     <li class="">
@@ -413,6 +420,7 @@
     {% endblock %}
 
     {% include "modal.html" %}
+    {% include "modal-info.html" %}
 
     {% include 'session_security/all.html' %}
 
