@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^finding_aids/', include('finding_aids.urls', namespace='finding_aids')),
 
     url(r'^mlr/', include('mlr.urls', namespace='mlr')),
+    url(r'^digitization/', include('digitization.urls', namespace='digitization')),
 
     url(r'^accounts/(?P<username>[\@\.\+\w-]+)/edit/$', custom_profile_edit, name='profile_edit'),
     url(r'^accounts/(?P<username>(?!(signout|signup|signin)/)[\@\.\+\w-]+)/$', custom_profile_detail,

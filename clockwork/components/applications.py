@@ -33,7 +33,8 @@ PROJECT_APPS = [
     'container',
     'finding_aids',
     'mlr',
-    'migration'
+    'migration',
+    'digitization'
 ]
 
 INSTALLED_APPS = PREREQ_APP + PROJECT_APPS
