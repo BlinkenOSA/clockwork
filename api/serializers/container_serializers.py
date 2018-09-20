@@ -5,4 +5,4 @@ from container.models import Container
 class ContainerDigitizedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Container
-        fields = ['barcode', 'digital_version_exists', 'digital_version_technical_metadata']
+        fields = ['barcode', 'digital_version_exists', 'digital_version_technical_metadata', 'digital_version_creation_date']
