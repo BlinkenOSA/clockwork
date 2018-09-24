@@ -1,9 +1,11 @@
 <div class="btn-group">
-    <a class="btn btn-default btn-xs" href="{% url 'finding_aids:template_update' series_id id %}">
+    <a class="btn btn-default btn-xs" href="{% url 'finding_aids:template_update' series_id id %}"
+       data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     <a class="btn btn-default btn-xs fm-delete" href="{% url 'finding_aids:template_delete' series_id id %}"
-       data-fm-head="<i class='fa fa-archive'></i>Delete Finding Aids Entry" data-fm-callback="reloadTable">
+       data-fm-head="<i class='fa fa-archive'></i>Delete Finding Aids Entry" data-fm-callback="reloadTable"
+       data-toggle="tooltip" data-placement="top" title="Delete">
         <i class="fa fa-trash-o"></i>
     </a>
 </div>

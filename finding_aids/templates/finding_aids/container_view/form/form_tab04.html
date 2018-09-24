@@ -16,10 +16,12 @@
                 {% bootstrap_field form.spatial_coverage_place %}
                 <div class="input-group-btn select2-addon">
                     <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'authority:place_create' %}"
-                        data-fm-head="<i class='fa fa-exchange'></i>Create Place" data-fm-callback="selectField">
+                        data-fm-head="<i class='fa fa-exchange'></i>Create Place" data-fm-callback="selectField"
+                        data-toggle="tooltip" data-placement="top" title="Create Place">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:place_list' %}" target="_blank">
+                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:place_list' %}" target="_blank"
+                       data-toggle="tooltip" data-placement="top" title="Place List">
                         <i class="fa fa-map-marker"></i>
                     </a>
                 </div>
@@ -34,10 +36,12 @@
                 {% bootstrap_field form.subject_person %}
                 <div class="input-group-btn select2-addon">
                     <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'authority:person_create' %}"
-                        data-fm-head="<i class='fa fa-exchange'></i>Create Person" data-fm-callback="selectField">
+                        data-fm-head="<i class='fa fa-exchange'></i>Create Person" data-fm-callback="selectField"
+                        data-toggle="tooltip" data-placement="top" title="Create Person">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:person_list' %}" target="_blank">
+                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:person_list' %}" target="_blank"
+                       data-toggle="tooltip" data-placement="top" title="Person List">
                         <i class="fa fa-group"></i>
                     </a>
                 </div>
@@ -50,10 +54,12 @@
                 {% bootstrap_field form.subject_corporation %}
                 <div class="input-group-btn select2-addon">
                     <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'authority:corporation_create' %}"
-                        data-fm-head="<i class='fa fa-exchange'></i>Create Corporation" data-fm-callback="selectField">
+                        data-fm-head="<i class='fa fa-exchange'></i>Create Corporation" data-fm-callback="selectField"
+                        data-toggle="tooltip" data-placement="top" title="Create Corporation">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:corporation_list' %}" target="_blank">
+                    <a class="btn btn-default select2-button" type="button" href="{% url 'authority:corporation_list' %}" target="_blank"
+                       data-toggle="tooltip" data-placement="top" title="Corporation List">
                         <i class="fa fa-building-o"></i>
                     </a>
                 </div>
@@ -66,10 +72,12 @@
                 {% bootstrap_field form.subject_keyword %}
                 <div class="input-group-btn select2-addon">
                     <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:keyword_create' %}"
-                        data-fm-head="<i class='fa fa-exchange'></i>Create Keyword" data-fm-callback="selectField">
+                        data-fm-head="<i class='fa fa-exchange'></i>Create Keyword" data-fm-callback="selectField"
+                        data-toggle="tooltip" data-placement="top" title="Create Keyword">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:keyword_list' %}" target="_blank">
+                    <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:keyword_list' %}" target="_blank"
+                       data-toggle="tooltip" data-placement="top" title="Keyword List">
                         <i class="fa fa-list-alt"></i>
                     </a>
                 </div>

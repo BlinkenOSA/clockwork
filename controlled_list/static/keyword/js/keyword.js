@@ -7,7 +7,10 @@ var table = $('#keyword_table').DataTable({
 	"columns": [
 			{ "data": "keyword"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

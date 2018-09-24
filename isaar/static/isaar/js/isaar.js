@@ -10,7 +10,10 @@ var table = $('#isaar_table').dataTable({
 			{ "data": "isad", "sortable": false },
             { "data": "status", "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
-    ]
+    ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

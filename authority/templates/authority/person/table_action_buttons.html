@@ -1,11 +1,13 @@
 <div class="btn-group ">
     <a class="btn btn-default btn-xs fm-update" href="{% url 'authority:person_update' id %}"
-        data-fm-head="<i class='fa fa-group'></i>Edit Person" data-fm-callback="reloadTable">
+        data-fm-head="<i class='fa fa-group'></i>Edit Person" data-fm-callback="reloadTable"
+        data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     {% if not exists %}
         <a class="btn btn-default btn-xs fm-delete" href="{% url 'authority:person_delete' id %}"
-           data-fm-head="<i class='fa fa-group'></i>Delete Person" data-fm-callback="reloadTable">
+           data-fm-head="<i class='fa fa-group'></i>Delete Person" data-fm-callback="reloadTable"
+           data-toggle="tooltip" data-placement="top" title="Delete">
            <i class="fa fa-trash-o"></i>
         </a>
     {% endif %}

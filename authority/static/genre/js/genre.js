@@ -8,7 +8,10 @@ var table = $('#genre_table').DataTable({
 			{ "data": "genre", "width": "30%" },
 			{ "data": "authority_url", "sortable": false },
 		   	{ "data": "action", width: "100px", "class": "action_column", "sortable": false }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

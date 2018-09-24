@@ -10,7 +10,10 @@ var table = $('#carrier_type_table').DataTable({
 			{ "data": "height", "class": "action_column", "sortable": false, "width": "50px"},
 			{ "data": "depth", "class": "action_column", "sortable": false, "width": "50px"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

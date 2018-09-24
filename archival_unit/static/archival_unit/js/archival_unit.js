@@ -11,6 +11,9 @@ var table = $('#archival_unit_table').DataTable({
            { "sortable": false, "class": "action_column"},
            { "sortable": false, "class": "action_column"},
  	 ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 var series_table = $('#archival_unit_series_table').DataTable({
@@ -22,6 +25,9 @@ var series_table = $('#archival_unit_series_table').DataTable({
            { "sortable": false},
            { "sortable": false, "class": "action_column"},
  	 ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

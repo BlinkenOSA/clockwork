@@ -8,7 +8,10 @@ var table = $('#place_table').DataTable({
 			{ "data": "place" },
 			{ "data": "authority_url", "sortable": false},
 		   	{ "data": "action", width: "100px", "class": "action_column" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

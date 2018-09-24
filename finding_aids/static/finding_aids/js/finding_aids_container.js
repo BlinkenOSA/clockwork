@@ -25,7 +25,10 @@ var table = $('#fa_table').DataTable({
     "info":     false,
 	"searching": true,
 	"autoWidth": true,
-	"stateSave": true
+	"stateSave": true,
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $('div.opendisplay').html(

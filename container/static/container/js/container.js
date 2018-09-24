@@ -18,7 +18,10 @@ var table = $('#container_table').DataTable({
     "info":      false,
 	"searching": false,
 	"autoWidth": true,
-    "stateSave": true
+    "stateSave": true,
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 

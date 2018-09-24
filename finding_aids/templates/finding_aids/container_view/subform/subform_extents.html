@@ -18,10 +18,12 @@
                         {% bootstrap_field form.extent_unit show_label=false %}
                         <div class="input-group-btn select2-nolabel-addon">
                             <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:extent_unit_create' %}"
-                                data-fm-head="<i class='fa fa-exchange'></i>Create Extent Unit" data-fm-callback="selectField">
+                                data-fm-head="<i class='fa fa-exchange'></i>Create Extent Unit" data-fm-callback="selectField"
+                                data-toggle="tooltip" data-placement="top" title="Create">
                                 <i class="fa fa-plus"></i>
                             </a>
-                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:extent_unit_list' %}" target="_blank">
+                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:extent_unit_list' %}" target="_blank"
+                               data-toggle="tooltip" data-placement="top" title="Extent Unit List">
                                 <i class="fa fa-list-alt"></i>
                             </a>
                         </div>

@@ -1,9 +1,11 @@
 <div class="input-group-btn select2-addon">
     <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'donor:create_popup' %}"
-        data-fm-head="<i class='fa fa-exchange'></i>Create Donor" data-fm-callback="selectDonor">
+        data-fm-head="<i class='fa fa-exchange'></i>Create Donor" data-fm-callback="selectDonor"
+        data-toggle="tooltip" data-placement="top" title="Add Donor">
         <i class="fa fa-plus"></i>
     </a>
-    <a class="btn btn-default select2-button" type="button" href="{% url 'donor:list' %}" target="_blank">
+    <a class="btn btn-default select2-button" type="button" href="{% url 'donor:list' %}" target="_blank"
+       data-toggle="tooltip" data-placement="top" title="List of Donors">
         <i class="fa fa-edit"></i>
     </a>
 </div>
