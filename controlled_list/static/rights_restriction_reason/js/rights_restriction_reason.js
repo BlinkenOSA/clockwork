@@ -7,7 +7,10 @@ var table = $('#rights_restriction_reason_table').DataTable({
 	"columns": [
 			{ "data": "reason"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

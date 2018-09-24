@@ -1,11 +1,13 @@
 <div class="btn-group ">
     {% if number_of_fa_entities > 0 %}
         {% if number_of_fa_entities == number_of_fa_published %}
-            <a href="/container/action/unpublish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-success btn-xs btn-action">
-                <i class="fa fa-cloud-upload"></i>
+            <a href="/container/action/unpublish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-success btn-xs btn-action"
+               data-toggle="tooltip" data-placement="top" title="Unpublish">
+                <i class="fa fa-cloud-download"></i>
             </a>
         {% else %}
-            <a href="/container/action/publish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-danger btn-xs btn-action">
+            <a href="/container/action/publish/{{ container.archival_unit_id }}/{{ container.id }}/" class="btn btn-danger btn-xs btn-action"
+               data-toggle="tooltip" data-placement="top" title="Publish">
                 <i class="fa fa-cloud-upload"></i>
             </a>
         {% endif %}

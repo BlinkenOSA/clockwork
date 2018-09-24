@@ -10,7 +10,10 @@ var table = $('#accession_table').DataTable({
 		   { "sortable": false },
 		   {  },
 		   { "width": "100px", "sortable": false, "class": "action_column" }
- 	 ]
+ 	 ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

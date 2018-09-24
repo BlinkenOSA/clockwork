@@ -18,10 +18,12 @@
                         {% bootstrap_field form.role show_label=false %}
                         <div class="input-group-btn select2-nolabel-addon">
                             <a class="btn btn-default select2-button fm-create" type="button" href="{% url 'controlled_list:geo_role_create' %}"
-                                data-fm-head="<i class='fa fa-exchange'></i>Create Role" data-fm-callback="selectField">
+                                data-fm-head="<i class='fa fa-exchange'></i>Create Role" data-fm-callback="selectField"
+                                data-toggle="tooltip" data-placement="top" title="Create Country Role">
                                 <i class="fa fa-plus"></i>
                             </a>
-                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:geo_role_list' %}" target="_blank">
+                            <a class="btn btn-default select2-button" type="button" href="{% url 'controlled_list:geo_role_list' %}" target="_blank"
+                               data-toggle="tooltip" data-placement="top" title="Country Role List">
                                 <i class="fa fa-list-alt"></i>
                             </a>
                         </div>

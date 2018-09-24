@@ -1,9 +1,11 @@
 <div class="btn-group ">
-    <a class="btn btn-default btn-xs" href="{% url 'isad:update' id %}">
+    <a class="btn btn-default btn-xs" href="{% url 'isad:update' id %}"
+       data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     <a class="btn btn-default btn-xs fm-delete" href="{% url 'isad:delete' id %}"
-       data-fm-head="<i class='fa fa-male'></i>Delete ISAD(G)" data-fm-callback="reloadTable">
+       data-fm-head="<i class='fa fa-male'></i>Delete ISAD(G)" data-fm-callback="reloadTable"
+       data-toggle="tooltip" data-placement="top" title="Delete">
        <i class="fa fa-trash-o"></i>
     </a>
 </div>

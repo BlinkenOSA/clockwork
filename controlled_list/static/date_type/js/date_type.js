@@ -7,7 +7,10 @@ var table = $('#date_type_table').DataTable({
 	"columns": [
 			{ "data": "type"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

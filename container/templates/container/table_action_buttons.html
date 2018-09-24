@@ -1,11 +1,13 @@
 <div class="btn-group ">
     <a class="btn btn-default btn-xs fm-update" href="{% url 'container:update' container %}"
-        data-fm-head="<i class='fa fa-archive'></i>Edit Container" data-fm-callback="reloadTable">
+        data-fm-head="<i class='fa fa-archive'></i>Edit Container" data-fm-callback="reloadTable"
+        data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     {% if number_of_fa_entities == 0 %}
         <a class="btn btn-default btn-xs fm-delete" href="{% url 'container:delete' container %}"
-           data-fm-head="<i class='fa fa-archive'></i>Delete Container" data-fm-callback="reloadTable">
+           data-fm-head="<i class='fa fa-archive'></i>Delete Container" data-fm-callback="reloadTable"
+           data-toggle="tooltip" data-placement="top" title="Delete">
            <i class="fa fa-trash-o"></i>
         </a>
     {% endif %}

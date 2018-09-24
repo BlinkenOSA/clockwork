@@ -1,10 +1,12 @@
 <div class="btn-group ">
     <a class="btn btn-default btn-xs fm-update" href="{% url 'authority:genre_update' id %}"
-        data-fm-head="<i class='fa fa-shield'></i>Edit Genre" data-fm-callback="reloadTable">
+        data-fm-head="<i class='fa fa-shield'></i>Edit Genre" data-fm-callback="reloadTable"
+        data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     <a class="btn btn-default btn-xs fm-delete" href="{% url 'authority:genre_delete' id %}"
-        data-fm-head="<i class='fa fa-shield'></i>Delete Genre" data-fm-callback="reloadTable">
+        data-fm-head="<i class='fa fa-shield'></i>Delete Genre" data-fm-callback="reloadTable"
+        data-toggle="tooltip" data-placement="top" title="Delete">
         <i class="fa fa-trash-o"></i>
     </a>
 </div>

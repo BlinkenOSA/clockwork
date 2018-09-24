@@ -9,6 +9,9 @@ var table = $('#donor_table').DataTable({
  	       { "data": 'address', "sortable": false },
 		   { "data": 'action', "sortable": false, "width": "100px", "class": "action_column" }
  	 ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

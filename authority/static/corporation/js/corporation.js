@@ -8,7 +8,10 @@ var table = $('#corporation_table').DataTable({
 			{ "data": "name"},
 			{ "data": "authority_url", "sortable": false },
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

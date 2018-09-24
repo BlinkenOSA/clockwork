@@ -1,10 +1,12 @@
 <div class="btn-group">
-    <a class="btn btn-default btn-xs" href="{% url 'accession:update' id %}">
+    <a class="btn btn-default btn-xs" href="{% url 'accession:update' id %}"
+       data-toggle="tooltip" data-placement="top" title="Edit">
         <i class="fa fa-edit"></i>
     </a>
     {% if number_of_archival_units == 0 %}
         <a class="btn btn-default btn-xs fm-delete"  href="{% url 'accession:delete' id %}"
-           data-fm-head="<i class='fa fa-exchange'></i>Delete Accession" data-fm-callback="reloadTable">
+           data-fm-head="<i class='fa fa-exchange'></i>Delete Accession" data-fm-callback="reloadTable"
+           data-toggle="tooltip" data-placement="top" title="Delete">
            <i class="fa fa-trash-o"></i>
         </a>
     {% endif %}

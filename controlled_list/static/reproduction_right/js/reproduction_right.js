@@ -7,7 +7,10 @@ var table = $('#reproduction_rights_table').DataTable({
 	"columns": [
 			{ "data": "statement"},
 		   	{ "data": "action", "class": "action_column", "sortable": false, "width": "100px" }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {

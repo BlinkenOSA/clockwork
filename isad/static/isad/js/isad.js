@@ -19,7 +19,10 @@ var table = $('#isad_table').DataTable({
 		   { "data": 'view-edit-delete', "width": "100px", "class": "action_column", "sortable": false },
 		   { "data": 'status', "width": "100px", "class": "action_column", "sortable": true },
 		   { "data": 'action', "width": "100px", "class": "action_column", "sortable": false }
- 	 ]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
  });
 
 $('#id_archival_unit').on('change', function (evt) {

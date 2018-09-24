@@ -21,7 +21,10 @@ var table = $('#mlr_table').DataTable({
             { "data": "mrss", "sortable": false, "class": "action_column" },
 			{ "data": "size", "width": "100px",  "sortable": false, "class": "action_column" },
 		    { "data": "action", "width": "100px", "sortable": false, "class": "action_column" }
-    ]
+    ],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $('#id_fonds').on('change', function (evt) {

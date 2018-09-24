@@ -10,7 +10,10 @@ var table = $('#language_table').DataTable({
 			{ "data": "iso_639_1", "width": "10%"},
 			{ "data": "iso_639_2", "width": "10%" },
 		   	{ "data": "action", "width": "20%", "class": "action_column", "sortable": false }
- 	]
+ 	],
+	"fnDrawCallback": function( oSettings ) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 $(function() {
