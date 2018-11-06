@@ -23,7 +23,7 @@ class DigitizationListJson(LoginRequiredMixin, BaseDatatableView):
     order_columns = ['container_no', 'barcode', 'digital_version_creation_date', 'duration', 'carrier_type']
 
     def get_initial_queryset(self):
-        qs = Container.objects.filter(digital_version_exists=True)
+        qs = Container.objects.filter(digital_version_exists=True, digital_version_technical_metadata__isnull=False)
         return qs
 
     def filter_queryset(self, qs):
