@@ -313,7 +313,10 @@ class FindingAidsEntityIndexer:
         date_from = date_object.date_from
         date_to = date_object.date_to
 
-        return "%s - %s" % (date_from, date_to)
+        if len(date_to) > 0:
+            return "%s - %s" % (date_from, date_to)
+        else:
+            return str(date_from)
 
     def _make_date_created_display(self):
         if len(self.finding_aids.date_from) == 4:
