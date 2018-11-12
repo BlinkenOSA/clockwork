@@ -160,6 +160,12 @@ class FindingAidsEntityIndexer:
             j["containerNumber"] = self.finding_aids.container.container_no
             j["containerType"] = self.finding_aids.container.carrier_type.type
 
+            if self.finding_aids.container.digital_version_exists:
+                j['digital_version_exists'] = self.finding_aids.container.digital_version_exists
+
+            if self.finding_aids.container.barcode:
+                j['digital_version_container_barcode'] = self.finding_aids.container.barcode
+
             j["seriesReferenceCode"] = self.finding_aids.archival_unit.reference_code.replace('HU OSA ', '')
 
             if self.finding_aids.description_level == 'L1':
@@ -211,10 +217,6 @@ class FindingAidsEntityIndexer:
 
             j["associatedPlace"] = [unicode(place.place) for
                                       place in self.finding_aids.findingaidsentityassociatedplace_set.all()]
-
-            # Subject entries
-
-
 
             j["dateCreated"] = self._make_date_created_display()
 
