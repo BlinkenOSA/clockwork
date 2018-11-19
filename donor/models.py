@@ -12,7 +12,7 @@ class Donor(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     old_id = models.IntegerField(blank=True, null=True)
 
-    name = models.CharField(unique=True, max_length=200)
+    name = models.CharField(unique=True, max_length=200, blank=True, null=True)
 
     first_name = models.CharField(max_length=200, blank=True)
     middle_name = models.CharField(max_length=200, blank=True)
