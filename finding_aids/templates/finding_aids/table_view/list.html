@@ -1,0 +1,71 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block js_page %}
+    <script>
+        var selectedSeries = {{ series.id }};
+    </script>
+    <script src="{% static 'components/handsontable/dist/handsontable.full.min.js' %}"></script>
+    <script src="{% static 'components/moment/min/moment.min.js' %}"></script>
+    <script src="{% static 'clockwork/js/ajax-post.js' %}"></script>
+    <script src="{% static 'finding_aids/js/finding_aids_table_view.js' %}"></script>
+{% endblock %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/handsontable/dist/handsontable.full.min.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'finding_aids/css/finding_aids_table_view.css' %}">
+{% endblock %}
+
+{% block title %}
+   {% trans 'Clockwork AMS - Folders/Items Table View' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ series.title_full|truncatechars:100 }}
+        </li>
+        <li class="active">
+            {% trans 'Folders/Items Table View' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Folders/Items Table View' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-default btn-addBelow">Add Entity (Below)</a>
+            <a class="btn btn-default btn-moveDown">Move Up</a>
+            <a class="btn btn-default btn-moveDown">Move Down</a>
+        </div>
+    </div>
+    <hr/>
+    <div class="faTableWrapper">
+        <div id="faTableView"></div>
+    </div>
+{% endblock %}
+
+{% block box-1-footer %}
+    <div class="pull-right">
+        <a class="btn btn-default" href="{% url 'finding_aids:choose_archival_unit' %}">
+            <i class="fa fa-times"></i>
+            {% trans 'Back to Archival Unit selection' %}
+        </a>
+    </div>
+{% endblock %}
+
