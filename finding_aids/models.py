@@ -38,7 +38,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     folder_no = models.IntegerField(default=0)
     sequence_no = models.IntegerField(default=0, blank=True, null=True)
 
-    title = models.CharField(max_length=300, blank=True, null=True)
+    title = models.CharField(max_length=300)
     title_given = models.BooleanField(default=False)
     title_original = models.CharField(max_length=300, blank=True, null=True)
 

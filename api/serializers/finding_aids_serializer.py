@@ -1,6 +1,10 @@
+import datetime
+from django_date_extensions.fields import ApproximateDateField, ApproximateDate
 from rest_framework import serializers
 
 from archival_unit.models import ArchivalUnit
+from container.models import Container
+from controlled_list.models import Locale
 from finding_aids.models import FindingAidsEntity, FindingAidsEntityAlternativeTitle, FindingAidsEntityDate, \
     FindingAidsEntityCreator, FindingAidsEntityPlaceOfCreation, FindingAidsEntitySubject, \
     FindingAidsEntityAssociatedPerson, FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedCountry, \
@@ -109,6 +113,47 @@ class FindingAidsEntityLanguageSerializer(serializers.ModelSerializer):
         exclude = ('id', 'fa_entity')
 
 
+class FindingAidsGridSerializer(serializers.ModelSerializer):
+    time_start = serializers.DurationField()
+    time_end = serializers.DurationField()
+    original_locale = serializers.SlugRelatedField(slug_field='locale_name', queryset=Locale.objects.all())
+
+    def to_internal_value(self, data):
+        date_from = data.get('date_from', None)
+        date_to = data.get('date_to', None)
+        time_start = data.get('time_start', None)
+        time_end = data.get('time_end', None)
+        duration = data.get('duration', None)
+        locale = data.get('original_locale', None)
+        if time_start:
+            hours, minutes, seconds = time_start.split(':')
+            data['time_start'] = datetime.timedelta(hours=int(hours), minutes=int(minutes), seconds=int(seconds))
+        if time_end:
+            hours, minutes, seconds = time_end.split(':')
+            data['time_end'] = datetime.timedelta(hours=int(hours), minutes=int(minutes), seconds=int(seconds))
+        if duration:
+            hours, minutes, seconds = duration.split(':')
+            data['duration'] = datetime.timedelta(hours=int(hours), minutes=int(minutes), seconds=int(seconds))
+        if date_from:
+            data['date_from'] = change_date(date_from, 'date_from')
+        if date_to:
+            data['date_to'] = change_date(date_to, 'date_to')
+        if locale:
+            data['original_locale'] = Locale.objects.get(locale_name=locale)
+        return data
+
+    class Meta:
+        model = FindingAidsEntity
+        fields = (
+            'id',
+            'archival_reference_code', 'original_locale',
+            'title', 'title_original',
+            'contents_summary', 'contents_summary_original',
+            'date_from', 'date_to', 'time_start', 'time_end', 'duration',
+            'note', 'note_original'
+        )
+
+
 class FindingAidsSerializer(serializers.ModelSerializer):
     archival_unit = ArchivalUnitSerializer()
     level = serializers.SerializerMethodField()
@@ -152,3 +197,35 @@ class FindingAidsSerializer(serializers.ModelSerializer):
     class Meta:
         model = FindingAidsEntity
         exclude = ('container', )
+
+
+def change_date(d, field):
+    if len(d) == 4:
+        return '%s-00-00' % d
+    elif len(d) == 7:
+        slices = d.split('-')
+        if len(slices) != 2:
+            raise serializers.ValidationError({field: 'Wrong date format.'})
+        else:
+            year = int(slices[0])
+            month = int(slices[1])
+            try:
+                ApproximateDate(year=year, month=month, day=0)
+                return "%s-00" % d
+            except ValueError:
+                raise serializers.ValidationError({field: 'Wrong date format.'})
+    elif len(d) == 10:
+        slices = d.split('-')
+        if len(slices) != 3:
+            raise serializers.ValidationError({field: 'Wrong date format.'})
+        else:
+            year = int(slices[0])
+            month = int(slices[1])
+            day = int(slices[2])
+            try:
+                ApproximateDate(year=year, month=month, day=day)
+                return d
+            except ValueError:
+                raise serializers.ValidationError({field: 'Wrong date format.'})
+    else:
+        raise serializers.ValidationError({field: 'Wrong date format.'})

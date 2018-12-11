@@ -1,0 +1,53 @@
+{% extends 'layout-box-table.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block js_page %}
+    <script src="{% static 'components/ag-grid-community/dist/ag-grid-community.min.noStyle.js' %}"></script>
+    <script src="{% static 'clockwork/js/ajax-post.js' %}"></script>
+    <script src="{% static 'finding_aids/js/finding_aids_table_view.js' %}"></script>
+{% endblock %}
+
+{% block css_page %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/ag-grid-community/dist/styles/ag-grid.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'components/ag-grid-community/dist/styles/ag-theme-balham.css' %}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'finding_aids/css/finding_aids_table_view.css' %}">
+{% endblock %}
+
+{% block title %}
+   {% trans 'Clockwork AMS - Folders/Items Table View' %}
+{% endblock %}
+
+{% block content-header %}
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i>{% trans 'Home' %}</a>
+        </li>
+        <li>
+            <i class="fa fa-file-o"></i>&nbsp;&nbsp;{% trans 'Finding Aids' %}
+        </li>
+        <li>
+            {{ series.title_full|truncatechars:100 }}
+        </li>
+        <li class="active">
+            {% trans 'Folders/Items Table View' %}
+        </li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+{% endblock %}
+
+{% block box-1-title %}
+    {% trans 'Folders/Items Table View' %}
+{% endblock %}
+
+{% block box-1-body %}
+    <div id="faTableView" style="height: 600px; width:100%;" class="ag-theme-balham"></div>
+{% endblock %}
+
+{% block box-1-footer %}
+
+{% endblock %}
+

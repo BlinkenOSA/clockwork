@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, UpdateAPIView
 
 from api.permission import APIGroupPermission
 from api.serializers.container_serializers import ContainerDigitizedSerializer
-from api.serializers.finding_aids_serializer import FindingAidsSerializer
+from api.serializers.finding_aids_serializer import FindingAidsSerializer, FindingAidsGridSerializer
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
 
@@ -27,3 +28,30 @@ class GetContainerMetadata(ListAPIView):
         if container:
             finding_aids = FindingAidsEntity.objects.filter(container=container, is_template=False)
             return finding_aids
+
+
+class FindingAidsEntityListView(ListAPIView):
+    serializer_class = FindingAidsGridSerializer
+    authentication_classes = (SessionAuthentication,)
+    pagination_class = None
+
+    def get_queryset(self):
+        qs = FindingAidsEntity.objects.filter(archival_unit=self.kwargs['series_id'])\
+            .order_by('container__container_no', 'folder_no', 'sequence_no')
+        return qs
+
+
+class FindingAidsEntityView(ListAPIView):
+    serializer_class = FindingAidsGridSerializer
+    authentication_classes = (SessionAuthentication,)
+
+    def get_queryset(self):
+        qs = FindingAidsEntity.objects.filter(archival_unit=self.kwargs['series_id'])\
+            .order_by('container__container_no', 'folder_no', 'sequence_no')
+        return qs
+
+
+class FindingAidsEntityUpdateView(UpdateAPIView):
+    serializer_class = FindingAidsGridSerializer
+    authentication_classes = (SessionAuthentication,)
+    queryset = FindingAidsEntity.objects.all()

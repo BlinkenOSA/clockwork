@@ -1,3 +1,5 @@
+var selectedSeries = '';
+
 var fonds = $('#id_fonds').djangoSelect2({
 	placeholder: '- Select Fonds -',
 	escapeMarkup: function (m) { return m; }
@@ -25,9 +27,12 @@ $('#id_series').on('change', function (evt) {
 	if($("#id_series").val()) {
 		$('#fa-container').attr('href', '/container/' + $("#id_series").val());
 		$('#fa-template').attr('href', '/finding_aids/templates/' + $("#id_series").val());
+		$('#fa-table-view').attr('href', '/finding_aids/table_view/' + $("#id_series").val());
+		selectedSeries = $("#id_series").val()
 	} else {
 		$('#fa-container').attr('href', '/container/#');
 		$('#fa-template').attr('href', '/finding_aids/templates/#');
+		$('#fa-table-view').attr('href', '/finding_aids/table_view');
 	}
 });
 
@@ -38,6 +43,12 @@ $('#fa-container').on('click', function(e) {
 });
 
 $('#fa-template').on('click', function(e) {
+	if (!($("#id_series").val())) {
+		e.preventDefault();
+	}
+});
+
+$('#fa-table-view').on('click', function(e) {
 	if (!($("#id_series").val())) {
 		e.preventDefault();
 	}
