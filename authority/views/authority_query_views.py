@@ -40,10 +40,10 @@ class VIAFMixin(object):
                 record_data = record['record']['recordData']
                 viaf_id = 'http://www.viaf.org/viaf/%s' % record_data['viafID']['#text']
 
-                if isinstance(record_data['v:mainHeadings']['data'], list):
-                    name = record_data['v:mainHeadings']['data'][0]['text']
+                if isinstance(record_data['mainHeadings']['data'], list):
+                    name = record_data['mainHeadings']['data'][0]['text']
                 else:
-                    name = record_data['v:mainHeadings']['data']['text']
+                    name = record_data['mainHeadings']['data']['text']
 
                 rec = {
                     'DT_RowId': counter,

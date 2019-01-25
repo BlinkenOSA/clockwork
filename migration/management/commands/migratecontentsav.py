@@ -22,9 +22,31 @@ class Command(BaseCommand):
                                   host=settings.MIGRATION_DB['HOST'],
                                   database=settings.MIGRATION_DB['DB'])
 
+    def add_arguments(self, parser):
+        parser.add_argument('--fonds', dest='fonds', help='Fonds Number')
+        parser.add_argument('--subfonds', dest='subfonds', help='Subfonds Number')
+        parser.add_argument('--series', dest='series', help='Series Number')
+        parser.add_argument('--container_list', dest='container_list', help='Container List')
+
     def handle(self, *args, **options):
         # FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Video')).delete()
         # FindingAidsEntity.objects.filter(primary_type=PrimaryType.objects.get(type='Audio')).delete()
+
+        where = ['(YearAir IS NOT NULL OR YearProduction IS NOT NULL)']
+
+        if options['fonds']:
+            where.append("Main.FondsID = %s" % options['fonds'])
+        if options['subfonds']:
+            where.append("Main.SubfondsID = %s" % options['subfonds'])
+        if options['series']:
+            where.append("Main.SeriesID = %s" % options['series'])
+
+        if options['container_list']:
+            where.append("Main.ListNo = %s" % options['container_list'])
+        else:
+            where.append("Main.ListNo = 1")
+
+        where = " AND ".join(where)
 
         if settings.MIGRATION_DB:
             sql = "SELECT ContentsAV.*, Main.FondsID, Main.SubfondsID, Main.SeriesID, Main.ListNo, Main.Container, " \
@@ -33,10 +55,10 @@ class Command(BaseCommand):
                   "INNER JOIN ListsInSeries ON Main.FondsID = ListsInSeries.FondsID AND " \
                   "                            Main.SubfondsID = ListsInSeries.SubfondsID AND " \
                   "                            Main.SeriesID = ListsInSeries.SeriesID AND " \
-                  "                            Main.ListNo = ListsInSeries.ListNo " \
-                  "WHERE Main.ListNo = 1 AND " \
-                  "(YearAir IS NOT NULL OR YearProduction IS NOT NULL)" \
-                  "ORDER BY Main.FondsID, Main.SubfondsID, Main.SeriesID, Main.ListNo, Main.Container, ContentsAV.`No`"
+                  "                            Main.ListNo = ListsInSeries.ListNo "
+
+            sql = sql + "WHERE " + where + \
+                " ORDER BY Main.FondsID, Main.SubfondsID, Main.SeriesID, Main.ListNo, Main.Container, ContentsAV.`No`"
 
             cursor = self.cnx.cursor(dictionary=True, buffered=True)
             cursor.execute(sql)
@@ -195,7 +217,7 @@ class Command(BaseCommand):
         cursor_one = self.cnx.cursor(buffered=True, dictionary=True)
         cursor_two = self.cnx.cursor(buffered=True, dictionary=True)
 
-        cursor_one.execute(sql_language, (language_id, ))
+        cursor_one.execute(sql_language, (language_id,))
         cursor_two.execute(sql_languages, (container_id, entry_no))
 
         main_language = cursor_one.fetchone()
