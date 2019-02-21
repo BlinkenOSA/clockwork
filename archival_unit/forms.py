@@ -113,7 +113,9 @@ class SubFondsUpdateForm(SubFondsCreateForm):
         if 'subfonds' in self.changed_data:
             subfonds_orig = ArchivalUnit.objects.get(pk=self.instance.pk).subfonds
             subfonds_new = self.cleaned_data['subfonds']
-            archival_units = ArchivalUnit.objects.filter(level='S', subfonds=subfonds_orig)
+            archival_units = ArchivalUnit.objects.filter(level='S',
+                                                         fonds=self.cleaned_data['fonds'],
+                                                         subfonds=subfonds_orig)
             for archival_unit in archival_units:
                 archival_unit.subfonds = subfonds_new
                 archival_unit.save()

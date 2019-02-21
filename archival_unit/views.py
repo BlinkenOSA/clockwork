@@ -185,6 +185,7 @@ class SubFondsUpdate(ArchivalUnitPermissionMixin, AuditTrailContextMixin, AjaxUp
     def get_initial(self):
         fonds = ArchivalUnit.objects.get(reference_code_id=self.kwargs['reference_code_id']).parent
         initial = super(SubFondsUpdate, self).get_initial()
+        initial['fonds'] = fonds.fonds
         initial['fonds_title'] = fonds.title
         initial['fonds_acronym'] = fonds.acronym
         return initial
