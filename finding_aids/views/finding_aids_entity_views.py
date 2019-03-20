@@ -94,16 +94,16 @@ class FindingAidsCreateFromTemplate(FindingAidsCreate):
     def get_initial(self):
         template = FindingAidsEntity.objects.get(pk=self.kwargs['template_id'])
         container = Container.objects.get(pk=self.kwargs['container_id'])
-        return collect_initial(template, container)
+        return self.collect_initial(template, container)
 
-    def get_inlines(self):
+    def construct_inlines(self):
         template = FindingAidsEntity.objects.get(pk=self.kwargs['template_id'])
-        inlines = super(FindingAidsCreateFromTemplate, self).get_inlines()
-        return self.collect_inline_initials(template, inlines)
+        inlines = super(FindingAidsCreateFromTemplate, self).construct_inlines()
+        inlines = self.set_inline_initials(template, inlines)
+        return inlines
 
     @staticmethod
-    def collect_inline_initials(template, inlines):
-        pass
+    def set_inline_initials(template, inlines):
         for idx, inline in enumerate(inlines):
             initials_array = []
             model_name = inline.model._meta.model_name
@@ -120,32 +120,32 @@ class FindingAidsCreateFromTemplate(FindingAidsCreate):
             inlines[idx].initial = initials_array
         return inlines
 
+    @staticmethod
+    def collect_initial(template, container):
+        initial = {}
 
-def collect_initial(template, container):
-    initial = {}
+        # SIMPLE FIELDS
+        for field in template._meta.fields:
+            if not (isinstance(field, AutoField) or isinstance(field, UUIDField) or isinstance(field, ForeignKey)):
+                if getattr(template, field.name):
+                    initial[field.name] = getattr(template, field.name)
 
-    # SIMPLE FIELDS
-    for field in template._meta.fields:
-        if not (isinstance(field, AutoField) or isinstance(field, UUIDField) or isinstance(field, ForeignKey)):
-            if getattr(template, field.name):
-                initial[field.name] = getattr(template, field.name)
+        # MANY TO MANY FIELDS
+        for field in template._meta.many_to_many:
+            initial[field.name] = [int(i.id) for i in getattr(template, field.name).all()]
 
-    # MANY TO MANY FIELDS
-    for field in template._meta.many_to_many:
-        initial[field.name] = [int(i.id) for i in getattr(template, field.name).all()]
+        # Remove fields
+        initial.pop('template_name', None)
 
-    # Remove fields
-    initial.pop('template_name', None)
-
-    # Set values
-    initial['is_template'] = False
-    initial['description_level'] = 'L1'
-    initial['level'] = 'F'
-    folder_no = get_number_of_folders(container.id) + 1
-    initial['folder_no'] = folder_no
-    initial['archival_reference_code'] = "%s/%s:%s" % (container.archival_unit.reference_code,
-                                                       container.container_no, folder_no)
-    return initial
+        # Set values
+        initial['is_template'] = False
+        initial['description_level'] = 'L1'
+        initial['level'] = 'F'
+        folder_no = get_number_of_folders(container.id) + 1
+        initial['folder_no'] = folder_no
+        initial['archival_reference_code'] = "%s/%s:%s" % (container.archival_unit.reference_code,
+                                                           container.container_no, folder_no)
+        return initial
 
 
 class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView):
