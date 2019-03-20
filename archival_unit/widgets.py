@@ -34,10 +34,11 @@ class ArchivalUnitSeriesContainersSelect2Widget(ModelSelect2Widget):
             finding_aids_message = '%d folders/items' % finding_aids_count
 
         if countainer_count == 0:
-            return '%s <span class="label label-warning label-container">no containers</span>' % obj.title
+            return '%s %s <span class="label label-warning label-container">no containers</span>' % \
+                (obj.reference_code, obj.title)
         elif countainer_count == 1:
-            return '%s <span class="label label-warning label-container">%s in %d container</span>' % \
-                   (obj.title, finding_aids_message, countainer_count)
+            return '%s %s <span class="label label-warning label-container">%s in %d container</span>' % \
+                   (obj.reference_code, obj.title, finding_aids_message, countainer_count)
         else:
-            return '%s <span class="label label-warning label-container">%s in %d containers</span>' % \
-                   (obj.title, finding_aids_message, countainer_count)
+            return '%s %s <span class="label label-warning label-container">%s in %d containers</span>' % \
+                   (obj.reference_code, obj.title, finding_aids_message, countainer_count)
