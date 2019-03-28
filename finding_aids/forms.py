@@ -218,6 +218,10 @@ class FindingAidsAssociatedPeopleForm(ModelForm):
         required=False
     )
 
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
+
 
 class FindingAidsAssociatedPeopleInline(InlineFormSet):
     extra = 1
@@ -234,6 +238,10 @@ class FindingAidsDateForm(ModelForm):
         widget=DateTypeSelect2Widget(attrs={'data-placeholder': '-- Select Date Type --'}),
         required=False
     )
+
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
 
 
 class FindingAidsDateInline(InlineFormSet):
@@ -256,6 +264,10 @@ class FindingAidsAssociatedCorporationForm(ModelForm):
         required=False
     )
 
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
+
 
 class FindingAidsAssociatedCorporationInline(InlineFormSet):
     extra = 1
@@ -276,6 +288,10 @@ class FindingAidsAssociatedCountryForm(ModelForm):
         widget=GeoRoleSelect2Widget(attrs={'data-placeholder': '-- Select Role --'}),
         required=False
     )
+
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
 
 
 class FindingAidsAssociatedCountryInline(InlineFormSet):
@@ -298,6 +314,10 @@ class FindingAidsAssociatedPlaceForm(ModelForm):
         required=False
     )
 
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
+
 
 class FindingAidsAssociatedPlaceInline(InlineFormSet):
     extra = 1
@@ -319,6 +339,10 @@ class FindingAidsLanguageForm(ModelForm):
         required=False
     )
 
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
+
 
 class FindingAidsLanguageInline(InlineFormSet):
     extra = 1
@@ -335,6 +359,10 @@ class FindingAidsExtentForm(ModelForm):
         widget=ExtentUnitSelect2Widget(attrs={'data-placeholder': '-- Select Extent Unit --'})
     )
 
+    def has_changed(self):
+        has_changed = ModelForm.has_changed(self)
+        return bool(self.initial or has_changed)
+    
 
 class FindingAidsExtentInline(InlineFormSet):
     extra = 1
