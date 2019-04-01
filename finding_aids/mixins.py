@@ -31,8 +31,11 @@ class FindingAidsAllowedArchivalUnitMixin(object):
         user = request.user
 
         if user.user_profile.allowed_archival_units.count():
-            container = get_object_or_404(Container, pk=self.kwargs['container_id'])
-            archival_unit = container.archival_unit
+            if 'container_id' in self.kwargs:
+                container = get_object_or_404(Container, pk=self.kwargs['container_id'])
+                archival_unit = container.archival_unit
+            else:
+                archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['series_id'])
 
             if archival_unit in user.user_profile.allowed_archival_units.all():
                 return super(FindingAidsAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)

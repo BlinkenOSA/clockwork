@@ -362,7 +362,7 @@ class FindingAidsExtentForm(ModelForm):
     def has_changed(self):
         has_changed = ModelForm.has_changed(self)
         return bool(self.initial or has_changed)
-    
+
 
 class FindingAidsExtentInline(InlineFormSet):
     extra = 1
