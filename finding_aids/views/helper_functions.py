@@ -35,6 +35,7 @@ def renumber_entries(action, fa_entity):
             folder.save()
     else:
         items = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                 level=fa_entity.level,
                                                  folder_no=fa_entity.folder_no,
                                                  sequence_no__gt=fa_entity.sequence_no)
         if len(items) > 0:
@@ -43,6 +44,7 @@ def renumber_entries(action, fa_entity):
                 item.save()
         else:
             folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                       level=fa_entity.level,
                                                        folder_no__gt=fa_entity.folder_no)
             for folder in folders:
                 folder.folder_no += step
