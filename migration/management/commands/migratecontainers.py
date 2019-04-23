@@ -108,14 +108,20 @@ class Command(BaseCommand):
 
                 container = Container.objects.filter(
                     archival_unit=archival_unit,
-                    container_no=int(row['Container'])
+                    old_id=row['ID']
                 ).first()
 
                 if not container:
                     print("Inserting %s-%s" % (archival_unit.reference_code, int(row['Container'])))
+
+                    container_no = Container.objects.filter(
+                        archival_unit=archival_unit,
+                        container_no__lte=int(row['Container'])
+                    ).count()
+
                     container = Container.objects.create(
                         archival_unit=archival_unit,
-                        container_no=int(row['Container']),
+                        container_no=container_no+1,
                         carrier_type=carrier_map[row['Description']]
                     )
                 else:
