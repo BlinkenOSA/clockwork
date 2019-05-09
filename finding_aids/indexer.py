@@ -153,6 +153,7 @@ class FindingAidsEntityIndexer:
         j = {}
         if lang == 'en':
             j['id'] = self.get_solr_id()
+            j['legacyID'] = self.finding_aids.legacy_id
             j['title'] = self.finding_aids.title
             j['titleOriginal'] = self.finding_aids.title_original
             j['level'] = "Folder" if self.finding_aids.level == 'F' else 'Item'
@@ -212,7 +213,7 @@ class FindingAidsEntityIndexer:
                 associated_corporations.append({'name': unicode(corporation.associated_corporation), 'role': unicode(corporation.role)})
             j["associatedCorporation"] = associated_corporations
 
-            j["associatedCountry"] = [unicode(country.country) for
+            j["associatedCountry"] = [unicode(country.associated_country.country) for
                                       country in self.finding_aids.findingaidsentityassociatedcountry_set.all()]
 
             j["associatedPlace"] = [unicode(place.place) for
