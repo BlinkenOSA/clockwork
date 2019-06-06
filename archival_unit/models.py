@@ -75,7 +75,10 @@ class ArchivalUnit(models.Model):
             self.reference_code_id = 'hu_osa_' + str(self.fonds) + '-' + str(self.subfonds) + '-' + str(self.series)
             subfonds_title = self.parent.title
             fonds_title = self.parent.parent.title
-            self.title_full = self.reference_code + ' ' + fonds_title + ': ' + subfonds_title + ': ' + self.title
+            if self.level == 'S' and self.subfonds == 0:
+                self.title_full = self.reference_code + ' ' + fonds_title + ': ' + self.title
+            else:
+                self.title_full = self.reference_code + ' ' + fonds_title + ': ' + subfonds_title + ': ' + self.title
 
         super(ArchivalUnit, self).save()
 
