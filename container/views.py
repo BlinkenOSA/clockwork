@@ -49,8 +49,12 @@ class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin,
         context['archival_unit'] = archival_unit
         archival_unit_names = archival_unit.title_full.split(": ")
         context['fonds_name'] = archival_unit_names[0].replace(archival_unit.reference_code, "").strip()
-        context['subfonds_name'] = archival_unit_names[1]
-        context['series_name'] = archival_unit_names[2]
+        if archival_unit.level == 'S' and archival_unit.subfonds == 0:
+            context['subfonds_name'] = ''
+            context['series_name'] = archival_unit_names[1]
+        else:
+            context['subfonds_name'] = archival_unit_names[1]
+            context['series_name'] = archival_unit_names[2]
         return context
 
 
