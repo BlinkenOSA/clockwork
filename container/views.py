@@ -112,8 +112,8 @@ class ContainerCreate(ContainerPermissionMixin, CreateView):
 
     def form_valid(self, form):
         container = form.instance
-        container_number = Container.objects.filter(archival_unit=container.archival_unit).count()
-        form.instance.container_no = container_number + 1
+        previous_container = Container.objects.filter(archival_unit=container.archival_unit).order_by('container_no').last()
+        form.instance.container_no = previous_container.container_no + 1
         if self.request.is_ajax():
             form.save()
             data = {
