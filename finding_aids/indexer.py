@@ -15,6 +15,7 @@ PRIMARY_TYPES = {
     'Textual': 'Textual'
 }
 
+
 class FindingAidsEntityIndexer:
     """
     Class to handle the indexing of a Finding Aids record.
