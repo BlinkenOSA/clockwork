@@ -147,7 +147,7 @@ class FindingAidsEntityIndexer:
 
             doc["title_original"] = self.finding_aids.title_original
             doc["title_search_%s" % locale] = self.finding_aids.title_original
-            doc["contents_summary_search_%s" % locale] = self.finding_aids.contents_summary
+            doc["contents_summary_search_%s" % locale] = self.finding_aids.contents_summary_original
 
         self.solr_document = doc
 
