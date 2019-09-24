@@ -149,8 +149,8 @@ class ISADIndexer:
         if lang == 'en':
             j["title"] = self.isad.title
             j["archivalHistory"] = self.isad.archival_history
-            j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative
-            j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract
+            j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative.replace('\n', '<br />')
+            j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract.replace('\n', '<br />')
             j["appraisal"] = self.isad.appraisal
             j["physicalCharacteristics"] = self.isad.physical_characteristics
             j["publicationNote"] = self.isad.publication_note
@@ -163,8 +163,8 @@ class ISADIndexer:
         else:
             j["title"] = self.isad.archival_unit.title_original
             j["archivalHistory"] = self.isad.archival_history_original
-            j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative_original
-            j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract_original
+            j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative_original.replace('\n', '<br />')
+            j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract_original.replace('\n', '<br />')
             j["appraisal"] = self.isad.appraisal_original
             j["physicalCharacteristics"] = self.isad.physical_characteristics_original
             j["publicationNote"] = self.isad.publication_note_original
