@@ -167,6 +167,7 @@ class FindingAidsEntityIndexer:
                 digital_version_exists = True
             if self.finding_aids.digital_version_exists:
                 digital_version_exists = True
+            j['digital_version_exists'] = digital_version_exists
 
             if digital_version_exists:
                 if self.finding_aids.container.barcode:
