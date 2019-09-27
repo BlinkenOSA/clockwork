@@ -75,6 +75,8 @@ class FindingAidsEntityIndexer:
         doc["title_search"] = self.finding_aids.title
         doc["title_sort"] = self.finding_aids.title
 
+        doc["title_original_search"] = self.finding_aids.title_original if self.finding_aids.title_original else None
+
         doc["fonds_sort"] = self.finding_aids.archival_unit.fonds
         doc["subfonds_sort"] = self.finding_aids.archival_unit.subfonds
         doc["series_sort"] = self.finding_aids.archival_unit.series
