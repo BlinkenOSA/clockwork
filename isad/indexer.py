@@ -144,7 +144,6 @@ class ISADIndexer:
         j["creator"] = creator
 
         j["rightsReproduction"] = self.isad.reproduction_rights_legacy
-        j["descriptionNotes"] = self.isad.archivists_note
 
         if lang == 'en':
             j["title"] = self.isad.title
