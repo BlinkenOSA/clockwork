@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options['all']:
             solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
-            solr_interface.delete(q='archival_level:Folder/Item', commit=True)
+            # solr_interface.delete(q='archival_level:Folder/Item', commit=True)
             for fa in FindingAidsEntity.objects.iterator():
                 print("Indexing FA Entity: %s / %s" % (fa.id, fa.archival_reference_code))
                 if fa.published:
