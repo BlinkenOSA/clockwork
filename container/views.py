@@ -76,7 +76,7 @@ class ContainerListJson(ContainerPermissionMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'container_no':
-            return '%s/%s' % (row.archival_unit.reference_code, row.container_no)
+            return '%s:%s' % (row.archival_unit.reference_code, row.container_no)
         elif column == 'carrier_type':
             return row.carrier_type.type
         elif column == 'navigate':
