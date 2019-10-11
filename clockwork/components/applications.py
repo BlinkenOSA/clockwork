@@ -15,7 +15,7 @@ PREREQ_APP = [
     'userena',
     'guardian',
     'easy_thumbnails',
-    'session_security',
+    # 'session_security',
     'rest_framework',
     'rest_framework.authtoken',
 ]
