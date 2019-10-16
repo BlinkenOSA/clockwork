@@ -63,6 +63,7 @@ class FindingAidsEntityIndexer:
         doc["record_origin"] = "Archives",
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code
+        doc["archival_reference_number"] = self.finding_aids.archival_reference_code
 
         doc["archival_level"] = "Folder/Item",
         doc["archival_level_facet"] = "Folder/Item",
@@ -165,13 +166,20 @@ class FindingAidsEntityIndexer:
             j["containerType"] = self.finding_aids.container.carrier_type.type
 
             digital_version_exists = False
-            if self.finding_aids.container.digital_version_exists:
-                digital_version_exists = True
+
+            # Folder level indicator
             if self.finding_aids.digital_version_exists:
                 digital_version_exists = True
-            j['digital_version_exists'] = digital_version_exists
+                j['digital_version_container_barcode'] = "%s_%03d-%03d" % \
+                     (
+                         self.finding_aids.archival_unit.reference_code,
+                         self.finding_aids.container.container_no,
+                         self.finding_aids.folder_no
+                     )
 
-            if digital_version_exists:
+            # Container level indicator
+            if self.finding_aids.container.digital_version_exists:
+                digital_version_exists = True
                 if self.finding_aids.container.barcode:
                     j['digital_version_container_barcode'] = self.finding_aids.container.barcode
                 else:
@@ -184,6 +192,7 @@ class FindingAidsEntityIndexer:
                                 self.finding_aids.container.container_no
                             )
 
+            j['digital_version_exists'] = digital_version_exists
             j["seriesReferenceCode"] = self.finding_aids.archival_unit.reference_code.replace('HU OSA ', '')
 
             j["folderNumber"] = self.finding_aids.folder_no
@@ -262,6 +271,7 @@ class FindingAidsEntityIndexer:
         doc["record_origin"] = "Archives",
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code
+        doc["archival_reference_number"] = self.finding_aids.archival_reference_code
 
         doc["archival_level"] = "Folder/Item",
         doc["archival_level_facet"] = "Folder/Item",
