@@ -63,7 +63,7 @@ class FindingAidsEntityIndexer:
         doc["record_origin"] = "Archives",
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code
-        doc["archival_reference_number"] = self.finding_aids.archival_reference_code
+        doc["archival_reference_number_search"] = self.finding_aids.archival_reference_code
 
         doc["archival_level"] = "Folder/Item",
         doc["archival_level_facet"] = "Folder/Item",
@@ -271,7 +271,7 @@ class FindingAidsEntityIndexer:
         doc["record_origin"] = "Archives",
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code
-        doc["archival_reference_number"] = self.finding_aids.archival_reference_code
+        doc["archival_reference_number_search"] = self.finding_aids.archival_reference_code
 
         doc["archival_level"] = "Folder/Item",
         doc["archival_level_facet"] = "Folder/Item",

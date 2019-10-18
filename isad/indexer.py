@@ -41,7 +41,7 @@ class ISADIndexer:
 
         doc['reference_code'] = self.isad.reference_code
         doc['reference_code_sort'] = self.isad.reference_code
-        doc['archival_reference_number'] = self.isad.reference_code
+        doc['archival_reference_number_search'] = self.isad.reference_code
 
         doc['title'] = self.isad.title
         doc['title_e'] = self.isad.title
