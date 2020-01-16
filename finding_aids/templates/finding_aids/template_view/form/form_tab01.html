@@ -9,16 +9,24 @@
     </div>
 </fieldset>
 <fieldset>
-    <div class="col-md-3">
-        {% bootstrap_field form.legacy_id %}
+    <div class="col-md-4">
+        {% bootstrap_field form.description_level %}
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
+        {% bootstrap_field form.level %}
+    </div>
+    <div class="col-md-4">
         {% bootstrap_field form.uuid %}
     </div>
-    <div class="col-md-3">
+</fieldset>
+<fieldset>
+    <div class="col-md-4">
+        {% bootstrap_field form.legacy_id %}
+    </div>
+    <div class="col-md-4">
         {% bootstrap_field form.primary_type %}
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         {% bootstrap_field form.original_locale %}
     </div>
 </fieldset>
