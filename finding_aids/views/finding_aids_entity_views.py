@@ -129,6 +129,10 @@ class FindingAidsCreateFromTemplate(FindingAidsCreate):
             if not (isinstance(field, AutoField) or isinstance(field, UUIDField) or isinstance(field, ForeignKey)):
                 if getattr(template, field.name):
                     initial[field.name] = getattr(template, field.name)
+            if isinstance(field, ForeignKey):
+                data = getattr(template, field.name)
+                if data:
+                    initial[field.name] = data.id
 
         # MANY TO MANY FIELDS
         for field in template._meta.many_to_many:
@@ -139,12 +143,23 @@ class FindingAidsCreateFromTemplate(FindingAidsCreate):
 
         # Set values
         initial['is_template'] = False
-        initial['description_level'] = 'L1'
-        initial['level'] = 'F'
-        folder_no = get_number_of_folders(container.id) + 1
-        initial['folder_no'] = folder_no
-        initial['archival_reference_code'] = "%s/%s:%s" % (container.archival_unit.reference_code,
-                                                           container.container_no, folder_no)
+
+        description_level = getattr(template, 'description_level')
+
+        if description_level == 'L1':
+            folder_no = get_number_of_folders(container.id) + 1
+            initial['folder_no'] = folder_no
+            initial['archival_reference_code'] = "%s/%s:%s" % (container.archival_unit.reference_code,
+                                                               container.container_no, folder_no)
+        else:
+            folder_no = get_number_of_folders(container.id) + 1
+            item_no = get_number_of_items(container.id, folder_no) + 1
+            initial['folder_no'] = folder_no
+            initial['sequence_no'] = item_no
+            initial['archival_reference_code'] = "%s/%s:%s-%s" % (container.archival_unit.reference_code,
+                                                                  container.container_no,
+                                                                  folder_no,
+                                                                  item_no)
         return initial
 
 

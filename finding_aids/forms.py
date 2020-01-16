@@ -165,8 +165,7 @@ class FindingAidsForm(FindingAidsBaseForm):
 
 class FindingAidsTemplateForm(FindingAidsBaseForm):
     class Meta(FindingAidsBaseForm.Meta):
-        exclude = ['archival_unit', 'container', 'folder_no', 'archival_reference_code', 'level',
-                   'description_level']
+        exclude = ['archival_unit', 'container', 'folder_no', 'archival_reference_code']
 
     def clean_template_name(self):
         if not self.cleaned_data['template_name']:
