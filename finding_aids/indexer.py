@@ -244,7 +244,7 @@ class FindingAidsEntityIndexer:
             j["associatedCountry"] = [unicode(country.associated_country.country) for
                                       country in self.finding_aids.findingaidsentityassociatedcountry_set.all()]
 
-            j["associatedPlace"] = [unicode(place.place) for
+            j["associatedPlace"] = [unicode(place.associated_place.place) for
                                       place in self.finding_aids.findingaidsentityassociatedplace_set.all()]
 
             j["dateCreated"] = self._make_date_created_display()
