@@ -28,4 +28,4 @@ def index_remove_finding_aids(finding_aids_entity_id):
     solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
     finding_aids = FindingAidsEntity.objects.get(pk=finding_aids_entity_id)
     indexer = FindingAidsEntityIndexer(finding_aids_entity_id=finding_aids.id)
-    solr_interface.delete(id=indexer.get_solr_id())
+    solr_interface.delete(id=indexer.get_solr_id(), commit=True)

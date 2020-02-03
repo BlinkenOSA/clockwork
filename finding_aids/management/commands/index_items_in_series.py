@@ -14,9 +14,10 @@ class Command(BaseCommand):
         parser.add_argument('--all', dest='all', help='Index everything.')
 
     def handle(self, *args, **options):
+        solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
+        solr_interface.delete(q='archival_level:Folder/Item', commit=True)
+
         if options['all']:
-            solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
-            # solr_interface.delete(q='archival_level:Folder/Item', commit=True)
             for fa in FindingAidsEntity.objects.iterator():
                 print("Indexing FA Entity: %s / %s" % (fa.id, fa.archival_reference_code))
                 if fa.published:
