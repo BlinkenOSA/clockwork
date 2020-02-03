@@ -230,16 +230,12 @@ class FindingAidsEntityIndexer:
             j["duration"] = duration
 
             # Associated entries
+            j["associatedPersonal"] = self._harmonize_roled_names(
+                self.finding_aids.findingaidsentityassociatedperson_set, 'associated_person', 'role')
 
-            associated_people = []
-            for person in self.finding_aids.findingaidsentityassociatedperson_set.all():
-                associated_people.append({'name': unicode(person.associated_person), 'role': unicode(person.role)})
-            j["associatedPersonal"] = associated_people
-
-            associated_corporations = []
-            for corporation in self.finding_aids.findingaidsentityassociatedcorporation_set.all():
-                associated_corporations.append({'name': unicode(corporation.associated_corporation), 'role': unicode(corporation.role)})
-            j["associatedCorporation"] = associated_corporations
+            j["associatedCorporation"] = self._harmonize_roled_names(
+                self.finding_aids.findingaidsentityassociatedcorporation_set, 'associated_corporation', 'role'
+            )
 
             j["associatedCountry"] = [unicode(country.associated_country.country) for
                                       country in self.finding_aids.findingaidsentityassociatedcountry_set.all()]
@@ -254,6 +250,18 @@ class FindingAidsEntityIndexer:
                 j["dates"].append(
                     {"dateType": date.date_type.type, "date": self._make_date_display(date)}
                 )
+
+            # Subject entries
+            j["spatialCoverageCountry"] = [unicode(country.country) for country in
+                                           self.finding_aids.spatial_coverage_country.all()]
+            j["spatialCoveragePlace"] = [unicode(place.place) for place in
+                                         self.finding_aids.spatial_coverage_place.all()]
+            j["subjectPeople"] = [unicode(person) for person in
+                                  self.finding_aids.subject_person.all()]
+            j["subjectCorporation"] = [unicode(corporation) for corporation in
+                                       self.finding_aids.subject_corporation.all()]
+            j["collectionSpecificTags"] = [unicode(keyword) for keyword in
+                                           self.finding_aids.subject_keyword.all()]
 
             # Remove empty json keys
             j = dict((k, v) for k, v in j.iteritems() if v)
@@ -413,3 +421,15 @@ class FindingAidsEntityIndexer:
             if seconds > 0:
                 duration_string.append("%s sec." % seconds)
         return ' '.join(duration_string)
+
+    @staticmethod
+    def _harmonize_roled_names(dataset, name_field, role_field):
+        collection = {}
+        for data in dataset.iterator():
+            name = unicode(getattr(data, name_field))
+            role = unicode(getattr(data, role_field))
+            if name not in collection.keys():
+                collection[name] = [role]
+            else:
+                collection[name].append(role)
+        return [{"name": k, "role": ', '.join(v)} for (k, v) in collection.items()]
