@@ -143,6 +143,11 @@ class ISADIndexer:
             creator.append(c.name)
         j["creator"] = creator
 
+        related_finding_aids = []
+        for rfa in self.isad.isadrelatedfindingaids_set.all():
+            related_finding_aids.append({'info': rfa.info, 'url': rfa.url})
+        j["relatedUnits"] = related_finding_aids
+
         j["rightsReproduction"] = self.isad.reproduction_rights_legacy
 
         if lang == 'en':
