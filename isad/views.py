@@ -29,9 +29,10 @@ class IsadAllowedArchivalUnitMixin(object):
             if 'archival_unit' in self.kwargs:
                 archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['archival_unit'])
             else:
-                archival_unit = get_object_or_404(ArchivalUnit, pk=self.kwargs['pk'])
+                isad = get_object_or_404(Isad, pk=self.kwargs['pk'])
+                archival_unit = get_object_or_404(ArchivalUnit, pk=isad.archival_unit.id)
 
-            if archival_unit in user.user_profile.allowed_archival_units.all():
+            if user.user_profile.allowed_archival_units.filter(pk=archival_unit.id).exists():
                 return super(IsadAllowedArchivalUnitMixin, self).get(request, *args, **kwargs)
             else:
                 raise PermissionDenied
