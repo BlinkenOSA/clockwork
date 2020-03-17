@@ -145,7 +145,7 @@ class FindingAidsGridSerializer(serializers.ModelSerializer):
     class Meta:
         model = FindingAidsEntity
         fields = (
-            'id',
+            'id', 'digital_version_exists',
             'archival_reference_code', 'original_locale',
             'title', 'title_original',
             'contents_summary', 'contents_summary_original',

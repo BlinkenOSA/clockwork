@@ -144,6 +144,12 @@ var columns = [
         label: 'Archival Reference Code',
         editor: false
     }, {
+        data: 'digital_version_exists',
+        label: 'Digital Version Exists',
+        type: 'checkbox',
+        className: 'htCenter',
+        validator: dummyValidator
+    },{
         data: 'title',
         label: 'Title',
         width: 200,
@@ -258,7 +264,7 @@ function fetchData(limit, offset=0) {
 hot.addHook("afterValidate", function(isValid, value, row, prop, source) {
     if(isValid) {
         const allowedActions = ['edit', 'UndoRedo.undo', 'UndoRedo.redo'];
-        if(allowedActions.includes(source)) {
+        if(allowedActions.includes(source) || prop === 'digital_version_exists') {
             let modifyData = {};
             modifyData[prop] = value;
             const r = hot.getSourceDataAtRow(row);
@@ -290,7 +296,7 @@ hot.addHook("afterScrollVertically", function() {
 hot.addHook("afterChange", function(changes, source){
     if(changes) {
         changes.forEach(([row, prop, oldValue, newValue]) => {
-            if(prop == 'time_start' || prop == 'time_end') {
+            if(prop === 'time_start' || prop === 'time_end') {
                 const timeFrom = hot.getDataAtCell(row, 8) || '';
                 const timeTo = hot.getDataAtCell(row, 9) || '';
                 const tf = moment(timeFrom, "hh:mm:ss");
