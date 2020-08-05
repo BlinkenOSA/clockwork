@@ -185,8 +185,8 @@ class ISADIndexer:
             j["publicationNote"] = self.isad.publication_note_original
             j["note"] = self.isad.note_original
             j["archivistsNote"] = self.isad.archivists_note_original
-            j["extent_estimated"] = self.isad.carrier_estimated_original
-            j["extent"] = self._return_extent(lang="hu")
+            j["extent_estimated"] = self.isad.carrier_estimated_original if locale_id == 'HU' else self.isad.carrier_estimated
+            j["extent"] = self._return_extent(lang=locale_id.lower())
 
             if self.isad.access_rights_legacy:
                 j["rightsAccess"] = self.isad.access_rights_legacy_original
@@ -246,6 +246,12 @@ class ISADIndexer:
             if lang == 'hu':
                 extent.append(str(c['number']) + ' ' + c['carrier_type__type_original_language'] + ', ' +
                               str(round(c['width']/1000.00, 2)) + u' folyóméter')
+            elif lang == 'pl':
+                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
+                              str(round(c['width']/1000.00, 2)) + u' metr bieżący')
+            elif lang == 'it':
+                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
+                              str(round(c['width']/1000.00, 2)) + u' metro lineare')
             else:
                 extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
                               str(round(c['width']/1000.00, 2)) + ' linear meters')
