@@ -5,6 +5,7 @@ from django.db.models import Sum, Count
 from hashids import Hashids
 
 from container.models import Container
+from controlled_list.models import Locale
 from isad.models import Isad
 
 
@@ -15,15 +16,15 @@ class ISADIndexer:
     def __init__(self, isad_id):
         self.isad = Isad.objects.get(id=isad_id)
         self.hashids = Hashids(salt="osaarchives", min_length=8)
-
         self.json = {}
         self.solr_document = {}
 
     def prepare_index(self):
         self._make_solr_document()
         self._make_json()
-        if self.isad.original_locale_id == 'HU':
-            self._make_json(lang='HU')
+        if self.isad.original_locale_id:
+            self._make_json(locale_id=self.isad.original_locale_id)
+        self.solr_document["isad_json"] = json.dumps(self.json)
 
     def get_solr_id(self):
         return self.hashids.encode(self.isad.archival_unit.fonds * 1000000 +
@@ -69,7 +70,7 @@ class ISADIndexer:
 
         doc['scope_and_content_narrative_search'] = self.isad.scope_and_content_narrative
         doc['archival_history_search'] = self.isad.archival_history
-        doc["publication_note_search_hu"] = self.isad.publication_note
+        doc["publication_note_search"] = self.isad.publication_note
 
         doc['primary_type'] = "Archival Unit"
         doc['primary_type_facet'] = "Archival Unit"
@@ -90,9 +91,11 @@ class ISADIndexer:
         doc['archival_unit_theme'] = themes
         doc['archival_unit_theme_facet'] = themes
 
-        if self.isad.original_locale_id == 'HU':
+        if self.isad.original_locale_id:
+            locale = self.isad.original_locale_id.lower()
+
             if self.isad.archival_unit.title_original:
-                doc['title_search_hu'] = self.isad.archival_unit.title_original
+                doc['title_search_%s' % locale] = self.isad.archival_unit.title_original
                 doc['title_original'] = self.isad.archival_unit.title_original
                 doc['title_original_e'] = self.isad.archival_unit.title_original
 
@@ -100,14 +103,16 @@ class ISADIndexer:
                 doc['scope_and_content_narrative_search_hu'] = self.isad.scope_and_content_narrative_original
 
             if self.isad.archival_history_original:
-                doc['archival_history_search_hu'] = self.isad.archival_history_original
+                doc['archival_history_search_%s' % locale] = self.isad.archival_history_original
 
             if self.isad.publication_note_original:
-                doc['publication_note_search_hu'] = self.isad.publication_note_original
+                doc['publication_note_search_%s' % locale] = self.isad.publication_note_original
 
         self.solr_document = doc
 
-    def _make_json(self, lang='en'):
+    def _make_json(self, locale_id='en'):
+        locale = locale_id.lower()
+
         j = {}
 
         j['id'] = self.solr_document['id']
@@ -150,7 +155,7 @@ class ISADIndexer:
 
         j["rightsReproduction"] = self.isad.reproduction_rights_legacy
 
-        if lang == 'en':
+        if locale == 'en':
             j["title"] = self.isad.title
             j["archivalHistory"] = self.isad.archival_history
             j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative.replace('\n', '<br />') \
@@ -165,8 +170,10 @@ class ISADIndexer:
             j["extent_estimated"] = self.isad.carrier_estimated
             j["extent"] = self._return_extent()
             j = dict((k, v) for k, v in j.iteritems() if v)
-            self.solr_document['isad_json'] = json.dumps(j)
+            self.json['isad_json_eng'] = json.dumps(j)
         else:
+            j["metadataLanguage"] = Locale.objects.get(pk=locale_id).locale_name
+            j["metadataLanguageCode"] = locale
             j["title"] = self.isad.archival_unit.title_original
             j["archivalHistory"] = self.isad.archival_history_original
             j["scopeAndContentNarrative"] = self.isad.scope_and_content_narrative_original.replace('\n', '<br />') \
@@ -178,14 +185,14 @@ class ISADIndexer:
             j["publicationNote"] = self.isad.publication_note_original
             j["note"] = self.isad.note_original
             j["archivistsNote"] = self.isad.archivists_note_original
-            j["extent_estimated"] = self.isad.carrier_estimated_original
-            j["extent"] = self._return_extent(lang="hu")
+            j["extent_estimated"] = self.isad.carrier_estimated_original if locale_id == 'HU' else self.isad.carrier_estimated
+            j["extent"] = self._return_extent(lang=locale_id.lower())
 
             if self.isad.access_rights_legacy:
                 j["rightsAccess"] = self.isad.access_rights_legacy_original
 
             j = dict((k, v) for k, v in j.iteritems() if v)
-            self.solr_document['isad_json_hu'] = json.dumps(j)
+            self.json['isad_json_2nd'] = json.dumps(j)
 
     def _make_date_created_search(self, year_from, year_to):
         date = []
@@ -236,11 +243,17 @@ class ISADIndexer:
             .annotate(width=Sum('carrier_type__width'), number=Count('id'))
 
         for c in containers:
-            if lang == 'en':
-                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
-                              str(round(c['width']/1000.00, 2)) + ' linear meters')
-            else:
+            if lang == 'hu':
                 extent.append(str(c['number']) + ' ' + c['carrier_type__type_original_language'] + ', ' +
                               str(round(c['width']/1000.00, 2)) + u' folyóméter')
+            elif lang == 'pl':
+                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
+                              str(round(c['width']/1000.00, 2)) + u' metr bieżący')
+            elif lang == 'it':
+                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
+                              str(round(c['width']/1000.00, 2)) + u' metro lineare')
+            else:
+                extent.append(str(c['number']) + ' ' + c['carrier_type__type'] + ', ' +
+                              str(round(c['width']/1000.00, 2)) + ' linear meters')
 
         return extent
