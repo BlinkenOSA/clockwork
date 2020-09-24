@@ -36,9 +36,13 @@ class FindingAidsInContainerListJson(FindingAidsPermissionMixin, BaseDatatableVi
         if column == 'level':
             folder_no = row.container.archival_unit.reference_code + ':' + str(row.container.container_no) + \
                         '/' + str(row.folder_no)
-            if row.level == 'F':
-                icon = '<i class="fa fa-folder-open-o"></i>'
-                return '<span class="call_no_folder">' + icon + folder_no + '</span>'
+            if row.description_level == 'L1':
+                if row.level == 'F':
+                    icon = '<i class="fa fa-folder-open-o"></i>'
+                    return '<span class="call_no_folder">' + icon + folder_no + '</span>'
+                else:
+                    icon = '<i class="fa fa-file-o"></i>'
+                    return '<span class="call_no_item">' + icon + folder_no + '</span>'
             else:
                 icon = '<i class="fa fa-file-o"></i>'
                 return '<span class="call_no_item">' + icon + folder_no + '-' + str(row.sequence_no) + '</span>'
