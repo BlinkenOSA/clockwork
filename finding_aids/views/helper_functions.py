@@ -15,37 +15,58 @@ def get_number_of_items(container_id, folder_no):
 
 
 def new_number(new_obj):
-    if new_obj.level == 'F':
+    if new_obj.description_level == 'L1':
         return {'folder_no': new_obj.folder_no + 1, 'sequence_no': 0}
     else:
         return {'folder_no': new_obj.folder_no, 'sequence_no': new_obj.sequence_no + 1}
 
 
 def renumber_entries(action, fa_entity):
-    if action == 'delete':
-        step = -1
-    else:
-        step = 1
-
-    if fa_entity.level == 'F':
+    # L1 entities
+    if fa_entity.description_level == 'L1':
         folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
                                                    folder_no__gt=fa_entity.folder_no)
-        for folder in folders:
-            folder.folder_no += step
-            folder.save()
+
+        # Delete L1 entities
+        if action == 'delete':
+            item_count = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                          description_level='L2',
+                                                          folder_no=fa_entity.folder_no).count()
+            if item_count == 0:
+                for folder in folders:
+                    folder.folder_no -= 1
+                    folder.save()
+
+        # Clone L1 entities
+        else:
+            for folder in folders:
+                folder.folder_no += 1
+                folder.save()
+
+    # L2 entities
     else:
+        folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                   folder_no__gt=fa_entity.folder_no)
         items = FindingAidsEntity.objects.filter(container=fa_entity.container,
                                                  level=fa_entity.level,
                                                  folder_no=fa_entity.folder_no,
                                                  sequence_no__gt=fa_entity.sequence_no)
-        if len(items) > 0:
-            for item in items:
-                item.sequence_no += step
-                item.save()
+
+        # Delete entities
+        if action == 'delete':
+            item_count = FindingAidsEntity.objects.filter(container=fa_entity.container,
+                                                          description_level='L2',
+                                                          folder_no=fa_entity.folder_no).count()
+            if item_count == 0:
+                for folder in folders:
+                    folder.folder_no -= 1
+                    folder.save()
+            else:
+                for item in items:
+                    item.sequence_no -= 1
+                    item.save()
+        # Clone entities
         else:
-            folders = FindingAidsEntity.objects.filter(container=fa_entity.container,
-                                                       level=fa_entity.level,
-                                                       folder_no__gt=fa_entity.folder_no)
-            for folder in folders:
-                folder.folder_no += step
-                folder.save()
+            for item in items:
+                item.sequence_no += 1
+                item.save()

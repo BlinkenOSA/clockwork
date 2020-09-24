@@ -1,3 +1,5 @@
+import uuid
+
 from django.db.models import AutoField, UUIDField, ForeignKey
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
@@ -176,6 +178,7 @@ class FindingAidsClone(FindingAidsPermissionMixin, JSONResponseMixin, DetailView
         new_obj.folder_no = new_numbers['folder_no']
         new_obj.sequence_no = new_numbers['sequence_no']
 
+        new_obj.uuid = uuid.uuid4()
         new_obj.title += " [copy]"
 
         new_obj.published = False
