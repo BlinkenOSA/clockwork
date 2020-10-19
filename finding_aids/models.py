@@ -70,11 +70,11 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     subject_keyword = models.ManyToManyField('controlled_list.Keyword', blank=True)
 
     # Extra metadata fields
-    language_statement = models.CharField(max_length=300, blank=True, null=True)
-    language_statement_original = models.CharField(max_length=300, blank=True, null=True)
+    language_statement = models.TextField(blank=True, null=True)
+    language_statement_original = models.TextField(blank=True, null=True)
 
-    physical_description = models.CharField(max_length=300, blank=True, null=True)
-    physical_description_original = models.CharField(max_length=300, blank=True, null=True)
+    physical_description = models.TextField(blank=True, null=True)
+    physical_description_original = models.TextField(blank=True, null=True)
 
     physical_condition = models.CharField(max_length=200, blank=True, null=True)
 
@@ -85,9 +85,9 @@ class FindingAidsEntity(CloneableMixin, models.Model):
     dimensions = models.TextField(max_length=200, blank=True, null=True)
 
     # Notes
-    note = models.CharField(max_length=500, blank=True, null=True)
-    note_original = models.CharField(max_length=500, blank=True, null=True)
-    internal_note = models.CharField(max_length=500, blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+    note_original = models.TextField(blank=True, null=True)
+    internal_note = models.TextField(blank=True, null=True)
 
     # Published
     published = models.BooleanField(default=False)
