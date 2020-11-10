@@ -117,7 +117,7 @@ class GeoRole(models.Model):
 
 class Keyword(models.Model):
     id = models.AutoField(primary_key=True)
-    keyword = models.CharField(unique=True, max_length=100)
+    keyword = models.CharField(unique=True, max_length=250)
 
     user_created = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(blank=True, auto_now_add=True)
