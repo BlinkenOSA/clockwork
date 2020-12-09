@@ -55,13 +55,13 @@ $('#id_description_level').on('change', function() {
 			calculateFolderNumber();
 			$("#id_level").prepend("<option value='F'>Folder</option>");
 			$('#id_level').val('F');
-			$('#id_folder_no').prop('readonly', true);
+			// $('#id_folder_no').prop('readonly', true);
 			break;
 		case 'L2':
 			calculateItemNumber();
 			$('#id_level').val('I');
 			$("#id_level option[value='F']").remove();
-			$('#id_folder_no').prop('readonly', false);
+			// $('#id_folder_no').prop('readonly', false);
 			break;
 	}
 });

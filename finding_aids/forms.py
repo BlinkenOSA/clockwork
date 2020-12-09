@@ -118,7 +118,7 @@ class FindingAidsBaseForm(ModelForm):
         widgets = {
             'uuid': TextInput(attrs={'readonly': True}),
             'archival_reference_code': TextInput(attrs={'readonly': True}),
-            'folder_no': NumberInput(attrs={'readonly': True}),
+            'folder_no': NumberInput(),
             'contents_summary': Textarea(attrs={'rows': 3}),
             'contents_summary_original': Textarea(attrs={'rows': 3}),
             'language_statement': Textarea(attrs={'rows': 3}),
