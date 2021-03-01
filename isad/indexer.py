@@ -162,6 +162,8 @@ class ISADIndexer:
                 if self.isad.scope_and_content_narrative else None
             j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract.replace('\n', '<br />') \
                 if self.isad.scope_and_content_abstract else None
+            j["administrativeHistory"] = self.isad.administrative_history.replace('\n', '<br />') \
+                if self.isad.administrative_history else None
             j["appraisal"] = self.isad.appraisal
             j["physicalCharacteristics"] = self.isad.physical_characteristics
             j["publicationNote"] = self.isad.publication_note
@@ -180,6 +182,8 @@ class ISADIndexer:
                 if self.isad.scope_and_content_narrative_original else None
             j["scopeAndContentAbstract"] = self.isad.scope_and_content_abstract_original.replace('\n', '<br />') \
                 if self.isad.scope_and_content_abstract_original else None
+            j["administrativeHistory"] = self.isad.administrative_history_original.replace('\n', '<br />') \
+                if self.isad.administrative_history_original else None
             j["appraisal"] = self.isad.appraisal_original
             j["physicalCharacteristics"] = self.isad.physical_characteristics_original
             j["publicationNote"] = self.isad.publication_note_original
