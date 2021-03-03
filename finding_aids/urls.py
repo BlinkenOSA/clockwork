@@ -4,6 +4,7 @@ from finding_aids.views.archival_unit_select_views import FindingAidsArchivalUni
 from finding_aids.views.container_list_views import *
 from finding_aids.views.finding_aids_entity_views import *
 from finding_aids.views.finding_aids_table_view import FindingAidsTableViewList
+from finding_aids.views.label_views import FindingAidsLabelDataView
 from finding_aids.views.renumber_views import *
 from finding_aids.views.template_views import FindingAidsTemplateList, FindingAidsTemplateListJson, \
     FindingAidsTemplateCreate, FindingAidsTemplateUpdate, FindingAidsTemplateDelete
@@ -43,5 +44,8 @@ urlpatterns = [
         name='finding_aids_template_list_json'),
 
     # Table View
-    url(r'^table_view/(?P<series_id>\d+)/$', FindingAidsTableViewList.as_view(), name='finding_aids_table_view_list')
+    url(r'^table_view/(?P<series_id>\d+)/$', FindingAidsTableViewList.as_view(), name='finding_aids_table_view_list'),
+
+    # Label data
+    url(r'^label_data/(?P<series_id>\d+)/$', FindingAidsLabelDataView.as_view(), name='finding_aids_label_data_view')
 ]
