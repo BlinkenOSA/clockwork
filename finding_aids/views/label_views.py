@@ -80,7 +80,7 @@ class FindingAidsLabelDataView(FindingAidsPermissionMixin, View):
             return dateformat.format(date, 'Y')
 
     def create_report(self, reference_code):
-        input_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'jasper', 'labels_4.jrxml')
+        input_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'jasper', 'labels.jrxml')
         output_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', '%s_labels' % reference_code)
         data_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'workdir', '%s.json' % reference_code)
 
