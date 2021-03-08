@@ -46,6 +46,7 @@ class CarrierType(models.Model):
     height = models.IntegerField(blank=True, null=True)
     depth = models.IntegerField(blank=True, null=True)
     old_id = models.IntegerField(blank=True, null=True)
+    jasper_file = models.CharField(max_length=100, blank=True, null=True)
 
     def __unicode__(self):
         return self.type
