@@ -74,6 +74,21 @@
     <a href="{% url 'finding_aids:finding_aids_template_list' archival_unit.id %}" class="btn btn-default">
         <i class="fa fa-copy"></i> Edit Templates
     </a>
+    {% if container_types %}
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-print"></i>
+            {% trans 'Print labels' %}
+            <span class="caret"></span>
+            <span class="sr-only">Print Labels</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+        {% for container_type in container_types %}
+            <li><a href="#">{{ container_type.type }} ({{ container_type.count }})</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
     <div class="pull-right">
         <a id="publish_all" href="{% url 'container:publish' 'publish' archival_unit.id 'all' %}" class="btn btn-default">

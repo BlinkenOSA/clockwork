@@ -1,5 +1,6 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
@@ -13,6 +14,7 @@ from clockwork.ajax_extra_views import AjaxDeleteProtectedView
 from clockwork.mixins import GeneralAllPermissionMixin, AuditTrailContextMixin
 from container.forms import ContainerForm, ContainerUpdateForm
 from container.models import Container
+from controlled_list.models import CarrierType
 from finding_aids.models import FindingAidsEntity
 
 
@@ -55,6 +57,8 @@ class ContainerList(ContainerPermissionMixin, ContainerAllowedArchivalUnitMixin,
         else:
             context['subfonds_name'] = archival_unit_names[1]
             context['series_name'] = archival_unit_names[2]
+        context['container_types'] = CarrierType.objects.filter(container__archival_unit=archival_unit)\
+            .annotate(count=Count('container__id')).order_by('-count')
         return context
 
 
