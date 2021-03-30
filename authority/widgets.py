@@ -47,7 +47,7 @@ class CorporationSelect2Widget(ModelSelect2Widget):
 class CorporationSelect2MultipleWidget(ModelSelect2MultipleWidget):
     model = Corporation
     search_fields = [
-        'country__icontains',
+        'name__icontains',
     ]
 
 
