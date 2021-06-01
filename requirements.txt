@@ -48,7 +48,7 @@ requests==2.23.0
 setuptools-scm==2.1.0
 six==1.10.0
 suds-community==0.8.4
-urllib3==1.25.8
+urllib3==1.26.5
 uuid==1.30
 vine==1.1.4
 wikipedia==1.4.0
