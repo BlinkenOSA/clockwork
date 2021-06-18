@@ -19,3 +19,5 @@ clockwork/components/database_migration.py
 .coverage
 accounts/fixtures/
 dump.rdb
+
+migration/management/commands/*
