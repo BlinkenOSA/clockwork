@@ -16,6 +16,7 @@ class ArchivalUnitSerializer(serializers.ModelSerializer):
         catalog_id = hashids.encode(fonds.fonds * 1000000 + fonds.subfonds * 1000 + fonds.series)
 
         return {
+            'number': obj.fonds,
             'reference_code': fonds.reference_code,
             'title': fonds.title,
             'catalog_id': catalog_id
@@ -27,6 +28,7 @@ class ArchivalUnitSerializer(serializers.ModelSerializer):
         catalog_id = hashids.encode(subfonds.fonds * 1000000 + subfonds.subfonds * 1000 + subfonds.series)
 
         return {
+            'number': obj.subfonds,
             'reference_code': subfonds.reference_code,
             'title': subfonds.title,
             'catalog_id': catalog_id
@@ -37,6 +39,7 @@ class ArchivalUnitSerializer(serializers.ModelSerializer):
         catalog_id = hashids.encode(obj.fonds * 1000000 + obj.subfonds * 1000 + obj.series)
 
         return {
+            'number': obj.series,
             'reference_code': obj.reference_code,
             'title': obj.title,
             'catalog_id': catalog_id
