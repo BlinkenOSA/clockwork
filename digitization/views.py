@@ -19,11 +19,11 @@ class DigitizationList(LoginRequiredMixin, TemplateView):
 
 class DigitizationListJson(LoginRequiredMixin, BaseDatatableView):
     model = Container
-    columns = ['id', 'container_no', 'barcode', 'digital_version_creation_date', 'duration', 'carrier_type', 'action']
-    order_columns = ['container_no', 'barcode', 'digital_version_creation_date', 'duration', 'carrier_type']
+    columns = ['id', 'container_no', 'barcode', 'digital_version_exists', 'digital_version_creation_date', 'duration', 'carrier_type', 'action']
+    order_columns = ['container_no', 'barcode', 'digital_version_exists', 'digital_version_creation_date', 'duration', 'carrier_type']
 
     def get_initial_queryset(self):
-        qs = Container.objects.filter(digital_version_exists=True, digital_version_technical_metadata__isnull=False)
+        qs = Container.objects.filter(barcode__isnull=False).exclude(barcode="")
         return qs
 
     def filter_queryset(self, qs):
@@ -40,6 +40,10 @@ class DigitizationListJson(LoginRequiredMixin, BaseDatatableView):
             return '%s/%s' % (row.archival_unit.reference_code, row.container_no)
         elif column == 'carrier_type':
             return row.carrier_type.type
+        elif column == 'digital_version_exists':
+            digital_version_exists = True if row.digital_version_exists else False
+            return render_to_string('digitization/table_digital_version_buttons.html',
+                             context={'digital_version': digital_version_exists})
         elif column == 'duration':
             duration = ""
             tech_md = row.digital_version_technical_metadata
