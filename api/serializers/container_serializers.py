@@ -52,7 +52,7 @@ class ArchivalUnitSerializer(serializers.ModelSerializer):
 
 class ContainerDigitizedSerializer(serializers.ModelSerializer):
     carrier_type = serializers.SerializerMethodField()
-    archival_unit = ArchivalUnitSerializer()
+    archival_unit = ArchivalUnitSerializer(read_only=True)
 
     def get_carrier_type(self, obj):
         return obj.carrier_type.type
