@@ -51,6 +51,7 @@ class ArchivalUnitSerializer(serializers.ModelSerializer):
 
 
 class ContainerDigitizedSerializer(serializers.ModelSerializer):
+    container_no = serializers.IntegerField(read_only=True)
     carrier_type = serializers.SerializerMethodField()
     archival_unit = ArchivalUnitSerializer(read_only=True)
 
