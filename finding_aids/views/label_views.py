@@ -78,12 +78,15 @@ class FindingAidsLabelDataView(FindingAidsPermissionMixin, View):
             json.dump({'labels': json_array}, outfile, indent=4)
 
     def _encode_date(self, date):
-        if date.year and date.month and date.day:
-            return dateformat.format(date, 'd M, Y')
-        elif date.year and date.month:
-            return dateformat.format(date, 'M, Y')
-        elif date.year:
-            return dateformat.format(date, 'Y')
+        if date != '':
+            if date.year and date.month and date.day:
+                return dateformat.format(date, 'd M, Y')
+            elif date.year and date.month:
+                return dateformat.format(date, 'M, Y')
+            elif date.year:
+                return dateformat.format(date, 'Y')
+        else:
+            return 'YYYY'
 
     def create_report(self, reference_code, jasper_file):
         output_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', '%s_%s' % (reference_code, jasper_file.replace(".jrxml", "")))

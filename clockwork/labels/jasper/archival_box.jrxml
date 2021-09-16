@@ -25,7 +25,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="series"/>
 		<fieldDescription><![CDATA[seriesTitle]]></fieldDescription>
 	</field>
-	<field name="startFolderDate" class="java.lang.Integer">
+	<field name="startFolderDate" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="startFolderDate"/>
 		<fieldDescription><![CDATA[startFolderDate]]></fieldDescription>
 	</field>
@@ -45,7 +45,7 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="sf"/>
 		<fieldDescription><![CDATA[sf]]></fieldDescription>
 	</field>
-	<field name="endFolderDate" class="java.lang.Integer">
+	<field name="endFolderDate" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="lastFolderDate"/>
 		<fieldDescription><![CDATA[endFolderDate]]></fieldDescription>
 	</field>
