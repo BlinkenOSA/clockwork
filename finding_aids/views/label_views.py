@@ -9,6 +9,7 @@ from pyreportjasper import JasperPy
 
 from archival_unit.models import ArchivalUnit
 from container.models import Container
+from controlled_list.models import CarrierType
 from finding_aids.mixins import FindingAidsPermissionMixin
 from django.http import HttpResponse, HttpResponseNotFound
 
@@ -18,20 +19,25 @@ from isad.models import Isad
 
 class FindingAidsLabelDataView(FindingAidsPermissionMixin, View):
     def get(self, request, *args, **kwargs):
+        carrier_type = get_object_or_404(CarrierType, pk=kwargs['carrier_type_id'])
         archival_unit = get_object_or_404(ArchivalUnit, pk=kwargs['series_id'])
 
-        self.make_json(kwargs['series_id'])
-        self.create_report(archival_unit.reference_code_id)
+        if carrier_type.jasper_file:
+            self.make_json(kwargs['series_id'])
+            self.create_report(archival_unit.reference_code_id, carrier_type.jasper_file)
 
-        filename = '%s_labels.pdf' % archival_unit.reference_code_id
-        file_path = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', filename)
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as pdf:
-                response = HttpResponse(pdf, content_type='application/pdf')
-                response['Content-Disposition'] = 'inline; filename="%s"' % filename
-                return response
+            filename = '%s_%s.pdf' % (archival_unit.reference_code_id, carrier_type.jasper_file.replace(".jrxml", ""))
+            file_path = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', filename)
+
+            if os.path.exists(file_path):
+                with open(file_path, 'r') as pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = 'inline; filename="%s"' % filename
+                    return response
+            else:
+                return HttpResponseNotFound('The requested pdf was not found in our server.')
         else:
-            return HttpResponseNotFound('The requested pdf was not found in our server.')
+            return HttpResponseNotFound('There are no jasper templates existing to this carrier type.')
 
     def make_json(self, series_id):
         json_array = []
@@ -79,21 +85,26 @@ class FindingAidsLabelDataView(FindingAidsPermissionMixin, View):
         elif date.year:
             return dateformat.format(date, 'Y')
 
-    def create_report(self, reference_code):
-        input_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'jasper', 'labels.jrxml')
-        output_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', '%s_labels' % reference_code)
-        data_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'workdir', '%s.json' % reference_code)
+    def create_report(self, reference_code, jasper_file):
+        output_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'output', '%s_%s' % (reference_code, jasper_file.replace(".jrxml", "")))
 
-        jasper = JasperPy()
-        jasper.process(
-            input_file,
-            output_file=output_file,
-            format_list=["pdf"],
-            parameters={},
-            db_connection={
-                'data_file': data_file,
-                'driver': 'json',
-                'json_query': 'labels',
-            },
-            locale='en_US'
-        )
+        if jasper_file:
+            input_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'jasper', jasper_file)
+            data_file = os.path.join(settings.BASE_DIR, 'clockwork', 'labels', 'workdir', '%s.json' % reference_code)
+
+            jasper = JasperPy()
+            jasper.process(
+                input_file,
+                output_file=output_file,
+                format_list=["pdf"],
+                parameters={},
+                db_connection={
+                    'data_file': data_file,
+                    'driver': 'json',
+                    'json_query': 'labels',
+                },
+                locale='en_US'
+            )
+        else:
+            with open(output_file, 'w') as pdf:
+                pass

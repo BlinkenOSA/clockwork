@@ -84,7 +84,11 @@
         </button>
         <ul class="dropdown-menu" role="menu">
         {% for container_type in container_types %}
-            <li><a href="#">{{ container_type.type }} ({{ container_type.count }})</a></li>
+            {% if container_type.jasper_file %}
+                <li><a href="{% url 'finding_aids:finding_aids_label_data_view' container_type.id archival_unit.id %}" target="_blank"><i class="fa fa-circle text-green"></i>{{ container_type.type }} ({{ container_type.count }})</a></li>
+            {% else %}
+                <li><a href="{{'#'}}" target="_blank"><i class="fa fa-circle text-red"></i>{{ container_type.type }} ({{ container_type.count }})</a></li>
+            {% endif %}
         {% endfor %}
         </ul>
     </div>
