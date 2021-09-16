@@ -47,5 +47,5 @@ urlpatterns = [
     url(r'^table_view/(?P<series_id>\d+)/$', FindingAidsTableViewList.as_view(), name='finding_aids_table_view_list'),
 
     # Label data
-    url(r'^labels/(?P<series_id>\d+)/$', FindingAidsLabelDataView.as_view(), name='finding_aids_label_data_view')
+    url(r'^labels/(?P<carrier_type_id>\d+)/(?P<series_id>\d+)/$', FindingAidsLabelDataView.as_view(), name='finding_aids_label_data_view')
 ]
