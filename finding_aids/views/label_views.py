@@ -63,8 +63,14 @@ class FindingAidsLabelDataView(FindingAidsPermissionMixin, View):
             if start_folder and last_folder:
                 label['startFolderName'] = start_folder.title
                 label['startFolderDate'] = self._encode_date(start_folder.date_from)
+                if start_folder.date_to:
+                    label['startFolderDate'] += " - %s" % self._encode_date(start_folder.date_to)
+
                 label['lastFolderName'] = last_folder.title
+
                 label['lastFolderDate'] = self._encode_date(last_folder.date_from)
+                if last_folder.date_to:
+                    label['lastFolderDate'] += " - %s" % self._encode_date(last_folder.date_to)
 
             isad = Isad.objects.filter(archival_unit=archival_unit).first()
             if isad:
