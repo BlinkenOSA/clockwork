@@ -10,7 +10,7 @@ from archival_unit.models import ArchivalUnit
 from clockwork.mixins import InlineSuccessMessageMixin, AuditTrailContextMixin
 from finding_aids.forms import FindingAidsAssociatedPeopleInline, \
     FindingAidsAssociatedCorporationInline, FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, \
-    FindingAidsLanguageInline, FindingAidsExtentInline, FindingAidsTemplateForm
+    FindingAidsLanguageInline, FindingAidsExtentInline, FindingAidsTemplateForm, FindingAidsDateInline
 from finding_aids.mixins import FindingAidsPermissionMixin, FindingAidsTemplateAllowedArchivalUnitMixin
 from finding_aids.models import FindingAidsEntity
 
@@ -63,7 +63,7 @@ class FindingAidsTemplateCreate(FindingAidsPermissionMixin, FindingAidsTemplateA
     success_message = "%(template_name)s was created successfully"
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
                      'languages', 'extents', 'dates']
 
@@ -100,7 +100,7 @@ class FindingAidsTemplateUpdate(FindingAidsPermissionMixin, AuditTrailContextMix
     success_message = "%(template_name)s was updated successfully"
     inlines = [FindingAidsAssociatedPeopleInline, FindingAidsAssociatedCorporationInline,
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
-               FindingAidsExtentInline]
+               FindingAidsExtentInline, FindingAidsDateInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
                      'languages', 'extents', 'dates']
 
