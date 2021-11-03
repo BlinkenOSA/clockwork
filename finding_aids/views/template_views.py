@@ -65,7 +65,7 @@ class FindingAidsTemplateCreate(FindingAidsPermissionMixin, FindingAidsTemplateA
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
                FindingAidsExtentInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_template_list',
@@ -102,7 +102,7 @@ class FindingAidsTemplateUpdate(FindingAidsPermissionMixin, AuditTrailContextMix
                FindingAidsAssociatedCountryInline, FindingAidsAssociatedPlaceInline, FindingAidsLanguageInline,
                FindingAidsExtentInline]
     inlines_names = ['associated_people', 'associated_corporations', 'associated_countries', 'associated_places',
-                     'languages', 'extents']
+                     'languages', 'extents', 'dates']
 
     def get_success_url(self):
         return reverse_lazy('finding_aids:finding_aids_template_list',
