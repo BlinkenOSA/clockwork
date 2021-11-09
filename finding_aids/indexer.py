@@ -155,6 +155,18 @@ class FindingAidsEntityIndexer:
             doc["title_search_%s" % locale] = self.finding_aids.title_original
             doc["contents_summary_search_%s" % locale] = self.finding_aids.contents_summary_original
 
+        # Digital version & barcode
+        if self.finding_aids.container.digital_version_exists:
+            if self.finding_aids.container.barcode:
+                doc['digital_version_exists'] = True
+                doc['digital_version_exists_facet'] = True
+
+                doc['digital_version_barcode'] = self.finding_aids.container.barcode
+                doc['digital_version_barcode_search'] = self.finding_aids.container.barcode
+            else:
+                doc['digital_version_exists'] = False
+                doc['digital_version_exists_facet'] = False
+
         self.solr_document = doc
 
     def _make_json(self, lang='en'):
