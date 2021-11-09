@@ -217,7 +217,8 @@ class FindingAidsEntityIndexer:
             j["formGenre"] = [genre.genre for genre in self.finding_aids.genre.all()]
             j["note"] = self.finding_aids.note
 
-            j["contentsSummary"] = self.finding_aids.contents_summary.replace('\n', '<br />')
+            j["contentsSummary"] = self.finding_aids.contents_summary.replace('\n', '<br />') \
+                if self.finding_aids.contents_summary else None
 
             j["language"] = [str(language.language) for language in self.finding_aids.findingaidsentitylanguage_set.all()]
             j["languageStatement"] = self.finding_aids.language_statement
@@ -282,7 +283,8 @@ class FindingAidsEntityIndexer:
         else:
             j = {}
             j["metadataLanguage"] = Locale.objects.get(pk=lang.upper()).locale_name
-            j["contentsSummary"] = self.finding_aids.contents_summary_original.replace('\n', '<br />')
+            j["contentsSummary"] = self.finding_aids.contents_summary_original.replace('\n', '<br />') \
+                if self.finding_aids.contents_summary_original else None
 
             # Remove empty json keys
             j = dict((k, v) for k, v in j.iteritems() if v)
