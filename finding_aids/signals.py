@@ -9,7 +9,7 @@ from isad.tasks import index_add_isad, index_remove_isad
 @receiver(post_save, sender=FindingAidsEntity)
 def update_finding_aids_index(sender, **kwargs):
     finding_aids = kwargs["instance"]
-    isad = finding_aids.archival_unit.isad
+
     if finding_aids.published:
         if finding_aids.confidential:
             index_add_finding_aids_confidential.delay(finding_aids_entity_id=finding_aids.id)
@@ -18,19 +18,24 @@ def update_finding_aids_index(sender, **kwargs):
     else:
         index_remove_finding_aids.delay(finding_aids_entity_id=finding_aids.id)
 
-    if isad.published:
-        index_add_isad.delay(isad_id=isad.id)
-    else:
-        index_remove_isad.delay(isad_id=isad.id)
+    if hasattr(finding_aids.archival_unit, 'isad'):
+        isad = finding_aids.archival_unit.isad
+
+        if isad.published:
+            index_add_isad.delay(isad_id=isad.id)
+        else:
+            index_remove_isad.delay(isad_id=isad.id)
 
 
 @receiver(post_delete, sender=FindingAidsEntity)
 def remove_finding_aids_index(sender, **kwargs):
     finding_aids = kwargs["instance"]
-    isad = finding_aids.archival_unit.isad
     index_remove_finding_aids.delay(finding_aids_entity_id=finding_aids.id)
 
-    if isad.published:
-        index_add_isad.delay(isad_id=isad.id)
-    else:
-        index_remove_isad.delay(isad_id=isad.id)
+    if hasattr(finding_aids.archival_unit, 'isad'):
+        isad = finding_aids.archival_unit.isad
+
+        if isad.published:
+            index_add_isad.delay(isad_id=isad.id)
+        else:
+            index_remove_isad.delay(isad_id=isad.id)
