@@ -165,6 +165,7 @@ class ISADIndexer:
             j["administrativeHistory"] = self.isad.administrative_history.replace('\n', '<br />') \
                 if self.isad.administrative_history else None
             j["appraisal"] = self.isad.appraisal
+            j["systemOfArrangement"] = self.isad.system_of_arrangement_information
             j["physicalCharacteristics"] = self.isad.physical_characteristics
             j["publicationNote"] = self.isad.publication_note
             j["note"] = self.isad.note
@@ -185,6 +186,7 @@ class ISADIndexer:
             j["administrativeHistory"] = self.isad.administrative_history_original.replace('\n', '<br />') \
                 if self.isad.administrative_history_original else None
             j["appraisal"] = self.isad.appraisal_original
+            j["systemOfArrangement"] = self.isad.system_of_arrangement_information_original
             j["physicalCharacteristics"] = self.isad.physical_characteristics_original
             j["publicationNote"] = self.isad.publication_note_original
             j["note"] = self.isad.note_original
