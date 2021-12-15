@@ -158,14 +158,22 @@ class FindingAidsEntityIndexer:
         # Digital version & barcode
         if self.finding_aids.container.digital_version_exists:
             if self.finding_aids.container.barcode:
+                doc['availability_facet'] = "Digitally Anywhere / With Registration"
+
                 doc['digital_version_exists'] = True
                 doc['digital_version_exists_facet'] = True
 
                 doc['digital_version_barcode'] = self.finding_aids.container.barcode
                 doc['digital_version_barcode_search'] = self.finding_aids.container.barcode
             else:
+                if self.finding_aids.digital_version_exists:
+                    doc['availability_facet'] = "Digitally Anywhere / With Registration"
+                else:
+                    doc['availability_facet'] = "In the Research Room"
+
                 doc['digital_version_exists'] = False
                 doc['digital_version_exists_facet'] = False
+
 
         self.solr_document = doc
 
