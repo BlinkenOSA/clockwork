@@ -173,7 +173,8 @@ class FindingAidsEntityIndexer:
 
                 doc['digital_version_exists'] = False
                 doc['digital_version_exists_facet'] = False
-
+        else:
+            doc['availability_facet'] = "Digitally Anywhere / With Registration"
 
         self.solr_document = doc
 
