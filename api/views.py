@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import re
+
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.exceptions import NotFound
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, \
+    get_object_or_404
+from rest_framework.views import APIView
 
 from api.permission import APIGroupPermission
 from api.serializers.container_serializers import ContainerDigitizedSerializer
@@ -55,3 +60,33 @@ class FindingAidsEntityUpdateView(UpdateAPIView):
     serializer_class = FindingAidsGridSerializer
     authentication_classes = (SessionAuthentication,)
     queryset = FindingAidsEntity.objects.all()
+
+
+class GetContainerMetadataByLegacyID(RetrieveAPIView):
+    serializer_class = ContainerDigitizedSerializer
+    lookup_field = 'barcode'
+    permission_classes = (APIGroupPermission, )
+
+    def get_object(self):
+        legacy_id = self.kwargs['legacy_id']
+
+        fa_objects = FindingAidsEntity.objects.filter(legacy_id=legacy_id)
+        if fa_objects.count() > 0:
+            fa_object = fa_objects.first()
+            return fa_object.container
+        else:
+            if re.match(r'^HU OSA [0-9]+-[0-9]+-[0-9]*_[0-9]{3}', legacy_id):
+                legacy_id = legacy_id.replace("HU OSA ", "")
+                fonds, subfonds, rest = legacy_id.split('-')
+                series, container_no = rest.split('_')
+                container = get_object_or_404(
+                    Container,
+                    archival_unit__fonds=int(fonds),
+                    archival_unit__subfonds=int(subfonds),
+                    archival_unit__series=int(series),
+                    container_no=int(container_no)
+                )
+                return container
+
+        raise NotFound(detail="Error 404, page not found", code=404)
+
