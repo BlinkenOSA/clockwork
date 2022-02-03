@@ -1,4 +1,5 @@
 import pysolr
+from django.conf import settings
 from django.core.management import BaseCommand
 
 from archival_unit.models import ArchivalUnit
@@ -14,7 +15,8 @@ class Command(BaseCommand):
         parser.add_argument('--all', dest='all', help='Index everything.')
 
     def handle(self, *args, **options):
-        solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
+        solr_core = getattr(settings, "SOLR_ADDRESS", "http://localhost:8983/solr/osacatalog")
+        solr_interface = pysolr.Solr(solr_core)
         solr_interface.delete(q='archival_level:Folder/Item', commit=True)
 
         if options['all']:
