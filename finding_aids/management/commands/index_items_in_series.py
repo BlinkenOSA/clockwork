@@ -1,5 +1,4 @@
 import pysolr
-from django.conf import settings
 from django.core.management import BaseCommand
 
 from archival_unit.models import ArchivalUnit
@@ -15,19 +14,20 @@ class Command(BaseCommand):
         parser.add_argument('--all', dest='all', help='Index everything.')
 
     def handle(self, *args, **options):
-        solr_core = getattr(settings, "SOLR_ADDRESS", "http://localhost:8983/solr/osacatalog")
-        solr_interface = pysolr.Solr(solr_core)
-        solr_interface.delete(q='archival_level:Folder/Item', commit=True)
+        solr_interface = pysolr.Solr("http://localhost:8983/solr/osacatalog")
+        # solr_interface.delete(q='archival_level:Folder/Item', commit=True)
 
         if options['all']:
-            for fa in FindingAidsEntity.objects.iterator():
-                print("Indexing FA Entity: %s / %s" % (fa.id, fa.archival_reference_code))
-                if fa.published:
-                    if fa.confidential:
-                        index_add_finding_aids_confidential(fa.id)
-                    else:
-                        index_add_finding_aids(fa.id)
-                    pass
+            archival_units = ArchivalUnit.objects.filter()
+            for archival_unit in archival_units.iterator():
+                for fa in FindingAidsEntity.objects.filter(archival_unit=archival_unit).iterator():
+                    print("Indexing FA Entity: %s / %s" % (fa.id, fa.archival_reference_code))
+                    if fa.published:
+                        if fa.confidential:
+                            index_add_finding_aids_confidential(fa.id)
+                        else:
+                            index_add_finding_aids(fa.id)
+                        pass
         else:
             archival_unit = ArchivalUnit.objects.get(fonds=options['fonds'],
                                                      subfonds=options['subfonds'],
