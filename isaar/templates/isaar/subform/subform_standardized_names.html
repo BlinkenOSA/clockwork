@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <div class="form-group">
-    <label class="control-label">{% trans 'Standardized forms of name according to other rules' %}</label>
+    <label class="control-label">{% trans '5.1.4 Standardized forms of name according to other rules' %}</label>
     {% for form in standardized_names %}
         <div id="{{ form.prefix }}-row" class="standardized_names-subform row subform">
             {% for hidden in form.hidden_fields %}
