@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <div class="form-group">
-    <label class="control-label">{% trans 'Related Finding Aids' %}</label>
+    <label class="control-label">{% trans '3.5.3 Related Finding Aids' %}</label>
     {% for form in related_finding_aids %}
         <div id="{{ form.prefix }}-row" class="related_finding_aids-subform subform row">
             {% for hidden in form.hidden_fields %}

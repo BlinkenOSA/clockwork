@@ -22,11 +22,24 @@ class IsaarForm(ModelForm):
                   'old_id', 'language', 'level_of_detail', 'status', 'institution_identifier', 'source',
                   'internal_note', 'convention')
         labels = {
-            'name': ugettext('Authorized forms of name'),
-            'type': ugettext('Type of entity'),
-            'old_id': ugettext('Authority record identifier'),
-            'language': ugettext('Languages'),
-            'convention': ugettext('Rules and/or conventions')
+            'name': ugettext('5.1.2 Authorized forms of name'),
+            'date_existence_from': ugettext('5.2.1 Date existence from'),
+            'date_existence_to': ugettext('5.2.1 Date existence to'),
+            'type': ugettext('5.1.1 Type of entity'),
+            'function': ugettext('5.2.5 Functions, occupations and activities'),
+            'history': ugettext('5.2.2 History'),
+            'mandate': ugettext('5.2.6 Mandates/Sources of authority'),
+            'legal_status': ugettext('5.2.4 Legal status'),
+            'general_context': ugettext('5.2.8 General context'),
+            'internal_structure': ugettext('5.2.7 Internal structures/Genealogy'),
+            'old_id': ugettext('5.4.1 Authority record identifier'),
+            'language': ugettext('5.4.7 Rules and/or conventions'),
+            'convention': ugettext('5.4.3 Rules and/or conventions'),
+            'institution_identifier': ugettext('5.4.2 Institution identifiers'),
+            'source': ugettext('5.4.8 Sources'),
+            'status': ugettext('5.4.4 Status'),
+            'level_of_detail': ugettext('5.4.5 Level of detail')
+
         }
         help_texts = {
             'date_existence_from': ugettext('Date format: YYYY, or YYYY-MM, or YYYY-MM-DD'),
