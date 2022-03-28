@@ -349,7 +349,7 @@
                         </li>
                     {% endif %}
 
-                    {% if perms.isad %}
+                    {% if perms.mlr %}
                         <li class="{% if 'mlr' in request.path %}active{% endif %}">
                             <a href="{% url 'mlr:list' %}">
                                 <i class="fa fa-university"></i>
