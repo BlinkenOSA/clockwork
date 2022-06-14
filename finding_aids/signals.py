@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 
 from finding_aids.models import FindingAidsEntity
@@ -27,7 +27,7 @@ def update_finding_aids_index(sender, **kwargs):
             index_remove_isad.delay(isad_id=isad.id)
 
 
-@receiver(post_delete, sender=FindingAidsEntity)
+@receiver(pre_delete, sender=FindingAidsEntity)
 def remove_finding_aids_index(sender, **kwargs):
     finding_aids = kwargs["instance"]
     index_remove_finding_aids.delay(finding_aids_entity_id=finding_aids.id)

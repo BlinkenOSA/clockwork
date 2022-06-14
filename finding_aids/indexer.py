@@ -294,6 +294,7 @@ class FindingAidsEntityIndexer:
             j["metadataLanguage"] = Locale.objects.get(pk=lang.upper()).locale_name
             j["contentsSummary"] = self.finding_aids.contents_summary_original.replace('\n', '<br />') \
                 if self.finding_aids.contents_summary_original else None
+            j["note"] = self.finding_aids.note_original
 
             # Remove empty json keys
             j = dict((k, v) for k, v in j.iteritems() if v)
