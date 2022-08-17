@@ -7,11 +7,11 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, \
     get_object_or_404
-from rest_framework.views import APIView
 
 from api.permission import APIGroupPermission
-from api.serializers.container_serializers import ContainerDigitizedSerializer, ContainerFADigitizedSerializer
-from api.serializers.finding_aids_serializer import FindingAidsSerializer, FindingAidsGridSerializer
+from api.serializers.container_serializers import ContainerDigitizedSerializer
+from api.serializers.finding_aids_serializer import FindingAidsSerializer, FindingAidsGridSerializer, \
+    FADigitizedSerializer
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
 
@@ -92,7 +92,7 @@ class GetContainerMetadataByLegacyID(RetrieveAPIView):
 
 
 class GetFAEntityMetadataByItemID(RetrieveAPIView):
-    serializer_class = ContainerFADigitizedSerializer
+    serializer_class = FADigitizedSerializer
     permission_classes = (APIGroupPermission, )
 
     def get_object(self):

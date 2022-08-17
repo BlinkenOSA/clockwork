@@ -64,10 +64,3 @@ class ContainerDigitizedSerializer(serializers.ModelSerializer):
         fields = ['barcode', 'carrier_type', 'container_no', 'digital_version_exists',
                   'digital_version_technical_metadata', 'digital_version_creation_date', 'archival_unit']
 
-
-class ContainerFADigitizedSerializer(serializers.ModelSerializer):
-    archival_unit = ArchivalUnitSerializer(read_only=True)
-
-    class Meta:
-        model = FindingAidsEntity
-        fields = ['archival_unit', 'title', 'folder_no', 'sequence_no', 'catalog_id', 'archival_reference_code']

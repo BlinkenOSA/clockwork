@@ -1,6 +1,8 @@
 from django.conf.urls import url
 
-from api.views import GetSetDigitizedContainer, GetContainerMetadata, FindingAidsEntityListView, \
+from api.views.catalog.archival_units_tree_quick_view import ArchivalUnitsTreeQuickView
+from api.views.catalog.archival_units_tree_view import ArchivalUnitsTreeView
+from api.views.workflow_views import GetSetDigitizedContainer, GetContainerMetadata, FindingAidsEntityListView, \
     FindingAidsEntityUpdateView, GetContainerMetadataByLegacyID, GetFAEntityMetadataByItemID
 
 urlpatterns = [
@@ -15,4 +17,8 @@ urlpatterns = [
 
     url(r'^finding_aids/by-item-id/(?P<item_id>[\w\. -]+)/$', GetFAEntityMetadataByItemID.as_view(), name='get_fa_entity_by_item_id'),
 
+    # Catalog Views
+    url(r'^catalog/archival-units-tree/(?P<archival_unit_id>[\w\. -]+)/$', ArchivalUnitsTreeView.as_view(), name='archival-units-tree'),
+    url(r'^catalog/archival-units-tree-quick-view/(?P<archival_unit_id>[\w\. -]+)/$', ArchivalUnitsTreeQuickView.as_view(),
+        name='archival-units-tree-quick-view'),
 ]
