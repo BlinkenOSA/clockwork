@@ -229,3 +229,12 @@ def change_date(d, field):
                 raise serializers.ValidationError({field: 'Wrong date format.'})
     else:
         raise serializers.ValidationError({field: 'Wrong date format.'})
+
+
+class FADigitizedSerializer(serializers.ModelSerializer):
+    archival_unit = ArchivalUnitSerializer(read_only=True)
+
+    class Meta:
+        model = FindingAidsEntity
+        fields = ['archival_unit', 'title', 'folder_no', 'sequence_no', 'catalog_id', 'archival_reference_code']
+
