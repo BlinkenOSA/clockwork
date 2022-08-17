@@ -10,7 +10,7 @@ from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, UpdateAP
 from rest_framework.views import APIView
 
 from api.permission import APIGroupPermission
-from api.serializers.container_serializers import ContainerDigitizedSerializer
+from api.serializers.container_serializers import ContainerDigitizedSerializer, ContainerFADigitizedSerializer
 from api.serializers.finding_aids_serializer import FindingAidsSerializer, FindingAidsGridSerializer
 from container.models import Container
 from finding_aids.models import FindingAidsEntity
@@ -90,3 +90,27 @@ class GetContainerMetadataByLegacyID(RetrieveAPIView):
 
         raise NotFound(detail="Error 404, page not found", code=404)
 
+
+class GetFAEntityMetadataByItemID(RetrieveAPIView):
+    serializer_class = ContainerFADigitizedSerializer
+    permission_classes = (APIGroupPermission, )
+
+    def get_object(self):
+        item_id = self.kwargs['item_id']
+
+        if re.match(r'^HU OSA [0-9]+-[0-9]+-[0-9]*_[0-9]{3}-[0-9]{3}', item_id):
+            item_id = item_id.replace("HU OSA ", "")
+            fonds, subfonds, rest, folder_no = item_id.split('-')
+            series, container_no = rest.split('_')
+            fa_entity = get_object_or_404(
+                FindingAidsEntity,
+                archival_unit__fonds=int(fonds),
+                archival_unit__subfonds=int(subfonds),
+                archival_unit__series=int(series),
+                container__container_no=int(container_no),
+                folder_no=int(folder_no)
+            )
+
+            return fa_entity
+
+        raise NotFound(detail="Error 404, page not found", code=404)
