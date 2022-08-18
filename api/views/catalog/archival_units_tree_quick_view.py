@@ -10,5 +10,5 @@ class ArchivalUnitsTreeQuickView(RetrieveAPIView):
 
     def get_object(self):
         archival_unit_id = self.kwargs['archival_unit_id']
-        archival_unit = get_object_or_404(Isad, archival_unit__id=archival_unit_id)
-        return archival_unit
+        isad = get_object_or_404(Isad, archival_unit__id=archival_unit_id, published=True)
+        return isad

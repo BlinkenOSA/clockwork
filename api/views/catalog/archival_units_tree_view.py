@@ -1,8 +1,10 @@
 from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from hashids import Hashids
 
 from archival_unit.models import ArchivalUnit
+from isad.models import Isad
 
 
 class ArchivalUnitsTreeView(APIView):
@@ -34,7 +36,9 @@ class ArchivalUnitsTreeView(APIView):
             archival_unit = get_object_or_404(ArchivalUnit, id=archival_unit_id)
             qs = ArchivalUnit.objects.filter(isad__published=True, fonds=archival_unit.fonds).order_by('fonds', 'subfonds', 'series')
 
+        idx = 0
         for au in qs:
+            idx += 1
             if au.level == 'F':
                 if actual_fond != au.fonds:
                     if actual_fond != 0:
@@ -57,6 +61,9 @@ class ArchivalUnitsTreeView(APIView):
                 else:
                     series['subfonds'] = True
                     subfonds['children'].append(series)
+
+            if idx == qs.count():
+                tree.append(fonds)
 
             actual_fond = au.fonds
             actual_subfonds = au.subfonds
