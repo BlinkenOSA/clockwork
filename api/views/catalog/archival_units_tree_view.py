@@ -1,10 +1,7 @@
 from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from hashids import Hashids
-
 from archival_unit.models import ArchivalUnit
-from isad.models import Isad
 
 
 class ArchivalUnitsTreeView(APIView):
@@ -13,6 +10,7 @@ class ArchivalUnitsTreeView(APIView):
     def get_unit_data(self, archival_unit):
         data = {
             'id': archival_unit.id,
+            'catalog_id': archival_unit.isad.catalog_id,
             'key': archival_unit.reference_code.replace(" ", "_").lower(),
             'title': archival_unit.title,
             'title_original': archival_unit.title_original,
