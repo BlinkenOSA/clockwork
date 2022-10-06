@@ -1,12 +1,12 @@
 from rest_framework.generics import RetrieveAPIView, get_object_or_404
 
-from api.serializers.catalog.archival_units_tree_quick_view_serializer import ArchivalUnitsTreeQuickViewSerializer
+from api.serializers.catalog.archival_units_detail_serializer import ArchivalUnitsDetailSerializer
 from isad.models import Isad
 
 
-class ArchivalUnitsTreeQuickView(RetrieveAPIView):
+class ArchivalUnitsDetailView(RetrieveAPIView):
     permission_classes = []
-    serializer_class = ArchivalUnitsTreeQuickViewSerializer
+    serializer_class = ArchivalUnitsDetailSerializer
 
     def get_object(self):
         archival_unit_id = self.kwargs['archival_unit_id']

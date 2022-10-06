@@ -35,6 +35,7 @@ class ISADIndexer:
         level = self._return_description_level(self.isad.description_level)
         doc = {}
         doc['id'] = self.get_solr_id()
+        doc['ams_id'] = self.isad.archival_unit.id
         doc['record_origin'] = 'Archives'
         doc['record_origin_facet'] = 'Archives'
         doc['archival_level'] = 'Archival Unit'

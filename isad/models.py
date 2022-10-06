@@ -3,10 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django_date_extensions.fields import ApproximateDateField
+from hashids import Hashids
 
 
 class Isad(models.Model):
     id = models.AutoField(primary_key=True)
+    catalog_id = models.CharField(max_length=20, blank=True, null=True)
     archival_unit = models.OneToOneField('archival_unit.ArchivalUnit')
     original_locale = models.ForeignKey('controlled_list.Locale', blank=True, null=True, on_delete=models.PROTECT)
     legacy_id = models.IntegerField(blank=True, null=True)
@@ -87,6 +89,16 @@ class Isad(models.Model):
 
     class Meta:
         db_table = 'isad_recrods'
+
+    def _get_catalog_id(self):
+        hashids = Hashids(salt="osaarchives", min_length=8)
+        return hashids.encode(self.archival_unit.fonds * 1000000 +
+                              self.archival_unit.subfonds * 1000 +
+                              self.archival_unit.series)
+
+    def save(self, **kwargs):
+        self.catalog_id = self._get_catalog_id()
+        super(Isad, self).save()
 
     def publish(self, user):
         self.published = True

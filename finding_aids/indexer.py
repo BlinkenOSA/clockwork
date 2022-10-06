@@ -60,6 +60,7 @@ class FindingAidsEntityIndexer:
     def _make_solr_document(self):
         doc = {}
         doc["id"] = self.get_solr_id(),
+        doc['ams_id'] = self.finding_aids.id
         doc["record_origin"] = "Archives",
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code

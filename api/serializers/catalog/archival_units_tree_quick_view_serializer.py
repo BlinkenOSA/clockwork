@@ -1,3 +1,4 @@
+from hashids import Hashids
 from rest_framework import serializers
 from isad.models import Isad
 
@@ -10,7 +11,8 @@ class ArchivalUnitsTreeQuickViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Isad
-        fields = ['id', 'reference_code', 'original_locale',
+        fields = ['id', 'reference_code', 'original_locale', 'catalog_id',
+                  'year_from', 'year_to', 'date_predominant',
                   'title', 'title_original',
                   'description_level',
                   'archival_history', 'archival_history_original',
