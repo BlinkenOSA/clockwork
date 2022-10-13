@@ -1,14 +1,14 @@
 import datetime
-from django_date_extensions.fields import ApproximateDateField, ApproximateDate
+from django_date_extensions.fields import ApproximateDate
 from rest_framework import serializers
 
 from archival_unit.models import ArchivalUnit
-from container.models import Container
 from controlled_list.models import Locale
 from finding_aids.models import FindingAidsEntity, FindingAidsEntityAlternativeTitle, FindingAidsEntityDate, \
     FindingAidsEntityCreator, FindingAidsEntityPlaceOfCreation, FindingAidsEntitySubject, \
     FindingAidsEntityAssociatedPerson, FindingAidsEntityAssociatedCorporation, FindingAidsEntityAssociatedCountry, \
     FindingAidsEntityAssociatedPlace, FindingAidsEntityLanguage
+from api.serializers.archival_unit_serializer import ArchivalUnitSerializer as ArchivalUnitDetailSerializer
 
 
 class ArchivalUnitSerializer(serializers.ModelSerializer):
