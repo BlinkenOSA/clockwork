@@ -94,6 +94,7 @@ class FindingAidsEntity(CloneableMixin, models.Model):
 
     # Digital Version
     digital_version_exists = models.BooleanField(default=False)
+    digital_version_online = models.BooleanField(default=False)
 
     confidential_display_text = models.CharField(max_length=300, blank=True, null=True)
     confidential = models.BooleanField(default=False)

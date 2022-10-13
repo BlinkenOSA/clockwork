@@ -65,6 +65,10 @@ class FindingAidsEntityIndexer:
         doc["record_origin_facet"] = "Archives",
         doc["call_number"] = self.finding_aids.archival_reference_code
 
+        doc["fonds"] = self.finding_aids.archival_unit.fonds
+        doc["subfonds"] = self.finding_aids.archival_unit.subfonds
+        doc["series"] = self.finding_aids.archival_unit.series
+
         doc["archival_reference_number_search"] = [
             self.finding_aids.archival_reference_code,
             "%s:%s" % (self.finding_aids.archival_unit.reference_code, self.finding_aids.container.container_no)
@@ -148,6 +152,7 @@ class FindingAidsEntityIndexer:
         doc["added_corporation_facet"] = associated_corporations
 
         # Subject entries
+
 
         if self.original_locale:
             locale = self.original_locale

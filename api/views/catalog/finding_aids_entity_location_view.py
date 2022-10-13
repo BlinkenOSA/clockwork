@@ -21,15 +21,16 @@ class FindingAidsEntityLocationView(APIView):
             'children': []
         }
 
-    def get_container_placeholder(self):
+    def get_placeholder(self, level):
         return {
             'key': 'placeholder',
-            'level': 'container'
+            'level': level
         }
 
     def get_container_data(self, container):
         return {
             'key': "%s_%s" % (container.archival_unit.reference_code.replace(" ", "_").lower(), container.container_no),
+            'reference_code': "%s:%s" % (container.archival_unit.reference_code, container.container_no),
             'container_no': container.container_no,
             'level': 'container',
             'carrier_type': container.carrier_type.type
@@ -63,30 +64,52 @@ class FindingAidsEntityLocationView(APIView):
         if hasattr(series, 'isad'):
             tree.append(self.get_archival_unit_data(series))
 
-        # Containers
-        container_no = container.container_no
-        containers = Container.objects.filter(
-            archival_unit=series, container_no__gte=container_no-1, container_no__lte=container_no+1
-        ).order_by('container_no')
+        # Add container placeholder if it's not the first container
+        countainer_count = Container.objects.filter(archival_unit=series).count()
+        if container.container_no > 1:
+            tree.append(self.get_placeholder('container'))
 
-        for container in containers.iterator():
-            tree.append(self.get_container_data(container))
+        # Add active container
+        tree.append(self.get_container_data(container))
+
+        # L1 description level
+        if fa_entity.description_level == 'L1':
 
             # Finding Aids Entities
             fa_qs = FindingAidsEntity.objects.filter(container=container).order_by('folder_no', 'sequence_no')
-
-            # Add first FA Entity in container
+            fa_count = fa_qs.count()
             fa_first = fa_qs.first()
             fa_last = fa_qs.last()
 
+            # Add first FA Entity in container
             tree.append(self.get_fa_entity_data(fa_first, fa_first.archival_reference_code == fa_entity.archival_reference_code))
 
+            # Add placeholder
+            if fa_entity.folder_no > 3:
+                tree.append(self.get_placeholder('folder'))
+
+            # Add previous
+            if fa_entity.folder_no > 2:
+                fa_previous = fa_qs.filter(folder_no=fa_entity.folder_no-1).first()
+                tree.append(self.get_fa_entity_data(fa_previous, False))
+
+            # Add active
             if container.container_no == fa_entity.container.container_no and \
                fa_first.archival_reference_code != fa_entity.archival_reference_code and \
                fa_last.archival_reference_code != fa_entity.archival_reference_code:
                 tree.append(self.get_fa_entity_data(fa_entity, True))
 
-            if fa_qs.count() > 1:
+            # Add next
+            if fa_entity.folder_no + 1 < fa_count:
+                fa_next = fa_qs.filter(folder_no=fa_entity.folder_no+1).first()
+                tree.append(self.get_fa_entity_data(fa_next, False))
+
+            # Add placeholder
+            if fa_entity.folder_no + 2 < fa_count:
+                tree.append(self.get_placeholder('folder'))
+
+            # Add last
+            if fa_count > 1:
                 tree.append(self.get_fa_entity_data(fa_last, fa_last.archival_reference_code == fa_entity.archival_reference_code))
 
         return Response(tree)

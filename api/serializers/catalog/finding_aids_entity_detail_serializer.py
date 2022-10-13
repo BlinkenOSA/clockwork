@@ -30,7 +30,7 @@ class ContainerSerializer(serializers.ModelSerializer):
 class AlternativeTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = FindingAidsEntityAlternativeTitle
-        fields = ['title', 'title_given']
+        fields = ['alternative_title', 'title_given']
 
 
 class DateSerializer(serializers.ModelSerializer):
