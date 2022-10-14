@@ -7,6 +7,7 @@ PREREQ_APP = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'corsheaders',
     'bootstrap3',
     'django_select2',
     'widget_tweaks',

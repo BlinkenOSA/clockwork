@@ -11,6 +11,7 @@ django-appconf==1.0.2
 django-bootstrap3==9.1.0
 django-braces==1.11.0
 -e git://github.com/JoshBone/django_cloneable.git@c603ed5ddd1a28d5677ecb4cdd53068d26296457#egg=django_cloneable
+django-cors-headers==2.5.3
 django-crispy-forms==1.7.0
 django-datatables-view==1.14.0
 django-date-extensions==2.0
