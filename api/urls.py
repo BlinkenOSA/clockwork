@@ -5,6 +5,7 @@ from api.views.catalog.archival_units_tree_quick_view import ArchivalUnitsTreeQu
 from api.views.catalog.archival_units_tree_view import ArchivalUnitsTreeView
 from api.views.catalog.finding_aids_entity_detail_view import FindingAidsEntityDetailView
 from api.views.catalog.finding_aids_entity_location_view import FindingAidsEntityLocationView
+from api.views.catalog.finding_aids_image_manifest_view import FindingAidsImageManifestView
 from api.views.workflow_views import GetSetDigitizedContainer, GetContainerMetadata, FindingAidsEntityListView, \
     FindingAidsEntityUpdateView, GetContainerMetadataByLegacyID, GetFAEntityMetadataByItemID
 
@@ -32,5 +33,8 @@ urlpatterns = [
     url(r'^catalog/finding-aids/(?P<fa_entity_catalog_id>[\w\. -]+)/$', FindingAidsEntityDetailView.as_view(),
         name='finding-aids-full-view'),
     url(r'^catalog/finding-aids-location/(?P<fa_entity_catalog_id>[\w\. -]+)/$', FindingAidsEntityLocationView.as_view(),
-        name='finding-aids-location-view')
+        name='finding-aids-location-view'),
+    url(r'^catalog/finding-aids-image-manifest/(?P<fa_entity_catalog_id>[\w\. -]+)/$', FindingAidsImageManifestView.as_view(),
+        name='finding-aids-full-view'),
 ]
+
