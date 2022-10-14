@@ -10,11 +10,11 @@ Django==1.11.29
 django-appconf==1.0.2
 django-bootstrap3==9.1.0
 django-braces==1.11.0
-git+https://github.com/JoshBone/django_cloneable.git@c603ed5ddd1a28d5677ecb4cdd53068d26296457#egg=django_cloneable
+-e git://github.com/JoshBone/django_cloneable.git@c603ed5ddd1a28d5677ecb4cdd53068d26296457#egg=django_cloneable
 django-crispy-forms==1.7.0
 django-datatables-view==1.14.0
 django-date-extensions==2.0
-git+https://github.com/JoshBone/django-extra-views.git@8f8f931f2ded02f639fc411c81f48fed0f2ca0c6#egg=django_extra_views
+-e git://github.com/JoshBone/django-extra-views.git@8f8f931f2ded02f639fc411c81f48fed0f2ca0c6#egg=django_extra_views
 django-fm==0.2.5
 django-generic-json-views==0.8
 django-guardian==1.4.6
@@ -30,6 +30,7 @@ fcrepo==1.1
 hashids==1.2.0
 html2text==2014.12.29
 idna==2.6
+iiif-prezi==0.3.0
 kombu==4.1.0
 lxml==4.6.1
 Markdown==2.6.11
