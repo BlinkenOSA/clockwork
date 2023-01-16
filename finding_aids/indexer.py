@@ -205,15 +205,12 @@ class FindingAidsEntityIndexer:
             # Folder level indicator
             if self.finding_aids.digital_version_exists:
                 digital_version_exists = True
-                if self.finding_aids.legacy_id:
-                    j['digital_version_container_barcode'] = self.finding_aids.legacy_id
-                else:
-                    j['digital_version_container_barcode'] = "%s_%03d-%03d" % \
-                         (
-                             self.finding_aids.archival_unit.reference_code,
-                             self.finding_aids.container.container_no,
-                             self.finding_aids.folder_no
-                         )
+                j['digital_version_container_barcode'] = "%s_%03d-%03d" % \
+                     (
+                         self.finding_aids.archival_unit.reference_code,
+                         self.finding_aids.container.container_no,
+                         self.finding_aids.folder_no
+                     )
 
             # Container level indicator
             if self.finding_aids.container.digital_version_exists:
