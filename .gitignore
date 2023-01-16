@@ -21,3 +21,5 @@ accounts/fixtures/
 dump.rdb
 
 migration/management/commands/*
+
+.DS_STORE
