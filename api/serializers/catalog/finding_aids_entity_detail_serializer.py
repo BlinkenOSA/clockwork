@@ -144,6 +144,7 @@ class FindingAidsEntityDetailSerializer(serializers.ModelSerializer):
     added_place = AssociatedPlaceSerializer(many=True, source='findingaidsentityassociatedplace_set')
     digital_version_identifier = serializers.SerializerMethodField()
     languages = FALanguageSerializer(many=True, source='findingaidsentitylanguage_set')
+    citation = serializers.SerializerMethodField()
 
     def get_description_level(self, obj):
         dl = {'L1': 'Level 1', 'L2': 'Level 2'}
@@ -154,9 +155,11 @@ class FindingAidsEntityDetailSerializer(serializers.ModelSerializer):
         return fl[obj.level]
 
     def get_digital_version_identifier(self, obj):
+        archival_unit_ref_code = obj.archival_unit.reference_code.replace(" ", "_")
+
         # Folder level indicator
         if obj.digital_version_exists:
-            return "%s_%03d-%03d" % (obj.archival_unit.reference_code, obj.container.container_no, obj.folder_no)
+            return "%s_%03d-%03d" % (archival_unit_ref_code, obj.container.container_no, obj.folder_no)
 
         # Container level indicator
         if obj.container.digital_version_exists:
@@ -166,7 +169,49 @@ class FindingAidsEntityDetailSerializer(serializers.ModelSerializer):
                 if obj.container.container_label:
                     return obj.container.container_label
                 else:
-                    return "%s_%03d" % (obj.archival_unit.reference_code, obj.container.container_no)
+                    return "%s_%03d" % (archival_unit_ref_code, obj.container.container_no)
+
+    def get_citation(self, obj):
+        citation = []
+
+        # Title
+        if obj.title_given:
+            citation.append("[%s]" % obj.title)
+        else:
+            if obj.primary_type.type == 'Still Image':
+                citation.append('"%s"' % obj.title)
+            else:
+                citation.append(obj.title)
+        citation.append(', ')
+
+        # Date
+        if obj.date_to:
+            citation.append("%s - %s" % (str(obj.date_from), str(obj.date_to)))
+        else:
+            citation.append(str(obj.date_from))
+        citation.append('; ')
+
+        # Ref. code
+        citation.append(obj.archival_reference_code)
+        citation.append('; ')
+
+        # Series
+        citation.append(obj.archival_unit.title)
+        citation.append('; ')
+
+        # Subfonds
+        if obj.archival_unit.subfonds != 0:
+            citation.append(obj.archival_unit.parent.title)
+            citation.append('; ')
+
+        # Fonds
+        citation.append(obj.archival_unit.parent.parent.title)
+        citation.append('; ')
+
+        # OSA
+        citation.append("Vera and Donald Blinken Open Society Archives at Central European University, Budapest")
+
+        return "".join(citation)
 
     class Meta:
         model = FindingAidsEntity

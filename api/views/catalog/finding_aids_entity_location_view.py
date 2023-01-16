@@ -18,13 +18,15 @@ class FindingAidsEntityLocationView(APIView):
             'title_original': archival_unit.title_original,
             'reference_code': archival_unit.reference_code,
             'level': archival_unit.level,
+            'has_subfonds': archival_unit.subfonds != 0,
             'children': []
         }
 
-    def get_placeholder(self, level):
+    def get_placeholder(self, level, has_subfonds):
         return {
             'key': 'placeholder',
-            'level': level
+            'level': level,
+            'has_subfonds': has_subfonds
         }
 
     def get_container_data(self, container):
@@ -33,7 +35,8 @@ class FindingAidsEntityLocationView(APIView):
             'reference_code': "%s:%s" % (container.archival_unit.reference_code, container.container_no),
             'container_no': container.container_no,
             'level': 'container',
-            'carrier_type': container.carrier_type.type
+            'carrier_type': container.carrier_type.type,
+            'has_subfonds': container.archival_unit.subfonds != 0,
         }
 
     def get_fa_entity_data(self, fa_entity, active=False):
@@ -43,7 +46,8 @@ class FindingAidsEntityLocationView(APIView):
             'reference_code': fa_entity.archival_reference_code,
             'title': fa_entity.title,
             'active': active,
-            'level': 'folder' if fa_entity.level == 'F' else 'item'
+            'level': 'folder' if fa_entity.level == 'F' else 'item',
+            'has_subfonds': fa_entity.archival_unit.subfonds != 0,
         }
 
     def get(self, request, fa_entity_catalog_id):
@@ -64,11 +68,6 @@ class FindingAidsEntityLocationView(APIView):
         if hasattr(series, 'isad'):
             tree.append(self.get_archival_unit_data(series))
 
-        # Add container placeholder if it's not the first container
-        countainer_count = Container.objects.filter(archival_unit=series).count()
-        if container.container_no > 1:
-            tree.append(self.get_placeholder('container'))
-
         # Add active container
         tree.append(self.get_container_data(container))
 
@@ -86,7 +85,7 @@ class FindingAidsEntityLocationView(APIView):
 
             # Add placeholder
             if fa_entity.folder_no > 3:
-                tree.append(self.get_placeholder('folder'))
+                tree.append(self.get_placeholder('folder', fa_entity.archival_unit.subfonds != 0))
 
             # Add previous
             if fa_entity.folder_no > 2:
@@ -106,7 +105,7 @@ class FindingAidsEntityLocationView(APIView):
 
             # Add placeholder
             if fa_entity.folder_no + 2 < fa_count:
-                tree.append(self.get_placeholder('folder'))
+                tree.append(self.get_placeholder('folder', fa_entity.archival_unit.subfonds != 0))
 
             # Add last
             if fa_count > 1:

@@ -28,7 +28,7 @@ class FindingAidsImageManifestView(APIView):
             manifest = factory.manifest(label="%s %s" % (fa_entity.archival_reference_code, fa_entity.title))
             manifest.viewingDirection = "left-to-right"
             manifest.attribution = '%s %s<br/>' % (fa_entity.archival_reference_code, fa_entity.title) + \
-                                   '%s<br/>' % (fa_entity.archival_unit.title_full) + \
+                                   '%s<br/>' % fa_entity.archival_unit.title_full + \
                                    'Vera & Donald Blinken Open Society Archives'
 
             seq = manifest.sequence()

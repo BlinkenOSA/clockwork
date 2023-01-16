@@ -114,3 +114,16 @@ class GetFAEntityMetadataByItemID(RetrieveAPIView):
             return fa_entity
 
         raise NotFound(detail="Error 404, page not found", code=404)
+
+
+class GetFAEntityMetadataByLegacyID(RetrieveAPIView):
+    serializer_class = FADigitizedSerializer
+    permission_classes = (APIGroupPermission, )
+
+    def get_object(self):
+        legacy_id = self.kwargs['legacy_id']
+        fa_entity = get_object_or_404(
+            FindingAidsEntity,
+            legacy_id=legacy_id
+        )
+        return fa_entity

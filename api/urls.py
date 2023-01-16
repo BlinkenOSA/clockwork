@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from api.views.catalog.archival_units_detail_view import ArchivalUnitsDetailView
+from api.views.catalog.archival_units_image_manifest_view import ArchivalUnitsManifestView
 from api.views.catalog.archival_units_tree_quick_view import ArchivalUnitsTreeQuickView
 from api.views.catalog.archival_units_tree_view import ArchivalUnitsTreeView
 from api.views.catalog.finding_aids_entity_detail_view import FindingAidsEntityDetailView
@@ -20,6 +21,8 @@ urlpatterns = [
     url(r'^finding_aids/(?P<pk>\d+)/$', FindingAidsEntityUpdateView.as_view(), name='update_finding_aids_view'),
 
     url(r'^finding_aids/by-item-id/(?P<item_id>[\w\. -]+)/$', GetFAEntityMetadataByItemID.as_view(), name='get_fa_entity_by_item_id'),
+    url(r'^finding_aids/by-legacy-id/(?P<legacy_id>[\w\. -]+)/$', GetFAEntityMetadataByLegacyID.as_view(),
+        name='get_fa_entity_by_legacy_id'),
 
     # Archival Unit Views
     url(r'^catalog/archival-units-tree/(?P<archival_unit_id>[\w\. -]+)/$', ArchivalUnitsTreeView.as_view(),
@@ -34,7 +37,11 @@ urlpatterns = [
         name='finding-aids-full-view'),
     url(r'^catalog/finding-aids-location/(?P<fa_entity_catalog_id>[\w\. -]+)/$', FindingAidsEntityLocationView.as_view(),
         name='finding-aids-location-view'),
-    url(r'^catalog/finding-aids-image-manifest/(?P<fa_entity_catalog_id>[\w\. -]+)/$', FindingAidsImageManifestView.as_view(),
-        name='finding-aids-full-view'),
+
+    # IIIF manifests
+    url(r'^catalog/archival-units-image-manifest/(?P<archival_unit_id>[\w\. -]+)/manifest.json', ArchivalUnitsManifestView.as_view(),
+        name='archival-units-manifest-view'),
+    url(r'^catalog/finding-aids-image-manifest/(?P<fa_entity_catalog_id>[\w\. -]+)/manifest.json', FindingAidsImageManifestView.as_view(),
+        name='finding-aids-manifest-view'),
 ]
 
