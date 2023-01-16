@@ -8,7 +8,8 @@ from api.views.catalog.finding_aids_entity_detail_view import FindingAidsEntityD
 from api.views.catalog.finding_aids_entity_location_view import FindingAidsEntityLocationView
 from api.views.catalog.finding_aids_image_manifest_view import FindingAidsImageManifestView
 from api.views.workflow_views import GetSetDigitizedContainer, GetContainerMetadata, FindingAidsEntityListView, \
-    FindingAidsEntityUpdateView, GetContainerMetadataByLegacyID, GetFAEntityMetadataByItemID
+    FindingAidsEntityUpdateView, GetContainerMetadataByLegacyID, GetFAEntityMetadataByItemID, \
+    GetFAEntityMetadataByLegacyID
 
 urlpatterns = [
     url(r'^containers/(?P<barcode>\w+)/$', GetSetDigitizedContainer.as_view(), name='list_set_digitized_container'),
@@ -39,9 +40,9 @@ urlpatterns = [
         name='finding-aids-location-view'),
 
     # IIIF manifests
-    url(r'^catalog/archival-units-image-manifest/(?P<archival_unit_id>[\w\. -]+)/manifest.json', ArchivalUnitsManifestView.as_view(),
-        name='archival-units-manifest-view'),
-    url(r'^catalog/finding-aids-image-manifest/(?P<fa_entity_catalog_id>[\w\. -]+)/manifest.json', FindingAidsImageManifestView.as_view(),
-        name='finding-aids-manifest-view'),
+    url(r'^catalog/archival-units-image-manifest/(?P<archival_unit_id>[\w\. -]+)/manifest.json',
+        ArchivalUnitsManifestView.as_view(), name='archival-units-manifest-view'),
+    url(r'^catalog/finding-aids-image-manifest/(?P<fa_entity_catalog_id>[\w\. -]+)/manifest.json',
+        FindingAidsImageManifestView.as_view(), name='finding-aids-manifest-view'),
 ]
 
